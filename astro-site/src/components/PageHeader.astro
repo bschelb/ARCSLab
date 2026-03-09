@@ -1,0 +1,15 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  description: string;
+  watermark?: string;
+}
+const { eyebrow, title, description, watermark } = Astro.props;
+---
+<div class="page-header">
+  {watermark && <Fragment><style>{`.page-header::before{content:'${watermark}';position:absolute;right:60px;top:50%;transform:translateY(-50%);font-family:'Playfair Display',serif;font-size:120px;font-weight:900;color:rgba(255,255,255,0.025);letter-spacing:-4px;white-space:nowrap;}`}</style></Fragment>}
+  <div class="page-header-eyebrow">{eyebrow}</div>
+  <h1>{title}</h1>
+  <p>{description}</p>
+</div>

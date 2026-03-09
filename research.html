@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research | ARCS Lab | UTK</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--stone-50:#faf8f5;--stone-100:#f2ede6;--stone-200:#e4d9cc;--stone-300:#c9b99e;--stone-700:#4a3728;--stone-900:#1e150d;--utk-orange:#FF6600;--utk-orange-deep:#cc4f00;--smoke:#6b6560;--nav-h:88px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{overflow-x:hidden;}
+body{font-family:'DM Sans',sans-serif;background:var(--stone-50);color:var(--stone-900);}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(250,248,245,0.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--stone-200);}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo-mark{width:36px;height:36px;background:var(--utk-orange);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:16px;font-weight:900;color:white;}
+.nav-logo-text{font-weight:600;font-size:18px;color:var(--stone-900);}
+.nav-logo-sub{font-weight:300;font-size:13px;color:var(--smoke);display:block;}
+.nav-links{display:flex;gap:32px;align-items:center;}
+.nav-links a{text-decoration:none;font-size:13px;font-weight:500;color:var(--stone-700);letter-spacing:0.04em;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--utk-orange);}
+.nav-cta{background:var(--utk-orange);color:white!important;padding:8px 20px;font-size:12px!important;}
+.page-header{padding:calc(var(--nav-h) + 80px) 80px 64px;background:var(--stone-900);position:relative;overflow:hidden;}
+.page-header::before{content:'RESEARCH';position:absolute;right:40px;top:50%;transform:translateY(-50%);font-family:'Playfair Display',serif;font-size:130px;font-weight:900;color:rgba(255,255,255,0.025);white-space:nowrap;letter-spacing:-4px;}
+.eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--utk-orange);margin-bottom:16px;}
+.page-header h1{font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,60px);font-weight:900;color:white;line-height:1.1;margin-bottom:20px;}
+.page-header p{font-size:17px;color:rgba(255,255,255,.93);max-width:640px;line-height:1.75;}
+.areas{padding:80px;}
+.area-block{display:grid;grid-template-columns:260px 1fr;gap:80px;padding:72px 0;border-top:1px solid var(--stone-200);align-items:start;}
+.area-block:first-child{border-top:none;padding-top:0;}
+.area-num{font-family:'DM Mono',monospace;font-size:13px;color:var(--stone-500);letter-spacing:.1em;margin-bottom:12px;}
+.area-icon{width:64px;height:64px;background:var(--stone-100);display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:20px;}
+.area-tag{display:inline-block;background:rgba(255,102,0,.1);color:var(--utk-orange);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;margin-bottom:16px;}
+.area-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--stone-900);line-height:1.2;}
+.area-desc{font-size:15px;color:var(--smoke);line-height:1.8;margin-bottom:20px;}
+.bullets{display:flex;flex-direction:column;gap:9px;margin-bottom:28px;}
+.bullet{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--stone-700);line-height:1.6;}
+.bullet::before{content:'→';color:var(--utk-orange);font-weight:700;flex-shrink:0;}
+.pubs-mini{border-top:1px solid var(--stone-200);padding-top:20px;}
+.pubs-mini-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--stone-500);margin-bottom:12px;}
+.pubs-mini-item{font-size:13px;color:var(--smoke);padding:7px 0;border-bottom:1px solid var(--stone-100);font-style:italic;line-height:1.5;}
+.pubs-mini-item:last-child{border-bottom:none;}
+.pubs-mini-item strong{color:var(--stone-700);font-style:normal;}
+.methods-section{background:var(--stone-900);padding:80px;}
+.section-title{font-family:'Playfair Display',serif;font-size:40px;font-weight:700;color:white;margin-bottom:12px;}
+.section-lead{font-size:17px;color:rgba(255,255,255,.92);max-width:600px;line-height:1.75;margin-bottom:56px;}
+.methods-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(255,255,255,.05);}
+.method-card{background:var(--stone-900);padding:40px 32px;border:1px solid rgba(255,255,255,.06);}
+.method-icon{font-size:28px;margin-bottom:16px;}
+.method-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:white;margin-bottom:12px;}
+.method-desc{font-size:14px;color:rgba(255,255,255,.90);line-height:1.7;}
+.apps-section{padding:80px;background:var(--stone-100);}
+.apps-section .section-title{color:var(--stone-900);}
+.apps-section .section-lead{color:var(--smoke);}
+.apps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.app-card{background:white;padding:32px 28px;position:relative;overflow:hidden;border-bottom:3px solid transparent;transition:border-color .25s,transform .2s;}
+.app-card:hover{border-color:var(--utk-orange);transform:translateY(-3px);}
+.app-icon{font-size:30px;margin-bottom:14px;}
+.app-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--stone-900);margin-bottom:8px;}
+.app-desc{font-size:13px;color:var(--smoke);line-height:1.65;}
+footer{background:#58595B;border-top:1px solid rgba(255,255,255,.06);padding:32px 80px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+footer p{font-size:14px;color:rgba(255,255,255,.88);}
+.footer-links{display:flex;gap:24px;}
+.footer-links a{font-size:14px;color:rgba(255,255,255,.88);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--utk-orange);}
+@media(max-width:900px){.area-block{grid-template-columns:1fr;}
+.methods-grid,.apps-grid{grid-template-columns:1fr 1fr;}
+.areas,.methods-section,.apps-section{padding:48px 28px;}
+nav{padding:0 24px;}.nav-links{display:none;}
+footer{padding:24px 28px;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo"><img src="assets/Frame 3.png" style="height:56px;width:auto;display:block;"><div class="nav-logo-text">ARCS Lab<span class="nav-logo-sub">University of Tennessee, Knoxville</span></div></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a><a href="research.html" class="active">Research</a><a href="publications.html">Publications</a><a href="team.html">Team</a><a href="pi.html">PI</a><a href="funding.html">Funding</a><a href="talks.html">Talks</a><a href="contact.html" class="nav-cta">Contact</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="eyebrow">ARCS Lab · UTK ISE</div>
+  <h1>Our Research</h1>
+  <p>We use rigorous mixed-methods inquiry to understand and improve how humans and AI systems collaborate — building the scientific foundation for trustworthy, high-performing human-AI teams across mission-critical domains.</p>
+</div>
+
+<div class="areas">
+
+  <div class="area-block">
+    <div>
+      <div class="area-num">01</div>
+      <div class="area-icon">🤝</div>
+      <div class="area-tag">Core Focus</div>
+      <div class="area-title">Human-AI Teaming</div>
+    </div>
+    <div>
+      <p class="area-desc">Human-AI teaming sits at the intersection of human factors, cognitive systems engineering, and AI. We study how humans and AI agents develop shared understanding, coordinate actions, and sustain effective collaboration — particularly in dynamic, high-stakes environments where mistakes are costly.</p>
+      <p class="area-desc">We examine team cognition constructs including shared mental models, transactive memory systems, and situational awareness within mixed human-AI teams, using both controlled laboratory experiments and real-world applied contexts.</p>
+      <div class="bullets">
+        <div class="bullet">Modeling information-sharing behaviors and perceived information needs in human-AI teams</div>
+        <div class="bullet">Examining team composition effects: how the presence of AI teammates changes team dynamics</div>
+        <div class="bullet">Designing AI teammates that adapt to human cognition and workload in real time</div>
+        <div class="bullet">Investigating transition phases and role shifts when AI autonomy levels change</div>
+        <div class="bullet">Studying ad hoc team formation and performance in collaborative technology environments</div>
+      </div>
+      <div class="pubs-mini">
+        <div class="pubs-mini-label">Representative Publications</div>
+        <div class="pubs-mini-item"><strong>Schelble et al. (2025).</strong> Should AI Teammates Give All the Answers? Examining Different AI Information-Sharing Techniques on Team Cognition. <em>IJHCI</em></div>
+        <div class="pubs-mini-item"><strong>Schelble et al. (2025).</strong> A Mixed Methods Approach to Analyzing the Role of AI Teammates in Transition Phases. <em>PACM HCI (GROUP)</em></div>
+        <div class="pubs-mini-item"><strong>Schelble et al. (2024).</strong> Modeling Perceived Information Needs in Human-AI Teams. <em>Behaviour &amp; Information Technology</em></div>
+        <div class="pubs-mini-item"><strong>Schelble et al. (2022).</strong> Let's Think Together! Assessing Shared Mental Models, Performance, and Trust. <em>PACM HCI (GROUP)</em> ★ Best Paper HM</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="area-block">
+    <div>
+      <div class="area-num">02</div>
+      <div class="area-icon">🔒</div>
+      <div class="area-tag">Core Focus</div>
+      <div class="area-title">Trustworthy AI</div>
+    </div>
+    <div>
+      <p class="area-desc">Trust is the linchpin of effective human-AI collaboration. Poorly calibrated trust — both overtrust and undertrust — undermines safety and performance. Our research investigates the multidimensional nature of trust: how it forms, breaks, spreads across team networks, and can be repaired.</p>
+      <p class="area-desc">We also study the ethical dimensions of AI behavior: how AI decision-making is perceived through a moral lens, how ethical violations affect team trust, and what design principles promote responsible AI that humans can rely on appropriately.</p>
+      <div class="bullets">
+        <div class="bullet">Empirically investigating the relationship between AI ethics and trust in human-AI teaming</div>
+        <div class="bullet">Studying how trust spreads — and distrust propagates — across human-AI team networks</div>
+        <div class="bullet">Examining how team role and violation type shape trust after AI ethical failures</div>
+        <div class="bullet">Designing explainable AI behaviors that support accurate trust calibration</div>
+        <div class="bullet">Developing frameworks for trust repair following AI performance or ethical violations</div>
+      </div>
+      <div class="pubs-mini">
+        <div class="pubs-mini-label">Representative Publications</div>
+        <div class="pubs-mini-item"><strong>Schelble et al. (2025).</strong> Addressing the Role of Context on Trust in Human-AI Teams. <em>Ergonomics</em></div>
+        <div class="pubs-mini-item"><strong>Zhou, …, Schelble et al. (2025).</strong> The Spread of Trust and Distrust in Human-AI Teams. <em>Applied Ergonomics</em></div>
+        <div class="pubs-mini-item"><strong>Textor, …, Schelble et al. (2022).</strong> Exploring the Relationship Between Ethics and Trust. <em>JCEDM</em> ★ Best Article of 2022</div>
+        <div class="pubs-mini-item"><strong>Schelble et al. (2022).</strong> Towards Ethical AI: Empirically Investigating Dimensions of AI Ethics, Trust, and Performance. <em>Human Factors</em></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="area-block">
+    <div>
+      <div class="area-num">03</div>
+      <div class="area-icon">📚</div>
+      <div class="area-tag">Applied Focus</div>
+      <div class="area-title">Training</div>
+    </div>
+    <div>
+      <p class="area-desc">Effective training is essential for humans operating alongside AI in complex environments. Our research explores how to design experiences that maximize skill transference, build appropriate mental models of AI capabilities, and prepare human operators for the realities of joint human-AI work.</p>
+      <div class="bullets">
+        <div class="bullet">Comparing independent vs. collaborative training approaches and their effects on human-AI team performance</div>
+        <div class="bullet">Developing intelligent training interventions that adapt to individual and team performance states</div>
+        <div class="bullet">Enhancing psychological fidelity in simulation-based training environments</div>
+        <div class="bullet">Using generative AI to create lightweight, scalable simulations for training future autonomous teammates</div>
+      </div>
+      <div class="pubs-mini">
+        <div class="pubs-mini-label">Representative Publications</div>
+        <div class="pubs-mini-item"><strong>Flathmann, Schelble &amp; Galeano (2024).</strong> Empirical Impacts of Independent and Collaborative Training on Task Performance. <em>HFES Annual Meeting</em></div>
+        <div class="pubs-mini-item"><strong>Flathmann, Ihekweazu &amp; Schelble (2025).</strong> Leveraging Generative AI for Lightweight Simulations. <em>HFES Annual Meeting</em></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="area-block">
+    <div>
+      <div class="area-num">04</div>
+      <div class="area-icon">🎯</div>
+      <div class="area-tag">Core Focus</div>
+      <div class="area-title">Situational Awareness</div>
+    </div>
+    <div>
+      <p class="area-desc">Situational awareness (SA) — the perception, comprehension, and projection of relevant environmental elements — is critical for effective decision-making in complex human-AI teams. Our work investigates how AI teammates can enhance or degrade SA, and how interface design shapes collective understanding in contested environments.</p>
+      <div class="bullets">
+        <div class="bullet">Examining the role of spatial information and AI-shared cues in human-agent team situational awareness</div>
+        <div class="bullet">Developing adaptive interfaces that surface mission-critical information for human operators</div>
+        <div class="bullet">Studying shared SA in electronically contested / EW environments (current ARL project)</div>
+        <div class="bullet">Modeling how shared mental model accuracy relates to team SA and performance outcomes</div>
+      </div>
+      <div class="pubs-mini">
+        <div class="pubs-mini-label">Representative Publications</div>
+        <div class="pubs-mini-item"><strong>Schelble et al. (2022).</strong> I See You: Examining the Role of Spatial Information in Human-Agent Teams. <em>PACM HCI (CSCW)</em></div>
+        <div class="pubs-mini-item"><strong>McNeese, Schelble et al. (2021).</strong> Who/What is My Teammate? Team Composition in Human-AI Teaming. <em>IEEE Trans. Human-Machine Systems</em></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="area-block">
+    <div>
+      <div class="area-num">05</div>
+      <div class="area-icon">🤖</div>
+      <div class="area-tag">Applied Focus</div>
+      <div class="area-title">Applied Robotics</div>
+    </div>
+    <div>
+      <p class="area-desc">Autonomous and semi-autonomous robotic systems are increasingly integrated into manufacturing, logistics, and emergency response. Our lab examines how to design and deploy collaborative robots and UGVs so they function as true teammates — safe, predictable, and effective partners for human operators.</p>
+      <div class="bullets">
+        <div class="bullet">Human-robot teaming in advanced manufacturing: ergonomics, workload, and trust</div>
+        <div class="bullet">Designing unmanned ground vehicles (UGVs) for search-and-rescue in dynamic environments</div>
+        <div class="bullet">Adaptive autonomy frameworks for robotic systems operating in high-risk contexts</div>
+        <div class="bullet">Evaluating robot transparency and human acceptance of robotic AI teammates</div>
+      </div>
+      <div class="pubs-mini">
+        <div class="pubs-mini-label">Representative Publications</div>
+        <div class="pubs-mini-item"><strong>Hauptman, Schelble et al. (2024).</strong> The Role of Autonomy Levels and Contextual Risk in Designing Safer AI Teammates. <em>IEEE ICHMS</em></div>
+        <div class="pubs-mini-item"><strong>Hauptman, Schelble et al. (2022).</strong> Adapt and Overcome: Perceptions of Adaptive Autonomous Agents. <em>Computers in Human Behavior</em></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="area-block">
+    <div>
+      <div class="area-num">06</div>
+      <div class="area-icon">🔬</div>
+      <div class="area-tag">Methodological</div>
+      <div class="area-title">Evaluation &amp; Validation</div>
+    </div>
+    <div>
+      <p class="area-desc">Rigorous evaluation is foundational to ARCS Lab work. We develop and apply experimental frameworks — drawing on quantitative, qualitative, and computational methods — to robustly test AI teammate effectiveness, safety, and resilience before deployment in real-world settings.</p>
+      <div class="bullets">
+        <div class="bullet">Designing and validating game-theoretic and reinforcement learning models of human-AI cooperation</div>
+        <div class="bullet">Mixed-methods approaches combining surveys, behavioral measures, and verbal protocols</div>
+        <div class="bullet">Developing testbeds for evaluating AI teammate behavior under varied autonomy and risk conditions</div>
+        <div class="bullet">Addressing vulnerability identification and mitigation for compromised AI teammates (ARL project)</div>
+      </div>
+      <div class="pubs-mini">
+        <div class="pubs-mini-label">Representative Publications</div>
+        <div class="pubs-mini-item"><strong>Schelble et al. (2021).</strong> Understanding Human-AI Cooperation Through Game Theory and Reinforcement Learning. <em>HICSS-54</em> ★ Best Paper Nominee</div>
+        <div class="pubs-mini-item"><strong>Gonzalez, …, Schelble et al. (2026).</strong> Toward a Science of Human-AI Teaming for Decision-Making: A Complementarity Framework. <em>PNAS Nexus</em></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="methods-section">
+  <div class="eyebrow">Methodology</div>
+  <h2 class="section-title">How We Work</h2>
+  <p class="section-lead">ARCS Lab research is fundamentally interdisciplinary and mixed-methods, combining the rigor of experimental science with the depth of qualitative inquiry.</p>
+  <div class="methods-grid">
+    <div class="method-card"><div class="method-icon">📊</div><div class="method-title">Quantitative</div><p class="method-desc">Controlled experiments, surveys, behavioral measurement, structural equation modeling, network analysis, and statistical inference to test causal hypotheses about human-AI interaction.</p></div>
+    <div class="method-card"><div class="method-icon">💬</div><div class="method-title">Qualitative</div><p class="method-desc">Thematic analysis, think-aloud protocols, semi-structured interviews, and expert elicitation to contextualize findings and surface constructs that resist quantification.</p></div>
+    <div class="method-card"><div class="method-icon">⚙️</div><div class="method-title">Computational</div><p class="method-desc">Reinforcement learning models, game-theoretic frameworks, agent-based simulation, and generative AI tools to build and test formal models of human-AI collaborative behavior.</p></div>
+  </div>
+</div>
+
+<div class="apps-section">
+  <div class="eyebrow">Applied Domains</div>
+  <h2 class="section-title" style="color:var(--stone-900);">Where We Work</h2>
+  <p class="section-lead" style="color:var(--smoke);">Our research addresses real-world challenges across high-stakes domains where human-AI teaming has the greatest potential impact.</p>
+  <div class="apps-grid">
+    <div class="app-card"><div class="app-icon">⚔️</div><div class="app-title">Defense &amp; Command</div><p class="app-desc">Shared situational awareness in electronically contested environments, AI on the battlefield, and compromised AI mitigation for warfighters.</p></div>
+    <div class="app-card"><div class="app-icon">🏭</div><div class="app-title">Advanced Manufacturing</div><p class="app-desc">Collaborative robotics integration, human-cobot workload distribution, and trust in automated manufacturing workflows.</p></div>
+    <div class="app-card"><div class="app-icon">🏥</div><div class="app-title">Healthcare</div><p class="app-desc">Ethical AI decision support in clinical settings, adaptive autonomy for healthcare AI teammates, and human factors in medical AI deployment.</p></div>
+    <div class="app-card"><div class="app-icon">🆘</div><div class="app-title">Emergency Response</div><p class="app-desc">Human-robot teaming in search-and-rescue, AI decision support for first responders, and team cognition under high-stress conditions.</p></div>
+    <div class="app-card"><div class="app-icon">🔐</div><div class="app-title">Cybersecurity</div><p class="app-desc">Human behavior modeling in cybersecurity contexts, cognitive biases in security decision-making, and AI-assisted defense strategies.</p></div>
+    <div class="app-card"><div class="app-icon">💼</div><div class="app-title">Future of Work</div><p class="app-desc">AI teammate integration in organizational contexts, workforce augmentation, and the human dimensions of AI-enabled productivity.</p></div>
+    <div class="app-card"><div class="app-icon">⚖️</div><div class="app-title">Responsible AI</div><p class="app-desc">AI ethics in practice, responsible deployment frameworks, and the societal implications of human-AI teaming at scale.</p></div>
+    <div class="app-card"><div class="app-icon">🧠</div><div class="app-title">Decision-Making</div><p class="app-desc">Human-AI complementarity in complex decisions, cognitive bias mitigation, and advice-taking from AI systems under uncertainty.</p></div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 ARCS Lab · University of Tennessee, Knoxville</p>
+  <div class="footer-links"><a href="index.html">Home</a><a href="publications.html">Publications</a><a href="team.html">Team</a><a href="contact.html">Contact</a></div>
+</footer>
+</body>
+</html>

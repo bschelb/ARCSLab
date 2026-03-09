@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Funding | ARCS Lab | UTK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --s50: #faf8f5;
+        --s100: #f2ede6;
+        --s200: #e4d9cc;
+        --s300: #c9b99e;
+        --s500: #6b5040;
+        --s700: #4a3728;
+        --s900: #1e150d;
+        --or: #ff6600;
+        --sm: #3d3330;
+        --nh: 88px;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        overflow-x: hidden;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--s50);
+        color: var(--s900);
+      }
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        height: var(--nh);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 48px;
+        background: rgba(250, 248, 245, 0.93);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--s200);
+      }
+      .nl {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+      }
+      .nm {
+        width: 36px;
+        height: 36px;
+        background: var(--or);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Playfair Display", serif;
+        font-size: 16px;
+        font-weight: 900;
+        color: white;
+      }
+      .nt {
+        font-weight: 600;
+        font-size: 18px;
+        color: var(--s900);
+      }
+      .ns {
+        font-weight: 300;
+        font-size: 13px;
+        color: var(--sm);
+        display: block;
+      }
+      .nav-links {
+        display: flex;
+        gap: 32px;
+        align-items: center;
+      }
+      .nav-links a {
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--s700);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: var(--or);
+      }
+      .nc {
+        background: var(--or);
+        color: white !important;
+        padding: 10px 24px;
+        font-size: 13px !important;
+      }
+      .ey {
+        font-family: "DM Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--or);
+        margin-bottom: 16px;
+      }
+
+      .ph {
+        padding: calc(var(--nh) + 80px) 80px 64px;
+        background: var(--s900);
+        position: relative;
+        overflow: hidden;
+      }
+      .ph::before {
+        content: "FUNDING";
+        position: absolute;
+        right: 40px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-family: "Playfair Display", serif;
+        font-size: 130px;
+        font-weight: 900;
+        color: rgba(255, 255, 255, 0.025);
+        white-space: nowrap;
+      }
+      .ph h1 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(36px, 5vw, 60px);
+        font-weight: 900;
+        color: white;
+        line-height: 1.1;
+        margin-bottom: 20px;
+      }
+      .ph p {
+        font-size: 17px;
+        color: rgba(255, 255, 255, 0.92);
+        max-width: 640px;
+        line-height: 1.75;
+      }
+
+      .totals {
+        display: grid;
+        grid-template-columns: 1fr;
+        background: var(--or);
+      }
+      .tot {
+        padding: 48px 40px;
+        border-right: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      .tot:last-child {
+        border-right: none;
+      }
+      .tot-n {
+        font-family: "Playfair Display", serif;
+        font-size: 48px;
+        font-weight: 900;
+        color: white;
+        line-height: 1;
+      }
+      .tot-l {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.9);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin-top: 6px;
+      }
+
+      .grants {
+        padding: 80px;
+      }
+      .sh {
+        font-family: "Playfair Display", serif;
+        font-size: 36px;
+        font-weight: 700;
+        color: var(--s900);
+        margin-bottom: 48px;
+      }
+      .grant-card {
+        background: white;
+        border: 1px solid var(--s200);
+        padding: 48px;
+        margin-bottom: 24px;
+        position: relative;
+        overflow: hidden;
+      }
+      .grant-card::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 5px;
+        height: 100%;
+        background: var(--or);
+      }
+      .gc-status {
+        font-family: "DM Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+        display: inline-block;
+        padding: 4px 10px;
+      }
+      .gc-active {
+        background: rgba(255, 102, 0, 0.1);
+        color: var(--or);
+      }
+      .gc-pending {
+        background: rgba(74, 55, 40, 0.08);
+        color: var(--s700);
+      }
+      .gc-title {
+        font-family: "Playfair Display", serif;
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--s900);
+        margin-bottom: 12px;
+        line-height: 1.3;
+      }
+      .gc-meta {
+        display: flex;
+        gap: 32px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+      }
+      .gc-meta-item {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+      .gc-meta-label {
+        font-family: "DM Mono", monospace;
+        font-size: 9px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--s500);
+      }
+      .gc-meta-val {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--s900);
+      }
+      .gc-amount {
+        font-family: "Playfair Display", serif;
+        font-size: 36px;
+        font-weight: 900;
+        color: var(--or);
+      }
+      .gc-desc {
+        font-size: 14px;
+        color: var(--s700);
+        line-height: 1.75;
+      }
+
+      .internal {
+        padding: 0 80px 80px;
+      }
+      .int-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+      .int-card {
+        background: var(--s100);
+        padding: 32px;
+        border-left: 4px solid var(--s300);
+      }
+      .int-card.active {
+        border-color: var(--or);
+      }
+      .int-status {
+        font-family: "DM Mono", monospace;
+        font-size: 9px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--or);
+        margin-bottom: 10px;
+      }
+      .int-title {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--s900);
+        margin-bottom: 8px;
+        line-height: 1.4;
+      }
+      .int-meta {
+        font-size: 13px;
+        color: var(--sm);
+      }
+      .int-amount {
+        font-family: "Playfair Display", serif;
+        font-size: 24px;
+        font-weight: 900;
+        color: var(--s900);
+        margin-top: 12px;
+      }
+
+      .prior {
+        padding: 80px;
+        background: var(--s900);
+      }
+      .prior .sh {
+        color: white;
+      }
+      .prior p {
+        font-size: 15px;
+        color: rgba(255, 255, 255, 0.92);
+        line-height: 1.75;
+        max-width: 700px;
+        margin-bottom: 32px;
+      }
+      .prior-agencies {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .agency-pill {
+        padding: 10px 20px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.88);
+        font-weight: 500;
+      }
+
+      footer {
+        background: #58595b;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 32px 80px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+      footer p {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.88);
+      }
+      .fl {
+        display: flex;
+        gap: 24px;
+      }
+      .fl a {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.88);
+        text-decoration: none;
+      }
+      .fl a:hover {
+        color: var(--or);
+      }
+      @media (max-width: 900px) {
+        .totals,
+        .int-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .ph,
+        .grants,
+        .internal,
+        .prior {
+          padding-left: 28px;
+          padding-right: 28px;
+        }
+        nav {
+          padding: 0 24px;
+        }
+        .nav-links {
+          display: none;
+        }
+        footer {
+          padding: 24px 28px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="index.html" class="nl"
+        ><img
+          src="assets/Frame 3.png"
+          style="height: 56px; width: auto; display: block"
+        />
+        <div class="nt">
+          ARCS Lab<span class="ns">University of Tennessee, Knoxville</span>
+        </div></a
+      >
+      <div class="nav-links">
+        <a href="index.html">Home</a><a href="research.html">Research</a
+        ><a href="publications.html">Publications</a><a href="team.html">Team</a
+        ><a href="pi.html">PI</a
+        ><a href="funding.html" class="active">Funding</a
+        ><a href="talks.html">Talks</a
+        ><a href="contact.html" class="nc">Contact</a>
+      </div>
+    </nav>
+
+    <div class="ph">
+      <div class="ey">Sponsored Research</div>
+      <h1>Funding &amp; Grants</h1>
+      <p>
+        The ARCS Lab is actively funded by the Army Research Laboratory and the
+        University of Tennessee, Knoxville.
+      </p>
+    </div>
+
+    <div class="totals">
+      <div class="tot">
+        <div class="tot-n">$722,190</div>
+        <div class="tot-l">Total Awarded as PI</div>
+      </div>
+    </div>
+
+    <div class="grants">
+      <div class="ey">Current &amp; Awarded Funding</div>
+      <div class="sh">Active Grants</div>
+
+      <div class="grant-card">
+        <span class="gc-status gc-active">● Active</span>
+        <div class="gc-title">
+          Preventing, Identifying, and Mitigating the Impact of Compromised AI
+          Teammates Using Shared Situation Awareness and Mental Model Accuracy
+        </div>
+        <div class="gc-meta">
+          <div class="gc-meta-item">
+            <div class="gc-meta-label">Funder</div>
+            <div class="gc-meta-val">Army Research Laboratory (ARL)</div>
+          </div>
+          <div class="gc-meta-item">
+            <div class="gc-meta-label">Role</div>
+            <div class="gc-meta-val">PI — 100%</div>
+          </div>
+          <div class="gc-meta-item">
+            <div class="gc-meta-label">Award</div>
+            <div class="gc-amount">$718,690</div>
+          </div>
+        </div>
+        <p class="gc-desc">
+          This project investigates how human-AI teams can detect, respond to,
+          and recover from scenarios in which AI teammates are compromised or
+          provide inaccurate information. The research develops frameworks
+          rooted in shared situational awareness and mental model accuracy to
+          maintain team performance and safety in electronically contested and
+          adversarial environments. Work directly supports Army priorities in
+          human-machine teaming for command and control.
+        </p>
+      </div>
+
+      <div class="grant-card">
+        <span class="gc-status gc-active">● Active — Internal</span>
+        <div class="gc-title">
+          Understanding the Acceptance of AI Teammates in High-Risk Contexts
+        </div>
+        <div class="gc-meta">
+          <div class="gc-meta-item">
+            <div class="gc-meta-label">Funder</div>
+            <div class="gc-meta-val">
+              University of Tennessee — Faculty Research Assistants
+            </div>
+          </div>
+          <div class="gc-meta-item">
+            <div class="gc-meta-label">Role</div>
+            <div class="gc-meta-val">PI — 100%</div>
+          </div>
+          <div class="gc-meta-item">
+            <div class="gc-meta-label">Award</div>
+            <div class="gc-amount">$1,750</div>
+          </div>
+        </div>
+        <p class="gc-desc">
+          Internal UTK award supporting student research into the human factors
+          of AI teammate acceptance in high-stakes operational contexts.
+        </p>
+      </div>
+
+      <div class="grant-card">
+        <span class="gc-status gc-active">● Active — Internal</span>
+        <div class="gc-title">
+          Developing Personalized Adaptive AI Teammates
+        </div>
+        <div class="gc-meta">
+          <div class="gc-meta-item">
+            <div class="gc-meta-label">Funder</div>
+            <div class="gc-meta-val">
+              University of Tennessee — Departmental Research Assistantship
+              Program
+            </div>
+          </div>
+          <div class="gc-meta-item">
+            <div class="gc-meta-label">Role</div>
+            <div class="gc-meta-val">PI — 100%</div>
+          </div>
+          <div class="gc-meta-item">
+            <div class="gc-meta-label">Award</div>
+            <div class="gc-amount">$1,750</div>
+          </div>
+        </div>
+        <p class="gc-desc">
+          Internal UTK award supporting student research on the design and
+          evaluation of personalized, adaptive AI teammates.
+        </p>
+      </div>
+    </div>
+
+    <div class="prior">
+      <div class="ey">Prior Contributions</div>
+      <div class="sh">Funded Research as PhD Student</div>
+      <p>
+        As a PhD student and research assistant at Clemson University, Dr.
+        Schelble made significant contributions to over $2.6 million in
+        externally funded research across multiple federal agencies.
+      </p>
+      <div class="prior-agencies">
+        <div class="agency-pill">
+          Air Force Office of Scientific Research (AFOSR)
+        </div>
+        <div class="agency-pill">Office of Naval Research (ONR)</div>
+        <div class="agency-pill">National Science Foundation (NSF)</div>
+        <div class="agency-pill">Army Research Institute (ARI)</div>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2026 ARCS Lab · University of Tennessee, Knoxville</p>
+      <div class="fl">
+        <a href="index.html">Home</a><a href="research.html">Research</a
+        ><a href="team.html">Team</a><a href="contact.html">Contact</a>
+      </div>
+    </footer>
+  </body>
+</html>

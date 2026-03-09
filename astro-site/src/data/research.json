@@ -1,0 +1,197 @@
+[
+  {
+    "num": "01",
+    "icon": "🤝",
+    "tag": "Core Focus",
+    "title": "Human-AI Teaming",
+    "description": "Human-AI teaming sits at the intersection of human factors, cognitive systems engineering, and AI. We study how humans and AI agents develop shared understanding, coordinate actions, and sustain effective collaboration — particularly in dynamic, high-stakes environments where mistakes are costly.",
+    "description2": "We examine team cognition constructs including shared mental models, transactive memory systems, and situational awareness within mixed human-AI teams, using both controlled laboratory experiments and real-world applied contexts.",
+    "bullets": [
+      "Shared mental model development and accuracy in human-AI teams",
+      "Transactive memory systems and information distribution across mixed teams",
+      "Team cognition under degraded communication and adversarial conditions",
+      "Workload balancing and adaptive task allocation",
+      "Situation awareness in electronically contested environments"
+    ],
+    "pubs": [
+      {
+        "authors": "Schelble, Mallick, & McNeese",
+        "title": "A Mixed Methods Approach to Analyzing the Role of AI Teammates in Transition Phases",
+        "venue": "PACM HCI (GROUP), 2025"
+      },
+      {
+        "authors": "Schelble et al.",
+        "title": "Let's Think Together! Assessing Shared Mental Models, Performance, and Trust in Human-Agent Teams",
+        "venue": "PACM HCI (GROUP), 2021",
+        "award": "Best Paper Honorable Mention"
+      },
+      {
+        "authors": "McNeese, Schelble et al.",
+        "title": "Who/What is My Teammate? Team Composition Considerations in Human-AI Teaming",
+        "venue": "IEEE Trans. HMS, 2021"
+      },
+      {
+        "authors": "Gonzalez, ... Schelble ... & Woolley",
+        "title": "Toward a Science of Human–AI Teaming for Decision-Making",
+        "venue": "PNAS Nexus, 2026"
+      }
+    ]
+  },
+  {
+    "num": "02",
+    "icon": "🔒",
+    "tag": "Trust & Ethics",
+    "title": "Trustworthy AI",
+    "description": "Trust is the currency of effective human-AI collaboration. Our lab investigates how trust develops, breaks, and recovers in human-AI teams — with particular attention to the ethical dimensions of AI behavior and their downstream effects on team performance and decision-making.",
+    "description2": null,
+    "bullets": [
+      "Trust calibration, repair, and spread in mixed human-AI teams",
+      "The role of AI ethics and moral personas on trust and performance",
+      "Context-dependent trust: how domain risk and team role shape reliance",
+      "Designing transparent and explainable AI teammate behaviors",
+      "Trust in ethically charged and adversarial decision environments"
+    ],
+    "pubs": [
+      {
+        "authors": "Schelble et al.",
+        "title": "Addressing the Role of Context on Trust in Human-AI Teams",
+        "venue": "Ergonomics, 2025"
+      },
+      {
+        "authors": "Zhang, Flathmann, Musick, Schelble et al.",
+        "title": "I Know This Looks Bad, But I Can Explain",
+        "venue": "ACM TIIS, 2024",
+        "award": "Featured Article"
+      },
+      {
+        "authors": "Textor, Zhang, Lopez, Schelble et al.",
+        "title": "Exploring the Relationship Between Ethics and Trust in Human-AI Teaming",
+        "venue": "JCEDM, 2022",
+        "award": "Best JCEDM Article"
+      },
+      {
+        "authors": "Schelble et al.",
+        "title": "Towards Ethical AI: Empirically Investigating Dimensions of AI Ethics, Trust, and Performance",
+        "venue": "Human Factors, 2022"
+      }
+    ]
+  },
+  {
+    "num": "03",
+    "icon": "📚",
+    "tag": "Learning",
+    "title": "Training",
+    "description": "Effective human-AI teaming begins before deployment. We study how training environments, instructional design, and skill-transfer strategies prepare both humans and AI agents for collaborative performance in operational settings.",
+    "description2": null,
+    "bullets": [
+      "Collaborative vs. independent training paradigms for human-AI teams",
+      "Psychological fidelity in simulation-based training",
+      "Skill transfer from training to operational settings",
+      "Intelligent tutoring and adaptive training interventions",
+      "Generative AI-powered simulation environments for future teaming"
+    ],
+    "pubs": [
+      {
+        "authors": "Flathmann, Schelble, & Galeano",
+        "title": "Empirical Impacts of Independent and Collaborative Training on Task Performance",
+        "venue": "HFES, 2024"
+      },
+      {
+        "authors": "Flathmann, Ihekweazu, & Schelble",
+        "title": "Leveraging Generative AI to Create Lightweight Simulations for Far-Future Autonomous Teammates",
+        "venue": "HFES, 2025"
+      }
+    ]
+  },
+  {
+    "num": "04",
+    "icon": "🎯",
+    "tag": "Awareness",
+    "title": "Situational Awareness",
+    "description": "Maintaining shared situational awareness (SA) is critical when humans and AI operate together in dynamic, time-pressured environments. Our research examines how AI teammates can enhance — or undermine — the team's collective understanding of ongoing situations.",
+    "description2": null,
+    "bullets": [
+      "Shared situation awareness frameworks for human-AI teams",
+      "AI information-sharing strategies that improve collective SA",
+      "Compromised AI detection through SA and mental-model accuracy",
+      "Real-time adaptive interfaces for mission-critical environments",
+      "Spatial information presentation in distributed multi-agent teams"
+    ],
+    "pubs": [
+      {
+        "authors": "Schelble, Mallick, Hauptman, & McNeese",
+        "title": "Should AI Teammates Give All the Answers?",
+        "venue": "IJHCI, 2025"
+      },
+      {
+        "authors": "Schelble et al.",
+        "title": "I See You: Examining the Role of Spatial Information in Human-Agent Teams",
+        "venue": "PACM HCI (CSCW), 2022"
+      },
+      {
+        "authors": "Schelble et al.",
+        "title": "Modeling Perceived Information Needs in Human-AI Teams",
+        "venue": "Behaviour & Information Technology, 2024"
+      }
+    ]
+  },
+  {
+    "num": "05",
+    "icon": "🤖",
+    "tag": "Robotics",
+    "title": "Applied Robotics",
+    "description": "We extend human-AI teaming research into physical collaborative systems — studying how humans interact with autonomous robots in manufacturing, logistics, and emergency-response environments.",
+    "description2": null,
+    "bullets": [
+      "Human-robot teaming in advanced and flexible manufacturing",
+      "Autonomous ground vehicles in logistics and contested environments",
+      "Physical and cognitive trust calibration in embodied AI teammates",
+      "Risk-based autonomy policies for collaborative robots",
+      "Safety-critical handoffs between human and robotic teammates"
+    ],
+    "pubs": [
+      {
+        "authors": "O'Neill, Flathmann, McNeese, Jones, & Schelble",
+        "title": "A Comment on 'Can You Outsmart the Robot?'",
+        "venue": "Academy of Management Discoveries, 2024"
+      },
+      {
+        "authors": "Hauptman, Schelble, Flathmann, & McNeese",
+        "title": "The Role of Autonomy Levels and Contextual Risk in Designing Safer AI Teammates",
+        "venue": "IEEE ICHMS, 2024"
+      }
+    ]
+  },
+  {
+    "num": "06",
+    "icon": "🔬",
+    "tag": "Methods",
+    "title": "Evaluation & Validation",
+    "description": "Rigorous science requires rigorous methods. We develop and apply novel experimental frameworks to test the effectiveness, safety, and reliability of AI teammates in both controlled and naturalistic settings.",
+    "description2": null,
+    "bullets": [
+      "Mixed-methods experimental designs for human-AI team research",
+      "Behavioral and physiological measures of team performance",
+      "Validated survey instruments for trust, SA, and team cognition",
+      "Wizard-of-Oz and simulation platforms for AI teammate evaluation",
+      "Longitudinal and within-subjects team dynamics studies"
+    ],
+    "pubs": [
+      {
+        "authors": "Schelble, Lancaster, Mallick et al.",
+        "title": "A Comparative Evaluation of Ad Hoc Team Performance in Modern Collaborative Technology",
+        "venue": "HFES, 2024"
+      },
+      {
+        "authors": "Schelble et al.",
+        "title": "Investigating the Effects of Perceived Teammate Artificiality",
+        "venue": "IJHCI, 2022"
+      },
+      {
+        "authors": "Musick, O'Neill, Schelble et al.",
+        "title": "What Happens When Humans Believe Their Teammate is an AI?",
+        "venue": "Computers in Human Behavior, 2021"
+      }
+    ]
+  }
+]

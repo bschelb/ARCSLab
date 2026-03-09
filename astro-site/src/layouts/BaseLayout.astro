@@ -1,0 +1,65 @@
+---
+interface Props {
+  title: string;
+  activePage?: string;
+}
+const { title, activePage = '' } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style is:global>
+    @import '../styles/global.css';
+  </style>
+  <slot name="head" />
+</head>
+<body>
+  <nav>
+    <a href={`${base}/`} class="nav-logo">
+      <img src={`${base}/assets/Frame 3.png`} style="height:56px;width:auto;display:block;" alt="ARCS Lab logo">
+      <div class="nav-logo-text">
+        ARCS Lab
+        <span class="nav-logo-sub">University of Tennessee, Knoxville</span>
+      </div>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links">
+      <a href={`${base}/`} class={activePage === 'home' ? 'active' : ''}>Home</a>
+      <a href={`${base}/research`} class={activePage === 'research' ? 'active' : ''}>Research</a>
+      <a href={`${base}/publications`} class={activePage === 'publications' ? 'active' : ''}>Publications</a>
+      <a href={`${base}/team`} class={activePage === 'team' ? 'active' : ''}>Team</a>
+      <a href={`${base}/pi`} class={activePage === 'pi' ? 'active' : ''}>PI</a>
+      <a href={`${base}/funding`} class={activePage === 'funding' ? 'active' : ''}>Funding</a>
+      <a href={`${base}/talks`} class={activePage === 'talks' ? 'active' : ''}>Talks</a>
+      <a href={`${base}/contact`} class="nav-cta">Contact</a>
+    </div>
+  </nav>
+
+  <slot />
+
+  <footer>
+    <p>&copy; 2026 ARCS Lab &middot; University of Tennessee, Knoxville &middot; Department of Industrial &amp; Systems Engineering</p>
+    <div class="footer-links">
+      <a href={`${base}/`}>Home</a>
+      <a href={`${base}/research`}>Research</a>
+      <a href={`${base}/publications`}>Publications</a>
+      <a href={`${base}/team`}>Team</a>
+      <a href={`${base}/contact`}>Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelector('.nav-toggle')?.addEventListener('click', () => {
+      document.querySelector('.nav-links')?.classList.toggle('open');
+    });
+  </script>
+</body>
+</html>

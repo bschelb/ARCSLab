@@ -1,0 +1,138 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+<BaseLayout title="Contact | ARCS Lab | UTK" activePage="contact">
+<style>
+  .page-header::before { content: 'CONTACT'; }
+  .contact-body { display: grid; grid-template-columns: 1fr 1fr; min-height: 60vh; }
+  .contact-left { padding: 80px; background: var(--stone-100); }
+  .contact-right { padding: 80px; background: white; }
+  .sh { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--stone-900); margin-bottom: 32px; }
+
+  .info-items { display: flex; flex-direction: column; gap: 28px; margin-bottom: 48px; }
+  .info-item { display: flex; gap: 16px; align-items: flex-start; }
+  .info-icon { width: 44px; height: 44px; background: white; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; border: 1px solid var(--stone-200); }
+  .info-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--stone-500); margin-bottom: 4px; }
+  .info-val { font-size: 14px; color: var(--stone-900); line-height: 1.6; }
+  .info-val a { color: var(--utk-orange); text-decoration: none; }
+  .info-val a:hover { text-decoration: underline; }
+
+  .map-embed { width: 100%; height: 220px; background: var(--stone-200); position: relative; overflow: hidden; margin-top: 32px; }
+  .map-embed iframe { width: 100%; height: 100%; border: none; }
+
+  .form-group { margin-bottom: 20px; }
+  .form-label { display: block; font-size: 12px; font-weight: 600; color: var(--stone-700); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 8px; }
+  .form-input, .form-select, .form-textarea { width: 100%; padding: 12px 16px; border: 1.5px solid var(--stone-200); background: var(--stone-50); font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--stone-900); outline: none; transition: border-color 0.2s; resize: vertical; }
+  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--utk-orange); }
+  .form-textarea { height: 120px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .btn-submit { background: var(--utk-orange); color: white; border: none; padding: 14px 40px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; cursor: pointer; width: 100%; transition: background 0.2s; }
+  .btn-submit:hover { background: var(--utk-orange-deep); }
+  .form-note { font-size: 12px; color: var(--smoke); margin-top: 12px; line-height: 1.6; }
+
+  .join-sec { padding: 80px; background: var(--stone-900); }
+  .join-sec .sh { color: white; font-size: 32px; margin-bottom: 16px; }
+  .join-lead { font-size: 16px; color: rgba(255,255,255,0.92); max-width: 700px; line-height: 1.75; margin-bottom: 48px; }
+  .join-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .join-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 32px; }
+  .join-icon { font-size: 28px; margin-bottom: 12px; }
+  .join-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: white; margin-bottom: 10px; }
+  .join-desc { font-size: 13px; color: rgba(255,255,255,0.90); line-height: 1.65; margin-bottom: 16px; }
+  .join-req { font-size: 12px; color: rgba(255,255,255,0.88); font-style: italic; }
+
+  @media (max-width: 900px) {
+    .contact-body, .form-row, .join-grid { grid-template-columns: 1fr; }
+    .contact-left, .contact-right, .join-sec { padding: 48px 28px; }
+  }
+</style>
+
+<PageHeader eyebrow="ARCS Lab · UTK ISE" title="Get in Touch" description="We welcome inquiries from prospective graduate students, research collaborators, industry partners, and members of the press. Don't hesitate to reach out." />
+
+<div class="contact-body">
+  <div class="contact-left">
+    <div class="section-eyebrow">Lab Information</div>
+    <div class="sh">Contact &amp; Location</div>
+    <div class="info-items">
+      <div class="info-item">
+        <div class="info-icon">📍</div>
+        <div><div class="info-label">Location</div><div class="info-val">851 Neyland Drive<br>Knoxville, TN 37996</div></div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">✉️</div>
+        <div><div class="info-label">Email</div><div class="info-val"><a href="mailto:bschelbl@utk.edu">bschelbl@utk.edu</a></div></div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🌐</div>
+        <div><div class="info-label">Lab Website</div><div class="info-val"><a href="https://bschelb.github.io/ARCSLab" target="_blank">bschelb.github.io/ARCSLab</a></div></div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">👤</div>
+        <div><div class="info-label">PI Personal Site</div><div class="info-val"><a href="https://beauschelble.com" target="_blank">beauschelble.com</a></div></div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🏛️</div>
+        <div><div class="info-label">Department</div><div class="info-val"><a href="https://tickle.utk.edu/ise/" target="_blank">Industrial &amp; Systems Engineering<br>Tickle College of Engineering, UTK</a></div></div>
+      </div>
+    </div>
+    <div class="map-embed">
+      <iframe src="https://maps.google.com/maps?q=851+Neyland+Drive,+Knoxville,+TN+37996&output=embed" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="contact-right">
+    <div class="section-eyebrow">Send a Message</div>
+    <div class="sh">Contact Form</div>
+    <form action="https://formspree.io/f/xvzwzoal" method="POST">
+      <input type="hidden" name="_subject" value="ARCS Lab Website Inquiry">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">First Name</label><input type="text" name="first_name" class="form-input" placeholder="Jane" required></div>
+        <div class="form-group"><label class="form-label">Last Name</label><input type="text" name="last_name" class="form-input" placeholder="Smith" required></div>
+      </div>
+      <div class="form-group"><label class="form-label">Email</label><input type="email" name="email" class="form-input" placeholder="jane@university.edu" required></div>
+      <div class="form-group"><label class="form-label">Affiliation</label><input type="text" name="affiliation" class="form-input" placeholder="University / Organization"></div>
+      <div class="form-group">
+        <label class="form-label">Inquiry Type</label>
+        <select name="inquiry_type" class="form-select form-input">
+          <option>Prospective Graduate Student</option>
+          <option>Research Collaboration</option>
+          <option>Industry Partnership</option>
+          <option>Media / Press</option>
+          <option>Speaking Invitation</option>
+          <option>General Inquiry</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Message</label><textarea name="message" class="form-textarea" placeholder="Tell us about your interest or inquiry..." required></textarea></div>
+      <button type="submit" class="btn-submit">Send Message</button>
+      <p class="form-note">We typically respond within 2–3 business days. For urgent inquiries, email Dr. Schelble directly at <a href="mailto:bschelbl@utk.edu" style="color:var(--utk-orange);">bschelbl@utk.edu</a>.</p>
+    </form>
+  </div>
+</div>
+
+<div class="join-sec" id="join">
+  <div class="section-eyebrow">Prospective Members</div>
+  <div class="sh">Join the ARCS Lab</div>
+  <p class="join-lead">The ARCS Lab recruits motivated students and researchers interested in human-AI teaming, human factors, HCI, and collaborative systems. We offer a rigorous, supportive, and interdisciplinary research environment at a leading research university.</p>
+  <div class="join-grid">
+    <div class="join-card">
+      <div class="join-icon">🎓</div>
+      <div class="join-title">PhD Students</div>
+      <div class="join-desc">We admit PhD students through the UTK ISE department. We are actively recruiting for positions starting Fall 2025 and beyond. Research assistantships available for qualified candidates.</div>
+      <div class="join-req">Preferred background: Human Factors, HCI, CS, Cognitive Science, Psychology, or Systems Engineering.</div>
+    </div>
+    <div class="join-card">
+      <div class="join-icon">🔧</div>
+      <div class="join-title">DEng Students</div>
+      <div class="join-desc">The Doctor of Engineering (DEng) program at UTK allows working professionals to pursue applied doctoral research. ARCS Lab welcomes DEng students with strong applied research interests.</div>
+      <div class="join-req">Professional experience in engineering, defense, manufacturing, or technology preferred.</div>
+    </div>
+    <div class="join-card">
+      <div class="join-icon">🏫</div>
+      <div class="join-title">Undergraduate Researchers</div>
+      <div class="join-desc">UTK undergraduates in ISE, CS, or related fields are welcome to apply for part-time research positions (typically 4 hours/week) in the ARCS Lab.</div>
+      <div class="join-req">Open to motivated undergraduates with strong academic records and genuine interest in research.</div>
+    </div>
+  </div>
+</div>
+</BaseLayout>

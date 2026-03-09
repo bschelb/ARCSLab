@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Publications | ARCS Lab | UTK</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --stone-50: #faf8f5; --stone-100: #f2ede6; --stone-200: #e4d9cc;
+    --stone-300: #c9b99e;
+    --stone-500: #6b5040; --stone-500: #8b7355; --stone-700: #4a3728;
+    --stone-900: #1e150d; --utk-orange: #FF6600; --utk-orange-deep: #cc4f00;
+    --smoke: #3d3330; --white: #fff; --nav-h: 88px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { overflow-x: hidden; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--stone-50); color: var(--stone-900); }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: var(--nav-h); display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px; background: rgba(250,248,245,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--stone-200);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo-mark { width: 36px; height: 36px; background: var(--utk-orange); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 900; color: white; }
+  .nav-logo-text { font-weight: 600; font-size: 18px; color: var(--stone-900); }
+  .nav-logo-sub { font-weight: 300; font-size: 13px; color: var(--smoke); display: block; }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links a { text-decoration: none; font-size: 15px; font-weight: 500; color: var(--stone-700); letter-spacing: 0.04em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--utk-orange); }
+  .nav-cta { background: var(--utk-orange); color: white !important; padding: 10px 24px; font-size: 13px !important; }
+  .nav-cta:hover { background: var(--utk-orange-deep) !important; }
+
+  /* PAGE HEADER */
+  .page-header {
+    padding-top: calc(var(--nav-h) + 80px);
+    padding-bottom: 60px;
+    padding-left: 80px; padding-right: 80px;
+    background: var(--stone-900);
+    position: relative; overflow: hidden;
+  }
+  .page-header::before {
+    content: 'PUBLICATIONS';
+    position: absolute; right: 60px; top: 50%; transform: translateY(-50%);
+    font-family: 'Playfair Display', serif; font-size: 120px; font-weight: 900;
+    color: rgba(255,255,255,0.03); letter-spacing: -4px; white-space: nowrap;
+  }
+  .page-header-eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--utk-orange); margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(36px, 5vw, 60px); font-weight: 900; color: white; line-height: 1.1; margin-bottom: 16px; }
+  .page-header-meta { display: flex; gap: 40px; flex-wrap: wrap; margin-top: 32px; }
+  .pmeta-item { text-align: left; }
+  .pmeta-num { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; color: var(--utk-orange); line-height: 1; }
+  .pmeta-label { font-size: 12px; color: rgba(255,255,255,0.92); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px; }
+
+  /* FILTERS */
+  .filter-bar {
+    background: white; border-bottom: 1px solid var(--stone-200);
+    padding: 20px 80px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+    position: sticky; top: var(--nav-h); z-index: 50;
+  }
+  .filter-label { font-size: 12px; color: var(--smoke); font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; margin-right: 8px; }
+  .filter-btn {
+    padding: 6px 16px; border: 1.5px solid var(--stone-200);
+    background: none; font-family: 'DM Sans', sans-serif;
+    font-size: 12px; color: var(--smoke); cursor: pointer;
+    transition: all 0.2s; font-weight: 500;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    border-color: var(--utk-orange); color: var(--utk-orange);
+    background: rgba(255,102,0,0.05);
+  }
+
+  /* CONTENT */
+  .pubs-content { padding: 60px 80px; }
+
+  .year-section { margin-bottom: 60px; }
+  .year-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px; font-weight: 900;
+    color: var(--stone-200);
+    border-bottom: 2px solid var(--stone-200);
+    padding-bottom: 16px; margin-bottom: 32px;
+    position: relative;
+  }
+  .year-label::after {
+    content: '';
+    position: absolute; bottom: -2px; left: 0;
+    width: 60px; height: 2px; background: var(--utk-orange);
+  }
+
+  .pub-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px; align-items: start;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--stone-100);
+    transition: all 0.2s;
+  }
+  .pub-row:hover { background: white; padding-left: 12px; padding-right: 12px; margin: 0 -12px; }
+  .pub-row:last-child { border-bottom: none; }
+
+  .pub-index {
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    color:var(--stone-500); padding-top: 3px; text-align: right;
+  }
+  .pub-body { }
+  .pub-title-main {
+    font-size: 15px; font-weight: 600; color: var(--stone-900);
+    line-height: 1.5; margin-bottom: 6px;
+  }
+  .pub-title-main a { color: inherit; text-decoration: none; }
+  .pub-title-main a:hover { color: var(--utk-orange); }
+  .pub-authors {
+    font-size: 13px; color: var(--smoke); margin-bottom: 4px; line-height: 1.5;
+  }
+  .pub-authors strong { color: var(--stone-700); font-weight: 600; }
+  .pub-venue {
+    font-size: 12px; color:var(--stone-500); font-style: italic;
+  }
+  .pub-venue strong { font-style: normal; color: var(--utk-orange); font-weight: 500; }
+  .pub-badges { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+  .badge {
+    font-family: 'DM Mono', monospace; font-size: 9px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 3px 8px; white-space: nowrap;
+  }
+  .badge-award { background: rgba(255,102,0,0.1); color: var(--utk-orange); border: 1px solid rgba(255,102,0,0.2); }
+  .badge-press { background: rgba(74,55,40,0.08); color: var(--stone-500); border: 1px solid var(--stone-200); }
+  .badge-journal { background: rgba(30,21,13,0.04); color: var(--stone-500); }
+
+  /* FOOTER */
+  footer { background: #58595B; border-top: 1px solid rgba(255,255,255,0.06); padding: 32px 80px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  footer p { font-size: 14px; color: rgba(255,255,255,0.88); }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { font-size: 14px; color: rgba(255,255,255,0.88); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--utk-orange); }
+
+  @media (max-width: 768px) {
+    .page-header, .pubs-content, .filter-bar { padding-left: 24px; padding-right: 24px; }
+    .pub-row { grid-template-columns: 1fr; }
+    .pub-badges { display: none; }
+    nav { padding: 0 24px; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="assets/Frame 3.png" style="height:56px;width:auto;display:block;">
+    <div class="nav-logo-text">ARCS Lab<span class="nav-logo-sub">University of Tennessee, Knoxville</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="research.html">Research</a>
+    <a href="publications.html" class="active">Publications</a>
+    <a href="team.html">Team</a>
+    <a href="pi.html">PI</a>
+    <a href="funding.html">Funding</a>
+    <a href="talks.html">Talks</a>
+    <a href="contact.html" class="nav-cta">Contact</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-eyebrow">Scholarly Output</div>
+  <h1>Publications</h1>
+  <div class="page-header-meta">
+    <div class="pmeta-item"><div class="pmeta-num">46+</div><div class="pmeta-label">Total Publications</div></div>
+    <div class="pmeta-item"><div class="pmeta-num">26</div><div class="pmeta-label">Journal Articles</div></div>
+    <div class="pmeta-item"><div class="pmeta-num">14</div><div class="pmeta-label">Conference Papers</div></div>
+    <div class="pmeta-item"><div class="pmeta-num">5</div><div class="pmeta-label">Best Paper Awards</div></div>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <span class="filter-label">Filter:</span>
+  <button class="filter-btn active" onclick="filterPubs('all',this)">All</button>
+  <button class="filter-btn" onclick="filterPubs('journal',this)">Journal Articles</button>
+  <button class="filter-btn" onclick="filterPubs('conference',this)">Conference Papers</button>
+  <button class="filter-btn" onclick="filterPubs('chapter',this)">Book Chapters</button>
+  <button class="filter-btn" onclick="filterPubs('award',this)">Award-Winning</button>
+</div>
+
+<div class="pubs-content">
+
+  <!-- 2026 -->
+  <div class="year-section">
+    <div class="year-label">2026</div>
+
+    <div class="pub-row" data-type="journal">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Toward a Science of Human–AI Teaming for Decision-Making: A Complementarity Framework</div>
+        <div class="pub-authors">Gonzalez, C., Donahue, K., Goldstein, D., Heidari, H., Jalali, M., <strong>Schelble, B.G.</strong>, Singh, A., &amp; Woolley, A.W.</div>
+        <div class="pub-venue"><strong>PNAS Nexus</strong>, 1–30. <a href="https://doi.org/10.1093/pnasnexus/pgag030" target="_blank" style="color:var(--utk-orange)">doi:10.1093/pnasnexus/pgag030</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Journal</span></div>
+    </div>
+
+    <div class="pub-row" data-type="chapter">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Modeling Human Behavior in Cybersecurity: Leveraging Structural Equation Modeling to Address Cognitive Biases and Enhance Defense Strategies</div>
+        <div class="pub-authors">Gurney, N., Wu, P., Molinaro, K., Jones, F., <strong>Schelble, B.G.</strong>, &amp; Zhu, Q.</div>
+        <div class="pub-venue">In <em>Foundations of Cyber Deception</em> (pp. 155–180). Springer Nature. <a href="https://doi.org/10.1007/978-3-031-93867-2" target="_blank" style="color:var(--utk-orange)">Springer</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Book Chapter</span></div>
+    </div>
+  </div>
+
+  <!-- 2025 -->
+  <div class="year-section">
+    <div class="year-label">2025</div>
+
+    <div class="pub-row" data-type="journal">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Human or AI Advice? Examining Trust, Influence, and Responsibility in Ethically-Charged Human-AI Team Decision-Making <span style="color:var(--stone-500);font-style:italic;font-size:12px;">(in press)</span></div>
+        <div class="pub-authors"><strong>Schelble, B.G.</strong>, Flathmann, C., Aly, H., Lyons, J., &amp; McNeese, N.</div>
+        <div class="pub-venue"><strong>Journal of Cognitive Engineering and Decision Making</strong></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-press">In Press</span></div>
+    </div>
+
+    <div class="pub-row" data-type="journal">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">A Mixed Methods Approach to Analyzing the Role of AI Teammates in Transition Phases <span style="color:var(--stone-500);font-style:italic;font-size:12px;">(in press)</span></div>
+        <div class="pub-authors"><strong>Schelble, B.G.</strong>, Mallick, R., &amp; McNeese, N.</div>
+        <div class="pub-venue"><strong>Proceedings of the ACM on Human-Computer Interaction</strong> (GROUP). <a href="https://doi.org/10.1145/3799438" target="_blank" style="color:var(--utk-orange)">doi:10.1145/3799438</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-press">In Press</span></div>
+    </div>
+
+    <div class="pub-row" data-type="journal">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">The Spread of Trust and Distrust in Human-AI Teams</div>
+        <div class="pub-authors">Zhou, S., Duan, W., Yin, X., Scalia, M., Hao, R., Weng, N., Funke, G., Tolston, M., Freeman, G., <strong>Schelble, B.G.</strong>, Gorman, J., &amp; McNeese, N.J.</div>
+        <div class="pub-venue"><strong>Applied Ergonomics</strong>, 130, Article 104648. <a href="https://doi.org/10.1016/j.apergo.2025.104648" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Journal</span></div>
+    </div>
+
+    <div class="pub-row" data-type="journal">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Addressing the Role of Context on Trust in Human-AI Teams: The Influence of Team Role and Violation Type in High-Risk Tasks</div>
+        <div class="pub-authors"><strong>Schelble, B.G.</strong>, Textor, C., Zhang, R., Lopez, J., Tavarez, N., Ku, C., McNeese, N.J., Pak, R., Freeman, G., Tossell, C., &amp; de Visser, E.</div>
+        <div class="pub-venue"><strong>Ergonomics</strong>, 1–21. <a href="https://doi.org/10.1080/00140139.2025.2570300" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Journal</span></div>
+    </div>
+
+    <div class="pub-row" data-type="journal">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Should AI Teammates Give All the Answers? Examining the Role of Different AI Information-Sharing Techniques on Team Cognition in Human-AI Teams</div>
+        <div class="pub-authors"><strong>Schelble, B.G.</strong>, Mallick, R., Hauptman, A., &amp; McNeese, N.J.</div>
+        <div class="pub-venue"><strong>International Journal of Human-Computer Interaction</strong>, 42(4), 2463–2488. <a href="https://doi.org/10.1080/10447318.2025.2528988" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Journal</span></div>
+    </div>
+
+    <div class="pub-row" data-type="journal">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Ethical Adaptation: Exploring the Use of Adaptive Autonomy in the Design of Ethical AI Teammates in Healthcare</div>
+        <div class="pub-authors">Hauptman, A., <strong>Schelble, B.G.</strong>, Flathmann, C., Mallick, R., Macdonald, J., &amp; McNeese, N.J.</div>
+        <div class="pub-venue"><strong>AI and Ethics</strong>, 5(5), 5397–5414. <a href="https://doi.org/10.1007/s43681-025-00782-w" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Journal</span></div>
+    </div>
+
+    <div class="pub-row" data-type="conference">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Examining the Role of AI Information-Sharing on Trust in Human-AI Teams</div>
+        <div class="pub-authors"><strong>Schelble, B.G.</strong>, Filer, G., Flathmann, C., &amp; Madathil, K.</div>
+        <div class="pub-venue"><strong>Proc. Human Factors &amp; Ergonomics Society Annual Meeting</strong>. <a href="https://doi.org/10.1177/10711813251367726" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Conference</span></div>
+    </div>
+
+    <div class="pub-row" data-type="conference">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Leveraging Generative AI to Create Lightweight Simulations for Far-Future Autonomous Teammates</div>
+        <div class="pub-authors">Flathmann, C., Ihekweazu, C., &amp; <strong>Schelble, B.G.</strong></div>
+        <div class="pub-venue"><strong>Proc. Human Factors &amp; Ergonomics Society Annual Meeting</strong>. <a href="https://doi.org/10.1177/10711813251357885" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Conference</span></div>
+    </div>
+  </div>
+
+  <!-- 2024 -->
+  <div class="year-section">
+    <div class="year-label">2024</div>
+
+    <div class="pub-row" data-type="journal">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">An Analysis of Ethical Rationales and Their Impact on the Perceived Moral Persona of AI Teammates</div>
+        <div class="pub-authors">Sengupta, S., <strong>Schelble, B.G.</strong>, Flathmann, C., McNeese, N.J., &amp; Lyons, J.</div>
+        <div class="pub-venue"><strong>AI and Ethics</strong>, 5, 2667–2679. <a href="https://doi.org/10.1007/s43681-024-00515-5" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Journal</span></div>
+    </div>
+
+    <div class="pub-row" data-type="journal">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Modeling Perceived Information Needs in Human-AI Teams: Improving AI Teammate Utility and Driving Team Cognition</div>
+        <div class="pub-authors"><strong>Schelble, B.G.</strong>, Flathmann, C., Macdonald, J., Knijnenburg, B., Brady, C., &amp; McNeese, N.J.</div>
+        <div class="pub-venue"><strong>Behaviour &amp; Information Technology</strong>, 44(9), 2069–2092. <a href="https://doi.org/10.1080/0144929X.2024.2396476" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Journal</span></div>
+    </div>
+
+    <div class="pub-row" data-type="journal">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">What You Say vs What You Do: Utilizing Positive Emotional Expressions to Relay AI Teammate Intent within Human-AI Teams</div>
+        <div class="pub-authors">Mallick, R., Flathmann, C., Duan, W., <strong>Schelble, B.G.</strong>, &amp; McNeese, N.J.</div>
+        <div class="pub-venue"><strong>International Journal of Human-Computer Studies</strong>, 192, 103355. <a href="https://doi.org/10.1016/j.ijhcs.2024.103355" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Journal</span></div>
+    </div>
+
+    <div class="pub-row" data-type="journal">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Understanding the Influence of AI Autonomy on AI Explainability in Human-AI Teams Using a Mixed Methods Approach</div>
+        <div class="pub-authors">Hauptman, A.I., <strong>Schelble, B.G.</strong>, Flathmann, C., Duan, W., &amp; McNeese, N.J.</div>
+        <div class="pub-venue"><strong>Cognition, Technology &amp; Work</strong>, 26, 435–455. <a href="https://doi.org/10.1007/s10111-024-00765-7" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Journal</span></div>
+    </div>
+
+    <div class="pub-row" data-type="journal">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">A Comment on "Can You Outsmart the Robot?" — Calling for a Different Path for the Future of Human–Robot Teaming</div>
+        <div class="pub-authors">O'Neill, T., Flathmann, C., McNeese, N.J., Jones, S., &amp; <strong>Schelble, B.G.</strong></div>
+        <div class="pub-venue"><strong>Academy of Management Discoveries</strong>, 10(1), 150–153. <a href="https://doi.org/10.5465/amd.2024.0009" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Journal</span></div>
+    </div>
+
+    <div class="pub-row" data-type="journal">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">I Know This Looks Bad, But I Can Explain: Understanding When AI Should Explain Actions In Human-AI Teams</div>
+        <div class="pub-authors">Zhang, R., Flathmann, C., Musick, G., <strong>Schelble, B.G.</strong>, McNeese, N.J., Knijnenburg, B., &amp; Duan, W.</div>
+        <div class="pub-venue"><strong>ACM Transactions on Interactive Intelligent Systems</strong>, 14(1), 1–23. <a href="https://doi.org/10.1145/3635474" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-award">★ 2023 &amp; 2024 Featured Article</span></div>
+    </div>
+
+    <div class="pub-row" data-type="conference">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">A Comparative Evaluation of Ad Hoc Team Performance, Effectiveness, and Interactions in Modern Collaborative Technology</div>
+        <div class="pub-authors"><strong>Schelble, B.G.</strong>, Lancaster, C., Mallick, R., McNeese, N.J., Freeman, G., &amp; Pak, R.</div>
+        <div class="pub-venue"><strong>Proc. HFES Annual Meeting</strong>, 68(1), 1254–1260. <a href="https://doi.org/10.1177/10711813241280939" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Conference</span></div>
+    </div>
+
+    <div class="pub-row" data-type="conference">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Empirical Impacts of Independent and Collaborative Training on Task Performance and Improvement in Human-AI Teams</div>
+        <div class="pub-authors">Flathmann, C., <strong>Schelble, B.G.</strong>, &amp; Galeano, A.</div>
+        <div class="pub-venue"><strong>Proc. HFES Annual Meeting</strong>, 68(1), 1447–1453. <a href="https://doi.org/10.1177/10711813241274425" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Conference</span></div>
+    </div>
+
+    <div class="pub-row" data-type="conference">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">The Role of Autonomy Levels and Contextual Risk in Designing Safer AI Teammates</div>
+        <div class="pub-authors">Hauptman, A., <strong>Schelble, B.G.</strong>, Flathmann, C., &amp; McNeese, N.</div>
+        <div class="pub-venue"><strong>2024 IEEE International Conference on Human-Machine Systems (ICHMS)</strong>. <a href="https://doi.org/10.1109/ICHMS59971.2024.10555844" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Conference</span></div>
+    </div>
+  </div>
+
+  <!-- 2023 -->
+  <div class="year-section">
+    <div class="year-label">2023</div>
+    <div class="pub-row" data-type="journal">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">The Purposeful Presentation of AI Teammates: Impacts on Human Acceptance and Perception</div>
+        <div class="pub-authors">Flathmann, C., <strong>Schelble, B.G.</strong>, McNeese, N.J., Knijnenberg, B., Gramopadhye, A., &amp; Madathil, K.C.</div>
+        <div class="pub-venue"><strong>Int. Journal of Human-Computer Interaction</strong>, 40(20), 6510–6527. <a href="https://doi.org/10.1080/10447318.2023.2254984" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Journal</span></div>
+    </div>
+    <div class="pub-row" data-type="journal">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">The Complex Relationship of AI Ethics and Trust in Human-AI Teaming: Insights from Advanced Real-World Subject Matter Experts</div>
+        <div class="pub-authors">Lopez, J., Textor, C., Lancaster, C., <strong>Schelble, B.G.</strong>, Freeman, G., Zhang, R., McNeese, N.J., &amp; Pak, R.</div>
+        <div class="pub-venue"><strong>AI and Ethics</strong>, 4(4), 1213–1233. <a href="https://doi.org/10.1007/s43681-023-00303-7" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Journal</span></div>
+    </div>
+    <div class="pub-row" data-type="journal">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Examining the Impact of Varying Levels of AI Teammate Influence on Human-AI Teams</div>
+        <div class="pub-authors">Flathmann, C., <strong>Schelble, B.G.</strong>, Rosopa, P.J., McNeese, N.J., Mallick, R., &amp; Madathil, K.</div>
+        <div class="pub-venue"><strong>Int. Journal of Human-Computer Studies</strong>, 177, 103061. <a href="https://doi.org/10.1016/j.ijhcs.2023.103061" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Journal</span></div>
+    </div>
+    <div class="pub-row" data-type="journal">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Understanding the Impact and Design of AI Teammate Etiquette</div>
+        <div class="pub-authors">Flathmann, C., McNeese, N.J., <strong>Schelble, B.G.</strong>, Knijnenburg, B., &amp; Freeman, G.</div>
+        <div class="pub-venue"><strong>Human-Computer Interaction</strong>, 39(5–6), 444–471. <a href="https://doi.org/10.1080/07370024.2023.2189595" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Journal</span></div>
+    </div>
+    <div class="pub-row" data-type="chapter">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Refocusing Human-AI Interaction Through a Teamwork Lens</div>
+        <div class="pub-authors">Flathmann, C., <strong>Schelble, B.G.</strong>, &amp; McNeese, N.J.</div>
+        <div class="pub-venue">In <em>Handbook on Virtual Work</em> (pp. 109–127). Edward Elgar Publishing. <a href="https://doi.org/10.4337/9781802200508.00013" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Book Chapter</span></div>
+    </div>
+    <div class="pub-row" data-type="conference">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">The Effect of Ethical and Unethical AI Actions on Outcomes of Trust and Performance in Human-AI Teams</div>
+        <div class="pub-authors"><strong>Schelble, B.G.</strong>, Lancaster, C., Duan, W., Mallick, R., McNeese, N.J., &amp; Lopez, J.</div>
+        <div class="pub-venue"><strong>HICSS-56</strong> (pp. 332–341). <a href="https://hdl.handle.net/10125/102668" target="_blank" style="color:var(--utk-orange)">link</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Conference</span></div>
+    </div>
+    <div class="pub-row" data-type="conference">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Intelligent Sharing is Caring: Toward the Design of an Intelligent System to Facilitate Team Sharing</div>
+        <div class="pub-authors">Musick, G., <strong>Schelble, B.G.</strong>, Mallick, R., &amp; McNeese, N.J.</div>
+        <div class="pub-venue"><strong>HICSS-56</strong> (pp. 428–437). <a href="https://hdl.handle.net/10125/102681" target="_blank" style="color:var(--utk-orange)">link</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Conference</span></div>
+    </div>
+  </div>
+
+  <!-- 2022 -->
+  <div class="year-section">
+    <div class="year-label">2022</div>
+    <div class="pub-row" data-type="journal">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">I See You: Examining the Role of Spatial Information in Human-Agent Teams</div>
+        <div class="pub-authors"><strong>Schelble, B.G.</strong>, Flathmann, C., Musick, G., McNeese, N.J., &amp; Freeman, G.</div>
+        <div class="pub-venue"><strong>Proc. ACM on Human-Computer Interaction</strong>, 6(CSCW2), 1–27. <a href="https://doi.org/10.1145/3555099" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Journal</span></div>
+    </div>
+    <div class="pub-row" data-type="journal">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Adapt and Overcome: Perceptions of Adaptive Autonomous Agents for Human-AI Teaming</div>
+        <div class="pub-authors">Hauptman, A.I., <strong>Schelble, B.G.</strong>, McNeese, N.J., &amp; Madathil, K.</div>
+        <div class="pub-venue"><strong>Computers in Human Behavior</strong>, 138, 107451. <a href="https://doi.org/10.1016/j.chb.2022.107451" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Journal</span></div>
+    </div>
+    <div class="pub-row" data-type="journal">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Towards Ethical AI: Empirically Investigating Dimensions of AI Ethics, Trust, and Performance in Human-AI Teaming</div>
+        <div class="pub-authors"><strong>Schelble, B.G.</strong>, Lopez, J., Textor, C., Zhang, R., McNeese, N.J., Pak, R., &amp; Freeman, G.</div>
+        <div class="pub-venue"><strong>Human Factors</strong>, 66(4), 1037–1055. <a href="https://doi.org/10.1177/00187208221116952" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Journal</span></div>
+    </div>
+    <div class="pub-row" data-type="journal">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Exploring the Relationship Between Ethics and Trust in Human-AI Teaming: A Mixed Methods Approach</div>
+        <div class="pub-authors">Textor, C., Zhang, R., Lopez, J., <strong>Schelble, B.G.</strong>, McNeese, N.J., Freeman, G., Pak, R., Tossell, C., &amp; de Visser, E.J.</div>
+        <div class="pub-venue"><strong>Journal of Cognitive Engineering and Decision Making</strong>, 16(4), 252–281. <a href="https://doi.org/10.1177/15553434221113964" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-award">★ Best JCEDM Article of 2022</span></div>
+    </div>
+    <div class="pub-row" data-type="journal">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Investigating the Effects of Perceived Teammate Artificiality on Human Performance and Cognition</div>
+        <div class="pub-authors"><strong>Schelble, B.G.</strong>, Flathmann, C., McNeese, N.J., O'Neill, T., Pak, R., &amp; Namara, M.</div>
+        <div class="pub-venue"><strong>Int. Journal of Human-Computer Interaction</strong>, 39(13), 2686–2701. <a href="https://doi.org/10.1080/10447318.2022.2085191" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Journal</span></div>
+    </div>
+    <div class="pub-row" data-type="conference">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Adaptive Autonomy as A Means for Implementing Shared Ethics in Human-AI Teams</div>
+        <div class="pub-authors">Hauptman, A., <strong>Schelble, B.G.</strong>, &amp; McNeese, N.J.</div>
+        <div class="pub-venue"><strong>AAAI Spring Symposium on AI Engineering</strong>. <a href="https://resources.sei.cmu.edu/asset_files/ConferencePaper/2022_021_001_884147.pdf" target="_blank" style="color:var(--utk-orange)">PDF</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Conference</span></div>
+    </div>
+  </div>
+
+  <!-- 2021 -->
+  <div class="year-section">
+    <div class="year-label">2021</div>
+    <div class="pub-row" data-type="journal">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Let's Think Together! Assessing Shared Mental Models, Performance, and Trust in Human-Agent Teams</div>
+        <div class="pub-authors"><strong>Schelble, B.G.</strong>, Flathmann, C., McNeese, N.J., Freeman, G., &amp; Mallick, R.</div>
+        <div class="pub-venue"><strong>Proc. ACM on Human-Computer Interaction</strong>, 6(GROUP), 1–29. <a href="https://doi.org/10.1145/3492832" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-award">★ Best Paper Honorable Mention (ACM GROUP)</span></div>
+    </div>
+    <div class="pub-row" data-type="journal">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Who/What is My Teammate? Team Composition Considerations in Human-AI Teaming</div>
+        <div class="pub-authors">McNeese, N.J., <strong>Schelble, B.G.</strong>, Canonico, L.B., &amp; Demir, M.</div>
+        <div class="pub-venue"><strong>IEEE Trans. on Human-Machine Systems</strong>, 51(4), 288–299. <a href="https://doi.org/10.1109/THMS.2021.3086018" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Journal</span></div>
+    </div>
+    <div class="pub-row" data-type="journal">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">What Happens When Humans Believe Their Teammate is an AI? An Investigation into Humans Teaming with Autonomy</div>
+        <div class="pub-authors">Musick, G., O'Neill, T.A., <strong>Schelble, B.G.</strong>, McNeese, N.J., &amp; Henke, J.</div>
+        <div class="pub-venue"><strong>Computers in Human Behavior</strong>, 122, 106825. <a href="https://doi.org/10.1016/j.chb.2021.106852" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Journal</span></div>
+    </div>
+    <div class="pub-row" data-type="conference">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Fostering Human-Agent Team Leadership by Leveraging Human Teaming Principles</div>
+        <div class="pub-authors">Flathmann, C., <strong>Schelble, B.G.</strong>, &amp; McNeese, N.J.</div>
+        <div class="pub-venue"><strong>2nd IEEE ICHMS</strong>, 1–6. <a href="https://doi.org/10.1109/ICHMS53169.2021.9582649" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Conference</span></div>
+    </div>
+    <div class="pub-row" data-type="conference">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Modeling and Guiding the Creation of Ethical Human-AI Teams</div>
+        <div class="pub-authors">Flathmann, C., <strong>Schelble, B.G.</strong>, Zhang, R., &amp; McNeese, N.J.</div>
+        <div class="pub-venue"><strong>ACM/AAAI AIES</strong>, 469–479. <a href="https://doi.org/10.1145/3461702.3462573" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Conference</span></div>
+    </div>
+    <div class="pub-row" data-type="conference">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Understanding Human-AI Cooperation Through Game Theory and Reinforcement Learning Models</div>
+        <div class="pub-authors"><strong>Schelble, B.G.</strong>, Flathmann, C., Canonico, L.B., &amp; McNeese, N.J.</div>
+        <div class="pub-venue"><strong>HICSS-54</strong>, 348–358. <a href="http://hdl.handle.net/10125/70652" target="_blank" style="color:var(--utk-orange)">link</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-award">★ Nominated Best Overall Paper (HICSS)</span></div>
+    </div>
+  </div>
+
+  <!-- 2020 -->
+  <div class="year-section">
+    <div class="year-label">2020</div>
+    <div class="pub-row" data-type="journal">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Human–Autonomy Teaming: A Review and Analysis of the Empirical Literature</div>
+        <div class="pub-authors">O'Neill, T.A., McNeese, N.J., Barron, A., &amp; <strong>Schelble, B.G.</strong></div>
+        <div class="pub-venue"><strong>Human Factors</strong>, 64(5), 904–938. <a href="https://doi.org/10.1177/0018720820960865" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Journal</span></div>
+    </div>
+    <div class="pub-row" data-type="conference">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Designing Human-Autonomy Teaming Experiments Through Reinforcement Learning</div>
+        <div class="pub-authors"><strong>Schelble, B.G.</strong>, Canonico, L.B., McNeese, N.J., Carroll, J., &amp; Hird, C.</div>
+        <div class="pub-venue"><strong>Proc. HFES Annual Meeting</strong>, 64(1), 1426–1430. <a href="https://doi.org/10.1177/1071181320641340" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Conference</span></div>
+    </div>
+    <div class="pub-row" data-type="conference">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Invoking Principles of Groupware to Develop and Evaluate Present and Future Human-Agent Teams</div>
+        <div class="pub-authors">Flathmann, C., <strong>Schelble, B.G.</strong>, Tubre, B., McNeese, N.J., &amp; Rodeghero, P.</div>
+        <div class="pub-venue"><strong>8th Int. Conf. on Human-Agent Interaction (HAI '20)</strong>, 15–24. <a href="https://doi.org/10.1145/3406499.3415072" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-award">★ Best Overall Paper (ACM HAI)</span></div>
+    </div>
+    <div class="pub-row" data-type="conference">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Towards Meaningfully Integrating Human-Autonomy Teaming in Applied Settings</div>
+        <div class="pub-authors"><strong>Schelble, B.G.</strong>, Flathmann, C., &amp; McNeese, N.J.</div>
+        <div class="pub-venue"><strong>8th Int. Conf. on Human-Agent Interaction (HAI '20)</strong>, 149–156. <a href="https://doi.org/10.1145/3406499.3415077" target="_blank" style="color:var(--utk-orange)">doi</a></div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-journal">Conference</span></div>
+    </div>
+  </div>
+
+  <!-- IN PRESS / BOOK CHAPTERS -->
+  <div class="year-section">
+    <div class="year-label" style="font-size:32px;">In Press &amp; Book Chapters</div>
+    <div class="pub-row" data-type="chapter">
+      
+      <div class="pub-body">
+        <div class="pub-title-main">Addressing AI Vulnerabilities Through Human-Centered Approaches and Risk Frameworks <span style="color:var(--stone-500);font-style:italic;font-size:12px;">(in press)</span></div>
+        <div class="pub-authors">Sawant, S., Bhanu, A., <strong>Schelble, B.G.</strong>, &amp; Madathil, K.</div>
+        <div class="pub-venue">In <em>Advances in Human-AI Collaboration</em>. John Wiley and Sons.</div>
+      </div>
+      <div class="pub-badges"><span class="badge badge-press">In Press</span></div>
+    </div>
+  </div>
+
+  <div style="margin-top: 40px; padding-top: 40px; border-top: 1px solid var(--stone-200);">
+    <p style="font-size:13px; color:var(--smoke); line-height:1.7;">
+      Full publication list with DOIs available on
+      <a href="https://scholar.google.com/citations?user=ggHXV-4AAAAJ&hl=en" target="_blank" style="color:var(--utk-orange);">Google Scholar</a>,
+      <a href="https://orcid.org/0000-0003-3704-697X" target="_blank" style="color:var(--utk-orange);">ORCID</a>, and
+      <a href="https://www.researchgate.net/profile/Beau-Schelble" target="_blank" style="color:var(--utk-orange);">ResearchGate</a>.
+      Dr. Schelble also maintains a personal publications list at
+      <a href="https://beauschelble.com" target="_blank" style="color:var(--utk-orange);">beauschelble.com</a>.
+    </p>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 ARCS Lab · University of Tennessee, Knoxville</p>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="research.html">Research</a>
+    <a href="team.html">Team</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</footer>
+
+<script>
+function filterPubs(type, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.pub-row').forEach(row => {
+    if (type === 'all') { row.style.display = ''; return; }
+    if (type === 'award') {
+      row.style.display = row.querySelector('.badge-award') ? '' : 'none';
+      return;
+    }
+    row.style.display = row.dataset.type === type ? '' : 'none';
+  });
+  // show/hide year sections that have no visible rows
+  document.querySelectorAll('.year-section').forEach(sec => {
+    const visible = [...sec.querySelectorAll('.pub-row')].some(r => r.style.display !== 'none');
+    sec.style.display = visible ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>

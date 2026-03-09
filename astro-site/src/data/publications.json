@@ -1,0 +1,346 @@
+[
+  {
+    "year": 2026,
+    "type": "journal",
+    "title": "Toward a Science of Human–AI Teaming for Decision-Making: A Complementarity Framework",
+    "authors": "Gonzalez, C., Donahue, K., Goldstein, D., Heidari, H., Jalali, M., Schelble, B.G., Singh, A., & Woolley, A.W.",
+    "venue": "PNAS Nexus, 1–30",
+    "award": null
+  },
+  {
+    "year": 2026,
+    "type": "book chapter",
+    "title": "Modeling Human Behavior in Cybersecurity: Leveraging Structural Equation Modeling to Address Cognitive Biases and Enhance Defense Strategies",
+    "authors": "Gurney, N., Wu, P., Molinaro, K., Jones, F., Schelble, B.G., & Zhu, Q.",
+    "venue": "Foundations of Cyber Deception (pp. 155–180). Springer Nature",
+    "award": null
+  },
+  {
+    "year": 2025,
+    "type": "journal",
+    "title": "Human or AI Advice? Examining Trust, Influence, and Responsibility in Ethically-Charged Human-AI Team Decision-Making",
+    "authors": "Schelble, B.G., Flathmann, C., Aly, H., Lyons, J., & McNeese, N.",
+    "venue": "Journal of Cognitive Engineering and Decision Making",
+    "award": "In Press"
+  },
+  {
+    "year": 2025,
+    "type": "journal",
+    "title": "A Mixed Methods Approach to Analyzing the Role of AI Teammates in Transition Phases",
+    "authors": "Schelble, B.G., Mallick, R., & McNeese, N.",
+    "venue": "Proceedings of the ACM on Human-Computer Interaction (GROUP)",
+    "award": "In Press"
+  },
+  {
+    "year": 2025,
+    "type": "journal",
+    "title": "The Spread of Trust and Distrust in Human-AI Teams",
+    "authors": "Zhou, S., Duan, W., Yin, X., Scalia, M., Hao, R., Weng, N., Funke, G., Tolston, M., Freeman, G., Schelble, B.G., Gorman, J., & McNeese, N.J.",
+    "venue": "Applied Ergonomics, 130, Article 104648",
+    "award": null
+  },
+  {
+    "year": 2025,
+    "type": "journal",
+    "title": "Addressing the Role of Context on Trust in Human-AI Teams: The Influence of Team Role and Violation Type in High-Risk Tasks",
+    "authors": "Schelble, B.G., Textor, C., Zhang, R., Lopez, J., Tavarez, N., Ku, C., McNeese, N.J., Pak, R., Freeman, G., Tossell, C., & de Visser, E.",
+    "venue": "Ergonomics, 1–21",
+    "award": null
+  },
+  {
+    "year": 2025,
+    "type": "journal",
+    "title": "Should AI Teammates Give All the Answers? Examining the Role of Different AI Information-Sharing Techniques on Team Cognition in Human-AI Teams",
+    "authors": "Schelble, B.G., Mallick, R., Hauptman, A., & McNeese, N.J.",
+    "venue": "International Journal of Human-Computer Interaction, 42(4), 2463–2488",
+    "award": null
+  },
+  {
+    "year": 2025,
+    "type": "journal",
+    "title": "Ethical Adaptation: Exploring the Use of Adaptive Autonomy in the Design of Ethical AI Teammates in Healthcare",
+    "authors": "Hauptman, A., Schelble, B.G., Flathmann, C., Mallick, R., Macdonald, J., & McNeese, N.J.",
+    "venue": "AI and Ethics, 5(5), 5397–5414",
+    "award": null
+  },
+  {
+    "year": 2025,
+    "type": "conference",
+    "title": "Examining the Role of AI Information-Sharing on Trust in Human-AI Teams",
+    "authors": "Schelble, B.G., Filer, G., Flathmann, C., & Madathil, K.",
+    "venue": "Proc. Human Factors & Ergonomics Society Annual Meeting",
+    "award": null
+  },
+  {
+    "year": 2025,
+    "type": "conference",
+    "title": "Leveraging Generative AI to Create Lightweight Simulations for Far-Future Autonomous Teammates",
+    "authors": "Flathmann, C., Ihekweazu, C., & Schelble, B.G.",
+    "venue": "Proc. Human Factors & Ergonomics Society Annual Meeting",
+    "award": null
+  },
+  {
+    "year": 2024,
+    "type": "journal",
+    "title": "An Analysis of Ethical Rationales and Their Impact on the Perceived Moral Persona of AI Teammates",
+    "authors": "Sengupta, S., Schelble, B.G., Flathmann, C., McNeese, N.J., & Lyons, J.",
+    "venue": "AI and Ethics, 5, 2667–2679",
+    "award": null
+  },
+  {
+    "year": 2024,
+    "type": "journal",
+    "title": "Modeling Perceived Information Needs in Human-AI Teams: Improving AI Teammate Utility and Driving Team Cognition",
+    "authors": "Schelble, B.G., Flathmann, C., Macdonald, J., Knijnenburg, B., Brady, C., & McNeese, N.J.",
+    "venue": "Behaviour & Information Technology, 44(9), 2069–2092",
+    "award": null
+  },
+  {
+    "year": 2024,
+    "type": "journal",
+    "title": "What You Say vs What You Do: Utilizing Positive Emotional Expressions to Relay AI Teammate Intent within Human-AI Teams",
+    "authors": "Mallick, R., Flathmann, C., Duan, W., Schelble, B.G., & McNeese, N.J.",
+    "venue": "International Journal of Human-Computer Studies, 192, 103355",
+    "award": null
+  },
+  {
+    "year": 2024,
+    "type": "journal",
+    "title": "Understanding the Influence of AI Autonomy on AI Explainability in Human-AI Teams Using a Mixed Methods Approach",
+    "authors": "Hauptman, A.I., Schelble, B.G., Flathmann, C., Duan, W., & McNeese, N.J.",
+    "venue": "Cognition, Technology & Work, 26, 435–455",
+    "award": null
+  },
+  {
+    "year": 2024,
+    "type": "journal",
+    "title": "A Comment on \"Can You Outsmart the Robot?\" — Calling for a Different Path for the Future of Human–Robot Teaming",
+    "authors": "O'Neill, T., Flathmann, C., McNeese, N.J., Jones, S., & Schelble, B.G.",
+    "venue": "Academy of Management Discoveries, 10(1), 150–153",
+    "award": null
+  },
+  {
+    "year": 2024,
+    "type": "journal",
+    "title": "I Know This Looks Bad, But I Can Explain: Understanding When AI Should Explain Actions In Human-AI Teams",
+    "authors": "Zhang, R., Flathmann, C., Musick, G., Schelble, B.G., McNeese, N.J., Knijnenburg, B., & Duan, W.",
+    "venue": "ACM Transactions on Interactive Intelligent Systems, 14(1), 1–23",
+    "award": "2023 & 2024 Featured Article"
+  },
+  {
+    "year": 2024,
+    "type": "conference",
+    "title": "A Comparative Evaluation of Ad Hoc Team Performance, Effectiveness, and Interactions in Modern Collaborative Technology",
+    "authors": "Schelble, B.G., Lancaster, C., Mallick, R., McNeese, N.J., Freeman, G., & Pak, R.",
+    "venue": "Proc. HFES Annual Meeting, 68(1), 1254–1260",
+    "award": null
+  },
+  {
+    "year": 2024,
+    "type": "conference",
+    "title": "Empirical Impacts of Independent and Collaborative Training on Task Performance and Improvement in Human-AI Teams",
+    "authors": "Flathmann, C., Schelble, B.G., & Galeano, A.",
+    "venue": "Proc. HFES Annual Meeting, 68(1), 1447–1453",
+    "award": null
+  },
+  {
+    "year": 2024,
+    "type": "conference",
+    "title": "The Role of Autonomy Levels and Contextual Risk in Designing Safer AI Teammates",
+    "authors": "Hauptman, A., Schelble, B.G., Flathmann, C., & McNeese, N.",
+    "venue": "2024 IEEE International Conference on Human-Machine Systems (ICHMS)",
+    "award": null
+  },
+  {
+    "year": 2023,
+    "type": "journal",
+    "title": "The Purposeful Presentation of AI Teammates: Impacts on Human Acceptance and Perception",
+    "authors": "Flathmann, C., Schelble, B.G., McNeese, N.J., Knijnenberg, B., Gramopadhye, A., & Madathil, K.C.",
+    "venue": "Int. Journal of Human-Computer Interaction, 40(20), 6510–6527",
+    "award": null
+  },
+  {
+    "year": 2023,
+    "type": "journal",
+    "title": "The Complex Relationship of AI Ethics and Trust in Human-AI Teaming: Insights from Advanced Real-World Subject Matter Experts",
+    "authors": "Lopez, J., Textor, C., Lancaster, C., Schelble, B.G., Freeman, G., Zhang, R., McNeese, N.J., & Pak, R.",
+    "venue": "AI and Ethics, 4(4), 1213–1233",
+    "award": null
+  },
+  {
+    "year": 2023,
+    "type": "journal",
+    "title": "Examining the Impact of Varying Levels of AI Teammate Influence on Human-AI Teams",
+    "authors": "Flathmann, C., Schelble, B.G., Rosopa, P.J., McNeese, N.J., Mallick, R., & Madathil, K.",
+    "venue": "Int. Journal of Human-Computer Studies, 177, 103061",
+    "award": null
+  },
+  {
+    "year": 2023,
+    "type": "journal",
+    "title": "Understanding the Impact and Design of AI Teammate Etiquette",
+    "authors": "Flathmann, C., McNeese, N.J., Schelble, B.G., Knijnenburg, B., & Freeman, G.",
+    "venue": "Human-Computer Interaction, 39(5–6), 444–471",
+    "award": null
+  },
+  {
+    "year": 2023,
+    "type": "book chapter",
+    "title": "Refocusing Human-AI Interaction Through a Teamwork Lens",
+    "authors": "Flathmann, C., Schelble, B.G., & McNeese, N.J.",
+    "venue": "Handbook on Virtual Work (pp. 109–127). Edward Elgar Publishing",
+    "award": null
+  },
+  {
+    "year": 2023,
+    "type": "conference",
+    "title": "The Effect of Ethical and Unethical AI Actions on Outcomes of Trust and Performance in Human-AI Teams",
+    "authors": "Schelble, B.G., Lancaster, C., Duan, W., Mallick, R., McNeese, N.J., & Lopez, J.",
+    "venue": "HICSS-56 (pp. 332–341)",
+    "award": null
+  },
+  {
+    "year": 2023,
+    "type": "conference",
+    "title": "Intelligent Sharing is Caring: Toward the Design of an Intelligent System to Facilitate Team Sharing",
+    "authors": "Musick, G., Schelble, B.G., Mallick, R., & McNeese, N.J.",
+    "venue": "HICSS-56 (pp. 428–437)",
+    "award": null
+  },
+  {
+    "year": 2022,
+    "type": "journal",
+    "title": "I See You: Examining the Role of Spatial Information in Human-Agent Teams",
+    "authors": "Schelble, B.G., Flathmann, C., Musick, G., McNeese, N.J., & Freeman, G.",
+    "venue": "Proc. ACM on Human-Computer Interaction, 6(CSCW2), 1–27",
+    "award": null
+  },
+  {
+    "year": 2022,
+    "type": "journal",
+    "title": "Adapt and Overcome: Perceptions of Adaptive Autonomous Agents for Human-AI Teaming",
+    "authors": "Hauptman, A.I., Schelble, B.G., McNeese, N.J., & Madathil, K.",
+    "venue": "Computers in Human Behavior, 138, 107451",
+    "award": null
+  },
+  {
+    "year": 2022,
+    "type": "journal",
+    "title": "Towards Ethical AI: Empirically Investigating Dimensions of AI Ethics, Trust, and Performance in Human-AI Teaming",
+    "authors": "Schelble, B.G., Lopez, J., Textor, C., Zhang, R., McNeese, N.J., Pak, R., & Freeman, G.",
+    "venue": "Human Factors, 66(4), 1037–1055",
+    "award": null
+  },
+  {
+    "year": 2022,
+    "type": "journal",
+    "title": "Exploring the Relationship Between Ethics and Trust in Human-AI Teaming: A Mixed Methods Approach",
+    "authors": "Textor, C., Zhang, R., Lopez, J., Schelble, B.G., McNeese, N.J., Freeman, G., Pak, R., Tossell, C., & de Visser, E.J.",
+    "venue": "Journal of Cognitive Engineering and Decision Making, 16(4), 252–281",
+    "award": "Best JCEDM Article of 2022"
+  },
+  {
+    "year": 2022,
+    "type": "journal",
+    "title": "Investigating the Effects of Perceived Teammate Artificiality on Human Performance and Cognition",
+    "authors": "Schelble, B.G., Flathmann, C., McNeese, N.J., O'Neill, T., Pak, R., & Namara, M.",
+    "venue": "Int. Journal of Human-Computer Interaction, 39(13), 2686–2701",
+    "award": null
+  },
+  {
+    "year": 2022,
+    "type": "conference",
+    "title": "Adaptive Autonomy as A Means for Implementing Shared Ethics in Human-AI Teams",
+    "authors": "Hauptman, A., Schelble, B.G., & McNeese, N.J.",
+    "venue": "AAAI Spring Symposium on AI Engineering",
+    "award": null
+  },
+  {
+    "year": 2021,
+    "type": "journal",
+    "title": "Let's Think Together! Assessing Shared Mental Models, Performance, and Trust in Human-Agent Teams",
+    "authors": "Schelble, B.G., Flathmann, C., McNeese, N.J., Freeman, G., & Mallick, R.",
+    "venue": "Proc. ACM on Human-Computer Interaction, 6(GROUP), 1–29",
+    "award": "Best Paper Honorable Mention (ACM GROUP)"
+  },
+  {
+    "year": 2021,
+    "type": "journal",
+    "title": "Who/What is My Teammate? Team Composition Considerations in Human-AI Teaming",
+    "authors": "McNeese, N.J., Schelble, B.G., Canonico, L.B., & Demir, M.",
+    "venue": "IEEE Trans. on Human-Machine Systems, 51(4), 288–299",
+    "award": null
+  },
+  {
+    "year": 2021,
+    "type": "journal",
+    "title": "What Happens When Humans Believe Their Teammate is an AI? An Investigation into Humans Teaming with Autonomy",
+    "authors": "Musick, G., O'Neill, T.A., Schelble, B.G., McNeese, N.J., & Henke, J.",
+    "venue": "Computers in Human Behavior, 122, 106825",
+    "award": null
+  },
+  {
+    "year": 2021,
+    "type": "conference",
+    "title": "Fostering Human-Agent Team Leadership by Leveraging Human Teaming Principles",
+    "authors": "Flathmann, C., Schelble, B.G., & McNeese, N.J.",
+    "venue": "2nd IEEE ICHMS, 1–6",
+    "award": null
+  },
+  {
+    "year": 2021,
+    "type": "conference",
+    "title": "Modeling and Guiding the Creation of Ethical Human-AI Teams",
+    "authors": "Flathmann, C., Schelble, B.G., Zhang, R., & McNeese, N.J.",
+    "venue": "ACM/AAAI AIES, 469–479",
+    "award": null
+  },
+  {
+    "year": 2021,
+    "type": "conference",
+    "title": "Understanding Human-AI Cooperation Through Game Theory and Reinforcement Learning Models",
+    "authors": "Schelble, B.G., Flathmann, C., Canonico, L.B., & McNeese, N.J.",
+    "venue": "HICSS-54, 348–358",
+    "award": "Nominated Best Overall Paper (HICSS)"
+  },
+  {
+    "year": 2020,
+    "type": "journal",
+    "title": "Human–Autonomy Teaming: A Review and Analysis of the Empirical Literature",
+    "authors": "O'Neill, T.A., McNeese, N.J., Barron, A., & Schelble, B.G.",
+    "venue": "Human Factors, 64(5), 904–938",
+    "award": null
+  },
+  {
+    "year": 2020,
+    "type": "conference",
+    "title": "Designing Human-Autonomy Teaming Experiments Through Reinforcement Learning",
+    "authors": "Schelble, B.G., Canonico, L.B., McNeese, N.J., Carroll, J., & Hird, C.",
+    "venue": "Proc. HFES Annual Meeting, 64(1), 1426–1430",
+    "award": null
+  },
+  {
+    "year": 2020,
+    "type": "conference",
+    "title": "Invoking Principles of Groupware to Develop and Evaluate Present and Future Human-Agent Teams",
+    "authors": "Flathmann, C., Schelble, B.G., Tubre, B., McNeese, N.J., & Rodeghero, P.",
+    "venue": "8th Int. Conf. on Human-Agent Interaction (HAI '20), 15–24",
+    "award": "Best Overall Paper (ACM HAI)"
+  },
+  {
+    "year": 2020,
+    "type": "conference",
+    "title": "Towards Meaningfully Integrating Human-Autonomy Teaming in Applied Settings",
+    "authors": "Schelble, B.G., Flathmann, C., & McNeese, N.J.",
+    "venue": "8th Int. Conf. on Human-Agent Interaction (HAI '20), 149–156",
+    "award": null
+  },
+  {
+    "year": 2025,
+    "type": "book chapter",
+    "title": "Addressing AI Vulnerabilities Through Human-Centered Approaches and Risk Frameworks",
+    "authors": "Sawant, S., Bhanu, A., Schelble, B.G., & Madathil, K.",
+    "venue": "Advances in Human-AI Collaboration. John Wiley and Sons",
+    "award": "In Press"
+  }
+]

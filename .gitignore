@@ -1,0 +1,14 @@
+# Personal / project notes
+README.txt
+CLAUDE.md
+.claude/
+
+# Astro build output & dependencies
+astro-site/dist/
+astro-site/node_modules/
+astro-site/.astro/
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+*.code-workspace

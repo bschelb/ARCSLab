@@ -1,0 +1,154 @@
+{
+  "pi": {
+    "name": "Dr. Beau G. Schelble",
+    "role": "Principal Investigator",
+    "title": "Assistant Professor, Industrial & Systems Engineering",
+    "subtitle": "Founding Director, AI & Robotics for Collaborative Systems Lab",
+    "department": "Tickle College of Engineering, University of Tennessee, Knoxville",
+    "email": "bschelbl@utk.edu",
+    "photo": "assets/DSCF0563-Beaus-Workstation.jpg",
+    "cropPosition": "center 40%",
+    "bio": "Dr. Schelble is an interdisciplinary researcher whose work sits at the intersection of human factors, human-centered computing, and AI. For nearly a decade he has explored how humans and AI can work together more effectively and safely — investigating trust, shared mental models, situational awareness, ethical AI behavior, and intelligent information sharing. His research spans defense, advanced manufacturing, healthcare, cybersecurity, and emergency response. He received his PhD in Human-Centered Computing from Clemson University in 2023 under advisor Nathan McNeese, and his BS in Psychology (Summa Cum Laude) from Clemson in 2018.",
+    "shortBio": "Assistant Professor of ISE. PhD in Human-Centered Computing, Clemson University 2023.",
+    "education": {
+      "phd": "Human-Centered Computing, Clemson University, 2023",
+      "bs": "Psychology (Summa Cum Laude), Clemson University, 2018"
+    },
+    "stats": {
+      "publications": "46+",
+      "piFunding": "$722K",
+      "bestPaperAwards": 5,
+      "invitedTalks": 7
+    },
+    "links": {
+      "personalWebsite": "https://beauschelble.com",
+      "googleScholar": "https://scholar.google.com/citations?user=ggHXV-4AAAAJ&hl=en",
+      "orcid": "https://orcid.org/0000-0003-3704-697X"
+    }
+  },
+  "phdStudents": [
+    {
+      "name": "Sarah Mendoza",
+      "role": "PhD Student, Industrial & Systems Engineering",
+      "email": "smendoz9@vols.utk.edu",
+      "photo": "assets/sarahHeadshot.jpg",
+      "cropPosition": "center 15%",
+      "education": "BS Psychology (Minor in Computer Science), Clemson University, 2025",
+      "bio": "Hello hello! I'm Sarah Mendoza and I'm from Clemson, South Carolina. Guided by my curiosity for people and interpersonal behaviors, I graduated from Clemson University with my bachelor's degree in Psychology in May 2025. I was brought into the world of human-AI teams during my time there — researching everything from trust perceptions, to autonomy levels, to teamwork versus taskwork. This, coupled with my minor in Computer Science, has prompted me to further explore the various dimensions of human-AI teams within the ARCS lab! When I'm not working, I'm probably in the gym, checking out a new café, or playing The Sims 3.",
+      "shortBio": "Research focus: trust perceptions, autonomy levels, and teamwork dimensions in human-AI teams.",
+      "links": {
+        "googleScholar": "https://scholar.google.com/citations?user=rYofT7YAAAAJ&hl=en"
+      }
+    },
+    {
+      "name": "Yayun Tian",
+      "role": "PhD Student, Industrial & Systems Engineering",
+      "email": "ytian21@vols.utk.edu",
+      "photo": "assets/yayunHeadshot.jpg",
+      "cropPosition": "center 60%",
+      "education": "MS Analytics, USC, 2022 · BS Applied Math & Statistics + Economics, Stony Brook, 2020",
+      "bio": "Hi, I'm Yayun Tian, and I'm a Ph.D. student in Industrial and Systems Engineering at the University of Tennessee, Knoxville. I graduated from Stony Brook University in 2020 with a Bachelor's degree in Applied Mathematics and Statistics, a double major in Economics, and a minor in Computer Science. In 2022, I earned my Master's degree in Analytics from the University of Southern California, and then spent three years working as a software engineer in Los Angeles. These experiences led me to think about how technology could play a more active and supportive role in teamwork — not just as a tool, but as a trusted and capable teammate.",
+      "shortBio": "Background in applied mathematics, statistics, and software engineering. Exploring AI as trusted teammate.",
+      "links": {}
+    }
+  ],
+  "dengStudents": [
+    {
+      "name": "Joey Burdin",
+      "role": "Doctor of Engineering Student, ISE",
+      "tenure": "2025–Present",
+      "bio": "Applied doctoral research in industrial and systems engineering with a focus on practical implementation of human-AI teaming principles in professional settings."
+    },
+    {
+      "name": "Cody Gaspar",
+      "role": "Doctor of Engineering Student, ISE",
+      "tenure": "2024–Present",
+      "bio": "Applied doctoral research in industrial and systems engineering, exploring human factors and systems-level approaches to emerging human-AI collaborative environments."
+    }
+  ],
+  "undergraduates": [
+    {
+      "name": "Elizabeth Hughes",
+      "role": "Undergraduate Researcher",
+      "degree": "BS Industrial & Systems Engineering",
+      "tenure": "2024–Present",
+      "bio": "Multiple ARCS Lab projects"
+    },
+    {
+      "name": "Carson Bogue",
+      "role": "Undergraduate Researcher",
+      "degree": "BS Industrial & Systems Engineering",
+      "tenure": "2024–Present",
+      "bio": "Multiple ARCS Lab projects"
+    },
+    {
+      "name": "Gracyn Filer",
+      "role": "Undergraduate Researcher",
+      "degree": "BS Industrial & Systems Engineering",
+      "tenure": "2024–Present",
+      "bio": "Co-author on HFES 2025 paper on AI information-sharing and trust"
+    }
+  ],
+  "collaborators": [
+    {
+      "name": "Christopher Flathmann",
+      "institution": "Clemson University",
+      "area": "Human-Centered Computing"
+    },
+    {
+      "name": "Allyson I. Hauptman",
+      "institution": "U.S. Military Academy (West Point)",
+      "area": "Human-AI Teaming"
+    },
+    {
+      "name": "Chad Tossell",
+      "institution": "Embry-Riddle Aeronautical University",
+      "area": "Human-AI Teaming & Trust"
+    },
+    {
+      "name": "Thomas A. O'Neill",
+      "institution": "University of Calgary",
+      "area": "Organizational Psychology"
+    },
+    {
+      "name": "Ewart de Visser",
+      "institution": "George Mason University",
+      "area": "Human-Robot Trust"
+    },
+    {
+      "name": "Jamie Gorman",
+      "institution": "Arizona State University",
+      "area": "Team Coordination Dynamics"
+    },
+    {
+      "name": "Kapil Chalil Madathil",
+      "institution": "Clemson University",
+      "area": "Industrial Engineering"
+    },
+    {
+      "name": "Gregory Funke",
+      "institution": "Air Force Research Laboratory",
+      "area": "Team Workload & Cyber Human Factors"
+    },
+    {
+      "name": "Joseph B. Lyons",
+      "institution": "Air Force Research Laboratory",
+      "area": "Trust in Automation"
+    },
+    {
+      "name": "Cleotilde Gonzalez",
+      "institution": "Carnegie Mellon University",
+      "area": "Dynamic Decision Making"
+    },
+    {
+      "name": "Xueping Li",
+      "institution": "University of Tennessee, Knoxville",
+      "area": "Healthcare Systems & Optimization"
+    },
+    {
+      "name": "Anahita Khojandi",
+      "institution": "University of Tennessee, Knoxville",
+      "area": "Machine Learning & Predictive Modeling"
+    }
+  ]
+}

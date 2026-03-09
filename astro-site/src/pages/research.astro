@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import research from '../data/research.json';
+---
+<BaseLayout title="Research | ARCS Lab | UTK" activePage="research">
+<style>
+  .page-header::before {
+    content: 'RESEARCH'; position: absolute; right: 40px; top: 50%; transform: translateY(-50%);
+    font-family: 'Playfair Display', serif; font-size: 130px; font-weight: 900;
+    color: rgba(255,255,255,0.025); white-space: nowrap; letter-spacing: -4px;
+  }
+  .areas { padding: 80px; }
+  .area-block {
+    display: grid; grid-template-columns: 260px 1fr; gap: 80px;
+    padding: 72px 0; border-top: 1px solid var(--stone-200); align-items: start;
+  }
+  .area-block:first-child { border-top: none; padding-top: 0; }
+  .area-num { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--stone-500); letter-spacing: .1em; margin-bottom: 12px; }
+  .area-icon { width: 64px; height: 64px; background: var(--stone-100); display: flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 20px; }
+  .area-tag { display: inline-block; background: rgba(255,102,0,.1); color: var(--utk-orange); font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; padding: 4px 12px; margin-bottom: 16px; }
+  .area-title { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--stone-900); line-height: 1.2; }
+  .area-desc { font-size: 15px; color: var(--smoke); line-height: 1.8; margin-bottom: 20px; }
+  .bullets { display: flex; flex-direction: column; gap: 9px; margin-bottom: 28px; }
+  .bullet { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: var(--stone-700); line-height: 1.6; }
+  .bullet::before { content: '→'; color: var(--utk-orange); font-weight: 700; flex-shrink: 0; }
+  .pubs-mini { border-top: 1px solid var(--stone-200); padding-top: 20px; }
+  .pubs-mini-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: var(--stone-500); margin-bottom: 12px; }
+  .pubs-mini-item { font-size: 13px; color: var(--smoke); padding: 7px 0; border-bottom: 1px solid var(--stone-100); font-style: italic; line-height: 1.5; }
+  .pubs-mini-item:last-child { border-bottom: none; }
+  .pubs-mini-item strong { color: var(--stone-700); font-style: normal; }
+
+  .methods-section { background: var(--stone-900); padding: 80px; }
+  .methods-section .section-title { color: white; }
+  .methods-section .section-lead { color: rgba(255,255,255,.92); }
+  .methods-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: rgba(255,255,255,.05); }
+  .method-card { background: var(--stone-900); padding: 40px 32px; border: 1px solid rgba(255,255,255,.06); }
+  .method-icon { font-size: 28px; margin-bottom: 16px; }
+  .method-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: white; margin-bottom: 12px; }
+  .method-desc { font-size: 14px; color: rgba(255,255,255,.90); line-height: 1.7; }
+
+  .apps-section { padding: 80px; background: var(--stone-100); }
+  .apps-section .section-title { color: var(--stone-900); }
+  .apps-section .section-lead { color: var(--smoke); }
+  .apps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .app-card { background: white; padding: 32px 28px; position: relative; overflow: hidden; border-bottom: 3px solid transparent; transition: border-color .25s, transform .2s; }
+  .app-card:hover { border-color: var(--utk-orange); transform: translateY(-3px); }
+  .app-icon { font-size: 30px; margin-bottom: 14px; }
+  .app-title { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--stone-900); margin-bottom: 8px; }
+  .app-desc { font-size: 13px; color: var(--smoke); line-height: 1.65; }
+
+  @media (max-width: 900px) {
+    .area-block { grid-template-columns: 1fr; }
+    .methods-grid, .apps-grid { grid-template-columns: 1fr 1fr; }
+    .areas, .methods-section, .apps-section { padding: 48px 28px; }
+  }
+</style>
+
+<PageHeader eyebrow="ARCS Lab · UTK ISE" title="Our Research" description="We use rigorous mixed-methods inquiry to understand and improve how humans and AI systems collaborate — building the scientific foundation for trustworthy, high-performing human-AI teams across mission-critical domains." />
+
+<div class="areas">
+  {research.map(area => (
+    <div class="area-block">
+      <div>
+        <div class="area-num">{area.num}</div>
+        <div class="area-icon">{area.icon}</div>
+        <div class="area-tag">{area.tag}</div>
+        <div class="area-title">{area.title}</div>
+      </div>
+      <div>
+        <p class="area-desc">{area.description}</p>
+        {area.description2 && <p class="area-desc">{area.description2}</p>}
+        <div class="bullets">
+          {area.bullets.map((b: string) => <div class="bullet">{b}</div>)}
+        </div>
+        <div class="pubs-mini">
+          <div class="pubs-mini-label">Representative Publications</div>
+          {area.pubs.map((pub: any) => (
+            <div class="pubs-mini-item">
+              <strong>{pub.authors} ({pub.venue.match(/\d{4}/)?.[0] || ''}).</strong> {pub.title}. <em>{pub.venue}</em>
+              {pub.award && ` ★ ${pub.award}`}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
+<div class="methods-section">
+  <div class="section-eyebrow">Methodology</div>
+  <h2 class="section-title">How We Work</h2>
+  <p class="section-lead">ARCS Lab research is fundamentally interdisciplinary and mixed-methods, combining the rigor of experimental science with the depth of qualitative inquiry.</p>
+  <div class="methods-grid">
+    <div class="method-card"><div class="method-icon">📊</div><div class="method-title">Quantitative</div><p class="method-desc">Controlled experiments, surveys, behavioral measurement, structural equation modeling, network analysis, and statistical inference to test causal hypotheses about human-AI interaction.</p></div>
+    <div class="method-card"><div class="method-icon">💬</div><div class="method-title">Qualitative</div><p class="method-desc">Thematic analysis, think-aloud protocols, semi-structured interviews, and expert elicitation to contextualize findings and surface constructs that resist quantification.</p></div>
+    <div class="method-card"><div class="method-icon">⚙️</div><div class="method-title">Computational</div><p class="method-desc">Reinforcement learning models, game-theoretic frameworks, agent-based simulation, and generative AI tools to build and test formal models of human-AI collaborative behavior.</p></div>
+  </div>
+</div>
+
+<div class="apps-section">
+  <div class="section-eyebrow">Applied Domains</div>
+  <h2 class="section-title">Where We Work</h2>
+  <p class="section-lead">Our research addresses real-world challenges across high-stakes domains where human-AI teaming has the greatest potential impact.</p>
+  <div class="apps-grid">
+    <div class="app-card"><div class="app-icon">⚔️</div><div class="app-title">Defense &amp; Command</div><p class="app-desc">Shared situational awareness in electronically contested environments, AI on the battlefield, and compromised AI mitigation for warfighters.</p></div>
+    <div class="app-card"><div class="app-icon">🏭</div><div class="app-title">Advanced Manufacturing</div><p class="app-desc">Collaborative robotics integration, human-cobot workload distribution, and trust in automated manufacturing workflows.</p></div>
+    <div class="app-card"><div class="app-icon">🏥</div><div class="app-title">Healthcare</div><p class="app-desc">Ethical AI decision support in clinical settings, adaptive autonomy for healthcare AI teammates, and human factors in medical AI deployment.</p></div>
+    <div class="app-card"><div class="app-icon">🆘</div><div class="app-title">Emergency Response</div><p class="app-desc">Human-robot teaming in search-and-rescue, AI decision support for first responders, and team cognition under high-stress conditions.</p></div>
+    <div class="app-card"><div class="app-icon">🔐</div><div class="app-title">Cybersecurity</div><p class="app-desc">Human behavior modeling in cybersecurity contexts, cognitive biases in security decision-making, and AI-assisted defense strategies.</p></div>
+    <div class="app-card"><div class="app-icon">💼</div><div class="app-title">Future of Work</div><p class="app-desc">AI teammate integration in organizational contexts, workforce augmentation, and the human dimensions of AI-enabled productivity.</p></div>
+    <div class="app-card"><div class="app-icon">⚖️</div><div class="app-title">Responsible AI</div><p class="app-desc">AI ethics in practice, responsible deployment frameworks, and the societal implications of human-AI teaming at scale.</p></div>
+    <div class="app-card"><div class="app-icon">🧠</div><div class="app-title">Decision-Making</div><p class="app-desc">Human-AI complementarity in complex decisions, cognitive bias mitigation, and advice-taking from AI systems under uncertainty.</p></div>
+  </div>
+</div>
+</BaseLayout>

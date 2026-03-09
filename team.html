@@ -1,0 +1,1055 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Team | ARCS Lab | UTK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --stone-50: #faf8f5;
+        --stone-100: #f2ede6;
+        --stone-200: #e4d9cc;
+        --stone-300: #c9b99e;
+        --stone-500: #8b7355;
+        --stone-700: #4a3728;
+        --stone-900: #1e150d;
+        --utk-orange: #ff6600;
+        --utk-orange-deep: #cc4f00;
+        --smoke: #6b6560;
+        --nav-h: 88px;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        overflow-x: hidden;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--stone-50);
+        color: var(--stone-900);
+      }
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        height: var(--nav-h);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 48px;
+        background: rgba(250, 248, 245, 0.92);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--stone-200);
+      }
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+      }
+      .nav-logo-mark {
+        width: 36px;
+        height: 36px;
+        background: var(--utk-orange);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Playfair Display", serif;
+        font-size: 16px;
+        font-weight: 900;
+        color: white;
+      }
+      .nav-logo-text {
+        font-weight: 600;
+        font-size: 18px;
+        color: var(--stone-900);
+      }
+      .nav-logo-sub {
+        font-weight: 300;
+        font-size: 13px;
+        color: var(--smoke);
+        display: block;
+      }
+      .nav-links {
+        display: flex;
+        gap: 32px;
+        align-items: center;
+      }
+      .nav-links a {
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--stone-700);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: var(--utk-orange);
+      }
+      .nav-cta {
+        background: var(--utk-orange);
+        color: white !important;
+        padding: 8px 20px;
+        font-size: 12px !important;
+      }
+
+      .page-header {
+        padding-top: calc(var(--nav-h) + 80px);
+        padding-bottom: 60px;
+        padding-left: 80px;
+        padding-right: 80px;
+        background: var(--stone-900);
+        position: relative;
+        overflow: hidden;
+      }
+      .page-header::before {
+        content: "TEAM";
+        position: absolute;
+        right: 40px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-family: "Playfair Display", serif;
+        font-size: 180px;
+        font-weight: 900;
+        color: rgba(255, 255, 255, 0.025);
+        letter-spacing: -8px;
+      }
+      .page-header-eyebrow {
+        font-family: "DM Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--utk-orange);
+        margin-bottom: 16px;
+      }
+      .page-header h1 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(36px, 5vw, 60px);
+        font-weight: 900;
+        color: white;
+        line-height: 1.1;
+        margin-bottom: 16px;
+      }
+      .page-header p {
+        font-size: 17px;
+        color: rgba(255, 255, 255, 0.92);
+        max-width: 580px;
+        line-height: 1.7;
+      }
+
+      .section {
+        padding: 80px;
+      }
+
+      /* PI FEATURED */
+      .pi-section {
+        background: white;
+      }
+      .pi-card {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 64px;
+        align-items: start;
+      }
+      .pi-photo {
+        width: 300px;
+        height: 360px;
+        background: var(--stone-200);
+        position: relative;
+        overflow: hidden;
+      }
+      .pi-photo-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--stone-900);
+      }
+      .pi-photo-letter {
+        font-family: "Playfair Display", serif;
+        font-size: 80px;
+        font-weight: 900;
+        color: var(--utk-orange);
+      }
+      .pi-photo-label {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--utk-orange);
+        padding: 12px 20px;
+      }
+      .pi-photo-label-text {
+        font-family: "DM Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: white;
+      }
+      .pi-eyebrow {
+        font-family: "DM Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--utk-orange);
+        margin-bottom: 12px;
+      }
+      .pi-name {
+        font-family: "Playfair Display", serif;
+        font-size: 42px;
+        font-weight: 900;
+        color: var(--stone-900);
+        line-height: 1.1;
+        margin-bottom: 8px;
+      }
+      .pi-title {
+        font-size: 16px;
+        color: var(--smoke);
+        margin-bottom: 32px;
+        line-height: 1.5;
+      }
+      .pi-bio {
+        font-size: 15px;
+        color: var(--stone-700);
+        line-height: 1.8;
+        margin-bottom: 32px;
+      }
+      .pi-stats {
+        display: flex;
+        gap: 32px;
+        padding: 24px 0;
+        border-top: 1px solid var(--stone-200);
+        border-bottom: 1px solid var(--stone-200);
+        margin-bottom: 32px;
+        flex-wrap: wrap;
+      }
+      .pi-stat-num {
+        font-family: "Playfair Display", serif;
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--stone-900);
+      }
+      .pi-stat-num span {
+        color: var(--utk-orange);
+      }
+      .pi-stat-label {
+        font-size: 11px;
+        color: var(--smoke);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin-top: 2px;
+      }
+      .pi-links {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .pi-link {
+        padding: 8px 16px;
+        border: 1.5px solid var(--stone-200);
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--stone-700);
+        text-decoration: none;
+        transition: all 0.2s;
+        letter-spacing: 0.02em;
+      }
+      .pi-link:hover {
+        border-color: var(--utk-orange);
+        color: var(--utk-orange);
+      }
+      .pi-link-primary {
+        background: var(--utk-orange);
+        border-color: var(--utk-orange);
+        color: white;
+      }
+      .pi-link-primary:hover {
+        background: var(--utk-orange-deep);
+        color: white !important;
+      }
+
+      /* STUDENTS */
+      .students-section {
+        background: var(--stone-100);
+      }
+      .section-eyebrow {
+        font-family: "DM Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--utk-orange);
+        margin-bottom: 16px;
+      }
+      .section-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(28px, 3.5vw, 40px);
+        font-weight: 700;
+        color: var(--stone-900);
+        margin-bottom: 16px;
+        line-height: 1.15;
+      }
+      .section-lead {
+        font-size: 16px;
+        color: var(--smoke);
+        max-width: 580px;
+        line-height: 1.75;
+        margin-bottom: 48px;
+      }
+
+      .student-tier-label {
+        font-family: "DM Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--stone-500);
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--stone-200);
+      }
+      .students-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        margin-bottom: 48px;
+        align-items: start;
+      }
+      .student-card {
+        background: white;
+        overflow: hidden;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .student-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 16px 40px rgba(30, 21, 13, 0.1);
+      }
+      .student-card-top {
+        height: 8px;
+        background: var(--stone-200);
+      }
+      .student-card-top.phd {
+        background: var(--utk-orange);
+      }
+      .student-card-top.deng {
+        background: var(--stone-500);
+      }
+      .student-card-top.undergrad {
+        background: var(--stone-300);
+      }
+      .student-card-body {
+        padding: 28px;
+      }
+      .student-avatar {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: var(--stone-100);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Playfair Display", serif;
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--stone-500);
+        margin-bottom: 16px;
+      }
+      .student-card-body .student-avatar.phd {
+        background: rgba(255, 102, 0, 0.1);
+        color: var(--utk-orange);
+      }
+      .student-name {
+        font-family: "Playfair Display", serif;
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--stone-900);
+        margin-bottom: 4px;
+      }
+      .student-role {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+      }
+      .student-role.phd {
+        color: var(--utk-orange);
+      }
+      .student-role.deng {
+        color: var(--stone-500);
+      }
+      .student-role.undergrad {
+        color: var(--stone-500);
+      }
+      .student-desc {
+        font-size: 13px;
+        color: var(--smoke);
+        line-height: 1.7;
+        margin-bottom: 12px;
+      }
+      .student-email {
+        font-size: 12px;
+        color: var(--stone-500);
+        font-family: "DM Mono", monospace;
+      }
+      .student-email a {
+        color: var(--utk-orange);
+        text-decoration: none;
+      }
+
+      /* COLLABORATORS */
+      .collab-section {
+        background: var(--stone-900);
+      }
+      .collab-section .section-title {
+        color: white;
+      }
+      .collab-section .section-lead {
+        color: rgba(255, 255, 255, 0.92);
+      }
+      .collab-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2px;
+        background: rgba(255, 255, 255, 0.05);
+      }
+      .collab-card {
+        background: var(--stone-900);
+        padding: 28px 24px;
+        transition: background 0.2s;
+      }
+      .collab-card:hover {
+        background: rgba(255, 102, 0, 0.08);
+      }
+      .collab-name {
+        font-family: "Playfair Display", serif;
+        font-size: 16px;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 4px;
+      }
+      .collab-inst {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.9);
+        line-height: 1.4;
+      }
+
+      /* JOIN SECTION */
+      .join-section {
+        background: var(--utk-orange);
+        padding: 80px;
+      }
+      .join-inner {
+        max-width: 720px;
+      }
+      .join-eyebrow {
+        font-family: "DM Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.88);
+        margin-bottom: 16px;
+      }
+      .join-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(32px, 4vw, 52px);
+        font-weight: 900;
+        color: white;
+        line-height: 1.1;
+        margin-bottom: 24px;
+      }
+      .join-text {
+        font-size: 17px;
+        color: rgba(255, 255, 255, 0.85);
+        line-height: 1.75;
+        margin-bottom: 40px;
+      }
+      .join-requirements {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 40px;
+      }
+      .join-req {
+        background: rgba(255, 255, 255, 0.12);
+        padding: 20px;
+        border-left: 3px solid rgba(255, 255, 255, 0.9);
+      }
+      .join-req-title {
+        font-weight: 600;
+        font-size: 14px;
+        color: white;
+        margin-bottom: 6px;
+      }
+      .join-req-text {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.9);
+        line-height: 1.5;
+      }
+      .btn-white {
+        background: white;
+        color: var(--utk-orange);
+        padding: 14px 32px;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        letter-spacing: 0.04em;
+        display: inline-block;
+        transition: all 0.2s;
+      }
+      .btn-white:hover {
+        background: var(--stone-100);
+      }
+
+      footer {
+        background: #58595B;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 32px 80px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+      footer p {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.88);
+      }
+      .footer-links {
+        display: flex;
+        gap: 24px;
+      }
+      .footer-links a {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.88);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .footer-links a:hover {
+        color: var(--utk-orange);
+      }
+
+      @media (max-width: 1024px) {
+        .pi-card {
+          grid-template-columns: 1fr;
+        }
+        .pi-photo {
+          width: 100%;
+          height: 280px;
+        }
+        .students-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .collab-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .join-requirements {
+          grid-template-columns: 1fr;
+        }
+        .section,
+        .join-section {
+          padding: 60px 40px;
+        }
+        .page-header {
+          padding-left: 40px;
+          padding-right: 40px;
+        }
+        nav {
+          padding: 0 24px;
+        }
+        .nav-links {
+          display: none;
+        }
+        footer {
+          padding: 24px 40px;
+        }
+      }
+      @media (max-width: 600px) {
+        .students-grid {
+          grid-template-columns: 1fr;
+        }
+        .pi-stats {
+          gap: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="index.html" class="nav-logo">
+        <img
+          src="assets/Frame 3.png"
+          style="height: 56px; width: auto; display: block"
+        />
+        <div class="nav-logo-text">
+          ARCS Lab<span class="nav-logo-sub"
+            >University of Tennessee, Knoxville</span
+          >
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="research.html">Research</a>
+        <a href="publications.html">Publications</a>
+        <a href="team.html" class="active">Team</a>
+        <a href="pi.html">PI</a>
+        <a href="funding.html">Funding</a>
+        <a href="talks.html">Talks</a>
+        <a href="contact.html" class="nav-cta">Contact</a>
+      </div>
+    </nav>
+
+    <div class="page-header">
+      <div class="page-header-eyebrow">People</div>
+      <h1>The ARCS Lab Team</h1>
+      <p>
+        Researchers at the intersection of human factors, HCI, and AI — united
+        by a commitment to advancing human-AI teaming science.
+      </p>
+    </div>
+
+    <!-- PI -->
+    <section class="section pi-section">
+      <div class="pi-card">
+        <div>
+          <div class="pi-photo">
+            <img
+              src="assets/DSCF0563-Beaus-Workstation.jpg"
+              alt="Dr. Beau Schelble"
+              style="
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+              "
+            />
+            <div class="pi-photo-label">
+              <div class="pi-photo-label-text">
+                Founding Director · ARCS Lab
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="pi-eyebrow">Principal Investigator</div>
+          <div class="pi-name">Dr. Beau G.<br />Schelble</div>
+          <div class="pi-title">
+            Assistant Professor, Industrial &amp; Systems Engineering<br />Founding
+            Director, AI &amp; Robotics for Collaborative Systems Lab<br />Tickle
+            College of Engineering · University of Tennessee, Knoxville
+          </div>
+          <div class="pi-bio">
+            Dr. Schelble is an interdisciplinary researcher whose work sits at
+            the intersection of human factors, human-centered computing, and AI.
+            For nearly a decade he has explored how humans and AI can work
+            together more effectively and safely — investigating trust, shared
+            mental models, situational awareness, ethical AI behavior, and
+            intelligent information sharing. His research spans defense,
+            advanced manufacturing, healthcare, cybersecurity, and emergency
+            response. He received his PhD in Human-Centered Computing from
+            Clemson University in 2023 under advisor Nathan McNeese, and his BS
+            in Psychology (Summa Cum Laude) from Clemson in 2018.
+          </div>
+          <div class="pi-stats">
+            <div>
+              <div class="pi-stat-num">46<span>+</span></div>
+              <div class="pi-stat-label">Publications</div>
+            </div>
+            <div>
+              <div class="pi-stat-num">$722K</div>
+              <div class="pi-stat-label">PI Funding</div>
+            </div>
+            <div>
+              <div class="pi-stat-num">5</div>
+              <div class="pi-stat-label">Best Paper Awards</div>
+            </div>
+            <div>
+              <div class="pi-stat-num">7</div>
+              <div class="pi-stat-label">Invited Talks</div>
+            </div>
+          </div>
+          <div class="pi-links">
+            <a href="pi.html" class="pi-link pi-link-primary">Full Profile →</a>
+            <a href="https://beauschelble.com" target="_blank" class="pi-link"
+              >Personal Website</a
+            >
+            <a
+              href="https://scholar.google.com/citations?user=ggHXV-4AAAAJ&hl=en"
+              target="_blank"
+              class="pi-link"
+              >Google Scholar</a
+            >
+            <a href="mailto:bschelbl@utk.edu" class="pi-link"
+              >bschelbl@utk.edu</a
+            >
+            <a
+              href="https://orcid.org/0000-0003-3704-697X"
+              target="_blank"
+              class="pi-link"
+              >ORCID</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GRADUATE STUDENTS -->
+    <section class="section students-section">
+      <div class="section-eyebrow">Lab Members</div>
+      <h2 class="section-title">Graduate Researchers</h2>
+      <p class="section-lead">
+        Our PhD and doctoral engineering students drive original research across
+        the ARCS Lab's core focus areas.
+      </p>
+
+      <div class="student-tier-label">PhD Students</div>
+      <div class="students-grid">
+        <div class="student-card">
+          <div class="student-card-top phd"></div>
+          <div class="student-card-body">
+            <img
+              src="assets/sarahHeadshot.jpg"
+              alt="Sarah Mendoza"
+              style="
+                width: 72px;
+                height: 72px;
+                border-radius: 50%;
+                object-fit: cover;
+                margin-bottom: 16px;
+                display: block;
+              "
+            />
+            <div class="student-name">Sarah Mendoza</div>
+            <div class="student-role phd">PhD Student · ISE</div>
+            <div class="student-desc">
+              Hello hello! I'm Sarah Mendoza and I'm from Clemson, South
+              Carolina. Guided by my curiosity for people and interpersonal
+              behaviors, I graduated from Clemson University with my bachelor's
+              degree in Psychology in May 2025. I was brought into the world of
+              human-AI teams during my time there — researching everything from
+              trust perceptions, to autonomy levels, to teamwork versus
+              taskwork. This, coupled with my minor in Computer Science, has
+              prompted me to further explore the various dimensions of human-AI
+              teams within the ARCS lab! When I'm not working, I'm probably in
+              the gym, checking out a new café, or playing The Sims 3.
+            </div>
+            <div class="student-email">
+              BS Psychology, Clemson University (2025) · Minor: Computer
+              Science<br /><a href="mailto:smendoz9@vols.utk.edu"
+                >smendoz9@vols.utk.edu</a
+              >
+              ·
+              <a
+                href="https://scholar.google.com/citations?user=rYofT7YAAAAJ&hl=en"
+                target="_blank"
+                rel="noopener"
+                >Google Scholar</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="student-card">
+          <div class="student-card-top phd"></div>
+          <div class="student-card-body">
+            <img
+              src="assets/yayunHeadshot.jpg"
+              alt="Yayun Tian"
+              style="
+                width: 72px;
+                height: 72px;
+                border-radius: 50%;
+                object-fit: cover;
+                margin-bottom: 16px;
+                display: block;
+              "
+            />
+            <div class="student-name">Yayun Tian</div>
+            <div class="student-role phd">PhD Student · ISE</div>
+            <div class="student-desc">
+              Hi, I'm Yayun Tian, and I'm a Ph.D. student in Industrial and
+              Systems Engineering at the University of Tennessee, Knoxville. I
+              graduated from Stony Brook University in 2020 with a Bachelor's
+              degree in Applied Mathematics and Statistics, a double major in
+              Economics, and a minor in Computer Science. In 2022, I earned my
+              Master's degree in Analytics from the University of Southern
+              California, and then spent three years working as a software
+              engineer in Los Angeles. These experiences led me to think about
+              how technology could play a more active and supportive role in
+              teamwork — not just as a tool, but as a trusted and capable
+              teammate.
+            </div>
+            <div class="student-email">
+              MS Analytics, USC (2022) · BS Applied Math &amp; Stats/Economics,
+              Stony Brook (2020)<br /><a href="mailto:ytian21@vols.utk.edu"
+                >ytian21@vols.utk.edu</a
+              >
+            </div>
+          </div>
+        </div>
+        <div
+          class="student-card"
+          style="
+            border: 2px dashed var(--stone-200);
+            background: var(--stone-50);
+          "
+        >
+          <div
+            class="student-card-top"
+            style="background: var(--stone-200)"
+          ></div>
+          <div class="student-card-body">
+            <div class="student-avatar" style="background: var(--stone-100)">
+              +
+            </div>
+            <div class="student-name" style="color: var(--stone-500)">
+              Incoming PhD Student
+            </div>
+            <div class="student-role" style="color: var(--stone-500)">
+              Joining August 2026
+            </div>
+            <div class="student-desc" style="color: var(--stone-500)">
+              A new PhD student is joining the ARCS Lab in August 2025. Details
+              to follow.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="student-tier-label">
+        Doctor of Engineering (DEng) Students
+      </div>
+      <div class="students-grid">
+        <div class="student-card">
+          <div class="student-card-top deng"></div>
+          <div class="student-card-body">
+            <div
+              class="student-avatar"
+              style="
+                background: rgba(139, 115, 85, 0.1);
+                color: var(--stone-500);
+              "
+            >
+              J
+            </div>
+            <div class="student-name">Joey Burdin</div>
+            <div class="student-role deng">DEng Student · ISE</div>
+            <div class="student-desc">
+              Applied doctoral research in industrial and systems engineering
+              with a focus on practical implementation of human-AI teaming
+              principles in professional settings.
+            </div>
+            <div class="student-email">2025–Present</div>
+          </div>
+        </div>
+        <div class="student-card">
+          <div class="student-card-top deng"></div>
+          <div class="student-card-body">
+            <div
+              class="student-avatar"
+              style="
+                background: rgba(139, 115, 85, 0.1);
+                color: var(--stone-500);
+              "
+            >
+              C
+            </div>
+            <div class="student-name">Cody Gaspar</div>
+            <div class="student-role deng">DEng Student · ISE</div>
+            <div class="student-desc">
+              Applied doctoral research in industrial and systems engineering,
+              exploring human factors and systems-level approaches to emerging
+              human-AI collaborative environments.
+            </div>
+            <div class="student-email">2024–Present</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="student-tier-label">Undergraduate Researchers</div>
+      <div class="students-grid">
+        <div class="student-card">
+          <div class="student-card-top undergrad"></div>
+          <div class="student-card-body">
+            <div class="student-avatar">E</div>
+            <div class="student-name">Elizabeth Hughes</div>
+            <div class="student-role undergrad">Undergraduate Researcher</div>
+            <div class="student-desc">
+              BS Industrial &amp; Systems Engineering · Multiple ARCS Lab
+              projects
+            </div>
+            <div class="student-email">2024–Present</div>
+          </div>
+        </div>
+        <div class="student-card">
+          <div class="student-card-top undergrad"></div>
+          <div class="student-card-body">
+            <div class="student-avatar">C</div>
+            <div class="student-name">Carson Bogue</div>
+            <div class="student-role undergrad">Undergraduate Researcher</div>
+            <div class="student-desc">
+              BS Industrial &amp; Systems Engineering · Multiple ARCS Lab
+              projects
+            </div>
+            <div class="student-email">2024–Present</div>
+          </div>
+        </div>
+        <div class="student-card">
+          <div class="student-card-top undergrad"></div>
+          <div class="student-card-body">
+            <div class="student-avatar">G</div>
+            <div class="student-name">Gracyn Filer</div>
+            <div class="student-role undergrad">Undergraduate Researcher</div>
+            <div class="student-desc">
+              BS Industrial &amp; Systems Engineering · Co-author on HFES 2025
+              paper on AI information-sharing and trust
+            </div>
+            <div class="student-email">2024–Present</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COLLABORATORS -->
+    <section class="section collab-section">
+      <div class="section-eyebrow">External Network</div>
+      <h2 class="section-title" style="color: white">Key Collaborators</h2>
+      <p class="section-lead">
+        The ARCS Lab maintains active research partnerships with leading
+        scholars across human factors, HCI, AI, and systems engineering.
+      </p>
+      <div class="collab-grid">
+        <div class="collab-card">
+          <div class="collab-name">Christopher Flathmann</div>
+          <div class="collab-inst">
+            Clemson University<br />Human-Centered Computing
+          </div>
+        </div>
+        <div class="collab-card">
+          <div class="collab-name">Allyson I. Hauptman</div>
+          <div class="collab-inst">
+            U.S. Military Academy (West Point)<br />Human-AI Teaming
+          </div>
+        </div>
+        <div class="collab-card">
+          <div class="collab-name">Chad Tossell</div>
+          <div class="collab-inst">
+            Embry-Riddle Aeronautical University<br />Human-AI Teaming &amp; Trust
+          </div>
+        </div>
+        <div class="collab-card">
+          <div class="collab-name">Thomas A. O'Neill</div>
+          <div class="collab-inst">
+            University of Calgary<br />Organizational Psychology
+          </div>
+        </div>
+        <div class="collab-card">
+          <div class="collab-name">Ewart de Visser</div>
+          <div class="collab-inst">
+            George Mason University<br />Human-Robot Trust
+          </div>
+        </div>
+        <div class="collab-card">
+          <div class="collab-name">Jamie Gorman</div>
+          <div class="collab-inst">
+            Arizona State University<br />Team Coordination Dynamics
+          </div>
+        </div>
+        <div class="collab-card">
+          <div class="collab-name">Kapil Chalil Madathil</div>
+          <div class="collab-inst">
+            Clemson University<br />Industrial Engineering
+          </div>
+        </div>
+        <div class="collab-card">
+          <div class="collab-name">Gregory Funke</div>
+          <div class="collab-inst">
+            Air Force Research Laboratory<br />Team Workload &amp; Cyber Human Factors
+          </div>
+        </div>
+        <div class="collab-card">
+          <div class="collab-name">Joseph B. Lyons</div>
+          <div class="collab-inst">
+            Air Force Research Laboratory<br />Trust in Automation
+          </div>
+        </div>
+        <div class="collab-card">
+          <div class="collab-name">Cleotilde Gonzalez</div>
+          <div class="collab-inst">
+            Carnegie Mellon University<br />Dynamic Decision Making
+          </div>
+        </div>
+        <div class="collab-card">
+          <div class="collab-name">Xueping Li</div>
+          <div class="collab-inst">
+            University of Tennessee, Knoxville<br />Healthcare Systems &amp; Optimization
+          </div>
+        </div>
+        <div class="collab-card">
+          <div class="collab-name">Anahita Khojandi</div>
+          <div class="collab-inst">
+            University of Tennessee, Knoxville<br />Machine Learning &amp; Predictive Modeling
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- JOIN -->
+    <section class="join-section" id="join">
+      <div class="join-inner">
+        <div class="join-eyebrow">Prospective Students</div>
+        <h2 class="join-title">Join the ARCS Lab</h2>
+        <p class="join-text">
+          We are actively recruiting motivated PhD students interested in
+          human-AI teaming, human factors, HCI, and the design of trustworthy AI
+          systems. We welcome students from diverse backgrounds including
+          psychology, computer science, industrial engineering, and cognitive
+          science.
+        </p>
+        <div class="join-requirements">
+          <div class="join-req">
+            <div class="join-req-title">Strong Candidates Have</div>
+            <div class="join-req-text">
+              Background in human factors, HCI, cognitive science, psychology,
+              or CS. Experience with experimental methods or programming. Strong
+              written and verbal communication skills.
+            </div>
+          </div>
+          <div class="join-req">
+            <div class="join-req-title">Research Opportunities</div>
+            <div class="join-req-text">
+              ARL-funded projects on human-AI teaming, trust calibration, shared
+              mental models, and compromised AI detection. Co-authorship on
+              high-impact publications.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2026 ARCS Lab · University of Tennessee, Knoxville · Department of Industrial &amp; Systems Engineering</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="publications.html">Publications</a>
+        <a href="research.html">Research</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </footer>
+  </body>
+</html>

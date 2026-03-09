@@ -1,1989 +1,800 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      AI & Robotics for Collaborative Systems Lab | University of Tennessee
-    </title>
-    <meta
-      name="description"
-      content="Official webpage for the AI & Robotics for Collaborative Systems (ARCS) Lab at the University of Tennessee, Knoxville – advancing human-AI teaming and intelligent collaborative systems."
-    />
-    <!-- Google Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      :root {
-        --ut-orange: #ff8200;
-        --dark: #1e1e1e;
-        --light: #fafafa;
-      }
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-family: "Inter", sans-serif;
-        scroll-behavior: smooth;
-      }
-      body {
-        background: var(--light);
-        color: var(--dark);
-        line-height: 1.6;
-      }
-      /* Navigation */
-      header {
-        position: sticky;
-        top: 0;
-        background: #fff;
-        border-bottom: 1px solid #e5e7eb;
-        z-index: 1000;
-      }
-      .nav-container {
-        max-width: 1100px;
-        margin: auto;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem;
-      }
-      .brand {
-        font-size: 1.25rem;
-        font-weight: 700;
-        color: var(--ut-orange);
-      }
-      nav ul {
-        list-style: none;
-        display: flex;
-        gap: 1rem;
-      }
-      nav a {
-        color: var(--dark);
-        text-decoration: none;
-        font-weight: 500;
-        transition: color 0.2s;
-      }
-      nav a:hover {
-        color: var(--ut-orange);
-      }
-      /* Mobile */
-      .hamburger {
-        display: none;
-        flex-direction: column;
-        cursor: pointer;
-      }
-      .hamburger span {
-        height: 3px;
-        width: 25px;
-        background: var(--dark);
-        margin: 4px 0;
-        transition: all 0.3s ease;
-      }
-      @media (max-width: 768px) {
-        nav ul {
-          position: absolute;
-          top: 64px;
-          left: 0;
-          width: 100%;
-          flex-direction: column;
-          background: #fff;
-          border-top: 1px solid #e5e7eb;
-          max-height: 0;
-          overflow: hidden;
-          transition: max-height 0.3s ease;
-        }
-        nav ul.show {
-          max-height: 400px;
-        }
-        .hamburger {
-          display: flex;
-        }
-      }
-
-      /* ============================
-        HERO (parallax + ken-burns + overlays + glass)
-         ============================ */
-      .hero {
-        position: relative;
-        background: linear-gradient(
-            to bottom,
-            rgba(0, 0, 0, 0.45) 0%,
-            rgba(0, 0, 0, 0.15) 45%,
-            rgba(0, 0, 0, 0) 70%
-          ),
-          url("assets/downtownPic.jpg") center top/cover no-repeat fixed;
-        min-height: 70vh;
-
-        /* override the generic section layout so hero is full width */
-        width: 100%;
-        max-width: none;
-        margin: 0; /* kill the centered section margin */
-        padding: 10vh 1rem; /* internal spacing for the text */
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        color: #fff;
-        isolation: isolate;
-        /* animation: none; */
-      }
-      section.hero {
-        padding: 0;
-      }
-      /* Bottom fade into page background */
-      .hero::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        /* transparent on top, fades to opaque at bottom */
-        -webkit-mask-image: linear-gradient(
-          to bottom,
-          transparent 70%,
-          black 100%
-        );
-        mask-image: linear-gradient(to bottom, transparent 70%, black 100%);
-        background: var(--light);
-        pointer-events: none;
-        z-index: 0; /* sits above bg image but below content */
-      }
-
-      .hero {
-        background-position: center 15%, bottom; /* first applies to gradient layer, second to image */
-      }
-
-      .hero-glass {
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
-        background: rgba(0, 0, 0, 0.28);
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        border-radius: 12px;
-        padding: 1.25rem 1.5rem;
-        max-width: 780px;
-        margin: 0 auto;
-        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
-      }
-      .hero h1 {
-        font-size: 2.5rem;
-        margin-bottom: 0.5rem;
-      }
-      .hero p {
-        font-size: 1.125rem;
-        max-width: 700px;
-        margin: 0 auto;
-      }
-
-      /* Desktop parallax only */
-      @media (max-width: 768px) {
-        .hero {
-          background-attachment: scroll;
-          min-height: 60vh;
-          padding: 8vh 1rem;
-        }
-      }
-
-      /* Ken-Burns */
-      @keyframes hero-zoom {
-        from {
-          background-size: auto, 104%;
-        }
-        to {
-          background-size: auto, 110%;
-        }
-      }
-
-      /* Respect reduced motion */
-      @media (prefers-reduced-motion: reduce) {
-        .hero {
-          animation: none;
-        }
-        .reveal {
-          transition: none;
-          transform: none;
-        }
-      }
-
-      /* Scroll-reveal utility */
-      .reveal {
-        opacity: 0;
-        transform: translateY(16px);
-        transition: opacity 0.6s ease, transform 0.6s ease;
-        will-change: opacity, transform;
-      }
-      .reveal.in {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      /* Sections */
-      section {
-        padding: 4rem 1rem;
-        max-width: 1100px;
-        margin: auto;
-      }
-      #about p {
-        text-align: justify;
-      }
-      h2 {
-        font-size: 2rem;
-        color: var(--ut-orange);
-        margin-bottom: 1.5rem;
-        text-align: center;
-      }
-      .grid {
-        display: grid;
-        gap: 2rem;
-      }
-      .grid-2 {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      }
-      .card {
-        background: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 8px;
-        padding: 1.5rem;
-        transition: transform 0.2s, box-shadow 0.2s;
-      }
-      .card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      }
-      /* People */
-      .people {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 2rem;
-        justify-content: center;
-      }
-      .person {
-        background: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 8px;
-        width: 260px;
-        text-align: center;
-        padding: 1.5rem;
-      }
-      .person img {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-bottom: 1rem;
-      }
-      .person p {
-        text-align: justify;
-      }
-      /* Footer */
-      footer {
-        background: #f3f4f6;
-        padding: 2rem 1rem;
-        text-align: center;
-        font-size: 0.9rem;
-        color: #4b5563;
-      }
-      footer a {
-        color: var(--ut-orange);
-        text-decoration: none;
-      }
-
-      /* ===== Publications Visual Enhancements ===== */
-      #publications {
-        background: #fdfdfd;
-        padding: 4rem 2rem;
-        border-radius: 12px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-        line-height: 1.7;
-      }
-      #publications h2 {
-        font-size: 2.25rem;
-        color: var(--ut-orange);
-        text-align: center;
-        margin-bottom: 2rem;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-      }
-      #publications #pubSearch {
-        display: block;
-        width: 100%;
-        max-width: 600px;
-        margin: 0 auto 2rem;
-        padding: 0.6rem 1rem;
-        border-radius: 8px;
-        border: 1px solid #e5e7eb;
-        font-size: 1rem;
-        outline: none;
-      }
-      #publications details {
-        margin-bottom: 1.5rem;
-        background: #fff;
-        border-radius: 8px;
-        padding: 1.5rem 2rem;
-        border: 1px solid #e5e7eb;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
-        transition: box-shadow 0.3s ease;
-      }
-      #publications details:hover {
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.07);
-      }
-      #publications summary {
-        cursor: pointer;
-        font-weight: 700;
-        color: #333;
-        font-size: 1.2rem;
-        background: linear-gradient(to right, #fff, #fff8f2);
-        padding: 0.75rem 1rem;
-        border-radius: 6px;
-      }
-      #publications h3 {
-        margin-top: 1.5rem;
-        font-size: 1.1rem;
-        color: var(--ut-orange);
-        border-bottom: 2px solid var(--ut-orange);
-        display: inline-block;
-        padding-bottom: 0.25rem;
-      }
-      #publications ul {
-        list-style: none;
-        padding-left: 0;
-      }
-      #publications li {
-        margin: 0.75rem 0;
-        padding-left: 1rem;
-        border-left: 3px solid #eee;
-      }
-      #publications li:hover {
-        border-left-color: var(--ut-orange);
-      }
-      #publications a {
-        color: var(--ut-orange);
-        text-decoration: none;
-        font-weight: 500;
-      }
-      #publications a:hover {
-        text-decoration: underline;
-      }
-      #publications p:last-of-type {
-        text-align: center;
-        margin-top: 2rem;
-      }
-      #publications p:last-of-type a {
-        display: inline-block;
-        background: var(--ut-orange);
-        color: white;
-        padding: 0.6rem 1.2rem;
-        border-radius: 6px;
-        transition: all 0.3s ease;
-      }
-      #publications p:last-of-type a:hover {
-        background: #e36d00;
-      }
-      /* =========================================== */
-
-      /* ===== ARCS Section Upgrades ===== */
-
-      /* Generic section wrapper enhancements */
-      section .section-head {
-        text-align: center;
-        margin-bottom: 2rem;
-      }
-      section .section-head p.lead {
-        max-width: 820px;
-        margin: 0.5rem auto 0;
-        color: #4b5563;
-      }
-
-      /* RESEARCH AREAS */
-      #research {
-        position: relative;
-      }
-      .ra-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 1.5rem;
-      }
-      .ra-card {
-        background: radial-gradient(
-            1200px 400px at 0% -20%,
-            rgba(255, 130, 0, 0.07),
-            transparent
-          ),
-          #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 16px;
-        padding: 1.25rem 1.25rem 1.35rem;
-        transition: transform 0.25s ease, box-shadow 0.25s ease,
-          border-color 0.25s ease;
-        box-shadow: 0 8px 20px rgba(17, 24, 39, 0.04);
-      }
-      .ra-card:hover {
-        transform: translateY(-6px);
-        border-color: rgba(255, 130, 0, 0.45);
-        box-shadow: 0 16px 28px rgba(17, 24, 39, 0.1);
-      }
-      .ra-icon {
-        width: 40px;
-        height: 40px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 12px;
-        background: #fff3e8;
-        border: 1px solid #ffd2a6;
-        margin-bottom: 0.75rem;
-      }
-      .ra-icon i {
-        width: 22px;
-        height: 22px;
-        color: var(--ut-orange);
-      }
-
-      #research h3 {
-        margin: 0 0 0.35rem 0;
-        font-size: 1.05rem;
-        color: #1f2937;
-        border: none;
-        padding: 0;
-      }
-
-      /* JOIN THE LAB (Opportunities) */
-      #opportunities {
-        background: linear-gradient(180deg, #fff, #fff9f3);
-        border: 1px solid #ffe3c7;
-        border-radius: 16px;
-        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
-      }
-      .opps-wrap {
-        display: grid;
-        grid-template-columns: 1.1fr 0.9fr;
-        gap: 2rem;
-        align-items: center;
-      }
-      @media (max-width: 900px) {
-        .opps-wrap {
-          grid-template-columns: 1fr;
-        }
-      }
-      .opps-card {
-        background: #fff;
-        border: 1px solid #f5d2ad;
-        border-radius: 14px;
-        padding: 1.25rem 1.5rem;
-      }
-      .badges {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin: 0.75rem 0 1rem;
-      }
-      .badge {
-        background: #fff3e8;
-        border: 1px solid #ffd2a6;
-        color: #9a4a00;
-        padding: 0.35rem 0.6rem;
-        border-radius: 999px;
-        font-size: 0.85rem;
-      }
-      .btn {
-        display: inline-block;
-        padding: 0.7rem 1.1rem;
-        border-radius: 10px;
-        background: var(--ut-orange);
-        color: #fff;
-        text-decoration: none;
-        font-weight: 600;
-        box-shadow: 0 8px 22px rgba(255, 130, 0, 0.25);
-        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-      }
-      .btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 12px 28px rgba(255, 130, 0, 0.35);
-      }
-      .btn.secondary {
-        background: #fff;
-        color: #c2410c;
-        border: 1px solid #f5d2ad;
-        box-shadow: none;
-      }
-      .btn-row {
-        display: flex;
-        gap: 0.8rem;
-        flex-wrap: wrap;
-        margin-top: 1rem;
-      }
-
-      /* PEOPLE */
-/* People — centered rows with even gaps */
-      #people .people-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, 320px); /* fixed card width */
-        justify-content: center;                         /* center the whole group */
-        gap: 1.75rem;
-        margin-inline: auto;                             /* center inside section */
-        max-width: 1200px;                               /* keep rows tidy on xl screens */
-}
-/* Make sure cards don’t try to stretch wider */
-      .person { 
-        width: 320px; max-width: 100%; 
-      }
-      .person {
-        background: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 16px;
-        padding: 1.25rem;
-        text-align: center;
-        transition: transform 0.25s ease, box-shadow 0.25s ease,
-          border-color 0.25s ease;
-        box-shadow: 0 8px 18px rgba(17, 24, 39, 0.05);
-      }
-      .person:hover {
-        transform: translateY(-6px);
-        border-color: rgba(255, 130, 0, 0.45);
-        box-shadow: 0 16px 28px rgba(17, 24, 39, 0.1);
-      }
-      .person img {
-        width: 120px;
-        height: 120px;
-        object-fit: cover;
-        border-radius: 999px;
-        margin-bottom: 0.9rem;
-        border: 4px solid #fff;
-        outline: 3px solid #ffe3c7;
-      }
-      .person h3 {
-        margin: 0.25rem 0 0.35rem 0;
-      }
-      .person p {
-        text-align: left;
-        font-size: 0.95rem;
-        color: #374151;
-      }
-      .person .links {
-        margin-top: 0.75rem;
-        display: flex;
-        gap: 0.85rem;
-        justify-content: center;
-      }
-      .person .links a {
-        font-weight: 600;
-        color: var(--ut-orange);
-        text-decoration: none;
-        border-bottom: 1px dashed rgba(255, 130, 0, 0.5);
-      }
-      .person .links a:hover {
-        border-bottom-style: solid;
-      }
-      /* Make ALL links inside a .person look the same, even if not wrapped in .links */
-#people .person a {
-  color: var(--ut-orange) !important;
-  text-decoration: none;
-  font-weight: 600;
-  border-bottom: 1px dashed rgba(255, 130, 0, 0.5);
-}
-#people .person a:hover { border-bottom-style: solid; }
-#people .person a:visited { color: var(--ut-orange) !important; }
-
-/* Optional: consistent divider styling for the “|” */
-#people .person .divider {
-  color: #333;
-  margin: 0 6px;
-  font-weight: 400;
-  opacity: 0.9;
-}
-
-/* (If you want centered bios) */
-#people .person p { text-align: center; }  /* replace your left-align rule */
-
-      /* CONTACT */
-      #contact {
-        background: linear-gradient(180deg, #fff, #f8fafc);
-        border: 1px solid #e5e7eb;
-        border-radius: 16px;
-        box-shadow: 0 8px 20px rgba(17, 24, 39, 0.05);
-      }
-      .contact-grid {
-        display: grid;
-        gap: 1.5rem;
-        grid-template-columns: 1.2fr 0.8fr;
-        align-items: start;
-      }
-      @media (max-width: 900px) {
-        .contact-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-      .contact-card {
-        background: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 14px;
-        padding: 1.25rem 1.5rem;
-      }
-      .contact-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-      }
-      .contact-list li {
-        display: flex;
-        align-items: center;
-        gap: 0.6rem;
-        margin: 0.5rem 0;
-      }
-      .contact-list i {
-        width: 20px;
-        height: 20px;
-        color: var(--ut-orange);
-      }
-      .copy {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        margin-top: 0.5rem;
-        padding: 0.45rem 0.65rem;
-        border-radius: 8px;
-        border: 1px solid #e5e7eb;
-        background: #f9fafb;
-        cursor: pointer;
-        font-size: 0.9rem;
-      }
-      .copy:hover {
-        background: #fff3e8;
-        border-color: #ffd2a6;
-      }
-      .map-placeholder {
-        height: 220px;
-        border-radius: 14px;
-        border: 1px dashed #e5e7eb;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #6b7280;
-        background: repeating-linear-gradient(
-          45deg,
-          #f9fafb,
-          #f9fafb 10px,
-          #f3f4f6 10px,
-          #f3f4f6 20px
-        );
-      }
-      /* ===== End Upgrades ===== */
-
-      /* ===== Header / Navbar Upgrades ===== */
-      header {
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        backdrop-filter: saturate(120%) blur(10px);
-        -webkit-backdrop-filter: saturate(120%) blur(10px);
-        background: rgba(255, 255, 255, 0.75);
-        border-bottom: 1px solid rgba(229, 231, 235, 0.6);
-        transition: background 0.25s ease, box-shadow 0.25s ease,
-          padding 0.25s ease;
-      }
-      header.scrolled {
-        background: rgba(255, 255, 255, 0.92);
-        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
-      }
-      .nav-container {
-        max-width: 1100px;
-        margin: 0 auto;
-        padding: 0.75rem 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-      }
-      nav ul {
-        list-style: none;
-        display: flex;
-        gap: 1rem;
-        align-items: center;
-      }
-      nav a {
-        position: relative;
-        display: inline-block;
-        padding: 0.35rem 0.4rem;
-        color: var(--dark);
-        text-decoration: none;
-        font-weight: 600;
-      }
-      nav a::after {
-        content: "";
-        position: absolute;
-        left: 0.4rem;
-        right: 0.4rem;
-        bottom: 0;
-        height: 2px;
-        border-radius: 2px;
-        background: var(--ut-orange);
-        transform: scaleX(0);
-        transform-origin: left;
-        transition: transform 0.25s ease;
-      }
-      nav a:hover::after,
-      nav a.active::after {
-        transform: scaleX(1);
-      }
-
-      /* Mobile menu refinements */
-      .hamburger {
-        display: none;
-        flex-direction: column;
-        gap: 4px;
-        cursor: pointer;
-        background: transparent;
-        border: 0;
-      }
-      .hamburger span {
-        height: 2px;
-        width: 24px;
-        background: var(--dark);
-        transition: transform 0.25s ease, opacity 0.25s ease;
-      }
-      .hamburger.open span:nth-child(1) {
-        transform: translateY(6px) rotate(45deg);
-      }
-      .hamburger.open span:nth-child(2) {
-        opacity: 0;
-      }
-      .hamburger.open span:nth-child(3) {
-        transform: translateY(-6px) rotate(-45deg);
-      }
-      @media (max-width: 768px) {
-        .hamburger {
-          display: flex;
-        }
-        nav ul {
-          position: absolute;
-          top: 72px;
-          left: 0;
-          right: 0;
-          background: rgba(255, 255, 255, 0.98);
-          border-top: 1px solid #e5e7eb;
-          flex-direction: column;
-          padding: 0.75rem 1rem;
-          max-height: 0;
-          overflow: hidden;
-          transition: max-height 0.3s ease;
-        }
-        nav ul.show {
-          max-height: 420px;
-        }
-      }
-
-      /* Center About paragraph and People bios */
-      #about p {
-        text-align: center !important;
-        max-width: 900px;
-        margin: 0 auto;
-      }
-      .person p {
-        text-align: center !important;
-      }
-      /* ===== End Header / Centering ===== */
-
-/* ===== Mobile-safe HERO overrides (no zoom, no fixed bg) ===== */
-.hero { 
-  background: none !important;
-  position: relative;
-  overflow: hidden;
-}
-.hero .hero-bg {
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-}
-.hero .hero-bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 50% 88%;
-  display: block;
-}
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,.45) 0%,
-    rgba(0,0,0,.15) 45%,
-    rgba(0,0,0,0) 70%
-  );
-}
-@media (max-width: 768px), (pointer: coarse) {
-  .hero .hero-bg img { object-position: 50% 88%; }
-  .hero { padding: 8vh 1rem; min-height: 60vh; }
-  .hero::after {
-    -webkit-mask-image: none !important;
-            mask-image: none !important;
-    background: linear-gradient(to bottom, rgba(0,0,0,.35), rgba(0,0,0,0)) !important;
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARCS Lab | AI & Robotics for Collaborative Systems | UTK</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --stone-50: #faf8f5;
+    --stone-100: #f2ede6;
+    --stone-200: #e4d9cc;
+    --stone-300: #c9b99e;
+    --stone-500: #6b5040;
+    --stone-500: #8b7355;
+    --stone-700: #4a3728;
+    --stone-900: #1e150d;
+    --utk-orange: #FF6600;
+    --utk-orange-deep: #cc4f00;
+    --smoke: #3d3330;
+    --white: #fff;
+    --nav-h: 88px;
   }
-}
-@media (prefers-reduced-motion: reduce) {
-  .hero { animation: none !important; }
-}
-
-/* Map embed */
-.map-embed {
-  position: relative;
-  width: 100%;
-  height: 320px;               /* tweak if you want taller */
-  border-radius: 14px;
-  overflow: hidden;
-  border: 1px solid #e5e7eb;
-  background: #f8fafc;
-}
-.map-embed iframe {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  border: 0;
-}
-
-/* ===== Mobile header: solid, auto-height, no blur, no seam ===== */
-@media (max-width: 768px) {
-  header {
-    position: sticky;                 /* back to sticky so no overlap math */
-    top: 0;
-    background: #fff !important;      /* solid background = no seam */
-    -webkit-backdrop-filter: none !important;
-            backdrop-filter: none !important;
-    border-bottom: 0 !important;      /* borders trigger hairlines */
-    box-shadow: 0 1px 0 rgba(0,0,0,.08);  /* subtle divider instead */
-    overflow: hidden;                  /* prevents any internal bleed */
-    background-clip: padding-box;
-    -webkit-background-clip: padding-box;
-    transform: translateZ(0);          /* stable compositing on iOS */
-    isolation: isolate;
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { overflow-x: hidden; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--stone-50);
+    color: var(--stone-900);
+    overflow-x: hidden;
   }
 
-  /* Keep the header compact and consistent */
-  .nav-container { padding: 10px 16px; }
-  .brand img { max-height: 44px; height: 44px; width: auto; display: block; }
-
-  /* Make sure no first-section margin peeks under header */
-  header + * { margin-top: 0 !important; }
-  .hero, section:first-of-type { margin-top: 0 !important; }
-  .hero > *:first-child { margin-top: 0 !important; }
-}
-
-/* If any 1px line still appears, draw our own crisp edge and avoid borders */
-@media (max-width: 768px) {
-  header::after {
-    content: "";
-    position: absolute; left: 0; right: 0; bottom: -1px; height: 1px;
-    background: rgba(0,0,0,.06);
-    pointer-events: none;
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: var(--nav-h);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px;
+    background: rgba(250,248,245,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--stone-200);
   }
-}
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px; text-decoration: none;
+  }
+  .nav-logo-mark {
+    width: 36px; height: 36px;
+    background: var(--utk-orange);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 900; color: white;
+    letter-spacing: -0.5px;
+  }
+  .nav-logo-text {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600; font-size: 18px;
+    color: var(--stone-900); letter-spacing: 0.02em;
+    line-height: 1.3;
+  }
+  .nav-logo-sub { font-weight: 300; font-size: 13px; color: var(--smoke); display: block; }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links a {
+    text-decoration: none; font-size: 15px; font-weight: 500;
+    color: var(--stone-700); letter-spacing: 0.04em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--utk-orange); }
+  .nav-cta {
+    background: var(--utk-orange); color: white !important;
+    padding: 10px 24px; font-size: 13px !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--utk-orange-deep) !important; color: white !important; }
 
-/* ===== Mobile nav: full-width dropdown under header ===== */
-@media (max-width: 768px) {
-  /* Let the menu overflow below the header */
-  header { overflow: visible !important; z-index: 1000; }
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: var(--nav-h);
+  }
+  .hero-left {
+    padding: 80px 64px 80px 80px;
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--utk-orange); margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-eyebrow::after {
+    content: ''; flex: 1; max-width: 48px; height: 1px;
+    background: var(--utk-orange);
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 5vw, 68px);
+    font-weight: 900; line-height: 1.05;
+    color: var(--stone-900); margin-bottom: 24px;
+  }
+  .hero-title span { color: var(--utk-orange); }
+  .hero-desc {
+    font-size: 17px; line-height: 1.75; color: var(--smoke);
+    max-width: 480px; margin-bottom: 48px;
+  }
+  .hero-stats {
+    display: flex; gap: 40px; margin-bottom: 48px;
+    padding-top: 40px;
+    border-top: 1px solid var(--stone-200);
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px; font-weight: 700;
+    color: var(--stone-900); line-height: 1;
+  }
+  .stat-num span { color: var(--utk-orange); }
+  .stat-label {
+    font-size: 12px; color: var(--smoke); margin-top: 4px;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--utk-orange); color: white;
+    padding: 14px 32px; font-size: 14px; font-weight: 600;
+    text-decoration: none; letter-spacing: 0.04em;
+    transition: all 0.2s; display: inline-block;
+  }
+  .btn-primary:hover { background: var(--utk-orange-deep); transform: translateY(-1px); }
+  .btn-outline {
+    border: 1.5px solid var(--stone-300); color: var(--stone-700);
+    padding: 14px 32px; font-size: 14px; font-weight: 500;
+    text-decoration: none; letter-spacing: 0.04em;
+    transition: all 0.2s; display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--utk-orange); color: var(--utk-orange); }
 
-  /* Anchor for absolute positioning */
-  nav { position: relative; }
-
-  /* Dropdown panel */
-  nav ul {
-    position: absolute;
-    top: 100%;                /* sits just below the header bar */
-    left: 0;
-    right: 0;
-    margin: 0;
-    background: #fff;
-    border-top: 1px solid #e5e7eb;
-    box-shadow: 0 12px 24px rgba(0,0,0,.10);
-    z-index: 1001;
-
-    /* collapsed by default; no internal scrollbar band */
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height .3s ease;
+  .hero-right {
+    background: var(--stone-900);
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-right-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 70% 30%, rgba(255,102,0,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(255,102,0,0.08) 0%, transparent 60%);
+  }
+  .hero-visual {
+    position: relative; z-index: 2;
+    padding: 60px; text-align: center;
+  }
+  .hero-acro {
+    font-family: 'Playfair Display', serif;
+    font-size: 120px; font-weight: 900;
+    color: rgba(255,255,255,0.06);
+    line-height: 1; letter-spacing: -4px;
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap; user-select: none;
+  }
+  .hero-pill-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    position: relative; z-index: 3;
+  }
+  .hero-pill {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 20px 24px;
+    text-align: left;
+    transition: all 0.3s;
+    cursor: default;
+  }
+  .hero-pill:hover {
+    background: rgba(255,102,0,0.15);
+    border-color: rgba(255,102,0,0.4);
+  }
+  .pill-icon {
+    font-size: 22px; margin-bottom: 8px; display: block;
+  }
+  .pill-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 600;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 4px;
+  }
+  .pill-sub {
+    font-size: 11px; color: rgba(255,255,255,0.90); line-height: 1.4;
   }
 
-  /* Expanded state (your JS adds .show) */
-  nav ul.show {
-    max-height: calc(100vh - 64px);   /* plenty of room; adjusts to viewport */
-    overflow: auto;                   /* scroll only if really needed */
-    -webkit-overflow-scrolling: touch;
+  /* ── MISSION STRIP ── */
+  .mission-strip {
+    background: var(--utk-orange);
+    padding: 40px 80px;
+    display: flex; align-items: center; gap: 40px;
+  }
+  .mission-strip-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.90); white-space: nowrap;
+  }
+  .mission-strip-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.88); }
+  .mission-strip-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; font-style: italic;
+    color: white; line-height: 1.5;
   }
 
-  /* Make menu items easy to tap */
-  nav ul li { border-bottom: 1px solid #f1f5f9; }
-  nav ul li:last-child { border-bottom: 0; }
-  nav ul a {
-    display: block;
-    padding: 14px 18px;
+  /* ── RESEARCH SECTION ── */
+  section { padding: 100px 80px; }
+  .section-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--utk-orange); margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 48px); font-weight: 700;
+    color: var(--stone-900); margin-bottom: 16px; line-height: 1.15;
+  }
+  .section-lead {
+    font-size: 17px; color: var(--smoke);
+    max-width: 600px; line-height: 1.75; margin-bottom: 60px;
+  }
+
+  .research-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--stone-200);
+  }
+  .research-card {
+    background: var(--stone-50);
+    padding: 40px 36px;
+    transition: all 0.25s;
+    position: relative; overflow: hidden;
+    cursor: default;
+  }
+  .research-card::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0;
+    width: 0; height: 3px;
+    background: var(--utk-orange);
+    transition: width 0.3s;
+  }
+  .research-card:hover::before { width: 100%; }
+  .research-card:hover { background: white; }
+  .rc-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; color:var(--stone-500);
+    letter-spacing: 0.1em; margin-bottom: 20px;
+  }
+  .rc-icon {
+    width: 48px; height: 48px;
+    background: var(--stone-100);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; margin-bottom: 20px;
+    transition: background 0.25s;
+  }
+  .research-card:hover .rc-icon { background: rgba(255,102,0,0.1); }
+  .rc-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; font-weight: 700;
+    color: var(--stone-900); margin-bottom: 12px; line-height: 1.2;
+  }
+  .rc-desc {
+    font-size: 14px; color: var(--smoke); line-height: 1.7;
+  }
+
+  /* ── RECENT PUBS ── */
+  .pubs-section { background: var(--stone-900); color: white; }
+  .pubs-section .section-title { color: white; }
+  .pubs-section .section-lead { color: rgba(255,255,255,0.93); }
+  .pubs-section .section-eyebrow { color: var(--utk-orange); }
+  .pub-list { display: flex; flex-direction: column; gap: 0; }
+  .pub-item {
+    padding: 28px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 24px; align-items: start;
+    transition: all 0.2s;
+  }
+  .pub-item:hover { padding-left: 8px; }
+  .pub-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px; color: var(--utk-orange);
+    padding-top: 4px;
+  }
+  .pub-title {
+    font-size: 15px; font-weight: 500;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.5; margin-bottom: 6px;
+  }
+  .pub-meta {
+    font-size: 12px; color: rgba(255,255,255,0.90);
+    font-style: italic;
+  }
+  .pub-award {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 0.08em;
+    color: var(--utk-orange);
+    background: rgba(255,102,0,0.12);
+    padding: 3px 8px; white-space: nowrap;
+    height: fit-content;
+  }
+  .pubs-cta { margin-top: 48px; }
+
+  /* ── TEAM PREVIEW ── */
+  .team-section { background: var(--stone-100); }
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px; margin-bottom: 48px;
+  }
+  .team-card {
+    background: white; overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .team-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(30,21,13,0.12); }
+  .team-card-img {
+    height: 200px; background: var(--stone-200);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .team-card-img-placeholder {
+    width: 72px; height: 72px; background: var(--stone-300);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; font-weight: 700; color: white;
+  }
+  .team-card-body { padding: 24px; }
+  .team-card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 700;
+    color: var(--stone-900); margin-bottom: 4px;
+  }
+  .team-card-role {
+    font-size: 12px; color: var(--utk-orange);
+    font-weight: 600; letter-spacing: 0.04em;
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .team-card-desc {
+    font-size: 13px; color: var(--smoke); line-height: 1.6;
+  }
+
+  /* ── FUNDING / PARTNERS ── */
+  .funding-strip {
+    background: white;
+    padding: 60px 80px;
+    display: flex; align-items: center; gap: 64px;
+    flex-wrap: wrap;
+  }
+  .funding-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color:var(--stone-500);
+    white-space: nowrap;
+  }
+  .funding-logo-row {
+    display: flex; align-items: center; gap: 48px; flex-wrap: wrap;
+  }
+  .funding-logo {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+  }
+  .funding-logo-badge {
+    padding: 12px 24px;
+    border: 1.5px solid var(--stone-200);
+    font-weight: 700; font-size: 14px;
+    color: var(--stone-700); letter-spacing: 0.02em;
+  }
+  .funding-logo-sub {
+    font-size: 10px; color:var(--stone-500);
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  .funding-amount {
+    margin-left: auto;
+    text-align: right;
+  }
+  .funding-amount-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px; font-weight: 900; color: var(--stone-900);
+    line-height: 1;
+  }
+  .funding-amount-label {
+    font-size: 11px; color: var(--smoke);
+    text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px;
+  }
+
+  /* ── CONTACT STRIP ── */
+  .contact-strip {
+    background: var(--stone-900);
+    padding: 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+  }
+  .contact-strip .section-title { color: white; font-size: 32px; }
+  .contact-strip .section-lead { color: rgba(255,255,255,0.92); font-size: 15px; }
+  .contact-info { display: flex; flex-direction: column; gap: 20px; }
+  .contact-item {
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+  .contact-icon {
+    width: 36px; height: 36px;
+    background: rgba(255,102,0,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+    color: var(--utk-orange);
+  }
+  .contact-item-label {
+    font-size: 11px; color: rgba(255,255,255,0.90);
+    text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px;
+  }
+  .contact-item-val {
+    font-size: 14px; color: rgba(255,255,255,0.85);
+  }
+  .contact-item-val a { color: var(--utk-orange); text-decoration: none; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #58595B;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 32px 80px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+  }
+  footer p { font-size: 14px; color: rgba(255,255,255,0.88); }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a {
+    font-size: 14px; color: rgba(255,255,255,0.88);
     text-decoration: none;
-    color: #111827;
-    font-weight: 600;
+    transition: color 0.2s;
   }
-  nav ul a:active, nav ul a:hover { background: #fff7ef; }
-}
+  .footer-links a:hover { color: var(--utk-orange); }
 
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-eyebrow { animation: fadeUp 0.6s ease both; }
+  .hero-title { animation: fadeUp 0.7s 0.1s ease both; }
+  .hero-desc { animation: fadeUp 0.7s 0.2s ease both; }
+  .hero-stats { animation: fadeUp 0.7s 0.3s ease both; }
+  .hero-actions { animation: fadeUp 0.7s 0.4s ease both; }
+  .hero-pill-grid { animation: fadeUp 0.8s 0.2s ease both; }
 
-/* ===== End HERO overrides ===== */
-
+  @media (max-width: 1024px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 60px 40px; }
+    nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    section { padding: 60px 40px; }
+    .research-grid { grid-template-columns: 1fr 1fr; }
+    .team-grid { grid-template-columns: 1fr 1fr; }
+    .contact-strip { grid-template-columns: 1fr; gap: 40px; padding: 60px 40px; }
+    footer { padding: 24px 40px; }
+    .mission-strip { padding: 32px 40px; }
+    .funding-strip { padding: 40px; }
+  }
 </style>
-  </head>
-  <body>
-    <header>
-      <div class="nav-container">
-        <div class="brand">
-          <img
-            src="assets/Frame 3.png"
-            alt="ARCS Lab Logo"
-            style="height: 130px"
-          />
-        </div>
-        <nav>
-          <button
-            class="hamburger"
-            aria-label="Toggle menu"
-            aria-expanded="false"
-            onclick="toggleMenu()"
-          >
-            <span></span><span></span><span></span>
-          </button>
-          <ul id="navMenu" role="menu">
-            <li><a href="#about">About</a></li>
-            <li><a href="#research">Research</a></li>
-            <li><a href="#people">People</a></li>
-            <li><a href="#publications">Publications</a></li>
-            <li><a href="#opportunities">Opportunities</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </nav>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="assets/Frame 3.png" style="height:56px;width:auto;display:block;">
+    <div class="nav-logo-text">
+      ARCS Lab
+      <span class="nav-logo-sub">University of Tennessee, Knoxville</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="active">Home</a>
+    <a href="research.html">Research</a>
+    <a href="publications.html">Publications</a>
+    <a href="team.html">Team</a>
+    <a href="pi.html">PI</a>
+    <a href="funding.html">Funding</a>
+    <a href="talks.html">Talks</a>
+    <a href="contact.html" class="nav-cta">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding: var(--nav-h) 0 0;">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Tickle College of Engineering · UTK ISE</div>
+    <h1 class="hero-title">
+      AI &amp; Robotics for<br>
+      <span>Collaborative</span><br>
+      Systems Lab
+    </h1>
+    <p class="hero-desc">
+      Advancing the science and engineering of human‑AI teaming through rigorous, human‑centered research — designing trustworthy AI teammates for defense, manufacturing, healthcare, and beyond.
+    </p>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">46<span>+</span></div>
+        <div class="stat-label">Publications</div>
       </div>
-    </header>
-
-    <!-- HERO -->
-    <section class="hero">
-      <picture class="hero-bg"><source media="(max-width: 768px)" srcset="assets/downtownPic-mobile.jpg"><img src="assets/downtownPic.jpg" alt="" aria-hidden="true" loading="eager" decoding="async"></picture><div class="hero-glass">
-        <h1 class="reveal">AI & Robotics for Collaborative Systems Lab</h1>
-        <p class="reveal">
-          Advancing human-AI teaming by understanding and optimizing
-          collaborative systems comprised of both human and computational
-          elements to enhance performance and safety across manufacturing,
-          healthcare, defense, and beyond.
-        </p>
+      <div>
+        <div class="stat-num">5</div>
+        <div class="stat-label">Best Paper Awards</div>
       </div>
-    </section>
-
-    <!-- About -->
-    <section id="about" class="reveal">
-      <h2>About the Lab</h2>
-      <p>
-        The AI & Robotics for Collaborative Systems (ARCS) Lab advances the
-        science and engineering of human-AI teaming. Led by Founding Director
-        Dr. Beau G. Schelble in the Tickle College of Engineering at the
-        University of Tennessee, Knoxville, ARCS focuses on human-centered AI
-        and collaborative intelligent systems with emphasis on trust, shared
-        knowledge, intelligent information sharing, and situational awareness.
-        The lab’s research portfolio includes $722,190 in awards to
-        date—highlighted by an Army Research Laboratory project on preventing,
-        identifying, and mitigating compromised AI teammates through shared
-        situational awareness and accurate shared mental models.
-        <br /><br />
-        ARCS integrates quantitative, qualitative, and computational methods to
-        design human-AI teams that improve the human condition across advanced
-        manufacturing, cybersecurity, emergency response, and
-        command-and-control. The lab publishes high-impact research across
-        leading HFES, ACM, and IEEE venues (e.g., Human Factors, Proceedings of
-        the ACM on Human-Computer Interaction, IEEE Transactions on
-        Human-Machine Systems). Lab members also contribute to the broader
-        community through editorial and committee service across the Human
-        Factors and HCI community. <br /><br />
-        At UT Knoxville, the ARCS Lab teaches and mentors across undergraduate
-        and graduate levels in human factors, sysetms engineering, and
-        industrial safety, cultivating a pipeline of scholars and practitioners.
-        ARCS team members are frequently invited to share evidence-based
-        guidance on ethical, trustworthy, high-performing human-AI teams,
-        including the National Academies’ Board on Human-Systems Integration,
-        West Point, Carnegie Mellon University, and UT Austin.
-      </p>
-    </section>
-
-    <!-- Research Areas -->
-    <section id="research" class="reveal">
-      <h2>Research Areas</h2>
-      <div class="ra-grid">
-        <div class="ra-card">
-          <div class="ra-icon"><i data-lucide="users"></i></div>
-          <h3>Human-AI Teaming</h3>
-          <p>
-            Modeling information-sharing, team cognition, and workload to create
-            synergistic human–machine partnerships.
-          </p>
+    </div>
+    <div class="hero-actions">
+      <a href="research.html" class="btn-primary">Explore Our Research</a>
+      <a href="publications.html" class="btn-outline">View Publications</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-bg"></div>
+    <div class="hero-visual">
+      <div class="hero-acro">ARCS</div>
+      <div class="hero-pill-grid">
+        <div class="hero-pill">
+          <span class="pill-icon">🤝</span>
+          <div class="pill-title">Intelligent Information Sharing</div>
+          <div class="pill-sub">Modeling cognition &amp; trust in collaborative systems</div>
         </div>
-        <div class="ra-card">
-          <div class="ra-icon"><i data-lucide="shield-check"></i></div>
-          <h3>Trustworthy AI</h3>
-          <p>
-            Designing transparent AI behaviors that accurately calibrate trust
-            and contribute to AI acceptance.
-          </p>
+        <div class="hero-pill">
+          <span class="pill-icon">🔒</span>
+          <div class="pill-title">Trustworthy AI</div>
+          <div class="pill-sub">Transparency, ethics, &amp; calibrated reliance</div>
         </div>
-        <div class="ra-card">
-          <div class="ra-icon"><i data-lucide="graduation-cap"></i></div>
-          <h3>Training</h3>
-          <p>
-            Improving skill transference from training to through intelligent
-            interventions and psychological fidelity.
-          </p>
+        <div class="hero-pill">
+          <span class="pill-icon">🎯</span>
+          <div class="pill-title">Situational Awareness</div>
+          <div class="pill-sub">Adaptive interfaces for mission-critical tasks</div>
         </div>
-        <div class="ra-card">
-          <div class="ra-icon"><i data-lucide="radar"></i></div>
-          <h3>Situational Awareness</h3>
-          <p>
-            Real-time adaptive interfaces that surface mission-critical cues and
-            promote collective understanding.
-          </p>
-        </div>
-        <div class="ra-card">
-          <div class="ra-icon"><i data-lucide="bot"></i></div>
-          <h3>Applied Robotics</h3>
-          <p>
-            Integrating collaborative robots and unmanned ground vehicles into
-            manufacturing and emergency scenarios.
-          </p>
-        </div>
-        <div class="ra-card">
-          <div class="ra-icon"><i data-lucide="sparkles"></i></div>
-          <h3>Evaluation &amp; Validation</h3>
-          <p>
-            Developing rigorous experimental frameworks to test AI teammates’
-            effectiveness, safety, and resilience.
-          </p>
+        <div class="hero-pill">
+          <span class="pill-icon">🤖</span>
+          <div class="pill-title">Applied Robotics</div>
+          <div class="pill-sub">Collaborative robots in manufacturing &amp; rescue</div>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <!-- People -->
-    <section id="people" class="reveal">
-      <h2>People</h2>
-      <div class="people-grid">
-        <div class="person">
-          <img
-            src="assets/DSCF0563-Beaus-Workstation.jpg"
-            alt="Director Portrait"
-          />
-          <h3>Dr. Beau Schelble</h3>
-          <p>
-            <strong>Professor &amp; Lab Director</strong> <br />Dr. Beau
-            G. Schelble is currently an assistant professor of industrial and
-            systems engineering at the University of Tennessee, Knoxville, and
-            is the founding director of the AI and Robotics for Collaborative
-            Systems (ARCS) lab. Dr. Schelble received his Ph.D. in
-            Human-Centered Computing from Clemson University in December 2023.
-            For nearly a decade, Dr. Schelble has prioritized the exploration of
-            human factors in human-AI systems to enhance the ability of human-AI
-            collaborative systems to coordinate successfully in complex
-            environments by supporting responsible AI, situational awareness,
-            trust, and shared knowledge.
-          </p>
-          <div class="links">
-            <a href="mailto:bschelbl@utk.edu">Email</a>
-            <span class="divider">|</span>
-            <a href="https://scholar.google.com/citations?user=bg4YvZIAAAAJ&hl=en&oi=ao" target="_blank" rel="noopener">Scholar</a>
-          </div>
-        </div>
-        <div class="person">
-          <img src="assets/sarahHeadshot.jpg" alt="Student Portrait" />
-          <h3>Sarah Mendoza</h3>
-          <p>
-            <strong>PhD Student<br /></strong> Hello hello! I’m Sarah
-            Mendoza and I’m from Clemson, South Carolina. Guided by my curiosity
-            for people and interpersonal behaviors, I graduated from Clemson
-            University with my bachelor’s degree in Psychology in May 2025. I
-            was brought into the world of human-AI teams during
-            my time there- researching everything from trust perceptions, to
-            autonomy levels, to teamwork versus taskwork. This, coupled with my
-            minor in Computer Science, has prompted me to further explore the
-            various dimensions of human-AI teams within the ARCS lab! When I’m not
-            working, I’m probably in the gym, checking out a new café, or
-            playing The Sims 3.
-          </p>
-          <div class="links">
-            <a href="mailto:smendoz9@vols.utk.edu">Email</a>
-            <span class="divider">|</span>
-            <a href="https://scholar.google.com/citations?user=rYofT7YAAAAJ&hl=en" target="_blank" rel="noopener">Scholar</a>
-          </div>
-        </div>
-        <div class="person">
-          <img src="assets/yayunHeadshot.jpg" alt="Student Portrait" />
-          <h3>Yayun Tian</h3>
-          <p>
-            <strong>PhD Student<br /></strong> Hi, I’m Yayun Tian, and
-            I’m a Ph.D. student in Industrial and Systems Engineering at the
-            University of Tennessee, Knoxville. I graduated from Stony Brook
-            University in 2020 with a Bachelor’s degree in Applied Mathematics
-            and Statistics, a double major in Economics, and a minor in Computer
-            Science. In 2022, I earned my Master’s degree in Analytics from the
-            University of Southern California, and then spent three years
-            working as a software engineer in Los Angeles These experiences also
-            led me to think about how technology could play a more active and
-            supportive role in teamwork, not just as a tool, but as a trusted
-            and capable teammate.
-          </p>
-          <div class="links">
-            <a href="mailto:ytian21@vols.utk.edu">Email</a>
-            <span class="divider">|</span>
-            <span>TBD</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Publications -->
-    <section id="publications" class="reveal">
-      <h2>Publications</h2>
-      <input
-        type="text"
-        id="pubSearch"
-        placeholder="Filter publications..."
-        aria-label="Filter publications"
-      />
-
-      <!-- 2025 -->
-      <details open>
-        <summary><strong>2025</strong></summary>
-        <h3>Journal Articles</h3>
-        <ul>
-          <li>
-            <strong>Schelble, B.G.</strong>, Mallick, R., Hauptman, A., &amp;
-            McNeese, N.J. (2025, July).
-            <em
-              >Should AI Teammates Give All the Answers? Examining the Role of
-              Different AI Information-Sharing Techniques on Team Cognition in
-              Human-AI Teams.</em
-            >
-            <span>International Journal of Human-Computer Interaction</span>.
-            <a
-              href="https://doi.org/10.1080/10447318.2025.2528988"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1080/10447318.2025.2528988</a
-            >
-          </li>
-          <li>
-            Hauptman, A., <strong>Schelble, B.G.</strong>, Flathmann, C.,
-            Mallick, R., Macdonald, J., &amp; McNeese, N.J. (2025, July).
-            <em
-              >Ethical Adaptation: Exploring the Use of Adaptive Autonomy in the
-              Design of Ethical AI Teammates in Healthcare.</em
-            >
-            <span>AI and Ethics</span>.
-            <a
-              href="https://doi.org/10.1007/s43681-025-00782-w"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1007/s43681-025-00782-w</a
-            >
-          </li>
-          <li>
-            Zhou, S., Duan, W., Yin, X., Scalia, M., Hao, R., Weng, N., Funke,
-            G., Tolston, M., Freeman, G., <strong>Schelble, B.G.</strong>,
-            Gorman, J., &amp; McNeese, N.J. (in press).
-            <em>The Spread of Trust and Distrust in Human-AI Teams.</em>
-            <span>Applied Ergonomics</span>.
-          </li>
-          <li>
-            <strong>Schelble, B.G.</strong>, Textor, C., Zhang, R., Lopez, J.,
-            Tavarez, N., Ku, C., McNeese, N.J., Pak, R., Freeman, G., Tossell,
-            C., &amp; de Visser, E. (in press).
-            <em
-              >Addressing the Role of Context on Trust in Human-AI Teams: The
-              Influence of Team Role and Violation Type in High-Risk Tasks.</em
-            >
-            <span>Ergonomics</span>.
-          </li>
-        </ul>
-        <h3>Refereed Conference Papers</h3>
-        <ul>
-          <li>
-            <strong>Schelble, B.G., Filer, G.</strong>, Flathmann, C., &amp;
-            Madathil, K. (2025, Aug.).
-            <em
-              >Examining the Role of AI Information-Sharing on Trust in Human-AI
-              Teams.</em
-            >
-            In <span>HFES Annual Meeting</span>.
-            <a
-              href="https://doi.org/10.1177/10711813251367726"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1177/10711813251367726</a
-            >
-          </li>
-          <li>
-            Flathmann, C., Ihekweazu, C., &amp; <strong>Schelble, B.G.</strong>
-            (2025, Jul.).
-            <em
-              >Leveraging Generative AI to Create Lightweight Simulations for
-              Far-Future Autonomous Teammates.</em
-            >
-            In <span>HFES Annual Meeting</span>.
-            <a
-              href="https://doi.org/10.1177/10711813251357885"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1177/10711813251357885</a
-            >
-          </li>
-        </ul>
-      </details>
-
-      <!-- 2024 -->
-      <details>
-        <summary><strong>2024</strong></summary>
-        <h3>Journal Articles</h3>
-        <ul>
-          <li>
-            Sengupta, S., <strong>Schelble, B.G.</strong>, Flathmann, C.,
-            McNeese, N.J., &amp; Lyons, J. (2024, Sept.).
-            <em
-              >An Analysis of Ethical Rationales and their Impact on the
-              Perceived Moral Persona of AI Teammates.</em
-            >
-            <span>AI and Ethics</span>, 5, 2667–2679.
-            <a
-              href="https://doi.org/10.1007/s43681-024-00515-5"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1007/s43681-024-00515-5</a
-            >
-          </li>
-          <li>
-            <strong>Schelble, B.G.</strong>, Flathmann, C., Macdonald, J.,
-            Knijnenburg, B., Brady, C., &amp; McNeese, N.J. (2024, Aug.).
-            <em
-              >Modeling Perceived Information Needs in Human-AI Teams: Improving
-              AI Teammate Utility and Driving Team Cognition.</em
-            >
-            <span>Behavior &amp; Information Technology</span>, 44(9),
-            2069–2092.
-            <a
-              href="https://doi.org/10.1080/0144929X.2024.2396476"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1080/0144929X.2024.2396476</a
-            >
-          </li>
-          <li>
-            Mallick, R., Flathmann, C., Duan, W.,
-            <strong>Schelble, B.G.</strong>, &amp; McNeese, N.J. (2024, Aug.).
-            <em
-              >What You Say vs What You Do: Utilizing Positive Emotional
-              Expressions to Relay AI Teammate Intent within Human-AI Teams.</em
-            >
-            <span>International Journal of Human-Computer Studies</span>, 192,
-            103355.
-            <a
-              href="https://doi.org/10.1016/j.ijhcs.2024.103355"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1016/j.ijhcs.2024.103355</a
-            >
-          </li>
-          <li>
-            Hauptman, A.I., <strong>Schelble, B.G.</strong>, Flathmann, C.,
-            Duan, W., &amp; McNeese, N.J. (2024, May).
-            <em
-              >Understanding the Influence of AI Autonomy on AI Explainability
-              in Human-AI Teams Using a Mixed Methods Approach.</em
-            >
-            <span>Cognition, Technology &amp; Work</span>, 26, 435–455.
-            <a
-              href="https://doi.org/10.1007/s10111-024-00765-7"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1007/s10111-024-00765-7</a
-            >
-          </li>
-          <li>
-            O’Neill, T., Flathmann, C., McNeese, N.J., Jones, S., &amp;
-            <strong>Schelble, B.G.</strong> (2024, Sept.).
-            <em>A Comment on “Can You Outsmart the Robot? …”</em>
-            <span>Academy of Management Discoveries</span>, 10(1), 150–153.
-            <a
-              href="https://doi.org/10.5465/amd.2024.0009"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.5465/amd.2024.0009</a
-            >
-          </li>
-          <li>
-            Zhang, R., Flathmann, C., Musick, G.,
-            <strong>Schelble, B.G.</strong>, McNeese, N.J., Knijnenburg, B.,
-            &amp; Duan, W. (2024, Feb.).
-            <em
-              >I Know This Looks Bad, But I Can Explain: Understanding When AI
-              Should Explain Actions in Human-AI Teams.</em
-            >
-            <span>ACM Transactions on Interactive Intelligent Systems</span>,
-            14(1), 1–23.
-            <a
-              href="https://doi.org/10.1145/3635474"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1145/3635474</a
-            >
-          </li>
-        </ul>
-        <h3>Refereed Conference Papers</h3>
-        <ul>
-          <li>
-            <strong>Schelble, B.G.</strong>, Lancaster, C., Mallick, R.,
-            McNeese, N.J., Freeman, G., &amp; Pak, R. (2024, Sept.).
-            <em
-              >A Comparative Evaluation of Ad Hoc Team Performance,
-              Effectiveness, and Interactions in Modern Collaborative
-              Technology.</em
-            >
-            In <span>HFES Annual Meeting</span>.
-            <a
-              href="https://doi.org/10.1177/10711813241280939"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1177/10711813241280939</a
-            >
-          </li>
-          <li>
-            Flathmann, C., <strong>Schelble, B.G.</strong>, &amp; Galeano, A.
-            (2024, Aug.).
-            <em
-              >Empirical Impacts of Independent and Collaborative Training on
-              Task Performance and Improvement in Human-AI Teams.</em
-            >
-            In <span>HFES Annual Meeting</span>.
-            <a
-              href="https://doi.org/10.1177/10711813241274425"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1177/10711813241274425</a
-            >
-          </li>
-          <li>
-            Hauptman, A., <strong>Schelble, B.G.</strong>, Flathmann, C., &amp;
-            McNeese, N. (2024, Jun.).
-            <em
-              >The Role of Autonomy Levels and Contextual Risk in Designing
-              Safer AI Teammates.</em
-            >
-            In <span>IEEE ICHMS 2024</span>.
-            <a
-              href="https://doi.org/10.1109/ICHMS59971.2024.10555844"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1109/ICHMS59971.2024.10555844</a
-            >
-          </li>
-        </ul>
-      </details>
-
-      <!-- 2023 -->
-      <details>
-        <summary><strong>2023</strong></summary>
-        <h3>Journal Articles</h3>
-        <ul>
-          <li>
-            Flathmann, C., <strong>Schelble, B.G.</strong>, McNeese, N.J.,
-            Knijnenburg, B., Gramopadhye, A., &amp; Madathil, K.C. (2023,
-            Sept.).
-            <em
-              >The Purposeful Presentation of AI Teammates: Impacts on Human
-              Acceptance and Perception.</em
-            >
-            <span>International Journal of Human-Computer Interaction</span>,
-            40(20), 6510–6527.
-            <a
-              href="https://doi.org/10.1080/10447318.2023.2254984"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1080/10447318.2023.2254984</a
-            >
-          </li>
-          <li>
-            Lopez, J., Textor, C., Lancaster, C.,
-            <strong>Schelble, B.G.</strong>, Freeman, G., Zhang, R., McNeese,
-            N.J., &amp; Pak, R. (2023, Jul.).
-            <em
-              >The Complex Relationship of AI Ethics and Trust in Human-AI
-              Teaming: Insights from Advanced Real-World SMEs.</em
-            >
-            <span>AI and Ethics</span>, 4(4), 1213–1233.
-            <a
-              href="https://doi.org/10.1007/s43681-023-00303-7"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1007/s43681-023-00303-7</a
-            >
-          </li>
-          <li>
-            Flathmann, C., <strong>Schelble, B.G.</strong>, Rosopa, P.J.,
-            McNeese, N.J., Mallick, R., &amp; Madathil, K. (2023, Sept.).
-            <em
-              >Examining the Impact of Varying Levels of AI Teammate Influence
-              on Human-AI Teams.</em
-            >
-            <span>International Journal of Human-Computer Studies</span>, 177,
-            103061.
-            <a
-              href="https://doi.org/10.1016/j.ijhcs.2023.103061"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1016/j.ijhcs.2023.103061</a
-            >
-          </li>
-          <li>
-            Flathmann, C., McNeese, N.J., <strong>Schelble, B.G.</strong>,
-            Knijnenburg, B., &amp; Freeman, G. (2023, Mar.).
-            <em
-              >Understanding the Impact and Design of AI Teammate Etiquette.</em
-            >
-            <span>Human-Computer Interaction</span>, 39(5–6), 444–471.
-            <a
-              href="https://doi.org/10.1080/07370024.2023.2189595"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1080/07370024.2023.2189595</a
-            >
-          </li>
-        </ul>
-        <h3>Refereed Conference Papers</h3>
-        <ul>
-          <li>
-            <strong>Schelble, B.G.</strong>, Lancaster, C., Duan, W., Mallick,
-            R., McNeese, N.J., &amp; Lopez, J. (2023, Jan.).
-            <em
-              >The Effect of Ethical and Unethical AI Actions on Outcomes of
-              Trust and Performance in Human-AI Teams.</em
-            >
-            In <span>HICSS-56</span>, 332–331.
-            <a
-              href="https://hdl.handle.net/10125/102668"
-              target="_blank"
-              rel="noopener"
-              >Handle</a
-            >
-          </li>
-          <li>
-            Musick, G., <strong>Schelble, B.G.</strong>, Mallick, R., &amp;
-            McNeese, N.J. (2023, Jan.).
-            <em
-              >Intelligent Sharing is Caring: Toward the Design of an
-              Intelligent System to Facilitate Team Sharing.</em
-            >
-            In <span>HICSS-56</span>, 428–437.
-            <a
-              href="https://hdl.handle.net/10125/102681"
-              target="_blank"
-              rel="noopener"
-              >Handle</a
-            >
-          </li>
-        </ul>
-        <h3>Book Chapter</h3>
-        <ul>
-          <li>
-            Flathmann, C., <strong>Schelble, B.G.</strong>, &amp; McNeese, N.J.
-            (2023, May).
-            <em>Refocusing Human-AI Interaction Through a Teamwork Lens.</em> In
-            <span>Handbook on Virtual Work</span>. Edward Elgar.
-            <a
-              href="https://doi.org/10.4337/9781802200508.00013"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.4337/9781802200508.00013</a
-            >
-          </li>
-        </ul>
-      </details>
-
-      <!-- 2022 -->
-      <details>
-        <summary><strong>2022</strong></summary>
-        <h3>Journal Articles</h3>
-        <ul>
-          <li>
-            <strong>Schelble, B.G.</strong>, Flathmann, C., Musick, G., McNeese,
-            N.J., &amp; Freeman, G. (2022, Nov.).
-            <em
-              >I See You: Examining the Role of Spatial Information in
-              Human-Agent Teams.</em
-            >
-            <span>Proceedings of the ACM on Human-Computer Interaction</span>,
-            6(CSCW2), 1–27.
-            <a
-              href="https://doi.org/10.1145/3555099"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1145/3555099</a
-            >
-          </li>
-          <li>
-            Hauptman, A.I., <strong>Schelble, B.G.</strong>, McNeese, N.J.,
-            &amp; Madathil, K. (2022, Sept.).
-            <em
-              >Adapt and Overcome: Perceptions of Adaptive Autonomous Agents for
-              Human-AI Teaming.</em
-            >
-            <span>Computers in Human Behavior</span>, 138, 107451.
-            <a
-              href="https://doi.org/10.1016/j.chb.2022.107451"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1016/j.chb.2022.107451</a
-            >
-          </li>
-          <li>
-            <strong>Schelble, B.G.</strong>, Lopez, J., Textor, C., Zhang, R.,
-            McNeese, N.J., Pak, R., &amp; Freeman, G. (2022, Aug.).
-            <em
-              >Towards Ethical AI: Empirically Investigating Dimensions of AI
-              Ethics, Trust, and Performance in Human-AI Teaming.</em
-            >
-            <span>Human Factors</span>, 66(4), 1037–1055.
-            <a
-              href="https://doi.org/10.1177/00187208221116952"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1177/00187208221116952</a
-            >
-          </li>
-          <li>
-            Textor, C., Zhang, R., Lopez, J., <strong>Schelble, B.G.</strong>,
-            McNeese, N.J., Freeman, G., Pak, R., Tossell, C., &amp; de Visser,
-            E.J. (2022, Aug.).
-            <em
-              >Exploring the Relationship Between Ethics and Trust in Human-AI
-              Teaming: A Mixed Methods Approach.</em
-            >
-            <span>Journal of Cognitive Engineering and Decision Making</span>,
-            16(4), 252–281.
-            <a
-              href="https://doi.org/10.1177/15553434221113964"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1177/15553434221113964</a
-            >
-          </li>
-        </ul>
-        <h3>Refereed Conference Papers</h3>
-        <ul>
-          <li>
-            Hauptman, A., <strong>Schelble, B.G.</strong>, &amp; McNeese, N.J.
-            (2022, Mar.).
-            <em
-              >Adaptive Autonomy as A Means for Implementing Shared Ethics in
-              Human-AI Teams.</em
-            >
-            In <span>AAAI Spring Symposium on AI Engineering</span>.
-            <a
-              href="https://resources.sei.cmu.edu/asset_files/ConferencePaper/2022_021_001_884147.pdf"
-              target="_blank"
-              rel="noopener"
-              >Link</a
-            >
-          </li>
-        </ul>
-      </details>
-
-      <!-- 2021 -->
-      <details>
-        <summary><strong>2021</strong></summary>
-        <h3>Journal Articles</h3>
-        <ul>
-          <li>
-            <strong>Schelble, B.G.</strong>, Flathmann, C., McNeese, N.J.,
-            O’Neill, T., Pak, R., &amp; Namara, M. (2022, Jul.).
-            <em
-              >Investigating the Effects of Perceived Teammate Artificiality on
-              Human Performance and Cognition.</em
-            >
-            <span>International Journal of Human-Computer Interaction</span>,
-            39(13), 2686–2701.
-            <a
-              href="https://doi.org/10.1080/10447318.2022.2085191"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1080/10447318.2022.2085191</a
-            >
-          </li>
-          <li>
-            <strong>Schelble, B.G.</strong>, Flathmann, C., McNeese, N.J.,
-            Freeman, G., &amp; Mallick, R. (2021, Jan.).
-            <em
-              >Let’s Think Together! Assessing Shared Mental Models,
-              Performance, and Trust in Human-Agent Teams.</em
-            >
-            <span>Proceedings of the ACM on Human-Computer Interaction</span>,
-            6(GROUP), 1–29.
-            <a
-              href="https://doi.org/10.1145/3492832"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1145/3492832</a
-            >
-          </li>
-          <li>
-            McNeese, N.J., <strong>Schelble, B.G.</strong>, Canonico, L.B.,
-            &amp; Demir, M. (2021, Jul.).
-            <em
-              >Who/What is My Teammate? Team Composition Considerations in
-              Human-AI Teaming.</em
-            >
-            <span>IEEE Transactions on Human-Machine Systems</span>, 51(4),
-            288–299.
-            <a
-              href="https://dx.doi.org/10.1109/THMS.2021.3086018"
-              target="_blank"
-              rel="noopener"
-              >http://dx.doi.org/10.1109/THMS.2021.3086018</a
-            >
-          </li>
-          <li>
-            Musick, G., O’Neill, T.A., <strong>Schelble, B.G.</strong>, McNeese,
-            N.J., &amp; Henke, J. (2021, Sept.).
-            <em
-              >Human-Autonomy Teaming: What Happens When Humans Believe Their
-              Teammate is an AI?</em
-            >
-            <span>Computers in Human Behavior</span>, 122, 106825.
-            <a
-              href="https://doi.org/10.1016/j.chb.2021.106852"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1016/j.chb.2021.106852</a
-            >
-          </li>
-        </ul>
-        <h3>Refereed Conference Papers</h3>
-        <ul>
-          <li>
-            Flathmann, C., <strong>Schelble, B.G.</strong>, &amp; McNeese, N.J.
-            (2021, Sept.).
-            <em
-              >Fostering Human-Agent Team Leadership by Leveraging Human Teaming
-              Principles.</em
-            >
-            In <span>IEEE ICHMS 2021</span>.
-            <a
-              href="https://doi.org/10.1109/ICHMS53169.2021.9582649"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1109/ICHMS53169.2021.9582649</a
-            >
-          </li>
-          <li>
-            Flathmann, C., <strong>Schelble, B.G.</strong>, Zhang, R., &amp;
-            McNeese, N.J. (2021, Jul.).
-            <em
-              >Modeling and Guiding the Creation of Ethical Human-AI Teams.</em
-            >
-            In <span>AIES</span>.
-            <a
-              href="https://doi.org/10.1145/3461702.3462573"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1145/3461702.3462573</a
-            >
-          </li>
-          <li>
-            <strong>Schelble, B.G.</strong>, Flathmann, C., Canonico, L.B.,
-            &amp; McNeese, N.J. (2021, Jan.).
-            <em
-              >Understanding Human-AI Cooperation Through Game-Theory and
-              Reinforcement Learning Models.</em
-            >
-            In <span>HICSS-54</span>, 348–358.
-            <a
-              href="http://hdl.handle.net/10125/70652"
-              target="_blank"
-              rel="noopener"
-              >Handle</a
-            >
-          </li>
-        </ul>
-      </details>
-
-      <!-- 2020 -->
-      <details>
-        <summary><strong>2020</strong></summary>
-        <h3>Journal Articles</h3>
-        <ul>
-          <li>
-            O’Neill, T.A., McNeese, N.J., Barron, A., &amp;
-            <strong>Schelble, B.G.</strong>
-            (2020, Oct.).
-            <em
-              >Human–Autonomy Teaming: A Review and Analysis of the Empirical
-              Literature.</em
-            >
-            <span>Human Factors</span>, 64(5), 904–938.
-            <a
-              href="https://doi.org/10.1177/0018720820960865"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1177/0018720820960865</a
-            >
-          </li>
-        </ul>
-        <h3>Refereed Conference Papers</h3>
-        <ul>
-          <li>
-            <strong>Schelble, B.G.</strong>, Canonico, L.B., McNeese, N.J.,
-            Carroll, J., &amp; Hird, C. (2020, Dec.).
-            <em
-              >Designing Human-Autonomy Teaming Experiments Through
-              Reinforcement Learning.</em
-            >
-            In <span>HFES Annual Meeting</span>, 64(1), 1426–1430.
-            <a
-              href="https://doi.org/10.1177/1071181320641340"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1177/1071181320641340</a
-            >
-          </li>
-          <li>
-            Flathmann, C., <strong>Schelble, B.G.</strong>, Tubre, B., McNeese,
-            N.J., &amp; Rodeghero, P. (2020, Nov.).
-            <em
-              >Invoking Principles of Groupware to Develop and Evaluate Present
-              and Future Human-Agent Teams.</em
-            >
-            In <span>HAI 2020</span>, 15–24.
-            <a
-              href="https://doi.org/10.1145/3406499.3415072"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1145/3406499.3415072</a
-            >
-          </li>
-          <li>
-            <strong>Schelble, B.G.</strong>, Flathmann, C., &amp; McNeese, N.J.
-            (2020, Nov.).
-            <em
-              >Towards Meaningfully Integrating Human-Autonomy Teaming in
-              Applied Settings.</em
-            >
-            In <span>HAI 2020</span>, 149–156.
-            <a
-              href="https://doi.org/10.1145/3406499.3415077"
-              target="_blank"
-              rel="noopener"
-              >https://doi.org/10.1145/3406499.3415077</a
-            >
-          </li>
-        </ul>
-      </details>
-
-      <p>
-        See all publications on
-        <a
-          href="https://scholar.google.com/citations?user=bg4YvZIAAAAJ&hl=en&oi=ao"
-          target="_blank"
-          rel="noopener"
-          >Google Scholar</a
-        >
-      </p>
-    </section>
-
-    <!-- Opportunities -->
-    <section id="opportunities" class="reveal">
-      <h2>Join the Lab</h2>
-      <div class="opps-wrap">
-        <div class="opps-card">
-          <p>
-            We are always recruiting motivated graduate and undergraduate
-            students interested in human-AI teaming, robotics, and human factors
-            engineering. Prospective students should email Dr. Schelble with a
-            CV and brief statement of research interests.
-          </p>
-          <div class="badges">
-            <span class="badge">Human–AI Teaming</span
-            ><span class="badge">Trust</span
-            ><span class="badge">Ethical AI</span
-            ><span class="badge">Robotics</span><span class="badge">HCI</span>
-          </div>
-          <div class="btn-row">
-            <a class="btn" href="mailto:bschelbl@utk.edu">Contact ARCS</a>
-          </div>
-        </div>
-        <div class="opps-card">
-          <p>
-            <strong>Who should apply?</strong><br />Curious builders and
-            rigorous thinkers across ISE, CS, HCI, Psychology, and related
-            fields. Experience in conducting experiments, stats/ML, or robotics is
-            great, but motivation and craft matter most.
-          </p>
-          <p class="lead" style="margin-top: 0.75rem">
-            Funding varies by cycle; outstanding undergrads &amp; grads are
-            encouraged to reach out.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact" class="reveal">
-      <h2>Contact</h2>
-      <div class="contact-grid">
-        <div class="contact-card">
-          <p>
-            <strong>ARCS Lab – Industrial &amp; Systems Engineering</strong
-            ><br />
-            515 John D. Tickle Engineering Building<br />
-            851 Neyland Drive, Knoxville, TN 37996-2315<br />
-          </p>
-          <ul class="contact-list">
-            <li>
-              <i data-lucide="mail"></i
-              ><a href="mailto:bschelbl@utk.edu">bschelbl@utk.edu</a>
-            </li>
-            <li><i data-lucide="map-pin"></i>Knoxville, Tennessee</li>
-          </ul>
-          <button class="copy" data-copy="bschelbl@utk.edu">
-            <i data-lucide="copy"></i>Copy email
-          </button>
-        </div>
-        <div class="contact-card">
-          <div class="map-embed">
-            <iframe
-              title="ARCS Lab location"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              allowfullscreen
-              src="https://www.google.com/maps?q=515%20John%20D.%20Tickle%20Engineering%20Building%2C%20851%20Neyland%20Dr%2C%20Knoxville%2C%20TN%2037996-2315&output=embed">
-            </iframe>
+<!-- MISSION STRIP -->
+<div class="mission-strip">
+  <span class="mission-strip-label">Mission</span>
+  <div class="mission-strip-divider"></div>
+  <p class="mission-strip-text">
+    "Advancing human‑AI teaming by understanding and optimizing collaborative systems comprising both human and computational elements to enhance performance and safety across manufacturing, healthcare, defense, and beyond."
+  </p>
 </div>
 
+<!-- RESEARCH AREAS -->
+<section>
+  <div class="section-eyebrow">Core Research Areas</div>
+  <h2 class="section-title">Six Pillars of Human-AI<br>Teaming Research</h2>
+  <p class="section-lead">Our interdisciplinary program integrates quantitative, qualitative, and computational methods to understand and improve human-AI collaborative systems.</p>
+  <div class="research-grid">
+    <div class="research-card">
+      <div class="rc-num">01</div>
+      <div class="rc-icon">🤝</div>
+      <div class="rc-title">Intelligent Information Sharing</div>
+      <p class="rc-desc">Modeling information-sharing, team cognition, and workload to create synergistic human–machine partnerships across complex, high-stakes environments.</p>
+    </div>
+    <div class="research-card">
+      <div class="rc-num">02</div>
+      <div class="rc-icon">🔒</div>
+      <div class="rc-title">Trustworthy AI</div>
+      <p class="rc-desc">Designing transparent AI behaviors that accurately calibrate trust, support responsible AI adoption, and contribute to meaningful AI acceptance.</p>
+    </div>
+    <div class="research-card">
+      <div class="rc-num">03</div>
+      <div class="rc-icon">📚</div>
+      <div class="rc-title">Training</div>
+      <p class="rc-desc">Improving skill transference from training to operations through intelligent interventions, human-centered design, and psychological fidelity.</p>
+    </div>
+    <div class="research-card">
+      <div class="rc-num">04</div>
+      <div class="rc-icon">🎯</div>
+      <div class="rc-title">Situational Awareness</div>
+      <p class="rc-desc">Developing real-time adaptive interfaces that surface mission-critical cues and promote collective understanding in electronically contested environments.</p>
+    </div>
+    <div class="research-card">
+      <div class="rc-num">05</div>
+      <div class="rc-icon">🤖</div>
+      <div class="rc-title">Applied Robotics</div>
+      <p class="rc-desc">Integrating collaborative robots and unmanned ground vehicles into advanced manufacturing workflows and high-stakes emergency response scenarios.</p>
+    </div>
+    <div class="research-card">
+      <div class="rc-num">06</div>
+      <div class="rc-icon">🔬</div>
+      <div class="rc-title">Evaluation &amp; Validation</div>
+      <p class="rc-desc">Developing rigorous experimental frameworks to test AI teammates' effectiveness, safety, and resilience through mixed-methods empirical research.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RECENT PUBLICATIONS -->
+<section class="pubs-section">
+  <div class="section-eyebrow">Latest Work</div>
+  <h2 class="section-title">Recent Publications</h2>
+  <p class="section-lead">Published across leading venues in Human Factors, HCI, ACM, and IEEE.</p>
+  <div class="pub-list">
+    <div class="pub-item">
+      <span class="pub-year">2026</span>
+      <div>
+        <div class="pub-title">Toward a Science of Human–AI Teaming for Decision-Making: A Complementarity Framework</div>
+        <div class="pub-meta">Gonzalez, Donahue, Goldstein, Heidari, Jalali, <strong style="color:rgba(255,255,255,0.90)">Schelble</strong>, Singh, Woolley · <em>PNAS Nexus</em></div>
+      </div>
+      <span></span>
+    </div>
+    <div class="pub-item">
+      <span class="pub-year">2025</span>
+      <div>
+        <div class="pub-title">A Mixed Methods Approach to Analyzing the Role of AI Teammates in Transition Phases</div>
+        <div class="pub-meta"><strong style="color:rgba(255,255,255,0.90)">Schelble</strong>, Mallick, McNeese · <em>Proceedings of the ACM on Human-Computer Interaction (GROUP)</em></div>
+      </div>
+      <span></span>
+    </div>
+    <div class="pub-item">
+      <span class="pub-year">2025</span>
+      <div>
+        <div class="pub-title">Should AI Teammates Give All the Answers? Examining Different AI Information-Sharing Techniques on Team Cognition</div>
+        <div class="pub-meta"><strong style="color:rgba(255,255,255,0.90)">Schelble</strong>, Mallick, Hauptman, McNeese · <em>International Journal of Human-Computer Interaction</em></div>
+      </div>
+      <span></span>
+    </div>
+    <div class="pub-item">
+      <span class="pub-year">2025</span>
+      <div>
+        <div class="pub-title">Addressing the Role of Context on Trust in Human-AI Teams: The Influence of Team Role and Violation Type in High-Risk Tasks</div>
+        <div class="pub-meta"><strong style="color:rgba(255,255,255,0.90)">Schelble</strong> et al. · <em>Ergonomics</em></div>
+      </div>
+      <span></span>
+    </div>
+    <div class="pub-item">
+      <span class="pub-year">2025</span>
+      <div>
+        <div class="pub-title">Ethical Adaptation: Exploring the Use of Adaptive Autonomy in the Design of Ethical AI Teammates in Healthcare</div>
+        <div class="pub-meta">Hauptman, <strong style="color:rgba(255,255,255,0.90)">Schelble</strong>, Flathmann, Mallick, Macdonald, McNeese · <em>AI and Ethics</em></div>
+      </div>
+      <span></span>
+    </div>
+    <div class="pub-item">
+      <span class="pub-year">2024</span>
+      <div>
+        <div class="pub-title">Modeling Perceived Information Needs in Human-AI Teams: Improving AI Teammate Utility and Driving Team Cognition</div>
+        <div class="pub-meta"><strong style="color:rgba(255,255,255,0.90)">Schelble</strong>, Flathmann, Macdonald, Knijnenburg, Brady, McNeese · <em>Behaviour &amp; Information Technology</em></div>
+      </div>
+      <span></span>
+    </div>
+    <div class="pub-item" style="border-bottom:none;">
+      <span class="pub-year">2024</span>
+      <div>
+        <div class="pub-title">I Know This Looks Bad, But I Can Explain: Understanding When AI Should Explain Actions In Human-AI Teams</div>
+        <div class="pub-meta">Zhang, Flathmann, Musick, <strong style="color:rgba(255,255,255,0.90)">Schelble</strong>, McNeese et al. · <em>ACM Transactions on Interactive Intelligent Systems</em></div>
+      </div>
+      <span class="pub-award">★ Featured Article</span>
+    </div>
+  </div>
+  <div class="pubs-cta">
+    <a href="publications.html" class="btn-primary">View All 46 Publications →</a>
+  </div>
+</section>
+
+<!-- TEAM PREVIEW -->
+<section class="team-section">
+  <div class="section-eyebrow">The Team</div>
+  <h2 class="section-title">Meet the ARCS Lab</h2>
+  <p class="section-lead">A growing community of researchers advancing the science of human-AI collaboration at the University of Tennessee, Knoxville.</p>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-card-img">
+        <img src="assets/DSCF0563-Beaus-Workstation.jpg" alt="Dr. Beau Schelble" style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>
+      <div class="team-card-body">
+        <div class="team-card-name">Dr. Beau G. Schelble</div>
+        <div class="team-card-role">PI · Founding Director</div>
+        <div class="team-card-desc">Assistant Professor of ISE. PhD in Human-Centered Computing, Clemson University 2023.</div>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-card-img" style="display:flex;align-items:center;justify-content:center;">
+        <img src="assets/sarahHeadshot.jpg" alt="Sarah Mendoza" style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>
+      <div class="team-card-body">
+        <div class="team-card-name">Sarah Mendoza</div>
+        <div class="team-card-role">PhD Student</div>
+        <div class="team-card-desc">Research focus: trust perceptions, autonomy levels, and teamwork dimensions in human-AI teams.</div>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-card-img" style="display:flex;align-items:center;justify-content:center;">
+        <img src="assets/yayunHeadshot.jpg" alt="Yayun Tian" style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>
+      <div class="team-card-body">
+        <div class="team-card-name">Yayun Tian</div>
+        <div class="team-card-role">PhD Student</div>
+        <div class="team-card-desc">Background in applied mathematics, statistics, and software engineering. Exploring AI as trusted teammate.</div>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-card-img" style="background: var(--stone-900); display:flex; align-items:center; justify-content:center;">
+        <div style="text-align:center; padding: 20px;">
+          <div style="font-family:'Playfair Display',serif; font-size:40px; color:var(--utk-orange); font-weight:900;">+</div>
+          <div style="font-size:13px; color:rgba(255,255,255,0.92); margin-top:8px;">Recruiting<br>Graduate Students</div>
         </div>
       </div>
-    </section>
+      <div class="team-card-body">
+        <div class="team-card-name">Join the ARCS Lab</div>
+        <div class="team-card-role">Open Positions</div>
+        <div class="team-card-desc">We seek motivated PhD students in ISE, CS, HCI, and Psychology. Email Dr. Schelble with your CV.</div>
+      </div>
+    </div>
+  </div>
+  <a href="team.html" class="btn-outline">View Full Team →</a>
+</section>
 
-    <footer>
-      <p>
-        &copy; <span id="year"></span> AI &amp; Robotics for Collaborative
-        Systems Lab, University of Tennessee, Knoxville. All rights reserved.
-      </p>
-      <p>
-        This site is built with ❤ and hosted via
-        <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
-      </p>
-    </footer>
+<!-- FUNDING STRIP -->
+<div class="funding-strip">
+  <span class="funding-label">Funding &amp; Partners</span>
+  <div class="funding-logo-row">
+    <div class="funding-logo">
+      <div class="funding-logo-badge">ARL</div>
+      <div class="funding-logo-sub">Army Research Lab</div>
+    </div>
+    <div class="funding-logo">
+      <div class="funding-logo-badge">UTK</div>
+      <div class="funding-logo-sub">University of Tennessee</div>
+    </div>
+    <div class="funding-logo">
+      <div class="funding-logo-badge" style="opacity:0.4; font-style:italic;">AFC</div>
+      <div class="funding-logo-sub" style="opacity:0.4;">Pending</div>
+    </div>
+    <div class="funding-logo">
+      <div class="funding-logo-badge" style="opacity:0.4; font-style:italic;">NSF</div>
+      <div class="funding-logo-sub" style="opacity:0.4;">Pending</div>
+    </div>
+  </div>
+  <div class="funding-amount">
+    <div class="funding-amount-num">$722K</div>
+    <div class="funding-amount-label">Total PI Awards</div>
+  </div>
+</div>
 
-    <script>
-      // Mobile nav toggle
-      function toggleMenu() {
-        document.getElementById("navMenu").classList.toggle("show");
-      }
-      // Update copyright year
-      document.getElementById("year").textContent = new Date().getFullYear();
+<!-- CONTACT STRIP -->
+<div class="contact-strip">
+  <div>
+    <div class="section-eyebrow">Get in Touch</div>
+    <h2 class="section-title">Work With Us</h2>
+    <p class="section-lead">Interested in collaboration, graduate study, or partnership? We'd love to hear from you.</p>
+    <div style="margin-top: 32px; display:flex; gap:16px; flex-wrap:wrap;">
+      <a href="contact.html" class="btn-primary">Contact the Lab</a>
+      <a href="team.html#join" class="btn-outline" style="border-color:rgba(255,255,255,0.2); color:rgba(255,255,255,0.90);">Prospective Students</a>
+    </div>
+  </div>
+  <div class="contact-info">
+    <div class="contact-item">
+      <div class="contact-icon">📍</div>
+      <div>
+        <div class="contact-item-label">Location</div>
+        <div class="contact-item-val">515 John D. Tickle Engineering Building<br>851 Neyland Drive, Knoxville, TN 37996</div>
+      </div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">✉️</div>
+      <div>
+        <div class="contact-item-label">Email</div>
+        <div class="contact-item-val"><a href="/cdn-cgi/l/email-protection#a2c0d1c1cac7cec0cee2d7d6c98cc7c6d7"><span class="__cf_email__" data-cfemail="6a081909020f0608062a1f1e01440f0e1f">[email&#160;protected]</span></a></div>
+      </div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">🏛</div>
+      <div>
+        <div class="contact-item-label">Department</div>
+        <div class="contact-item-val">Industrial &amp; Systems Engineering<br>Tickle College of Engineering, UTK</div>
+      </div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">🔗</div>
+      <div>
+        <div class="contact-item-label">Lab Website</div>
+        <div class="contact-item-val"><a href="https://bschelb.github.io/ARCSLab" target="_blank">bschelb.github.io/ARCSLab</a></div>
+      </div>
+    </div>
+  </div>
+</div>
 
-      // Scroll-reveal
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((e) => {
-            if (e.isIntersecting) e.target.classList.add("in");
-          });
-        },
-        { threshold: 0.1 }
-      );
-      document
-        .querySelectorAll(".reveal")
-        .forEach((el) => observer.observe(el));
-    </script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-      try {
-        lucide.createIcons();
-      } catch (e) {}
-    </script>
-
-    <script>
-      // Simple client-side filter for publications list items
-      (function () {
-        const input = document.getElementById("pubSearch");
-        if (!input) return;
-        input.addEventListener("input", function () {
-          const term = this.value.trim().toLowerCase();
-          document.querySelectorAll("#publications li").forEach((li) => {
-            const match = li.textContent.toLowerCase().includes(term);
-            li.style.display = match ? "" : "none";
-          });
-        });
-      })();
-    </script>
-
-    <script>
-      document.addEventListener("click", function (e) {
-        const btn = e.target.closest(".copy");
-        if (!btn) return;
-        const txt = btn.getAttribute("data-copy");
-        navigator.clipboard.writeText(txt).then(() => {
-          const prev = btn.innerHTML;
-          btn.innerHTML = '<i data-lucide="check"></i>Copied!';
-          setTimeout(() => {
-            btn.innerHTML = prev;
-            if (window.lucide) lucide.createIcons();
-          }, 1500);
-          if (window.lucide) lucide.createIcons();
-        });
-      });
-    </script>
-
-    <script>
-      // Header background on scroll
-      (function () {
-        const hdr = document.querySelector("header");
-        const onScroll = () => {
-          if (window.scrollY > 10) hdr.classList.add("scrolled");
-          else hdr.classList.remove("scrolled");
-        };
-        window.addEventListener("scroll", onScroll);
-        onScroll();
-      })();
-
-      // Mobile nav toggle with animated hamburger
-      function toggleMenu() {
-        const btn = document.querySelector(".hamburger");
-        const navList = document.getElementById("navMenu");
-        if (!btn || !navList) return;
-        navList.classList.toggle("show");
-        const open = navList.classList.contains("show");
-        btn.classList.toggle("open", open);
-        btn.setAttribute("aria-expanded", open ? "true" : "false");
-      }
-
-      // Active link highlight on scroll
-      (function () {
-        const links = Array.from(document.querySelectorAll('nav a[href^="#"]'));
-        const targets = links
-          .map((a) => document.querySelector(a.getAttribute("href")))
-          .filter(Boolean);
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              const id = "#" + entry.target.id;
-              const link = links.find((a) => a.getAttribute("href") === id);
-              if (!link) return;
-              if (entry.isIntersecting) {
-                links.forEach((l) => l.classList.remove("active"));
-                link.classList.add("active");
-              }
-            });
-          },
-          { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
-        );
-        targets.forEach((t) => observer.observe(t));
-      })();
-    </script>
-  </body>
-</html>
+<footer>
+  <p>© 2026 ARCS Lab · University of Tennessee, Knoxville · Department of Industrial &amp; Systems Engineering</p>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="research.html">Research</a>
+    <a href="publications.html">Publications</a>
+    <a href="team.html">Team</a>
+    <a href="con

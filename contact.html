@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact | ARCS Lab | UTK</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--s50:#faf8f5;--s100:#f2ede6;--s200:#e4d9cc;--s300:#c9b99e;--s500:#6b5040;--s700:#4a3728;--s900:#1e150d;--or:#FF6600;--sm:#3d3330;--nh:88px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{overflow-x:hidden;}
+body{font-family:'DM Sans',sans-serif;background:var(--s50);color:var(--s900);}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nh);display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(250,248,245,0.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--s200);}
+.nl{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nm{width:36px;height:36px;background:var(--or);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:16px;font-weight:900;color:white;}
+.nt{font-weight:600;font-size:18px;color:var(--s900);}
+.ns{font-weight:300;font-size:13px;color:var(--sm);display:block;}
+.nav-links{display:flex;gap:32px;align-items:center;}
+.nav-links a{text-decoration:none;font-size:15px;font-weight:500;color:var(--s700);letter-spacing:.04em;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--or);}
+.nc{background:var(--or);color:white!important;padding:10px 24px;font-size:13px!important;}
+.ey{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--or);margin-bottom:16px;}
+
+.ph{padding:calc(var(--nh) + 80px) 80px 64px;background:var(--s900);position:relative;overflow:hidden;}
+.ph::before{content:'CONTACT';position:absolute;right:40px;top:50%;transform:translateY(-50%);font-family:'Playfair Display',serif;font-size:120px;font-weight:900;color:rgba(255,255,255,.025);white-space:nowrap;}
+.ph h1{font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,60px);font-weight:900;color:white;line-height:1.1;margin-bottom:20px;}
+.ph p{font-size:17px;color:rgba(255,255,255,.92);max-width:600px;line-height:1.75;}
+
+.contact-body{display:grid;grid-template-columns:1fr 1fr;min-height:60vh;}
+.contact-left{padding:80px;background:var(--s100);}
+.contact-right{padding:80px;background:white;}
+.sh{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--s900);margin-bottom:32px;}
+
+.info-items{display:flex;flex-direction:column;gap:28px;margin-bottom:48px;}
+.info-item{display:flex;gap:16px;align-items:flex-start;}
+.info-icon{width:44px;height:44px;background:white;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;border:1px solid var(--s200);}
+.info-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--s500);margin-bottom:4px;}
+.info-val{font-size:14px;color:var(--s900);line-height:1.6;}
+.info-val a{color:var(--or);text-decoration:none;}
+.info-val a:hover{text-decoration:underline;}
+
+.map-embed{width:100%;height:220px;background:var(--s200);display:flex;align-items:center;justify-content:center;margin-top:32px;position:relative;overflow:hidden;}
+.map-embed iframe{width:100%;height:100%;border:none;}
+
+.form-group{margin-bottom:20px;}
+.form-label{display:block;font-size:12px;font-weight:600;color:var(--s700);letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px;}
+.form-input,.form-select,.form-textarea{width:100%;padding:12px 16px;border:1.5px solid var(--s200);background:var(--s50);font-family:'DM Sans',sans-serif;font-size:14px;color:var(--s900);outline:none;transition:border-color .2s;resize:vertical;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--or);}
+.form-textarea{height:120px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.btn-submit{background:var(--or);color:white;border:none;padding:14px 40px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;letter-spacing:.04em;cursor:pointer;width:100%;transition:background .2s;}
+.btn-submit:hover{background:#cc4f00;}
+.form-note{font-size:12px;color:var(--sm);margin-top:12px;line-height:1.6;}
+
+.join-sec{padding:80px;background:var(--s900);}
+.join-sec .sh{color:white;font-size:32px;margin-bottom:16px;}
+.join-lead{font-size:16px;color:rgba(255,255,255,.92);max-width:700px;line-height:1.75;margin-bottom:48px;}
+.join-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.join-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:32px;}
+.join-icon{font-size:28px;margin-bottom:12px;}
+.join-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:white;margin-bottom:10px;}
+.join-desc{font-size:13px;color:rgba(255,255,255,.90);line-height:1.65;margin-bottom:16px;}
+.join-req{font-size:12px;color:rgba(255,255,255,.88);font-style:italic;}
+
+footer{background:#58595B;border-top:1px solid rgba(255,255,255,.06);padding:32px 80px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+footer p{font-size:14px;color:rgba(255,255,255,.88);}
+.fl{display:flex;gap:24px;}
+.fl a{font-size:14px;color:rgba(255,255,255,.88);text-decoration:none;}
+.fl a:hover{color:var(--or);}
+@media(max-width:900px){.contact-body,.form-row,.join-grid{grid-template-columns:1fr;}.contact-left,.contact-right,.join-sec{padding:48px 28px;}nav{padding:0 24px;}.nav-links{display:none;}.ph{padding-left:28px;padding-right:28px;}footer{padding:24px 28px;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nl"><img src="assets/Frame 3.png" style="height:56px;width:auto;display:block;"><div class="nt">ARCS Lab<span class="ns">University of Tennessee, Knoxville</span></div></a>
+  <div class="nav-links"><a href="index.html">Home</a><a href="research.html">Research</a><a href="publications.html">Publications</a><a href="team.html">Team</a><a href="pi.html">PI</a><a href="funding.html">Funding</a><a href="talks.html">Talks</a><a href="contact.html" class="active nc">Contact</a></div>
+</nav>
+
+<div class="ph">
+  <div class="ey">ARCS Lab · UTK ISE</div>
+  <h1>Get in Touch</h1>
+  <p>We welcome inquiries from prospective graduate students, research collaborators, industry partners, and members of the press. Don't hesitate to reach out.</p>
+</div>
+
+<div class="contact-body">
+  <div class="contact-left">
+    <div class="ey">Lab Information</div>
+    <div class="sh">Contact &amp; Location</div>
+    <div class="info-items">
+      <div class="info-item">
+        <div class="info-icon">📍</div>
+        <div>
+          <div class="info-label">Location</div>
+          <div class="info-val">851 Neyland Drive<br>Knoxville, TN 37996</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">✉️</div>
+        <div>
+          <div class="info-label">Email</div>
+          <div class="info-val"><a href="mailto:bschelbl@utk.edu">bschelbl@utk.edu</a></div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🌐</div>
+        <div>
+          <div class="info-label">Lab Website</div>
+          <div class="info-val"><a href="https://bschelb.github.io/ARCSLab" target="_blank">bschelb.github.io/ARCSLab</a></div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">👤</div>
+        <div>
+          <div class="info-label">PI Personal Site</div>
+          <div class="info-val"><a href="https://beauschelble.com" target="_blank">beauschelble.com</a></div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🏛️</div>
+        <div>
+          <div class="info-label">Department</div>
+          <div class="info-val"><a href="https://tickle.utk.edu/ise/" target="_blank">Industrial &amp; Systems Engineering<br>Tickle College of Engineering, UTK</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="map-embed">
+      <iframe src="https://maps.google.com/maps?q=851+Neyland+Drive,+Knoxville,+TN+37996&output=embed" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="contact-right">
+    <div class="ey">Send a Message</div>
+    <div class="sh">Contact Form</div>
+    <form action="https://formspree.io/f/xvzwzoal" method="POST">
+      <input type="hidden" name="_subject" value="ARCS Lab Website Inquiry">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">First Name</label><input type="text" name="first_name" class="form-input" placeholder="Jane" required></div>
+        <div class="form-group"><label class="form-label">Last Name</label><input type="text" name="last_name" class="form-input" placeholder="Smith" required></div>
+      </div>
+      <div class="form-group"><label class="form-label">Email</label><input type="email" name="email" class="form-input" placeholder="jane@university.edu" required></div>
+      <div class="form-group"><label class="form-label">Affiliation</label><input type="text" name="affiliation" class="form-input" placeholder="University / Organization"></div>
+      <div class="form-group">
+        <label class="form-label">Inquiry Type</label>
+        <select name="inquiry_type" class="form-select form-input">
+          <option>Prospective Graduate Student</option>
+          <option>Research Collaboration</option>
+          <option>Industry Partnership</option>
+          <option>Media / Press</option>
+          <option>Speaking Invitation</option>
+          <option>General Inquiry</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Message</label><textarea name="message" class="form-textarea" placeholder="Tell us about your interest or inquiry..." required></textarea></div>
+      <button type="submit" class="btn-submit">Send Message</button>
+      <p class="form-note">We typically respond within 2–3 business days. For urgent inquiries, email Dr. Schelble directly at <a href="mailto:bschelbl@utk.edu" style="color:var(--or);">bschelbl@utk.edu</a>.</p>
+    </form>
+  </div>
+</div>
+
+<div class="join-sec" id="join">
+  <div class="ey">Prospective Members</div>
+  <div class="sh">Join the ARCS Lab</div>
+  <p class="join-lead">The ARCS Lab recruits motivated students and researchers interested in human-AI teaming, human factors, HCI, and collaborative systems. We offer a rigorous, supportive, and interdisciplinary research environment at a leading research university.</p>
+  <div class="join-grid">
+    <div class="join-card">
+      <div class="join-icon">🎓</div>
+      <div class="join-title">PhD Students</div>
+      <div class="join-desc">We admit PhD students through the UTK ISE department. We are actively recruiting for positions starting Fall 2025 and beyond. Research assistantships available for qualified candidates.</div>
+      <div class="join-req">Preferred background: Human Factors, HCI, CS, Cognitive Science, Psychology, or Systems Engineering.</div>
+    </div>
+    <div class="join-card">
+      <div class="join-icon">🔧</div>
+      <div class="join-title">DEng Students</div>
+      <div class="join-desc">The Doctor of Engineering (DEng) program at UTK allows working professionals to pursue applied doctoral research. ARCS Lab welcomes DEng students with strong applied research interests.</div>
+      <div class="join-req">Professional experience in engineering, defense, manufacturing, or technology preferred.</div>
+    </div>
+    <div class="join-card">
+      <div class="join-icon">🏫</div>
+      <div class="join-title">Undergraduate Researchers</div>
+      <div class="join-desc">UTK undergraduates in ISE, CS, or related fields are welcome to apply for part-time research positions (typically 4 hours/week) in the ARCS Lab.</div>
+      <div class="join-req">Open to motivated undergraduates with strong academic records and genuine interest in research.</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 ARCS Lab · University of Tennessee, Knoxville</p>
+  <div class="fl"><a href="index.html">Home</a><a href="research.html">Research</a><a href="publications.html">Publications</a><a href="team.html">Team</a></div>
+</foo

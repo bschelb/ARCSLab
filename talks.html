@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talks & News | ARCS Lab | UTK</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--s50:#faf8f5;--s100:#f2ede6;--s200:#e4d9cc;--s300:#c9b99e;--s500:#6b5040;--s700:#4a3728;--s900:#1e150d;--or:#FF6600;--sm:#3d3330;--nh:88px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{overflow-x:hidden;}
+body{font-family:'DM Sans',sans-serif;background:var(--s50);color:var(--s900);}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nh);display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(250,248,245,0.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--s200);}
+.nl{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nm{width:36px;height:36px;background:var(--or);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:16px;font-weight:900;color:white;}
+.nt{font-weight:600;font-size:18px;color:var(--s900);}
+.ns{font-weight:300;font-size:13px;color:var(--sm);display:block;}
+.nav-links{display:flex;gap:32px;align-items:center;}
+.nav-links a{text-decoration:none;font-size:15px;font-weight:500;color:var(--s700);letter-spacing:.04em;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--or);}
+.nc{background:var(--or);color:white!important;padding:10px 24px;font-size:13px!important;}
+.ey{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--or);margin-bottom:16px;}
+
+.ph{padding:calc(var(--nh) + 80px) 80px 64px;background:var(--s900);position:relative;overflow:hidden;}
+.ph::before{content:'TALKS';position:absolute;right:40px;top:50%;transform:translateY(-50%);font-family:'Playfair Display',serif;font-size:130px;font-weight:900;color:rgba(255,255,255,.025);white-space:nowrap;}
+.ph h1{font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,60px);font-weight:900;color:white;line-height:1.1;margin-bottom:20px;}
+.ph p{font-size:17px;color:rgba(255,255,255,.92);max-width:640px;line-height:1.75;}
+
+.talks-sec{padding:80px;}
+.sh{font-family:'Playfair Display',serif;font-size:34px;font-weight:700;color:var(--s900);margin-bottom:48px;}
+.talk-row{display:grid;grid-template-columns:100px 1fr auto;gap:24px;padding:28px 0;border-bottom:1px solid var(--s200);align-items:start;transition:padding-left .2s;}
+.talk-row:hover{padding-left:8px;}
+.talk-row:last-child{border-bottom:none;}
+.talk-date{font-family:'DM Mono',monospace;font-size:11px;color:var(--or);line-height:1.5;}
+.talk-title{font-size:16px;font-weight:600;color:var(--s900);margin-bottom:6px;line-height:1.4;}
+.talk-venue{font-size:13px;color:var(--sm);margin-bottom:4px;}
+.talk-loc{font-size:12px;color:var(--s500);}
+.talk-speaker{font-size:13px;font-weight:500;color:var(--s700);white-space:nowrap;text-align:right;}
+.talk-link{display:inline-block;margin-top:8px;font-size:12px;color:var(--or);text-decoration:none;font-weight:600;letter-spacing:.03em;}
+.talk-link:hover{text-decoration:underline;}
+
+.conf-sec{padding:0 80px 80px;background:var(--s50);}
+.conf-sec .sh{color:var(--s900);}
+
+.media-sec{padding:80px;background:var(--s900);}
+.media-sec .sh{color:white;}
+.media-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.media-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:32px;}
+.media-icon{font-size:28px;margin-bottom:16px;}
+.media-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:white;margin-bottom:8px;line-height:1.3;}
+.media-desc{font-size:13px;color:rgba(255,255,255,.90);line-height:1.65;margin-bottom:16px;}
+.media-link{font-size:12px;color:var(--or);text-decoration:none;font-weight:600;letter-spacing:.04em;}
+.media-link:hover{text-decoration:underline;}
+
+footer{background:#58595B;border-top:1px solid rgba(255,255,255,.06);padding:32px 80px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+footer p{font-size:14px;color:rgba(255,255,255,.88);}
+.fl{display:flex;gap:24px;}
+.fl a{font-size:14px;color:rgba(255,255,255,.88);text-decoration:none;}
+.fl a:hover{color:var(--or);}
+@media(max-width:900px){.talk-row{grid-template-columns:80px 1fr;}.talk-type{display:none;}.media-grid{grid-template-columns:1fr;}.talks-sec,.conf-sec,.media-sec{padding-left:28px;padding-right:28px;}nav{padding:0 24px;}.nav-links{display:none;}footer{padding:24px 28px;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nl"><img src="assets/Frame 3.png" style="height:56px;width:auto;display:block;"><div class="nt">ARCS Lab<span class="ns">University of Tennessee, Knoxville</span></div></a>
+  <div class="nav-links"><a href="index.html">Home</a><a href="research.html">Research</a><a href="publications.html">Publications</a><a href="team.html">Team</a><a href="pi.html">PI</a><a href="funding.html">Funding</a><a href="talks.html" class="active">Talks</a><a href="contact.html" class="nc">Contact</a></div>
+</nav>
+
+<div class="ph">
+  <div class="ey">Invited Talks &amp; Visibility</div>
+  <h1>Talks &amp; News</h1>
+  <p>Dr. Schelble and the ARCS Lab are active contributors to national conversations on human-AI teaming in defense, academia, and industry — with invited presentations at the National Academies, West Point, Carnegie Mellon, and beyond.</p>
+</div>
+
+<div class="talks-sec">
+  <div class="ey">Invited Presentations</div>
+  <div class="sh">Invited Talks</div>
+
+  <div class="talk-row">
+    <div class="talk-date">Sept 2025</div>
+    <div>
+      <div class="talk-title">Performance Optimization in Human-AI Teams</div>
+      <div class="talk-venue">National Academies of Sciences, Engineering, and Medicine — Board on Human-Systems Integration (BOHSI) Webinar</div>
+      <div class="talk-loc">National Academies, Washington, DC (Virtual)</div>
+      <a href="https://www.nationalacademies.org/units/DBASSE-DBASSE-10-07/event/45507" target="_blank" class="talk-link">View Event →</a>
+    </div>
+    <div class="talk-speaker">Beau Schelble</div>
+  </div>
+
+  <div class="talk-row">
+    <div class="talk-date">June 2025</div>
+    <div>
+      <div class="talk-title">Mitigating the Risks of Compromised AI Teammates</div>
+      <div class="talk-venue">AI on the Battlefield Workshop</div>
+      <div class="talk-loc">United States Military Academy (West Point), West Point, NY</div>
+    </div>
+    <div class="talk-speaker">Beau Schelble</div>
+  </div>
+
+  <div class="talk-row">
+    <div class="talk-date">Feb 2025</div>
+    <div>
+      <div class="talk-title">Human-Machine Teaming Deep Dive</div>
+      <div class="talk-venue">Technical Advisory Panel on the Use of AI Systems in Warfare</div>
+      <div class="talk-loc">United States Military Academy (West Point), West Point, NY</div>
+    </div>
+    <div class="talk-speaker">Beau Schelble</div>
+  </div>
+
+  <div class="talk-row">
+    <div class="talk-date">Feb 2025</div>
+    <div>
+      <div class="talk-title">Emerging Technologies Panel</div>
+      <div class="talk-venue">IISE Mid-Atlantic Regional Conference</div>
+      <div class="talk-loc">Knoxville, TN</div>
+    </div>
+    <div class="talk-speaker">Beau Schelble</div>
+  </div>
+
+  <div class="talk-row">
+    <div class="talk-date">Sept 2024</div>
+    <div>
+      <div class="talk-title">Getting on the Same Page: Information-Sharing, Team Cognition, Trust, and Ethics in Human-AI Teams</div>
+      <div class="talk-venue">CMU AI Institute for Societal Decision Making</div>
+      <div class="talk-loc">Carnegie Mellon University, Pittsburgh, PA</div>
+    </div>
+    <div class="talk-speaker">Beau Schelble</div>
+  </div>
+
+  <div class="talk-row">
+    <div class="talk-date">Sept 2024</div>
+    <div>
+      <div class="talk-title">From Assistance to Autonomy: Ethical Considerations in Human-AI Teaming</div>
+      <div class="talk-venue">Department of Information, Risk, and Operations Management</div>
+      <div class="talk-loc">University of Texas at Austin, Austin, TX</div>
+      <a href="https://ethicalai.utexas.edu/2024/09/15/nrt-ethical-ai-talk-series/" target="_blank" class="talk-link">View Event →</a>
+    </div>
+    <div class="talk-speaker">Beau Schelble</div>
+  </div>
+
+  <div class="talk-row">
+    <div class="talk-date">Sept 2023</div>
+    <div>
+      <div class="talk-title">Human-AI Teaming: Ethics, Trust, &amp; Shared Knowledge</div>
+      <div class="talk-venue">RTX (Raytheon Technologies)</div>
+      <div class="talk-loc">East Hartford, CT</div>
+    </div>
+    <div class="talk-speaker">Beau Schelble</div>
+  </div>
+</div>
+
+<!-- NEWS / MEDIA -->
+<div class="media-sec">
+  <div class="ey">Lab News &amp; Announcements</div>
+  <div class="sh">In the News</div>
+  <div class="media-grid">
+    <div class="media-card">
+      <div class="media-icon">🏛️</div>
+      <div class="media-title">ARCS Lab Established at UTK</div>
+      <div class="media-desc">Dr. Schelble joins the Tickle College of Engineering as a founding faculty member, establishing the AI &amp; Robotics for Collaborative Systems Lab in Fall 2024.</div>
+      <a href="https://tickle.utk.edu/ise/ise-welcomes-new-faculty-members/" target="_blank" class="media-link">Read Announcement →</a>
+    </div>
+    <div class="media-card">
+      <div class="media-icon">📰</div>
+      <div class="media-title">PNAS Nexus: Toward a Science of Human-AI Teaming</div>
+      <div class="media-desc">ARCS Lab contributes to landmark interdisciplinary paper on human-AI teaming for decision-making, co-authored with CMU, Cornell, and other leading institutions. Published February 2026.</div>
+      <a href="https://doi.org/10.1093/pnasnexus/pgag030" target="_blank" class="media-link">Read Paper →</a>
+    </div>
+    <div class="media-card">
+      <div class="media-icon">🎤</div>
+      <div class="media-title">National Academies BOHSI Webinar</div>
+      <div class="media-desc">Dr. Schelble presented on performance optimization in human-AI teams at the National Academies' Board on Human-Systems Integration webinar series, September 2025.</div>
+      <a href="https://www.nationalacademies.org/our-work/board-on-human-systems-integration" target="_blank" class="media-link">View BOHSI →</a>
+    </div>
+    <div class="media-card">
+      <div class="media-icon">⚔️</div>
+      <div class="media-title">West Point AI Workshop</div>
+      <div class="media-desc">Dr. Schelble was invited twice to the United States Military Academy at West Point — as part of the Technical Advisory Panel on AI in Warfare (Feb 2025) and the AI on the Battlefield Workshop (June 2025).</div>
+      <a href="https://www.westpoint.edu" target="_blank" class="media-link">USMA West Point →</a>
+    </div>
+    <div class="media-card">
+      <div class="media-icon">🔬</div>
+      <div class="media-title">ARL Award: Compromised AI Teammates</div>
+      <div class="media-desc">The ARCS Lab was awarded $718,690 from the Army Research Laboratory to study how human-AI teams can prevent, identify, and mitigate the effects of compromised AI teammates.</div>
+      <a href="funding.html" class="media-link">View Funding →</a>
+    </div>
+    <div class="media-card">
+      <div class="media-icon">📖</div>
+      <div class="media-title">ACM TIIS Featured Article — 2023 &amp; 2024</div>
+      <div class="media-desc">"I Know This Looks Bad, But I Can Explain" was selected as a featured article in ACM Transactions on Interactive Intelligent Systems for both 2023 and 2024.</div>
+      <a href="https://doi.org/10.1145/3635474" target="_blank" class="media-link">Read Article →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 ARCS Lab · University of Tennessee, Knoxville</p>
+  <div class="fl"><a href="index.html">Home</a><a href="publications.html">Publications</a><a href="team.html">Team</a><a href="contact.html">Contact</a></div>
+</footer>
+</body>
+</html>

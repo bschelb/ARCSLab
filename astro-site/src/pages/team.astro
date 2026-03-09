@@ -1,0 +1,181 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import team from '../data/team.json';
+
+const base = import.meta.env.BASE_URL;
+---
+<BaseLayout title="Team | ARCS Lab | UTK" activePage="team">
+<style>
+  .page-header::before {
+    content: 'TEAM'; position: absolute; right: 60px; top: 50%; transform: translateY(-50%);
+    font-family: 'Playfair Display', serif; font-size: 130px; font-weight: 900;
+    color: rgba(255,255,255,0.025); white-space: nowrap;
+  }
+  .pi-section { padding: 80px; background: var(--stone-100); }
+  .pi-card { display: grid; grid-template-columns: 320px 1fr; gap: 60px; background: white; overflow: hidden; }
+  .pi-img { background: var(--stone-200); min-height: 400px; }
+  .pi-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pi-body { padding: 48px 48px 48px 0; display: flex; flex-direction: column; justify-content: center; }
+  .pi-name { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 900; color: var(--stone-900); margin-bottom: 8px; }
+  .pi-title { font-size: 14px; color: var(--utk-orange); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
+  .pi-dept { font-size: 13px; color: var(--smoke); margin-bottom: 20px; }
+  .pi-bio { font-size: 15px; color: var(--smoke); line-height: 1.8; margin-bottom: 20px; }
+  .pi-links { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .pi-link { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border: 1px solid var(--stone-200); font-size: 13px; color: var(--stone-700); text-decoration: none; transition: all 0.2s; }
+  .pi-link:hover { border-color: var(--utk-orange); color: var(--utk-orange); }
+  .pi-stats { display: flex; gap: 32px; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--stone-200); }
+  .pi-stat-num { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 900; color: var(--stone-900); }
+  .pi-stat-label { font-size: 10px; color: var(--stone-500); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+
+  .students-section { padding: 80px; }
+  .sh { font-family: 'Playfair Display', serif; font-size: 34px; font-weight: 700; color: var(--stone-900); margin-bottom: 48px; }
+  .student-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 60px; }
+  .student-card { display: grid; grid-template-columns: 200px 1fr; background: white; border: 1px solid var(--stone-200); overflow: hidden; transition: transform 0.2s; }
+  .student-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(30,21,13,0.08); }
+  .student-img { background: var(--stone-200); min-height: 240px; }
+  .student-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .student-body { padding: 28px; display: flex; flex-direction: column; justify-content: center; }
+  .student-name { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--stone-900); margin-bottom: 4px; }
+  .student-role { font-size: 12px; color: var(--utk-orange); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px; }
+  .student-edu { font-size: 12px; color: var(--stone-500); margin-bottom: 12px; }
+  .student-bio { font-size: 13px; color: var(--smoke); line-height: 1.6; margin-bottom: 12px; }
+  .student-links { display: flex; gap: 8px; flex-wrap: wrap; }
+  .student-link { font-size: 12px; color: var(--utk-orange); text-decoration: none; font-weight: 500; }
+  .student-link:hover { text-decoration: underline; }
+
+  .small-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 60px; }
+  .small-card { background: white; border: 1px solid var(--stone-200); padding: 28px; }
+  .small-name { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--stone-900); margin-bottom: 4px; }
+  .small-role { font-size: 11px; color: var(--utk-orange); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px; }
+  .small-tenure { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--stone-500); margin-bottom: 8px; }
+  .small-bio { font-size: 13px; color: var(--smoke); line-height: 1.5; }
+
+  .collab-section { padding: 80px; background: var(--stone-900); }
+  .collab-section .sh { color: white; }
+  .collab-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .collab-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 24px; }
+  .collab-name { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; color: white; margin-bottom: 4px; }
+  .collab-inst { font-size: 12px; color: var(--utk-orange); margin-bottom: 4px; }
+  .collab-area { font-size: 11px; color: rgba(255,255,255,0.75); }
+
+  .join-section { padding: 80px; background: var(--stone-100); }
+  .join-section .sh { color: var(--stone-900); }
+
+  @media (max-width: 1024px) {
+    .pi-card { grid-template-columns: 1fr; }
+    .pi-body { padding: 32px; }
+    .student-grid { grid-template-columns: 1fr; }
+    .student-card { grid-template-columns: 160px 1fr; }
+    .small-grid { grid-template-columns: 1fr 1fr; }
+    .collab-grid { grid-template-columns: 1fr 1fr; }
+    .pi-section, .students-section, .collab-section, .join-section { padding: 48px 28px; }
+  }
+</style>
+
+<PageHeader eyebrow="ARCS Lab · People" title="Our Team" description="A collaborative community of researchers and students advancing the science of human-AI teaming at the University of Tennessee." />
+
+<!-- PI -->
+<div class="pi-section">
+  <div class="pi-card">
+    <div class="pi-img">
+      <img src={`${base}/${team.pi.photo}`} alt={team.pi.name}>
+    </div>
+    <div class="pi-body">
+      <div class="pi-name">{team.pi.name}</div>
+      <div class="pi-title">{team.pi.title}</div>
+      <div class="pi-title">{team.pi.subtitle}</div>
+      <div class="pi-dept">{team.pi.department}</div>
+      <p class="pi-bio">{team.pi.bio}</p>
+      <div class="pi-links">
+        <a href={`mailto:${team.pi.email}`} class="pi-link">✉ {team.pi.email}</a>
+        <a href={team.pi.links.googleScholar} target="_blank" class="pi-link">Google Scholar</a>
+        <a href={team.pi.links.orcid} target="_blank" class="pi-link">ORCID</a>
+        <a href={team.pi.links.personalWebsite} target="_blank" class="pi-link">Personal Site</a>
+      </div>
+      <div class="pi-stats">
+        <div><div class="pi-stat-num">{team.pi.stats.publications}</div><div class="pi-stat-label">Publications</div></div>
+        <div><div class="pi-stat-num">{team.pi.stats.piFunding}</div><div class="pi-stat-label">PI Funding</div></div>
+        <div><div class="pi-stat-num">{team.pi.stats.bestPaperAwards}</div><div class="pi-stat-label">Best Paper Awards</div></div>
+        <div><div class="pi-stat-num">{team.pi.stats.invitedTalks}</div><div class="pi-stat-label">Invited Talks</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PhD Students -->
+<div class="students-section">
+  <h2 class="sh">PhD Students</h2>
+  <div class="student-grid">
+    {team.phdStudents.map(s => (
+      <div class="student-card">
+        <div class="student-img">
+          {s.photo && <img src={`${base}/${s.photo}`} alt={s.name}>}
+        </div>
+        <div class="student-body">
+          <div class="student-name">{s.name}</div>
+          <div class="student-role">{s.role}</div>
+          <div class="student-edu">{s.education}</div>
+          <p class="student-bio">{s.bio}</p>
+          <div class="student-links">
+            {s.email && <a href={`mailto:${s.email}`} class="student-link">✉ Email</a>}
+            {s.links?.googleScholar && <a href={s.links.googleScholar} target="_blank" class="student-link">Scholar</a>}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <h2 class="sh">Doctor of Engineering Students</h2>
+  <div class="small-grid">
+    {team.dengStudents.map(s => (
+      <div class="small-card">
+        <div class="small-name">{s.name}</div>
+        <div class="small-role">{s.role}</div>
+        <div class="small-tenure">{s.tenure}</div>
+        <p class="small-bio">{s.bio}</p>
+      </div>
+    ))}
+  </div>
+
+  <h2 class="sh">Undergraduate Researchers</h2>
+  <div class="small-grid">
+    {team.undergraduates.map(s => (
+      <div class="small-card">
+        <div class="small-name">{s.name}</div>
+        <div class="small-role">{s.role} · {s.degree}</div>
+        <div class="small-tenure">{s.tenure}</div>
+        <p class="small-bio">{s.bio}</p>
+      </div>
+    ))}
+  </div>
+</div>
+
+<!-- Collaborators -->
+<div class="collab-section">
+  <div class="section-eyebrow">External Network</div>
+  <h2 class="sh">Key Collaborators</h2>
+  <div class="collab-grid">
+    {team.collaborators.map(c => (
+      <div class="collab-card">
+        <div class="collab-name">{c.name}</div>
+        <div class="collab-inst">{c.institution}</div>
+        <div class="collab-area">{c.area}</div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<!-- Join -->
+<div class="join-section" id="join">
+  <div class="section-eyebrow">Opportunities</div>
+  <h2 class="sh">Join the ARCS Lab</h2>
+  <p style="font-size: 15px; color: var(--smoke); line-height: 1.8; max-width: 700px; margin-bottom: 24px;">
+    We are actively recruiting graduate students (PhD and DEng) in Industrial &amp; Systems Engineering, Computer Science, Human-Computer Interaction, and Psychology. Undergraduate research opportunities are also available.
+  </p>
+  <p style="font-size: 15px; color: var(--smoke); line-height: 1.8; max-width: 700px; margin-bottom: 32px;">
+    To apply, email Dr. Schelble at <a href="mailto:bschelbl@utk.edu" style="color: var(--utk-orange);">bschelbl@utk.edu</a> with your CV, a brief statement of research interests, and any relevant publications or projects.
+  </p>
+  <a href={`${base}/contact`} class="btn-primary">Contact Dr. Schelble →</a>
+</div>
+</BaseLayout>

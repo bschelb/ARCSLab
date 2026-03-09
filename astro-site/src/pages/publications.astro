@@ -1,0 +1,164 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import publications from '../data/publications.json';
+
+const years = [...new Set(publications.filter(p => typeof p.year === 'number').map(p => p.year))].sort((a, b) => b - a);
+const types = [...new Set(publications.map(p => p.type))];
+const journalCount = publications.filter(p => p.type === 'journal').length;
+const confCount = publications.filter(p => p.type === 'conference').length;
+const bookCount = publications.filter(p => p.type === 'book chapter').length;
+const awardCount = publications.filter(p => p.award && p.award !== 'In Press').length;
+---
+<BaseLayout title="Publications | ARCS Lab | UTK" activePage="publications">
+<style>
+  .page-header::before {
+    content: 'PUBLICATIONS'; position: absolute; right: 60px; top: 50%; transform: translateY(-50%);
+    font-family: 'Playfair Display', serif; font-size: 120px; font-weight: 900;
+    color: rgba(255,255,255,0.03); letter-spacing: -4px; white-space: nowrap;
+  }
+  .stats-bar {
+    display: flex; gap: 48px; padding: 40px 80px;
+    background: var(--stone-100); border-bottom: 1px solid var(--stone-200);
+  }
+  .stat-box { text-align: center; }
+  .stat-box-num { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 900; color: var(--stone-900); }
+  .stat-box-num span { color: var(--utk-orange); }
+  .stat-box-label { font-size: 11px; color: var(--stone-500); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+  .filter-bar {
+    display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+    padding: 32px 80px; border-bottom: 1px solid var(--stone-200);
+  }
+  .filter-bar label { font-size: 12px; font-weight: 600; color: var(--stone-700); text-transform: uppercase; letter-spacing: 0.06em; margin-right: 8px; }
+  .filter-btn {
+    padding: 6px 16px; font-size: 12px; font-weight: 500;
+    border: 1px solid var(--stone-200); background: white; color: var(--stone-700);
+    cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+  }
+  .filter-btn:hover, .filter-btn.active { background: var(--utk-orange); color: white; border-color: var(--utk-orange); }
+  .pub-list { padding: 0 80px 80px; }
+  .year-group { margin-top: 48px; }
+  .year-label {
+    font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700;
+    color: var(--stone-900); padding-bottom: 16px;
+    border-bottom: 2px solid var(--utk-orange); margin-bottom: 0;
+  }
+  .pub-row {
+    display: grid; grid-template-columns: 80px 1fr auto; gap: 20px;
+    padding: 20px 0; border-bottom: 1px solid var(--stone-200); align-items: start;
+    transition: padding-left 0.2s;
+  }
+  .pub-row:hover { padding-left: 8px; }
+  .pub-type {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em;
+    text-transform: uppercase; padding-top: 4px;
+  }
+  .pub-type.journal { color: var(--utk-orange); }
+  .pub-type.conference { color: #2563eb; }
+  .pub-type.book { color: #7c3aed; }
+  .pub-type.workshop { color: #059669; }
+  .pub-title-text { font-size: 15px; font-weight: 500; color: var(--stone-900); line-height: 1.5; margin-bottom: 4px; }
+  .pub-authors { font-size: 13px; color: var(--smoke); margin-bottom: 2px; }
+  .pub-authors strong { color: var(--stone-900); font-weight: 600; }
+  .pub-venue { font-size: 12px; color: var(--stone-500); font-style: italic; }
+  .pub-award-badge {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.06em;
+    color: var(--utk-orange); background: rgba(255,102,0,0.1);
+    padding: 4px 10px; white-space: nowrap; height: fit-content;
+  }
+  @media (max-width: 1024px) {
+    .stats-bar, .filter-bar, .pub-list { padding-left: 40px; padding-right: 40px; }
+    .stats-bar { flex-wrap: wrap; gap: 24px; }
+  }
+</style>
+
+<PageHeader eyebrow="ARCS Lab · Scholarly Output" title="Publications" description="A complete record of peer-reviewed journal articles, conference papers, book chapters, and workshop contributions from the ARCS Lab and its collaborators." />
+
+<div class="stats-bar">
+  <div class="stat-box">
+    <div class="stat-box-num">{publications.length}<span>+</span></div>
+    <div class="stat-box-label">Total Publications</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-box-num">{journalCount}</div>
+    <div class="stat-box-label">Journal Articles</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-box-num">{confCount}</div>
+    <div class="stat-box-label">Conference Papers</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-box-num">{bookCount}</div>
+    <div class="stat-box-label">Book Chapters</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-box-num">{awardCount}</div>
+    <div class="stat-box-label">Best Paper Awards</div>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <label>Filter:</label>
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="journal">Journals</button>
+  <button class="filter-btn" data-filter="conference">Conference</button>
+  <button class="filter-btn" data-filter="book chapter">Book Chapters</button>
+  <button class="filter-btn" data-filter="award">Award-Winning</button>
+</div>
+
+<div class="pub-list">
+  {years.map(year => (
+    <div class="year-group" data-year={year}>
+      <div class="year-label">{year}</div>
+      {publications.filter(p => p.year === year).map(pub => (
+        <div class="pub-row" data-type={pub.type} data-award={pub.award && pub.award !== 'In Press' ? 'yes' : 'no'}>
+          <div class={`pub-type ${pub.type === 'book chapter' ? 'book' : pub.type}`}>{pub.type === 'book chapter' ? 'Book Ch.' : pub.type}</div>
+          <div>
+            <div class="pub-title-text">{pub.title}</div>
+            <div class="pub-authors" set:html={pub.authors.replace(/Schelble, B\.G\./g, '<strong>Schelble, B.G.</strong>').replace(/Schelble/g, '<strong>Schelble</strong>')} />
+            <div class="pub-venue">{pub.venue}</div>
+          </div>
+          {pub.award && pub.award !== 'In Press' ? <div class="pub-award-badge">★ {pub.award}</div> : <div></div>}
+        </div>
+      ))}
+    </div>
+  ))}
+  {publications.filter(p => typeof p.year !== 'number').length > 0 && (
+    <div class="year-group" data-year="inpress">
+      <div class="year-label">In Press</div>
+      {publications.filter(p => typeof p.year !== 'number').map(pub => (
+        <div class="pub-row" data-type={pub.type} data-award="no">
+          <div class={`pub-type ${pub.type === 'book chapter' ? 'book' : pub.type}`}>{pub.type === 'book chapter' ? 'Book Ch.' : pub.type}</div>
+          <div>
+            <div class="pub-title-text">{pub.title}</div>
+            <div class="pub-authors" set:html={pub.authors.replace(/Schelble, B\.G\./g, '<strong>Schelble, B.G.</strong>').replace(/Schelble/g, '<strong>Schelble</strong>')} />
+            <div class="pub-venue">{pub.venue}</div>
+          </div>
+          <div></div>
+        </div>
+      ))}
+    </div>
+  )}
+</div>
+
+<script>
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('.pub-row').forEach(row => {
+        const el = row as HTMLElement;
+        if (filter === 'all') { el.style.display = ''; }
+        else if (filter === 'award') { el.style.display = el.dataset.award === 'yes' ? '' : 'none'; }
+        else { el.style.display = el.dataset.type === filter ? '' : 'none'; }
+      });
+      document.querySelectorAll('.year-group').forEach(group => {
+        const el = group as HTMLElement;
+        const visibleRows = el.querySelectorAll('.pub-row:not([style*="display: none"])');
+        el.style.display = visibleRows.length > 0 ? '' : 'none';
+      });
+    });
+  });
+</script>
+</BaseLayout>
