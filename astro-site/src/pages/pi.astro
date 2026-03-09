@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import team from '../data/team.json';
 
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const pi = team.pi;
 ---
 <BaseLayout title="Dr. Beau Schelble | PI | ARCS Lab" activePage="pi">

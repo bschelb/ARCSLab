@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import team from '../data/team.json';
 import publications from '../data/publications.json';
 
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const recentPubs = publications.filter(p => typeof p.year === 'number').sort((a, b) => b.year - a.year).slice(0, 7);
 const researchAreas = [
   { num: '01', icon: '🤝', title: 'Intelligent Information Sharing', desc: 'Modeling information-sharing, team cognition, and workload to create synergistic human–machine partnerships across complex, high-stakes environments.' },

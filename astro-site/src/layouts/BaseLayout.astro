@@ -4,7 +4,7 @@ interface Props {
   activePage?: string;
 }
 const { title, activePage = '' } = Astro.props;
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <!DOCTYPE html>
 <html lang="en">
