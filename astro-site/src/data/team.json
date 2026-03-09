@@ -8,14 +8,14 @@
     "email": "bschelbl@utk.edu",
     "photo": "assets/DSCF0563-Beaus-Workstation.jpg",
     "cropPosition": "center 40%",
-    "bio": "Dr. Schelble is an interdisciplinary researcher whose work sits at the intersection of human factors, human-centered computing, and AI. For nearly a decade he has explored how humans and AI can work together more effectively and safely — investigating trust, shared mental models, situational awareness, ethical AI behavior, and intelligent information sharing. His research spans defense, advanced manufacturing, healthcare, cybersecurity, and emergency response. He received his PhD in Human-Centered Computing from Clemson University in 2023 under advisor Nathan McNeese, and his BS in Psychology (Summa Cum Laude) from Clemson in 2018.",
+    "bio": "Dr. Schelble is an interdisciplinary researcher whose work sits at the intersection of human factors, human-centered computing, and AI. For nearly a decade he has explored how humans and AI can work together more effectively and safely — investigating trust, shared mental models, situational awareness, ethical AI behavior, and intelligent information sharing. His research spans defense, advanced manufacturing, healthcare, cybersecurity, and emergency response. He received his PhD in Human-Centered Computing from Clemson University in 2023 under advisor Nathan McNeese, and his BS in Psychology from Clemson in 2018.",
     "shortBio": "Assistant Professor of ISE. PhD in Human-Centered Computing, Clemson University 2023.",
     "education": {
       "phd": "Human-Centered Computing, Clemson University, 2023",
-      "bs": "Psychology (Summa Cum Laude), Clemson University, 2018"
+      "bs": "Psychology, Clemson University, 2018"
     },
     "stats": {
-      "publications": "46+",
+      "publications": "43+",
       "piFunding": "$722K",
       "bestPaperAwards": 5,
       "invitedTalks": 7
