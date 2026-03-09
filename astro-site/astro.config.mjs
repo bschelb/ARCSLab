@@ -1,8 +1,7 @@
 import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  site: "https://bschelb.github.io",
-  base: "/ARCSLab",
+  site: "https://arcslab.io",
   build: {
     format: "file",
   },
