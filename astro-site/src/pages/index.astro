@@ -1,403 +1,690 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
 import team from '../data/team.json';
 import publications from '../data/publications.json';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const recentPubs = publications.filter(p => typeof p.year === 'number').sort((a, b) => b.year - a.year).slice(0, 7);
+const recentPubs = publications.filter(p => typeof p.year === 'number').sort((a, b) => b.year - a.year).slice(0, 6);
 const researchAreas = [
-  { num: '01', icon: '🤝', title: 'Intelligent Information Sharing', desc: 'Modeling information-sharing, team cognition, and workload to create synergistic human–machine partnerships across complex, high-stakes environments.' },
-  { num: '02', icon: '🔒', title: 'Trustworthy AI', desc: 'Designing transparent AI behaviors that accurately calibrate trust, support responsible AI adoption, and contribute to meaningful AI acceptance.' },
-  { num: '03', icon: '📚', title: 'Training', desc: 'Improving skill transference from training to operations through intelligent interventions, human-centered design, and psychological fidelity.' },
-  { num: '04', icon: '🎯', title: 'Situational Awareness', desc: 'Developing real-time adaptive interfaces that surface mission-critical cues and promote collective understanding in electronically contested environments.' },
-  { num: '05', icon: '🤖', title: 'Applied Robotics', desc: 'Integrating collaborative robots and unmanned ground vehicles into advanced manufacturing workflows and high-stakes emergency response scenarios.' },
-  { num: '06', icon: '🔬', title: 'Evaluation & Validation', desc: 'Developing rigorous experimental frameworks to test AI teammates\' effectiveness, safety, and resilience through mixed-methods empirical research.' },
+  { num: '01', icon: 'network', title: 'Intelligent Information Sharing', desc: 'Modeling information-sharing, team cognition, and workload to create synergistic human–machine partnerships across complex, high-stakes environments.' },
+  { num: '02', icon: 'shield', title: 'Trustworthy AI', desc: 'Designing transparent AI behaviors that accurately calibrate trust, support responsible AI adoption, and contribute to meaningful AI acceptance.' },
+  { num: '03', icon: 'layers', title: 'Training', desc: 'Improving skill transference from training to operations through intelligent interventions, human-centered design, and psychological fidelity.' },
+  { num: '04', icon: 'radar', title: 'Situational Awareness', desc: 'Developing real-time adaptive interfaces that surface mission-critical cues and promote collective understanding in electronically contested environments.' },
+  { num: '05', icon: 'bot', title: 'Applied Robotics', desc: 'Integrating collaborative robots and unmanned ground vehicles into advanced manufacturing workflows and high-stakes emergency response scenarios.' },
+  { num: '06', icon: 'flask', title: 'Evaluation & Validation', desc: 'Developing rigorous experimental frameworks to test AI teammates\' effectiveness, safety, and resilience through mixed-methods empirical research.' },
 ];
 ---
-<BaseLayout title="ARCS Lab | AI & Robotics for Collaborative Systems | UTK" activePage="home">
+<BaseLayout title="ARCS Lab | AI & Robotics for Collaborative Systems | UT Knoxville" activePage="home">
 <style>
+  /* ── HERO ── */
   .hero {
-    min-height: 70vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding-top: var(--nav-h);
+    position: relative;
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background: var(--ink);
+    overflow: hidden;
+    padding-top: calc(var(--nav-h) + 3px);
   }
-  .hero-left {
-    padding: 80px 64px 80px 80px;
-    display: flex; flex-direction: column; justify-content: center;
+  #net-canvas {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    display: block;
+  }
+  .hero-shade {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 90% 70% at 18% 75%, rgba(20,16,11,0.92) 0%, rgba(20,16,11,0.55) 50%, rgba(20,16,11,0.15) 100%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    position: relative; z-index: 2;
+    padding: 80px var(--gutter) 0;
+    max-width: 1100px;
   }
   .hero-eyebrow {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--utk-orange); margin-bottom: 24px;
-    display: flex; align-items: center; gap: 12px;
-    animation: fadeUp 0.6s ease both;
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--mono); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--dk-text-2);
+    border: 1px solid rgba(255,255,255,0.18);
+    padding: 9px 18px;
+    margin-bottom: 36px;
+    animation: fadeUp 0.7s ease both;
   }
-  .hero-eyebrow::after {
-    content: ''; flex: 1; max-width: 48px; height: 1px;
-    background: var(--utk-orange);
+  .hero-eyebrow .hl { color: var(--orange); }
+  .hero h1 {
+    font-family: var(--serif);
+    font-optical-sizing: auto;
+    font-size: clamp(46px, 6.6vw, 92px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.02;
+    color: #fff;
+    margin-bottom: 28px;
+    max-width: 980px;
+    animation: fadeUp 0.8s 0.1s ease both;
   }
-  .hero-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(42px, 5vw, 68px);
-    font-weight: 900; line-height: 1.05;
-    color: var(--stone-900); margin-bottom: 24px;
-    animation: fadeUp 0.7s 0.1s ease both;
+  .hero h1 em {
+    font-style: italic; font-weight: 500; color: var(--orange);
   }
-  .hero-title span { color: var(--utk-orange); }
   .hero-desc {
-    font-size: 17px; line-height: 1.75; color: var(--smoke);
-    max-width: 480px; margin-bottom: 48px;
-    animation: fadeUp 0.7s 0.2s ease both;
+    font-size: 18px; line-height: 1.75; color: var(--dk-text-2);
+    max-width: 620px; margin-bottom: 44px;
+    animation: fadeUp 0.8s 0.2s ease both;
   }
-  .hero-stats {
-    display: flex; gap: 40px; margin-bottom: 48px;
-    padding-top: 40px;
-    border-top: 1px solid var(--stone-200);
-    animation: fadeUp 0.7s 0.3s ease both;
+  .hero-actions {
+    display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 72px;
+    animation: fadeUp 0.8s 0.3s ease both;
   }
-  .stat-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 36px; font-weight: 700;
-    color: var(--stone-900); line-height: 1;
+  .hero-console {
+    position: relative; z-index: 2;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    background: rgba(20,16,11,0.55);
+    backdrop-filter: blur(6px);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 0 var(--gutter);
   }
-  .stat-num span { color: var(--utk-orange); }
-  .stat-label {
-    font-size: 12px; color: var(--smoke); margin-top: 4px;
-    text-transform: uppercase; letter-spacing: 0.06em;
+  .hc-stat {
+    padding: 30px 24px 30px 0;
+    border-right: 1px solid rgba(255,255,255,0.08);
   }
-  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; animation: fadeUp 0.7s 0.4s ease both; }
-  .hero-right {
-    position: relative; overflow: hidden;
+  .hc-stat:last-child { border-right: none; }
+  .hc-stat + .hc-stat { padding-left: 24px; }
+  .hc-num {
+    font-family: var(--serif); font-size: clamp(26px, 2.6vw, 38px);
+    font-weight: 600; color: #fff; line-height: 1;
+    font-variant-numeric: tabular-nums;
   }
-  .hero-right img {
-    position: absolute; inset: 0;
-    width: 100%; height: 100%; object-fit: cover; display: block;
-    object-position: 33% 67%;
-  }
-
-  .mission-strip {
-    background: var(--utk-orange);
-    padding: 40px 80px;
-    display: flex; align-items: center; gap: 40px;
-  }
-  .mission-strip-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
-    color: rgba(255,255,255,0.90); white-space: nowrap;
-  }
-  .mission-strip-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.88); }
-  .mission-strip-text {
-    font-family: 'Playfair Display', serif;
-    font-size: 20px; font-style: italic;
-    color: white; line-height: 1.5;
+  .hc-num .accent { color: var(--orange); }
+  .hc-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--dk-muted); margin-top: 9px;
   }
 
-  section.research { padding: 100px 80px; background: var(--stone-100); }
-  .research-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+  /* ── MISSION BAND ── */
+  .mission {
+    background: var(--orange);
+    padding: 56px var(--gutter);
+    display: grid; grid-template-columns: auto 1fr; gap: 48px; align-items: center;
   }
-  .research-card {
-    background: white; padding: 36px 32px;
-    border: 1px solid var(--stone-200);
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    position: relative; overflow: hidden; cursor: default;
+  .mission-k {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.24em;
+    text-transform: uppercase; color: rgba(255,255,255,0.92);
+    display: flex; align-items: center; gap: 12px; white-space: nowrap;
   }
-  .research-card::before {
-    content: ''; position: absolute; top: 0; left: 0;
-    width: 100%; height: 4px; background: var(--stone-200); transition: background 0.3s;
+  .mission-k::after { content: ''; width: 48px; height: 1.5px; background: rgba(255,255,255,0.6); }
+  .mission p {
+    font-family: var(--serif); font-style: italic; font-weight: 500;
+    font-size: clamp(19px, 2vw, 25px); line-height: 1.5; color: #fff;
+    max-width: 980px;
   }
-  .research-card:hover::before { background: var(--utk-orange); }
-  .research-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 48px rgba(30,21,13,0.10), 0 4px 12px rgba(30,21,13,0.06);
-    border-color: transparent;
+
+  /* ── RESEARCH ── */
+  .research { padding: 110px var(--gutter); background: var(--paper); }
+  .sec-head-row {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 32px; flex-wrap: wrap;
   }
-  .rc-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
-  .rc-num {
-    font-family: 'DM Mono', monospace; font-size: 11px; color: white;
-    background: var(--stone-900); width: 32px; height: 32px;
-    display: flex; align-items: center; justify-content: center;
-    letter-spacing: 0.05em; flex-shrink: 0;
-  }
-  .research-card:hover .rc-num { background: var(--utk-orange); }
-  .rc-icon {
-    width: 48px; height: 48px; background: var(--stone-100);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px; transition: all 0.3s; flex-shrink: 0;
-  }
-  .research-card:hover .rc-icon { background: rgba(255,102,0,0.1); transform: scale(1.05); }
-  .rc-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--stone-900); margin-bottom: 12px; line-height: 1.25; }
-  .rc-desc { font-size: 14px; color: var(--smoke); line-height: 1.75; }
-  .rc-arrow {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.08em;
-    color: var(--stone-500); margin-top: 20px; text-transform: uppercase;
+  .view-all {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--text-strong); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    border-bottom: 1.5px solid var(--orange); padding-bottom: 6px;
+    margin-bottom: 56px; white-space: nowrap;
     transition: color 0.2s;
   }
-  .research-card:hover .rc-arrow { color: var(--utk-orange); }
-  .rc-arrow span { transition: transform 0.2s; display: inline-block; }
-  .research-card:hover .rc-arrow span { transform: translateX(4px); }
-
-  section.pubs-section { background: var(--stone-900); color: white; padding: 100px 80px; }
-  .pubs-section .section-title { color: white; }
-  .pubs-section .section-lead { color: rgba(255,255,255,0.93); }
-  .pub-list { display: flex; flex-direction: column; }
-  .pub-item {
-    padding: 28px 0; border-bottom: 1px solid rgba(255,255,255,0.08);
-    display: grid; grid-template-columns: 80px 1fr auto;
-    gap: 24px; align-items: start; transition: all 0.2s;
+  .view-all:hover { color: var(--orange-deep); }
+  .research-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--line); border: 1px solid var(--line);
   }
-  .pub-item:hover { padding-left: 8px; }
-  .pub-item:last-child { border-bottom: none; }
-  .pub-year { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--utk-orange); padding-top: 4px; }
-  .pub-title-text { font-size: 15px; font-weight: 500; color: rgba(255,255,255,0.9); line-height: 1.5; margin-bottom: 6px; }
-  .pub-meta { font-size: 12px; color: rgba(255,255,255,0.90); font-style: italic; }
-  .pub-award { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: var(--utk-orange); background: rgba(255,102,0,0.12); padding: 3px 8px; white-space: nowrap; height: fit-content; }
-  .pubs-cta { margin-top: 48px; }
+  .research-card {
+    background: var(--paper); padding: 40px 34px;
+    position: relative; text-decoration: none; display: block;
+    transition: background 0.3s ease;
+  }
+  .research-card::after {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 0; height: 3px; background: var(--orange);
+    transition: width 0.35s cubic-bezier(0.22, 0.6, 0.3, 1);
+  }
+  .research-card:hover { background: #fff; }
+  .research-card:hover::after { width: 100%; }
+  .rc-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 26px; }
+  .rc-num {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em;
+    color: var(--text-muted);
+  }
+  .rc-icon { color: var(--text-strong); transition: color 0.25s, transform 0.25s; }
+  .research-card:hover .rc-icon { color: var(--orange); transform: scale(1.08); }
+  .rc-title {
+    font-family: var(--serif); font-size: 21px; font-weight: 600;
+    color: var(--text-strong); line-height: 1.25; margin-bottom: 12px;
+  }
+  .rc-desc { font-size: 14px; color: var(--text); line-height: 1.75; }
+  .rc-go {
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 22px;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--text-muted); transition: color 0.2s;
+  }
+  .rc-go span { transition: transform 0.2s; }
+  .research-card:hover .rc-go { color: var(--orange-deep); }
+  .research-card:hover .rc-go span { transform: translateX(4px); }
 
-  section.team-section { background: var(--stone-100); padding: 100px 80px; }
+  /* ── PUBLICATIONS ── */
+  .pubs { padding: 110px var(--gutter); }
+  .pub-list { border-top: 1px solid var(--line-dark); }
+  .pub-item {
+    display: grid; grid-template-columns: 90px 1fr auto; gap: 28px;
+    padding: 26px 0; border-bottom: 1px solid var(--line-dark);
+    align-items: start; position: relative;
+    transition: padding-left 0.25s ease;
+  }
+  .pub-item::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 2px; background: var(--orange); opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .pub-item:hover { padding-left: 18px; }
+  .pub-item:hover::before { opacity: 1; }
+  .pub-year { font-family: var(--mono); font-size: 12px; color: var(--orange); padding-top: 4px; }
+  .pub-title-text { font-size: 15.5px; font-weight: 500; color: var(--dk-text); line-height: 1.55; margin-bottom: 7px; }
+  .pub-meta { font-size: 12.5px; color: var(--dk-muted); }
+  .pub-meta em { color: var(--dk-text-2); }
+  .pub-award {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+    color: var(--orange); background: rgba(255,102,0,0.13);
+    padding: 4px 10px; white-space: nowrap; height: fit-content;
+  }
+  .pubs-cta { margin-top: 52px; display: flex; gap: 16px; flex-wrap: wrap; }
+
+  /* ── TEAM ── */
+  .team { padding: 110px var(--gutter); background: var(--paper-2); }
   .team-grid {
     display: grid; grid-template-columns: repeat(4, 1fr);
-    gap: 24px; margin-bottom: 48px;
+    gap: 22px; margin-bottom: 52px;
   }
-  .team-card { background: white; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
-  .team-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(30,21,13,0.12); }
-  .team-card-img { height: 420px; background: var(--stone-200); overflow: hidden; }
-  .team-card-img img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block; }
-  .team-card-body { padding: 24px; }
-  .team-card-name { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--stone-900); margin-bottom: 4px; }
-  .team-card-role { font-size: 12px; color: var(--utk-orange); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 8px; }
-  .team-card-desc { font-size: 13px; color: var(--smoke); line-height: 1.6; }
-
-  .funding-strip {
-    background: white; padding: 60px 80px;
-    display: flex; align-items: center; gap: 64px; flex-wrap: wrap;
+  .team-card {
+    background: #fff; text-decoration: none; display: block;
+    border: 1px solid var(--line);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
-  .funding-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--stone-500); white-space: nowrap; }
-  .funding-logo-row { display: flex; align-items: center; gap: 48px; flex-wrap: wrap; }
-  .funding-logo { display: flex; flex-direction: column; align-items: center; gap: 6px; }
-  .funding-logo-badge { padding: 12px 24px; border: 1.5px solid var(--stone-200); font-weight: 700; font-size: 14px; color: var(--stone-700); letter-spacing: 0.02em; }
-  .funding-logo-sub { font-size: 10px; color: var(--stone-500); text-transform: uppercase; letter-spacing: 0.1em; }
-  .funding-amount { margin-left: auto; text-align: right; }
-  .funding-amount-num { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 900; color: var(--stone-900); line-height: 1; }
-  .funding-amount-label { font-size: 11px; color: var(--smoke); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
-
-  .contact-strip {
-    background: var(--stone-900); padding: 80px;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+  .team-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 22px 48px rgba(20,16,11,0.13);
   }
-  .contact-strip .section-title { color: white; font-size: 32px; }
-  .contact-strip .section-lead { color: rgba(255,255,255,0.92); font-size: 15px; }
-  .contact-info { display: flex; flex-direction: column; gap: 20px; }
-  .contact-item { display: flex; gap: 16px; align-items: flex-start; }
-  .contact-icon { width: 36px; height: 36px; background: rgba(255,102,0,0.15); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; color: var(--utk-orange); }
-  .contact-item-label { font-size: 11px; color: rgba(255,255,255,0.90); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
-  .contact-item-val { font-size: 14px; color: rgba(255,255,255,0.85); }
-  .contact-item-val a { color: var(--utk-orange); text-decoration: none; }
+  .team-card-img { height: 340px; background: var(--paper-2); overflow: hidden; position: relative; }
+  .team-card-img img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    filter: saturate(0.92);
+    transition: transform 0.4s ease;
+  }
+  .team-card:hover .team-card-img img { transform: scale(1.035); }
+  .team-card-body { padding: 22px 24px 26px; }
+  .team-card-name { font-family: var(--serif); font-size: 19px; font-weight: 600; color: var(--text-strong); margin-bottom: 5px; }
+  .team-card-role {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--orange-deep); margin-bottom: 10px;
+  }
+  .team-card-desc { font-size: 13px; color: var(--text); line-height: 1.65; }
+  .join-tile {
+    background: var(--ink); border: 1px solid var(--ink);
+    display: flex; flex-direction: column;
+  }
+  .join-tile .team-card-img {
+    background: var(--ink); display: flex; align-items: center; justify-content: center;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .join-plus {
+    width: 64px; height: 64px; border: 1.5px solid var(--orange);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif); font-size: 34px; color: var(--orange);
+    transition: background 0.25s, color 0.25s;
+  }
+  .join-tile:hover .join-plus { background: var(--orange); color: #fff; }
+  .join-tile .team-card-name { color: #fff; }
+  .join-tile .team-card-role { color: var(--orange); }
+  .join-tile .team-card-desc { color: var(--dk-muted); }
 
+  /* ── FUNDING BAND ── */
+  .funding-band {
+    background: #fff; border-top: 1px solid var(--line);
+    padding: 64px var(--gutter);
+    display: flex; align-items: center; gap: 56px; flex-wrap: wrap;
+  }
+  .fb-label {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--text-muted); white-space: nowrap;
+  }
+  .fb-badges { display: flex; gap: 28px; flex-wrap: wrap; }
+  .fb-badge { text-align: center; }
+  .fb-badge .b {
+    padding: 14px 26px; border: 1.5px solid var(--line-strong);
+    font-family: var(--mono); font-weight: 500; font-size: 14px;
+    letter-spacing: 0.06em; color: var(--text-strong);
+  }
+  .fb-badge .s {
+    font-family: var(--mono); font-size: 9.5px; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.12em; margin-top: 10px;
+  }
+  .fb-total { margin-left: auto; text-align: right; }
+  .fb-total .n {
+    font-family: var(--serif); font-size: 46px; font-weight: 600;
+    color: var(--text-strong); line-height: 1; font-variant-numeric: tabular-nums;
+  }
+  .fb-total .n span { color: var(--orange); }
+  .fb-total .l {
+    font-family: var(--mono); font-size: 10px; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.14em; margin-top: 8px;
+  }
+
+  /* ── CONTACT CTA ── */
+  .cta {
+    padding: 110px var(--gutter);
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 72px;
+  }
+  .cta-info { display: flex; flex-direction: column; gap: 24px; }
+  .cta-item { display: flex; gap: 18px; align-items: flex-start; }
+  .cta-icon {
+    width: 42px; height: 42px; flex-shrink: 0;
+    border: 1px solid rgba(255,255,255,0.16);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--orange);
+  }
+  .cta-k {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--dk-muted); margin-bottom: 5px;
+  }
+  .cta-v { font-size: 14.5px; color: var(--dk-text); line-height: 1.65; }
+  .cta-v a { color: var(--orange); text-decoration: none; }
+  .cta-v a:hover { text-decoration: underline; }
+
+  /* ── RESPONSIVE ── */
   @media (max-width: 1024px) {
-    .hero { grid-template-columns: 1fr; }
-    .hero-right { display: none; }
-    .hero-left { padding: 60px 40px; }
-    section.research, section.pubs-section, section.team-section { padding: 60px 40px; }
+    .hero-console { grid-template-columns: repeat(3, 1fr); }
+    .hc-stat:nth-child(3) { border-right: none; }
+    .hc-stat:nth-child(n+4) { border-top: 1px solid rgba(255,255,255,0.08); }
+    .hc-stat { padding-left: 24px; }
+    .hc-stat:first-child, .hc-stat:nth-child(4) { padding-left: 0; }
     .research-grid { grid-template-columns: 1fr 1fr; }
-    section.research::before { font-size: 120px; }
     .team-grid { grid-template-columns: 1fr 1fr; }
-    .contact-strip { grid-template-columns: 1fr; gap: 40px; padding: 60px 40px; }
-    .mission-strip { padding: 32px 40px; }
-    .funding-strip { padding: 40px; }
+    .cta { grid-template-columns: 1fr; gap: 48px; }
+    .mission { grid-template-columns: 1fr; gap: 20px; }
+  }
+  @media (max-width: 480px) {
+    .hero h1 { font-size: clamp(36px, 11.5vw, 46px); }
+    .hero-eyebrow { max-width: 100%; }
+  }
+  @media (max-width: 640px) {
+    .hero { min-height: 88vh; }
+    .research-grid { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: 1fr; }
+    .hero-console { grid-template-columns: 1fr 1fr; }
+    .hc-stat { border-right: none !important; border-top: 1px solid rgba(255,255,255,0.08); padding-left: 0; }
+    .hc-stat:first-child, .hc-stat:nth-child(2) { border-top: none; }
   }
 </style>
 
 <!-- HERO -->
-<section class="hero" style="padding: var(--nav-h) 0 0;">
-  <div class="hero-left">
-    <div class="hero-eyebrow">Tickle College of Engineering · UTK ISE</div>
-    <h1 class="hero-title">
-      AI &amp; Robotics for<br>
-      <span>Collaborative</span><br>
-      Systems Lab
-    </h1>
-    <p class="hero-desc">
-      Advancing the science and engineering of human‑AI teaming through rigorous, human‑centered research — designing trustworthy AI teammates for defense, manufacturing, healthcare, and beyond.
-    </p>
-    <div class="hero-stats">
-      <div>
-        <div class="stat-num">46<span>+</span></div>
-        <div class="stat-label">Publications</div>
-      </div>
-      <div>
-        <div class="stat-num">5</div>
-        <div class="stat-label">Best Paper Awards</div>
-      </div>
+<section class="hero">
+  <canvas id="net-canvas" aria-hidden="true"></canvas>
+  <div class="hero-shade" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">
+      <span class="status-dot"></span>
+      <span><span class="hl">ARCS Lab</span> · AI &amp; Robotics for Collaborative Systems · Knoxville, TN</span>
     </div>
+    <h1>Humans and AI,<br>engineered to think as <em>one team.</em></h1>
+    <p class="hero-desc">
+      We advance the science of human-AI teaming through rigorous, human-centered research — designing trustworthy AI teammates for defense, advanced manufacturing, healthcare, and emergency response.
+    </p>
     <div class="hero-actions">
-      <a href={`${base}/research`} class="btn-primary">Explore Our Research</a>
-      <a href={`${base}/publications`} class="btn-outline">View Publications</a>
+      <a href={`${base}/research`} class="btn">Explore the Research <span class="arr">→</span></a>
+      <a href={`${base}/publications`} class="btn-light">Publications <span class="arr">→</span></a>
     </div>
   </div>
-  <div class="hero-right">
-    <img src="/assets/downtownPic.jpg" alt="Knoxville skyline" />
+  <div class="hero-console">
+    <div class="hc-stat">
+      <div class="hc-num"><span data-count="46">0</span><span class="accent">+</span></div>
+      <div class="hc-label">Publications</div>
+    </div>
+    <div class="hc-stat">
+      <div class="hc-num"><span data-count="2055">0</span><span class="accent">+</span></div>
+      <div class="hc-label">Citations</div>
+    </div>
+    <div class="hc-stat">
+      <div class="hc-num"><span data-count="722" data-prefix="$" data-suffix="K">$0</span></div>
+      <div class="hc-label">PI Funding Awarded</div>
+    </div>
+    <div class="hc-stat">
+      <div class="hc-num"><span data-count="5">0</span></div>
+      <div class="hc-label">Best Paper Awards</div>
+    </div>
+    <div class="hc-stat">
+      <div class="hc-num"><span data-count="7">0</span></div>
+      <div class="hc-label">Invited Talks</div>
+    </div>
   </div>
 </section>
 
-<!-- MISSION STRIP -->
-<div class="mission-strip">
-  <span class="mission-strip-label">Mission</span>
-  <div class="mission-strip-divider"></div>
-  <p class="mission-strip-text">
-    "Advancing human‑AI teaming by understanding and optimizing collaborative systems comprising both human and computational elements to enhance performance and safety across manufacturing, healthcare, defense, and beyond."
+<!-- MISSION -->
+<section class="mission">
+  <div class="mission-k">Mission</div>
+  <p>
+    "Advancing human-AI teaming by understanding and optimizing collaborative systems comprising both human and computational elements — to enhance performance and safety across manufacturing, healthcare, defense, and beyond."
   </p>
-</div>
+</section>
 
 <!-- RESEARCH AREAS -->
 <section class="research">
-  <div class="section-eyebrow">Core Research Areas</div>
-  <h2 class="section-title">Six Pillars of Human-AI<br>Teaming Research</h2>
-  <p class="section-lead">Our interdisciplinary program integrates quantitative, qualitative, and computational methods to understand and improve human-AI collaborative systems.</p>
+  <div class="sec-head-row">
+    <div>
+      <div class="eyebrow" data-reveal>01 · Research Program</div>
+      <h2 class="sec-title" data-reveal>Six pillars of<br>human-AI teaming <em>research</em></h2>
+    </div>
+    <a href={`${base}/research`} class="view-all" data-reveal>View all research →</a>
+  </div>
+  <p class="sec-lead" data-reveal>Our interdisciplinary program integrates quantitative, qualitative, and computational methods to understand and improve human-AI collaborative systems.</p>
   <div class="research-grid">
-    {researchAreas.map(area => (
-      <a href={`${base}/research`} class="research-card" style="text-decoration:none;">
-        <div class="rc-header">
-          <div class="rc-num">{area.num}</div>
-          <div class="rc-icon">{area.icon}</div>
+    {researchAreas.map((area, i) => (
+      <a href={`${base}/research`} class="research-card" data-reveal style={`--rd: ${i * 70}ms`}>
+        <div class="rc-top">
+          <span class="rc-num">/{area.num}</span>
+          <span class="rc-icon"><Icon name={area.icon} size={30} /></span>
         </div>
         <div class="rc-title">{area.title}</div>
         <p class="rc-desc">{area.desc}</p>
-        <div class="rc-arrow">Learn more <span>→</span></div>
+        <div class="rc-go">Learn more <span>→</span></div>
       </a>
     ))}
   </div>
 </section>
 
 <!-- RECENT PUBLICATIONS -->
-<section class="pubs-section">
-  <div class="section-eyebrow">Latest Work</div>
-  <h2 class="section-title">Recent Publications</h2>
-  <p class="section-lead">Published across leading venues in Human Factors, HCI, ACM, and IEEE.</p>
+<section class="pubs blueprint on-dark">
+  <div class="eyebrow" data-reveal>02 · Latest Work</div>
+  <h2 class="sec-title" data-reveal>Recent <em>publications</em></h2>
+  <p class="sec-lead" data-reveal>Published across leading venues of the HFES, ACM, and IEEE communities — Human Factors, PACM HCI, IEEE Transactions on Human-Machine Systems, and more.</p>
   <div class="pub-list">
-    {recentPubs.map(pub => (
-      <div class="pub-item">
+    {recentPubs.map((pub, i) => (
+      <div class="pub-item" data-reveal style={`--rd: ${i * 60}ms`}>
         <span class="pub-year">{pub.year}</span>
         <div>
           <div class="pub-title-text">{pub.title}</div>
-          <div class="pub-meta" set:html={`${pub.authors.replace(/Schelble/g, '<strong style="color:rgba(255,255,255,0.90)">Schelble</strong>')} · <em>${pub.venue}</em>`} />
+          <div class="pub-meta" set:html={`${pub.authors.replace(/Schelble/g, '<strong style="color:rgba(255,255,255,0.92)">Schelble</strong>')} · <em>${pub.venue}</em>`} />
         </div>
         {pub.award ? <span class="pub-award">★ {pub.award}</span> : <span></span>}
       </div>
     ))}
   </div>
-  <div class="pubs-cta">
-    <a href={`${base}/publications`} class="btn-primary">View All {publications.length} Publications →</a>
+  <div class="pubs-cta" data-reveal>
+    <a href={`${base}/publications`} class="btn">All {publications.length} publications <span class="arr">→</span></a>
   </div>
 </section>
 
 <!-- TEAM PREVIEW -->
-<section class="team-section">
-  <div class="section-eyebrow">The Team</div>
-  <h2 class="section-title">Meet the ARCS Lab</h2>
-  <p class="section-lead">A growing community of researchers advancing the science of human-AI collaboration at the University of Tennessee, Knoxville.</p>
+<section class="team">
+  <div class="sec-head-row">
+    <div>
+      <div class="eyebrow" data-reveal>03 · The Team</div>
+      <h2 class="sec-title" data-reveal>The people behind<br>the <em>partnership</em></h2>
+    </div>
+    <a href={`${base}/team`} class="view-all" data-reveal>Meet the full team →</a>
+  </div>
+  <p class="sec-lead" data-reveal>A growing community of researchers advancing the science of human-AI collaboration at the University of Tennessee, Knoxville.</p>
   <div class="team-grid">
-    <div class="team-card">
+    <a href={`${base}/pi`} class="team-card" data-reveal>
       <div class="team-card-img">
-        <img src={`${base}/${team.pi.photo}`} alt={team.pi.name} style={`object-position: ${team.pi.cropPosition || 'center 20%'}`}>
+        <img src={`${base}/${team.pi.photo}`} alt={team.pi.name} style={`object-position: ${team.pi.cropPosition || 'center 20%'}`} loading="lazy">
       </div>
       <div class="team-card-body">
         <div class="team-card-name">{team.pi.name}</div>
         <div class="team-card-role">PI · Founding Director</div>
         <div class="team-card-desc">{team.pi.shortBio}</div>
       </div>
-    </div>
-    {team.phdStudents.map(s => (
-      <div class="team-card">
-      <div class="team-card-img">
-          <img src={`${base}/${s.photo}`} alt={s.name} style={`object-position: ${s.cropPosition || 'center 20%'}`}>
+    </a>
+    {team.phdStudents.map((s, i) => (
+      <a href={`${base}/team`} class="team-card" data-reveal style={`--rd: ${(i + 1) * 80}ms`}>
+        <div class="team-card-img">
+          <img src={`${base}/${s.photo}`} alt={s.name} style={`object-position: ${s.cropPosition || 'center 20%'}`} loading="lazy">
         </div>
         <div class="team-card-body">
           <div class="team-card-name">{s.name}</div>
           <div class="team-card-role">PhD Student</div>
           <div class="team-card-desc">{s.shortBio}</div>
         </div>
-      </div>
+      </a>
     ))}
-    <div class="team-card">
-      <div class="team-card-img" style="background: var(--stone-900); display:flex; align-items:center; justify-content:center;">
-        <div style="text-align:center; padding: 20px;">
-          <div style="font-family:'Playfair Display',serif; font-size:40px; color:var(--utk-orange); font-weight:900;">+</div>
-          <div style="font-size:13px; color:rgba(255,255,255,0.92); margin-top:8px;">Recruiting<br>Graduate Students</div>
-        </div>
+    <a href={`${base}/team#join`} class="team-card join-tile" data-reveal style="--rd: 240ms">
+      <div class="team-card-img">
+        <div class="join-plus">+</div>
       </div>
       <div class="team-card-body">
         <div class="team-card-name">Join the ARCS Lab</div>
-        <div class="team-card-role">Open Positions</div>
+        <div class="team-card-role">Recruiting PhD Students</div>
         <div class="team-card-desc">We seek motivated PhD students in ISE, CS, HCI, and Psychology. Email Dr. Schelble with your CV.</div>
       </div>
-    </div>
+    </a>
   </div>
-  <a href={`${base}/team`} class="btn-outline">View Full Team →</a>
 </section>
 
-<!-- FUNDING STRIP -->
-<div class="funding-strip">
-  <span class="funding-label">Funding &amp; Partners</span>
-  <div class="funding-logo-row">
-    <div class="funding-logo">
-      <div class="funding-logo-badge">ARL</div>
-      <div class="funding-logo-sub">Army Research Lab</div>
+<!-- FUNDING BAND -->
+<section class="funding-band">
+  <span class="fb-label">Sponsored By</span>
+  <div class="fb-badges">
+    <div class="fb-badge">
+      <div class="b">ARO</div>
+      <div class="s">Army Research Office</div>
     </div>
-    <div class="funding-logo">
-      <div class="funding-logo-badge">UTK</div>
-      <div class="funding-logo-sub">University of Tennessee</div>
+    <div class="fb-badge">
+      <div class="b">UTK</div>
+      <div class="s">University of Tennessee</div>
     </div>
   </div>
-  <div class="funding-amount">
-    <div class="funding-amount-num">$722K</div>
-    <div class="funding-amount-label">Total PI Awards</div>
+  <div class="fb-total">
+    <div class="n"><span data-count="722" data-prefix="$" data-suffix="K">$0</span><span>+</span></div>
+    <div class="l">Total Awarded as PI</div>
   </div>
-</div>
+</section>
 
-<!-- CONTACT STRIP -->
-<div class="contact-strip">
+<!-- CONTACT CTA -->
+<section class="cta blueprint on-dark">
   <div>
-    <div class="section-eyebrow">Get in Touch</div>
-    <h2 class="section-title">Work With Us</h2>
-    <p class="section-lead">Interested in collaboration, graduate study, or partnership? We'd love to hear from you.</p>
-    <div style="margin-top: 32px; display:flex; gap:16px; flex-wrap:wrap;">
-      <a href={`${base}/contact`} class="btn-primary">Contact the Lab</a>
-      <a href={`${base}/team#join`} class="btn-outline" style="border-color:rgba(255,255,255,0.2); color:rgba(255,255,255,0.90);">Prospective Students</a>
+    <div class="eyebrow" data-reveal>04 · Get in Touch</div>
+    <h2 class="sec-title" data-reveal>Let's build the next<br>generation of <em>teams.</em></h2>
+    <p class="sec-lead" data-reveal style="margin-bottom: 36px;">Interested in collaboration, graduate study, or partnership? We'd love to hear from you.</p>
+    <div style="display:flex; gap:16px; flex-wrap:wrap;" data-reveal>
+      <a href={`${base}/contact`} class="btn">Contact the Lab <span class="arr">→</span></a>
+      <a href={`${base}/team#join`} class="btn-light">Prospective Students <span class="arr">→</span></a>
     </div>
   </div>
-  <div class="contact-info">
-    <div class="contact-item">
-      <div class="contact-icon">📍</div>
+  <div class="cta-info">
+    <div class="cta-item" data-reveal>
+      <div class="cta-icon"><Icon name="pin" size={20} /></div>
       <div>
-        <div class="contact-item-label">Location</div>
-        <div class="contact-item-val">515 John D. Tickle Engineering Building<br>851 Neyland Drive, Knoxville, TN 37996</div>
+        <div class="cta-k">Location</div>
+        <div class="cta-v">515 John D. Tickle Engineering Building<br>851 Neyland Drive, Knoxville, TN 37996</div>
       </div>
     </div>
-    <div class="contact-item">
-      <div class="contact-icon">✉️</div>
+    <div class="cta-item" data-reveal style="--rd: 80ms">
+      <div class="cta-icon"><Icon name="mail" size={20} /></div>
       <div>
-        <div class="contact-item-label">Email</div>
-        <div class="contact-item-val"><a href="mailto:bschelbl@utk.edu">bschelbl@utk.edu</a></div>
+        <div class="cta-k">Email</div>
+        <div class="cta-v"><a href="mailto:bschelbl@utk.edu">bschelbl@utk.edu</a></div>
       </div>
     </div>
-    <div class="contact-item">
-      <div class="contact-icon">🏛</div>
+    <div class="cta-item" data-reveal style="--rd: 160ms">
+      <div class="cta-icon"><Icon name="building" size={20} /></div>
       <div>
-        <div class="contact-item-label">Department</div>
-        <div class="contact-item-val">Industrial &amp; Systems Engineering<br>Tickle College of Engineering, UTK</div>
+        <div class="cta-k">Department</div>
+        <div class="cta-v">Industrial &amp; Systems Engineering<br>Tickle College of Engineering, UTK</div>
       </div>
     </div>
-    <div class="contact-item">
-      <div class="contact-icon">🔗</div>
+    <div class="cta-item" data-reveal style="--rd: 240ms">
+      <div class="cta-icon"><Icon name="globe" size={20} /></div>
       <div>
-        <div class="contact-item-label">Lab Website</div>
-        <div class="contact-item-val"><a href="https://bschelb.github.io/ARCSLab" target="_blank">bschelb.github.io/ARCSLab</a></div>
+        <div class="cta-v"><a href="https://arcslab.io">arcslab.io</a></div>
+        <div class="cta-k" style="margin-top:4px; margin-bottom:0;">Lab Website</div>
       </div>
     </div>
   </div>
-</div>
+</section>
+
+<script>
+  // ── Human-AI team network: circles = humans, squares = AI agents.
+  //    Edges form between nearby nodes; orange pulses travel along them
+  //    (information sharing — the lab's research subject, visualized).
+  const canvas = document.getElementById('net-canvas') as HTMLCanvasElement | null;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (canvas) {
+    const ctx = canvas.getContext('2d')!;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let W = 0, H = 0;
+    let nodes: { x: number; y: number; vx: number; vy: number; ai: boolean; r: number }[] = [];
+    let pulses: { a: number; b: number; t: number; speed: number }[] = [];
+    const LINK_DIST = 150;
+    const mouse = { x: -9999, y: -9999 };
+
+    function resize() {
+      const rect = canvas!.parentElement!.getBoundingClientRect();
+      W = rect.width; H = rect.height;
+      canvas!.width = W * dpr;
+      canvas!.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const count = Math.max(24, Math.min(54, Math.round((W * H) / 26000)));
+      nodes = Array.from({ length: count }, () => ({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.25,
+        vy: (Math.random() - 0.5) * 0.25,
+        ai: Math.random() < 0.38,
+        r: 2 + Math.random() * 1.6,
+      }));
+      pulses = [];
+    }
+
+    function neighbors() {
+      const pairs: [number, number, number][] = [];
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const d = Math.hypot(dx, dy);
+          if (d < LINK_DIST) pairs.push([i, j, d]);
+        }
+      }
+      return pairs;
+    }
+
+    function draw(pairs: [number, number, number][]) {
+      ctx.clearRect(0, 0, W, H);
+      // edges
+      for (const [i, j, d] of pairs) {
+        const alpha = (1 - d / LINK_DIST) * 0.22;
+        ctx.strokeStyle = `rgba(255,255,255,${alpha.toFixed(3)})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(nodes[i].x, nodes[i].y);
+        ctx.lineTo(nodes[j].x, nodes[j].y);
+        ctx.stroke();
+      }
+      // pulses
+      for (const p of pulses) {
+        const a = nodes[p.a], b = nodes[p.b];
+        const x = a.x + (b.x - a.x) * p.t;
+        const y = a.y + (b.y - a.y) * p.t;
+        ctx.fillStyle = 'rgba(255,102,0,0.9)';
+        ctx.beginPath();
+        ctx.arc(x, y, 2.2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = 'rgba(255,102,0,0.18)';
+        ctx.beginPath();
+        ctx.arc(x, y, 6, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      // nodes
+      for (const n of nodes) {
+        if (n.ai) {
+          ctx.strokeStyle = 'rgba(255,140,60,0.85)';
+          ctx.lineWidth = 1.3;
+          const s = n.r * 2.4;
+          ctx.strokeRect(n.x - s / 2, n.y - s / 2, s, s);
+        } else {
+          ctx.fillStyle = 'rgba(250,248,243,0.8)';
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+    }
+
+    function tick() {
+      for (const n of nodes) {
+        n.x += n.vx;
+        n.y += n.vy;
+        // gentle mouse repulsion
+        const dx = n.x - mouse.x, dy = n.y - mouse.y;
+        const md = Math.hypot(dx, dy);
+        if (md < 110 && md > 0.01) {
+          n.x += (dx / md) * 0.5;
+          n.y += (dy / md) * 0.5;
+        }
+        if (n.x < -20) n.x = W + 20;
+        if (n.x > W + 20) n.x = -20;
+        if (n.y < -20) n.y = H + 20;
+        if (n.y > H + 20) n.y = -20;
+      }
+      const pairs = neighbors();
+      // spawn pulses along random live edges
+      if (pairs.length && Math.random() < 0.10 && pulses.length < 7) {
+        const [a, b] = pairs[Math.floor(Math.random() * pairs.length)];
+        pulses.push({ a, b, t: 0, speed: 0.012 + Math.random() * 0.015 });
+      }
+      pulses = pulses.filter((p) => (p.t += p.speed) < 1);
+      draw(pairs);
+    }
+
+    let running = false;
+    function loop() {
+      if (!running) return;
+      tick();
+      requestAnimationFrame(loop);
+    }
+
+    resize();
+    window.addEventListener('resize', resize);
+    canvas.parentElement!.addEventListener('pointermove', (e) => {
+      const r = canvas!.getBoundingClientRect();
+      mouse.x = e.clientX - r.left;
+      mouse.y = e.clientY - r.top;
+    });
+    canvas.parentElement!.addEventListener('pointerleave', () => {
+      mouse.x = -9999; mouse.y = -9999;
+    });
+
+    if (reducedMotion) {
+      draw(neighbors());
+    } else {
+      // animate only while the hero is on screen
+      const vis = new IntersectionObserver(([e]) => {
+        const shouldRun = e.isIntersecting && !document.hidden;
+        if (shouldRun && !running) { running = true; loop(); }
+        if (!shouldRun) running = false;
+      });
+      vis.observe(canvas);
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) running = false;
+        else { running = true; loop(); }
+      });
+    }
+  }
+</script>
 </BaseLayout>

@@ -3,117 +3,124 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import funding from '../data/funding.json';
 
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const externalGrants = funding.active.filter(g => !g.funder.startsWith('University of Tennessee'));
+const internalGrants = funding.active.filter(g => g.funder.startsWith('University of Tennessee'));
 ---
-<BaseLayout title="Funding | ARCS Lab | UTK" activePage="funding">
+<BaseLayout title="Funding | ARCS Lab | UT Knoxville" activePage="funding"
+  description="ARCS Lab sponsored research — funded by the Army Research Office and the University of Tennessee, Knoxville, with $722K+ awarded as PI.">
 <style>
-  .page-header::before { content: 'FUNDING'; }
-  .totals { display: grid; grid-template-columns: 1fr; background: var(--utk-orange); }
-  .tot { padding: 48px 40px; }
-  .tot-n { font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 900; color: white; line-height: 1; }
-  .tot-l { font-size: 12px; color: rgba(255,255,255,0.9); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 6px; }
+  .grants { padding: 96px var(--gutter) 56px; }
+  .grant-card {
+    background: #fff; border: 1px solid var(--line);
+    padding: 52px clamp(28px, 4vw, 56px); margin-bottom: 26px;
+    position: relative;
+  }
+  .gc-head { display: flex; align-items: center; gap: 16px; margin-bottom: 22px; flex-wrap: wrap; }
+  .gc-status {
+    font-family: var(--mono); font-size: 10px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: 9px; padding: 6px 14px;
+  }
+  .gc-active { background: var(--orange-glow); color: var(--orange-deep); }
+  .gc-id { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; color: var(--text-muted); }
+  .gc-title {
+    font-family: var(--serif); font-size: clamp(22px, 2.4vw, 28px);
+    font-weight: 600; color: var(--text-strong); margin-bottom: 26px; line-height: 1.3;
+    max-width: 860px;
+  }
+  .gc-meta {
+    display: flex; gap: 48px; flex-wrap: wrap; margin-bottom: 26px;
+    padding: 20px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  }
+  .gc-meta-item { display: flex; flex-direction: column; gap: 5px; }
+  .gc-meta-label {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--text-muted);
+  }
+  .gc-meta-val { font-size: 14.5px; font-weight: 500; color: var(--text-strong); }
+  .gc-desc { font-size: 14.5px; color: var(--text); line-height: 1.8; max-width: 860px; }
 
-  .grants { padding: 80px; }
-  .sh { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; color: var(--stone-900); margin-bottom: 48px; }
-  .grant-card { background: white; border: 1px solid var(--stone-200); padding: 48px; margin-bottom: 24px; position: relative; overflow: hidden; }
-  .grant-card::before { content: ''; position: absolute; left: 0; top: 0; width: 5px; height: 100%; background: var(--utk-orange); }
-  .gc-status { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px; display: inline-block; padding: 4px 10px; }
-  .gc-active { background: rgba(255,102,0,0.1); color: var(--utk-orange); }
-  .gc-pending { background: rgba(74,55,40,0.08); color: var(--stone-700); }
-  .gc-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--stone-900); margin-bottom: 12px; line-height: 1.3; }
-  .gc-meta { display: flex; gap: 32px; flex-wrap: wrap; margin-bottom: 20px; }
-  .gc-meta-item { display: flex; flex-direction: column; gap: 3px; }
-  .gc-meta-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--stone-500); }
-  .gc-meta-val { font-size: 14px; font-weight: 600; color: var(--stone-900); }
-  .gc-amount { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 900; color: var(--utk-orange); }
-  .gc-desc { font-size: 14px; color: var(--stone-700); line-height: 1.75; }
+  .internal { padding: 0 var(--gutter) 96px; }
+  .int-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .int-card { background: var(--paper-2); padding: 34px; border-left: 3px solid var(--orange); }
+  .int-status {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--orange-deep); margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .int-title { font-size: 15.5px; font-weight: 600; color: var(--text-strong); margin-bottom: 8px; line-height: 1.45; }
+  .int-meta { font-size: 13px; color: var(--text-muted); }
 
-  .internal { padding: 0 80px 80px; }
-  .int-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-  .int-card { background: var(--stone-100); padding: 32px; border-left: 4px solid var(--stone-300); }
-  .int-card.active { border-color: var(--utk-orange); }
-  .int-status { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--utk-orange); margin-bottom: 10px; }
-  .int-title { font-size: 15px; font-weight: 600; color: var(--stone-900); margin-bottom: 8px; line-height: 1.4; }
-  .int-meta { font-size: 13px; color: var(--smoke); }
-  .int-amount { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 900; color: var(--stone-900); margin-top: 12px; }
-
-  .prior { padding: 80px; background: var(--stone-900); }
-  .prior .sh { color: white; }
-  .prior p { font-size: 15px; color: rgba(255,255,255,0.92); line-height: 1.75; max-width: 700px; margin-bottom: 32px; }
-  .prior-agencies { display: flex; gap: 16px; flex-wrap: wrap; }
-  .agency-pill { padding: 10px 20px; border: 1px solid rgba(255,255,255,0.12); font-size: 13px; color: rgba(255,255,255,0.88); font-weight: 500; }
+  .prior { padding: 96px var(--gutter); }
+  .prior p { font-size: 15.5px; color: var(--dk-text-2); line-height: 1.8; max-width: 720px; margin-bottom: 36px; }
+  .prior p strong { color: #fff; }
+  .prior-agencies { display: flex; gap: 14px; flex-wrap: wrap; }
+  .agency-pill {
+    padding: 12px 22px; border: 1px solid rgba(255,255,255,0.16);
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em;
+    color: var(--dk-text-2); transition: border-color 0.2s, color 0.2s;
+  }
+  .agency-pill:hover { border-color: var(--orange); color: var(--orange); }
 
   @media (max-width: 900px) {
     .int-grid { grid-template-columns: 1fr; }
-    .grants, .internal, .prior { padding-left: 28px; padding-right: 28px; }
+    .gc-meta { gap: 28px; }
   }
 </style>
 
-<PageHeader eyebrow="Sponsored Research" title="Funding & Grants" description="The ARCS Lab is actively funded by the Army Research Laboratory and the University of Tennessee, Knoxville." />
-
-<div class="totals">
-  <div class="tot">
-    <div class="tot-n">{funding.totalAwardedAsPI}</div>
-    <div class="tot-l">Total Awarded as PI</div>
-  </div>
-</div>
+<PageHeader
+  index="05"
+  crumb="Sponsored Research"
+  title="Funded to solve"
+  titleEm="hard problems."
+  lead="The ARCS Lab is actively funded by the Army Research Office and the University of Tennessee, Knoxville — supporting research on the most consequential questions in human-AI teaming."
+  stats={[
+    { value: funding.totalAwardedAsPI, label: 'Total Awarded as PI' },
+    { value: `${funding.active.length}`, label: 'Active Awards' },
+    { value: '$2.6M+', label: 'Contributed To (Pre-UTK)' },
+  ]}
+/>
 
 <div class="grants">
-  <div class="section-eyebrow">Current &amp; Awarded Funding</div>
-  <div class="sh">Active Grants</div>
+  <div class="eyebrow" data-reveal>Current &amp; Awarded Funding</div>
+  <h2 class="sec-title" data-reveal>Active <em>grants</em></h2>
 
-  {funding.active.filter(g => !g.funder.startsWith('University of Tennessee')).map(g => (
-    <div class="grant-card">
-      <span class="gc-status gc-active">● Active</span>
-      <div class="gc-title">{g.title}</div>
-      <div class="gc-meta">
-        <div class="gc-meta-item"><div class="gc-meta-label">Funder</div><div class="gc-meta-val">{g.funder}</div></div>
-        <div class="gc-meta-item"><div class="gc-meta-label">Role</div><div class="gc-meta-val">{g.piRole}</div></div>
-        <div class="gc-meta-item"><div class="gc-meta-label">Award</div><div class="gc-amount">{g.amount}</div></div>
-      </div>
-      <p class="gc-desc">{g.description}</p>
-    </div>
-  ))}
-</div>
-
-<div class="internal">
-  <div class="int-grid">
-    {funding.active.filter(g => g.funder.startsWith('University of Tennessee')).map(g => (
-      <div class="int-card active">
-        <div class="int-status">● Active — Internal</div>
-        <div class="int-title">{g.title}</div>
-        <div class="int-meta">{g.funder} · {g.piRole}</div>
-        <div class="int-amount">{g.amount}</div>
-      </div>
-    ))}
-  </div>
-</div>
-
-{/* PENDING SECTION — temporarily hidden
-{funding.pending && funding.pending.length > 0 && (
-  <div class="grants" style="padding-top: 0;">
-    <div class="section-eyebrow">Under Review</div>
-    <div class="sh">Pending Proposals</div>
-    {funding.pending.map(g => (
-      <div class="grant-card">
-        <span class="gc-status gc-pending">○ Pending</span>
+  <div style="margin-top: 40px;">
+    {externalGrants.map((g, i) => (
+      <div class="grant-card frame" data-reveal>
+        <div class="gc-head">
+          <span class="gc-status gc-active"><span class="status-dot"></span> Active</span>
+          <span class="gc-id">AWARD-{String(i + 1).padStart(2, '0')} // EXTERNAL</span>
+        </div>
         <div class="gc-title">{g.title}</div>
         <div class="gc-meta">
           <div class="gc-meta-item"><div class="gc-meta-label">Funder</div><div class="gc-meta-val">{g.funder}</div></div>
           <div class="gc-meta-item"><div class="gc-meta-label">Role</div><div class="gc-meta-val">{g.piRole}</div></div>
-          <div class="gc-meta-item"><div class="gc-meta-label">Proposed</div><div class="gc-amount">{g.amount}</div></div>
+          {g.amount && <div class="gc-meta-item"><div class="gc-meta-label">Award</div><div class="gc-meta-val">{g.amount}</div></div>}
         </div>
+        <p class="gc-desc">{g.description}</p>
       </div>
     ))}
   </div>
-)}
-*/}
+</div>
 
-<div class="prior">
-  <div class="section-eyebrow">Prior Contributions</div>
-  <div class="sh">Funded Research as PhD Student</div>
-  <p>As a PhD student and research assistant at Clemson University, Dr. Schelble made significant contributions to over $2.6 million in externally funded research across multiple federal agencies.</p>
-  <div class="prior-agencies">
+<div class="internal">
+  <div class="int-grid">
+    {internalGrants.map((g, i) => (
+      <div class="int-card" data-reveal style={`--rd: ${i * 90}ms`}>
+        <div class="int-status"><span class="status-dot"></span> Active — Internal</div>
+        <div class="int-title">{g.title}</div>
+        <div class="int-meta">{g.funder} · {g.piRole}</div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<div class="prior blueprint on-dark">
+  <div class="eyebrow" data-reveal>Prior Contributions</div>
+  <h2 class="sec-title" data-reveal>Funded research <em>before UTK</em></h2>
+  <p data-reveal>As a PhD student and research assistant at Clemson University, Dr. Schelble made significant contributions to <strong>over $2.6 million</strong> in externally funded research across multiple federal agencies.</p>
+  <div class="prior-agencies" data-reveal>
     {funding.prior.agencies.map(a => (
       <div class="agency-pill">{a}</div>
     ))}

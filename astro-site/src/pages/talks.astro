@@ -1,74 +1,125 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
+import Icon from '../components/Icon.astro';
 import talksData from '../data/talks.json';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const iconMap: Record<string, string> = {
+  '🏛️': 'building',
+  '📰': 'doc',
+  '🎤': 'mic',
+  '⚔️': 'target',
+  '🔬': 'flask',
+  '📖': 'book',
+};
 ---
-<BaseLayout title="Talks & News | ARCS Lab | UTK" activePage="talks">
+<BaseLayout title="Talks & News | ARCS Lab | UT Knoxville" activePage="talks"
+  description="Invited talks and news from the ARCS Lab — National Academies, West Point, Carnegie Mellon, UT Austin, and more.">
 <style>
-  .page-header::before { content: 'TALKS'; }
-  .talks-sec { padding: 80px; }
-  .sh { font-family: 'Playfair Display', serif; font-size: 34px; font-weight: 700; color: var(--stone-900); margin-bottom: 48px; }
-  .talk-row { display: grid; grid-template-columns: 100px 1fr auto; gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--stone-200); align-items: start; transition: padding-left 0.2s; }
-  .talk-row:hover { padding-left: 8px; }
+  .talks-sec { padding: 96px var(--gutter); }
+  .timeline { position: relative; margin-top: 48px; padding-left: 36px; }
+  .timeline::before {
+    content: ''; position: absolute; left: 5px; top: 8px; bottom: 8px;
+    width: 1.5px; background: var(--line-strong);
+  }
+  .talk-row {
+    position: relative;
+    display: grid; grid-template-columns: 150px 1fr; gap: 32px;
+    padding: 30px 0; border-bottom: 1px solid var(--line); align-items: start;
+  }
   .talk-row:last-child { border-bottom: none; }
-  .talk-date { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--utk-orange); line-height: 1.5; }
-  .talk-title { font-size: 16px; font-weight: 600; color: var(--stone-900); margin-bottom: 6px; line-height: 1.4; }
-  .talk-venue { font-size: 13px; color: var(--smoke); margin-bottom: 4px; }
-  .talk-loc { font-size: 12px; color: var(--stone-500); }
-  .talk-speaker { font-size: 13px; font-weight: 500; color: var(--stone-700); white-space: nowrap; text-align: right; }
-  .talk-link { display: inline-block; margin-top: 8px; font-size: 12px; color: var(--utk-orange); text-decoration: none; font-weight: 600; letter-spacing: 0.03em; }
-  .talk-link:hover { text-decoration: underline; }
+  .talk-row::before {
+    content: ''; position: absolute; left: -36px; top: 40px;
+    width: 11px; height: 11px; border-radius: 50%;
+    background: var(--paper); border: 2.5px solid var(--orange);
+    transition: background 0.2s;
+  }
+  .talk-row:hover::before { background: var(--orange); }
+  .talk-date {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em;
+    color: var(--orange-deep); line-height: 1.6; padding-top: 4px;
+  }
+  .talk-title { font-family: var(--serif); font-size: 20px; font-weight: 600; color: var(--text-strong); margin-bottom: 8px; line-height: 1.35; }
+  .talk-venue { font-size: 14px; color: var(--text); margin-bottom: 4px; }
+  .talk-loc {
+    font-family: var(--mono); font-size: 11.5px; color: var(--text-muted);
+    display: flex; align-items: center; gap: 7px;
+  }
+  .talk-link {
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 12px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--orange-deep); text-decoration: none;
+    border-bottom: 1px solid var(--orange); padding-bottom: 2px;
+  }
+  .talk-link:hover { color: var(--orange); }
 
-  .media-sec { padding: 80px; background: var(--stone-900); }
-  .media-sec .sh { color: white; }
-  .media-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .media-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 32px; }
-  .media-icon { font-size: 28px; margin-bottom: 16px; }
-  .media-title { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: white; margin-bottom: 8px; line-height: 1.3; }
-  .media-desc { font-size: 13px; color: rgba(255,255,255,0.90); line-height: 1.65; margin-bottom: 16px; }
-  .media-link { font-size: 12px; color: var(--utk-orange); text-decoration: none; font-weight: 600; letter-spacing: 0.04em; }
+  .media-sec { padding: 96px var(--gutter); }
+  .media-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line-dark); border: 1px solid var(--line-dark); }
+  .media-card { background: var(--ink); padding: 36px 32px; display: flex; flex-direction: column; transition: background 0.25s; }
+  .media-card:hover { background: var(--ink-2); }
+  .media-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
+  .media-icon { color: var(--orange); }
+  .media-date { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dk-muted); }
+  .media-title { font-family: var(--serif); font-size: 19px; font-weight: 600; color: white; margin-bottom: 12px; line-height: 1.3; }
+  .media-desc { font-size: 13.5px; color: var(--dk-text-2); line-height: 1.7; margin-bottom: 20px; flex: 1; }
+  .media-link {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--orange); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 7px; width: fit-content;
+  }
   .media-link:hover { text-decoration: underline; }
 
-  @media (max-width: 900px) {
-    .talk-row { grid-template-columns: 80px 1fr; }
-    .talk-speaker { display: none; }
+  @media (max-width: 768px) {
+    .talk-row { grid-template-columns: 1fr; gap: 8px; }
     .media-grid { grid-template-columns: 1fr; }
-    .talks-sec, .media-sec { padding: 48px 28px; }
   }
 </style>
 
-<PageHeader eyebrow="Invited Talks & Visibility" title="Talks & News" description="Dr. Schelble and the ARCS Lab are active contributors to national conversations on human-AI teaming in defense, academia, and industry — with invited presentations at the National Academies, West Point, Carnegie Mellon, and beyond." />
+<PageHeader
+  index="06"
+  crumb="Visibility"
+  title="Talks &"
+  titleEm="news."
+  lead="Dr. Schelble and the ARCS Lab are active contributors to national conversations on human-AI teaming in defense, academia, and industry — with invited presentations at the National Academies, West Point, Carnegie Mellon, and beyond."
+  stats={[
+    { value: `${talksData.invitedTalks.length}`, label: 'Invited Talks' },
+    { value: `${talksData.media.length}`, label: 'News Items' },
+  ]}
+/>
 
 <div class="talks-sec">
-  <div class="section-eyebrow">Invited Presentations</div>
-  <div class="sh">Invited Talks</div>
-
-  {talksData.invitedTalks.map(talk => (
-    <div class="talk-row">
-      <div class="talk-date">{talk.date}</div>
-      <div>
-        <div class="talk-title">{talk.title}</div>
-        <div class="talk-venue">{talk.venue}</div>
-        <div class="talk-loc">{talk.location}</div>
-        {talk.link && <a href={talk.link} target="_blank" class="talk-link">View Event →</a>}
+  <div class="eyebrow" data-reveal>Invited Presentations</div>
+  <h2 class="sec-title" data-reveal>Invited <em>talks</em></h2>
+  <div class="timeline">
+    {talksData.invitedTalks.map((talk, i) => (
+      <div class="talk-row" data-reveal style={`--rd: ${Math.min(i, 4) * 60}ms`}>
+        <div class="talk-date">{talk.date}</div>
+        <div>
+          <div class="talk-title">{talk.title}</div>
+          <div class="talk-venue">{talk.venue}</div>
+          <div class="talk-loc"><Icon name="pin" size={13} /> {talk.location}</div>
+          {talk.link && <a href={talk.link} target="_blank" rel="noopener" class="talk-link">View Event →</a>}
+        </div>
       </div>
-      <div class="talk-speaker">{talk.speaker}</div>
-    </div>
-  ))}
+    ))}
+  </div>
 </div>
 
-<div class="media-sec">
-  <div class="section-eyebrow">Lab News &amp; Announcements</div>
-  <div class="sh">In the News</div>
+<div class="media-sec blueprint on-dark">
+  <div class="eyebrow" data-reveal>Lab News &amp; Announcements</div>
+  <h2 class="sec-title" data-reveal>In the <em>news</em></h2>
+  <p class="sec-lead" data-reveal>Milestones, awards, and coverage from the lab's first years.</p>
   <div class="media-grid">
-    {talksData.media.map(item => (
-      <div class="media-card">
-        <div class="media-icon">{item.icon}</div>
+    {talksData.media.map((item, i) => (
+      <div class="media-card" data-reveal style={`--rd: ${(i % 3) * 80}ms`}>
+        <div class="media-top">
+          <span class="media-icon"><Icon name={iconMap[item.icon] ?? 'doc'} size={26} /></span>
+          <span class="media-date">{item.date}</span>
+        </div>
         <div class="media-title">{item.title}</div>
         <div class="media-desc">{item.description}</div>
-        {item.link && <a href={item.link.startsWith('http') ? item.link : `${base}/${item.link}`} target={item.link.startsWith('http') ? '_blank' : undefined} class="media-link">{item.linkText} →</a>}
+        {item.link && <a href={item.link.startsWith('http') ? item.link : `${base}/${item.link}`} target={item.link.startsWith('http') ? '_blank' : undefined} rel="noopener" class="media-link">Read more →</a>}
       </div>
     ))}
   </div>

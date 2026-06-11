@@ -1,120 +1,189 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
 import team from '../data/team.json';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const pi = team.pi;
 ---
-<BaseLayout title="Dr. Beau Schelble | PI | ARCS Lab" activePage="pi">
+<BaseLayout title="Dr. Beau Schelble | Principal Investigator | ARCS Lab" activePage="pi"
+  description="Dr. Beau G. Schelble — Assistant Professor of Industrial & Systems Engineering at UT Knoxville and Founding Director of the ARCS Lab. Expert in human-AI teaming.">
 <style>
-  .pi-hero { padding-top: var(--nav-h); display: grid; grid-template-columns: 1fr 1fr; min-height: 60vh; }
-  .ph-left { background: var(--stone-900); padding: 80px; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; }
-  .ph-left::before { content: 'BGS'; position: absolute; right: -10px; bottom: -20px; font-family: 'Playfair Display', serif; font-size: 200px; font-weight: 900; color: rgba(255,255,255,0.025); line-height: 1; letter-spacing: -8px; }
-  .pi-av { width: 260px; height: 300px; object-fit: cover; object-position: center top; margin-bottom: 36px; position: relative; z-index: 2; }
-  .pi-name { font-family: 'Playfair Display', serif; font-size: 54px; font-weight: 900; color: white; line-height: 1.05; margin-bottom: 12px; position: relative; z-index: 2; }
-  .pi-ttl { font-size: 16px; color: rgba(255,255,255,0.93); margin-bottom: 6px; position: relative; z-index: 2; }
-  .pi-org { font-size: 14px; color: var(--utk-orange); font-weight: 600; margin-bottom: 36px; position: relative; z-index: 2; }
-  .pi-lks { display: flex; flex-wrap: wrap; gap: 8px; position: relative; z-index: 2; }
-  .pi-lk { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border: 1px solid rgba(255,255,255,0.15); font-size: 13px; color: rgba(255,255,255,0.9); text-decoration: none; transition: all 0.2s; }
-  .pi-lk:hover { border-color: var(--utk-orange); color: var(--utk-orange); }
+  .pi-hero {
+    padding-top: calc(var(--nav-h) + 3px);
+    display: grid; grid-template-columns: 1fr 1.1fr; min-height: 72vh;
+  }
+  .ph-left {
+    padding: 72px var(--gutter) 72px;
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .pi-crumb {
+    display: flex; align-items: center; gap: 14px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--dk-muted); margin-bottom: 32px;
+    position: relative; z-index: 2;
+  }
+  .pi-crumb .ix { color: var(--orange); font-weight: 500; }
+  .pi-crumb .sep { width: 32px; height: 1px; background: rgba(255,255,255,0.25); }
+  .pi-av {
+    width: 250px; height: 290px; object-fit: cover; object-position: center top;
+    margin-bottom: 36px; position: relative; z-index: 2;
+    border: 1px solid rgba(255,255,255,0.18);
+    filter: saturate(0.95);
+  }
+  .pi-av-wrap { position: relative; z-index: 2; width: fit-content; }
+  .pi-av-wrap::before, .pi-av-wrap::after {
+    content: ''; position: absolute; width: 20px; height: 20px; z-index: 3;
+  }
+  .pi-av-wrap::before { top: -5px; left: -5px; border-top: 2px solid var(--orange); border-left: 2px solid var(--orange); }
+  .pi-av-wrap::after { bottom: 31px; right: -5px; border-bottom: 2px solid var(--orange); border-right: 2px solid var(--orange); }
+  .pi-name {
+    font-family: var(--serif); font-size: clamp(40px, 4.6vw, 60px);
+    font-weight: 600; color: white; line-height: 1.04; margin-bottom: 16px;
+    position: relative; z-index: 2; letter-spacing: -0.015em;
+  }
+  .pi-ttl { font-size: 16px; color: var(--dk-text); margin-bottom: 7px; position: relative; z-index: 2; }
+  .pi-org {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em;
+    color: var(--orange); margin-bottom: 36px; position: relative; z-index: 2;
+  }
+  .pi-lks { display: flex; flex-wrap: wrap; gap: 9px; position: relative; z-index: 2; }
+  .pi-lk {
+    display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px;
+    border: 1px solid rgba(255,255,255,0.18); font-family: var(--mono);
+    font-size: 11px; letter-spacing: 0.06em; color: var(--dk-text);
+    text-decoration: none; transition: all 0.2s;
+  }
+  .pi-lk:hover { border-color: var(--orange); color: var(--orange); }
 
-  .ph-right { background: var(--stone-100); padding: 80px; display: flex; flex-direction: column; justify-content: center; }
-  .bio-h { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--stone-900); margin-bottom: 20px; }
-  .bio p { font-size: 15px; color: var(--smoke); line-height: 1.85; margin-bottom: 14px; }
+  .ph-right { background: var(--paper-2); padding: 72px clamp(32px, 5vw, 72px); display: flex; flex-direction: column; justify-content: center; }
+  .bio-h { font-family: var(--serif); font-size: 27px; font-weight: 600; color: var(--text-strong); margin-bottom: 22px; }
+  .bio p { font-size: 14.5px; color: var(--text); line-height: 1.85; margin-bottom: 15px; }
+  .bio p:last-child { margin-bottom: 0; }
 
-  .pi-stats { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--utk-orange); }
-  .st { padding: 40px 32px; border-right: 1px solid rgba(255,255,255,0.2); }
+  .pi-statband { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--orange); }
+  .st { padding: 42px var(--gutter) 42px 36px; border-right: 1px solid rgba(255,255,255,0.25); }
+  .st:first-child { padding-left: var(--gutter); }
   .st:last-child { border-right: none; }
-  .sn { font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 900; color: white; line-height: 1; }
-  .sl { font-size: 11px; color: rgba(255,255,255,0.9); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 6px; }
+  .sn { font-family: var(--serif); font-size: 42px; font-weight: 600; color: white; line-height: 1; font-variant-numeric: tabular-nums; }
+  .sl { font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,0.92); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 9px; }
 
-  .sec { padding: 80px; }
-  .sec-alt { padding: 80px; background: var(--stone-100); }
-  .sec-dark { padding: 80px; background: var(--stone-900); }
-  .sh { font-family: 'Playfair Display', serif; font-size: 34px; font-weight: 700; margin-bottom: 36px; }
-  .sec .sh, .sec-alt .sh { color: var(--stone-900); }
-  .sec-dark .sh { color: white; }
+  .sec { padding: 96px var(--gutter); }
+  .sec-alt { padding: 96px var(--gutter); background: var(--paper-2); }
+  .sec-dark { padding: 96px var(--gutter); }
 
-  .edu-grid { display: flex; flex-direction: column; gap: 16px; }
-  .edu-card { background: white; padding: 36px; }
-  .edu-deg { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--stone-900); margin-bottom: 6px; }
-  .edu-field { font-size: 13px; color: var(--utk-orange); font-weight: 600; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
-  .edu-school { font-size: 14px; color: var(--smoke); }
-  .edu-yr { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--stone-500); margin-top: 8px; }
-  .edu-note { font-size: 13px; color: var(--smoke); margin-top: 10px; font-style: italic; line-height: 1.6; }
+  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .edu-card { background: #fff; border: 1px solid var(--line); padding: 40px; position: relative; }
+  .edu-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--orange); }
+  .edu-deg { font-family: var(--serif); font-size: 22px; font-weight: 600; color: var(--text-strong); margin-bottom: 6px; }
+  .edu-field {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--orange-deep); margin-bottom: 8px;
+  }
+  .edu-school { font-size: 14.5px; color: var(--text); }
+  .edu-yr { font-family: var(--mono); font-size: 12px; color: var(--text-muted); margin-top: 10px; }
+  .edu-note { font-size: 13px; color: var(--text); margin-top: 12px; line-height: 1.7; border-top: 1px solid var(--paper-2); padding-top: 12px; }
+  .edu-note em { color: var(--text-strong); }
 
-  .honors { display: flex; flex-direction: column; }
-  .hr-row { display: grid; grid-template-columns: 70px 1fr auto; gap: 20px; padding: 18px 0; border-bottom: 1px solid var(--stone-200); align-items: start; }
-  .hr-row:last-child { border-bottom: none; }
-  .hr-yr { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--utk-orange); }
-  .hr-ttl { font-size: 14px; font-weight: 600; color: var(--stone-900); line-height: 1.5; }
-  .hr-org { font-size: 12px; color: var(--smoke); margin-top: 3px; }
-  .hr-bdg { font-family: 'DM Mono', monospace; font-size: 9px; padding: 3px 8px; background: rgba(255,102,0,0.1); color: var(--utk-orange); border: 1px solid rgba(255,102,0,0.2); white-space: nowrap; }
+  .honors { border-top: 1px solid var(--line); }
+  .hr-row {
+    display: grid; grid-template-columns: 90px 1fr auto; gap: 24px;
+    padding: 20px 0; border-bottom: 1px solid var(--line); align-items: start;
+    transition: padding-left 0.22s; position: relative;
+  }
+  .hr-row::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 2px; background: var(--orange); opacity: 0; transition: opacity 0.22s;
+  }
+  .hr-row:hover { padding-left: 14px; }
+  .hr-row:hover::before { opacity: 1; }
+  .hr-yr { font-family: var(--mono); font-size: 12px; color: var(--orange-deep); padding-top: 3px; }
+  .hr-ttl { font-size: 14.5px; font-weight: 500; color: var(--text-strong); line-height: 1.55; }
+  .hr-org { font-size: 12.5px; color: var(--text-muted); margin-top: 3px; }
+  .hr-bdg {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.06em;
+    padding: 4px 10px; background: var(--orange-glow); color: var(--orange-deep);
+    white-space: nowrap;
+  }
 
-  .aff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .aff-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); padding: 28px 24px; }
-  .aff-abbr { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 900; color: var(--utk-orange); margin-bottom: 6px; }
-  .aff-name { font-size: 13px; color: rgba(255,255,255,0.93); }
-  .aff-yr { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.93); margin-top: 8px; }
+  .aff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line-dark); border: 1px solid var(--line-dark); }
+  .aff-card { background: var(--ink); padding: 32px 28px; transition: background 0.25s; }
+  .aff-card:hover { background: var(--ink-2); }
+  .aff-abbr { font-family: var(--serif); font-size: 27px; font-weight: 600; color: var(--orange); margin-bottom: 8px; line-height: 1.15; }
+  .aff-name { font-size: 13.5px; color: var(--dk-text); line-height: 1.5; }
+  .aff-yr { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dk-muted); margin-top: 12px; }
 
-  .teach-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .tc { background: var(--stone-100); padding: 28px; }
-  .tc-code { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--utk-orange); margin-bottom: 6px; }
-  .tc-title { font-size: 15px; font-weight: 600; color: var(--stone-900); margin-bottom: 8px; }
-  .tc-meta { font-size: 12px; color: var(--smoke); line-height: 1.6; }
+  .teach-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .tc { background: #fff; border: 1px solid var(--line); padding: 32px 30px; transition: transform 0.25s, box-shadow 0.25s; }
+  .tc:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(20,16,11,0.08); }
+  .tc-code { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--orange-deep); margin-bottom: 10px; }
+  .tc-title { font-family: var(--serif); font-size: 18px; font-weight: 600; color: var(--text-strong); margin-bottom: 10px; line-height: 1.3; }
+  .tc-meta { font-size: 12.5px; color: var(--text-muted); line-height: 1.6; }
 
-  @media (max-width: 900px) {
-    .pi-hero, .aff-grid, .teach-grid { grid-template-columns: 1fr; }
-    .pi-stats { grid-template-columns: 1fr 1fr; }
-    .sec, .sec-alt, .sec-dark { padding: 48px 28px; }
+  @media (max-width: 1024px) {
+    .pi-hero { grid-template-columns: 1fr; }
+    .pi-statband { grid-template-columns: 1fr 1fr; }
+    .st { padding: 32px var(--gutter); border-bottom: 1px solid rgba(255,255,255,0.25); }
+    .st:nth-child(even) { border-right: none; }
+    .edu-grid, .aff-grid, .teach-grid { grid-template-columns: 1fr; }
+    .hr-row { grid-template-columns: 70px 1fr; }
+    .hr-bdg { display: none; }
   }
 </style>
 
 <div class="pi-hero">
-  <div class="ph-left">
-    <img src={`${base}/${pi.photo}`} alt={pi.name} class="pi-av">
-    <div class="pi-name">Dr. Beau G.<br>Schelble</div>
+  <div class="ph-left blueprint">
+    <div class="pi-crumb">
+      <span class="ix">04</span>
+      <span class="sep"></span>
+      <span>ARCS Lab — Principal Investigator</span>
+    </div>
+    <div class="pi-av-wrap">
+      <img src={`${base}/${pi.photo}`} alt={pi.name} class="pi-av">
+    </div>
+    <h1 class="pi-name">Dr. Beau G.<br>Schelble</h1>
     <div class="pi-ttl">Assistant Professor, Industrial &amp; Systems Engineering</div>
-    <div class="pi-org">Founding Director, ARCS Lab · UTK Tickle College of Engineering</div>
+    <div class="pi-org">Founding Director, ARCS Lab · Tickle College of Engineering</div>
     <div class="pi-lks">
-      <a href="https://beauschelble.com" target="_blank" class="pi-lk">🌐 Personal Site</a>
-      <a href="https://scholar.google.com/citations?user=ggHXV-4AAAAJ" target="_blank" class="pi-lk">📖 Scholar</a>
-      <a href="https://orcid.org/0000-0003-3704-697X" target="_blank" class="pi-lk">🔗 ORCID</a>
-      <a href="https://www.researchgate.net/profile/Beau-Schelble" target="_blank" class="pi-lk">🔬 ResearchGate</a>
-      <a href="https://www.linkedin.com/in/beau-schelble-ph-d-498675135/" target="_blank" class="pi-lk">💼 LinkedIn</a>
-      <a href="mailto:bschelbl@utk.edu" class="pi-lk">✉️ Email</a>
+      <a href="https://beauschelble.com" target="_blank" rel="noopener" class="pi-lk"><Icon name="globe" size={14} /> Personal Site</a>
+      <a href="https://scholar.google.com/citations?user=ggHXV-4AAAAJ" target="_blank" rel="noopener" class="pi-lk"><Icon name="book" size={14} /> Scholar</a>
+      <a href="https://orcid.org/0000-0003-3704-697X" target="_blank" rel="noopener" class="pi-lk"><Icon name="link" size={14} /> ORCID</a>
+      <a href="https://www.researchgate.net/profile/Beau-Schelble" target="_blank" rel="noopener" class="pi-lk"><Icon name="flask" size={14} /> ResearchGate</a>
+      <a href="https://www.linkedin.com/in/beau-schelble-ph-d-498675135/" target="_blank" rel="noopener" class="pi-lk"><Icon name="briefcase" size={14} /> LinkedIn</a>
+      <a href="mailto:bschelbl@utk.edu" class="pi-lk"><Icon name="mail" size={14} /> Email</a>
     </div>
   </div>
   <div class="ph-right">
-    <div class="section-eyebrow">Principal Investigator</div>
+    <div class="eyebrow">About the PI</div>
     <div class="bio-h">About Dr. Schelble</div>
     <div class="bio">
-      <p>Dr. Beau G. Schelble is an Assistant Professor of Industrial &amp; Systems Engineering and the Founding Director of the AI &amp; Robotics for Collaborative Systems (ARCS) Lab in the Tickle College of Engineering at the University of Tennessee, Knoxville. He received his Ph.D. in Human-Centered Computing from Clemson University in 2023. His expertise lies in human-AI/autonomy teaming, human-centered AI, and collaborative intelligent systems engineering, with an emphasis on trust, shared knowledge, intelligent information sharing, and situational awareness. Dr. Schelble has served as Principal Investigator on awards totaling $722,190 to date, including an Army Research Lab award focused on preventing, identifying, and mitigating the impact of compromised AI teammates through shared situation awareness and mental model accuracy.</p>
+      <p>Dr. Beau G. Schelble is an Assistant Professor of Industrial &amp; Systems Engineering and the Founding Director of the AI &amp; Robotics for Collaborative Systems (ARCS) Lab in the Tickle College of Engineering at the University of Tennessee, Knoxville. He received his Ph.D. in Human-Centered Computing from Clemson University in 2023. His expertise lies in human-AI/autonomy teaming, human-centered AI, and collaborative intelligent systems engineering, with an emphasis on trust, shared knowledge, intelligent information sharing, and situational awareness. Dr. Schelble has served as Principal Investigator on awards totaling $722,190 to date, including an Army Research Office award focused on preventing, identifying, and mitigating the impact of compromised AI teammates through shared situation awareness and mental model accuracy.</p>
       <p>Dr. Schelble's research program integrates quantitative, qualitative, and computational methods to study and design human-AI teams capable of improving the human condition across a wide range of applications, such as advanced manufacturing, cybersecurity, emergency response, and command and control. He has published over 45 works on human-AI teaming and human-centered AI in leading venues of the HFES, ACM, and IEEE communities (e.g., Human Factors, Proceedings of the ACM on Human-Computer Interaction, and IEEE Transactions on Human-Machine Systems). His work has earned him five best paper awards/nominations. He also contributes to the scholarly community as an Associate Editor for the ASME Journal of Autonomous Vehicles and Systems, serves on multiple program committees, and reviews for a wide array of journals (e.g., Human Factors; IJHCI; IJHCS; Behavior &amp; Information Technology; Computers in Human Behavior).</p>
       <p>At UT Knoxville, Dr. Schelble teaches undergraduate and graduate courses in human factors and industrial safety, and actively mentors Ph.D. and undergraduate researchers. He is frequently invited to speak on human-AI teaming, recently at the National Academies' Board on Human-Systems Integration, West Point's "AI on the Battlefield" workshop, and UT Austin, where he shares evidence-based guidance for building ethical, trustworthy, and high-performing human-AI teams.</p>
     </div>
   </div>
 </div>
 
-<div class="pi-stats">
-  <div class="st"><div class="sn">46+</div><div class="sl">Publications</div></div>
-  <div class="st"><div class="sn">$722K</div><div class="sl">PI Funding</div></div>
-  <div class="st"><div class="sn">5</div><div class="sl">Best Paper Awards</div></div>
-  <div class="st"><div class="sn">7</div><div class="sl">Invited Talks</div></div>
+<div class="pi-statband">
+  <div class="st"><div class="sn"><span data-count="46">0</span>+</div><div class="sl">Publications</div></div>
+  <div class="st"><div class="sn"><span data-count="722" data-prefix="$" data-suffix="K">$0</span></div><div class="sl">PI Funding</div></div>
+  <div class="st"><div class="sn"><span data-count="5">0</span></div><div class="sl">Best Paper Awards</div></div>
+  <div class="st"><div class="sn"><span data-count="7">0</span></div><div class="sl">Invited Talks</div></div>
 </div>
 
 <div class="sec">
-  <div class="section-eyebrow">Academic Background</div>
-  <div class="sh">Education</div>
-  <div class="edu-grid">
-    <div class="edu-card">
+  <div class="eyebrow" data-reveal>Academic Background</div>
+  <h2 class="sec-title" data-reveal><em>Education</em></h2>
+  <div class="edu-grid" style="margin-top: 40px;">
+    <div class="edu-card" data-reveal>
       <div class="edu-deg">Doctor of Philosophy</div>
       <div class="edu-field">Human-Centered Computing</div>
       <div class="edu-school">Clemson University</div>
       <div class="edu-yr">2023</div>
       <div class="edu-note">Advisor: Dr. Nathan J. McNeese. Dissertation: <em>Leveraging Artificial Intelligence for Team Cognition in Human-AI Teams</em>. NSF/NRT THINKER Fellow.</div>
     </div>
-    <div class="edu-card">
+    <div class="edu-card" data-reveal style="--rd: 100ms">
       <div class="edu-deg">Bachelor of Science</div>
       <div class="edu-field">Psychology (Human Factors)</div>
       <div class="edu-school">Clemson University</div>
@@ -125,45 +194,45 @@ const pi = team.pi;
 </div>
 
 <div class="sec-alt">
-  <div class="section-eyebrow">Recognition</div>
-  <div class="sh">Honors &amp; Awards</div>
-  <div class="honors">
-    <div class="hr-row">
+  <div class="eyebrow" data-reveal>Recognition</div>
+  <h2 class="sec-title" data-reveal>Honors &amp; <em>awards</em></h2>
+  <div class="honors" style="margin-top: 40px;">
+    <div class="hr-row" data-reveal>
       <span class="hr-yr">2025</span>
       <div><div class="hr-ttl">2023 &amp; 2024 Featured Article, ACM Transactions on Interactive Intelligent Systems</div><div class="hr-org">Association for Computing Machinery</div></div>
       <span class="hr-bdg">★ Featured</span>
     </div>
-    <div class="hr-row">
+    <div class="hr-row" data-reveal>
       <span class="hr-yr">2024</span>
       <div><div class="hr-ttl">Most Outstanding Graduate Student, Human-Centered Computing PhD Program</div><div class="hr-org">Clemson University</div></div>
       <span class="hr-bdg">★ Award</span>
     </div>
-    <div class="hr-row">
+    <div class="hr-row" data-reveal>
       <span class="hr-yr">2023</span>
       <div><div class="hr-ttl">Best Journal of Cognitive Engineering and Decision Making Article of 2022</div><div class="hr-org">JCEDM · SAGE Journals</div></div>
       <span class="hr-bdg">★ Best Article</span>
     </div>
-    <div class="hr-row">
+    <div class="hr-row" data-reveal>
       <span class="hr-yr">2023</span>
       <div><div class="hr-ttl">Outstanding Graduate Research Assistant Nominee</div><div class="hr-org">Clemson University Graduate Student Government</div></div>
       <span></span>
     </div>
-    <div class="hr-row">
+    <div class="hr-row" data-reveal>
       <span class="hr-yr">2022</span>
       <div><div class="hr-ttl">Best Paper Honorable Mention — ACM International Conference on Supporting Group Work (GROUP)</div><div class="hr-org">"Let's Think Together! Assessing Shared Mental Models, Performance, and Trust in Human-Agent Teams"</div></div>
       <span class="hr-bdg">★ Best Paper HM</span>
     </div>
-    <div class="hr-row">
+    <div class="hr-row" data-reveal>
       <span class="hr-yr">2021</span>
       <div><div class="hr-ttl">Nominated for Best Overall Paper — HICSS-54</div><div class="hr-org">Hawaii International Conference on System Sciences</div></div>
       <span class="hr-bdg">★ Nominee</span>
     </div>
-    <div class="hr-row">
+    <div class="hr-row" data-reveal>
       <span class="hr-yr">2020</span>
       <div><div class="hr-ttl">Best Overall Paper — 8th International Conference on Human-Agent Interaction (ACM HAI)</div><div class="hr-org">"Invoking Principles of Groupware to Develop and Evaluate Present and Future Human-Agent Teams"</div></div>
       <span class="hr-bdg">★ Best Paper</span>
     </div>
-    <div class="hr-row">
+    <div class="hr-row" data-reveal>
       <span class="hr-yr">2019–21</span>
       <div><div class="hr-ttl">NSF/NRT THINKER Fellowship — $95,000</div><div class="hr-org">Technology-Human Integrated Knowledge Education and Research, Clemson University</div></div>
       <span class="hr-bdg">★ Fellowship</span>
@@ -171,26 +240,26 @@ const pi = team.pi;
   </div>
 </div>
 
-<div class="sec-dark">
-  <div class="section-eyebrow">Professional Memberships &amp; Editorial Service</div>
-  <div class="sh">Affiliations</div>
-  <div class="aff-grid">
-    <div class="aff-card"><div class="aff-abbr">HFES</div><div class="aff-name">Human Factors and Ergonomics Society</div><div class="aff-yr">Member since 2018</div></div>
-    <div class="aff-card"><div class="aff-abbr">ACM</div><div class="aff-name">Association for Computing Machinery</div><div class="aff-yr">Member since 2020</div></div>
-    <div class="aff-card"><div class="aff-abbr">IEEE</div><div class="aff-name">Institute of Electrical and Electronics Engineers</div><div class="aff-yr">Member since 2024</div></div>
-    <div class="aff-card"><div class="aff-abbr">IISE</div><div class="aff-name">Institute of Industrial and System Engineers</div><div class="aff-yr">Member since 2024</div></div>
-    <div class="aff-card"><div class="aff-abbr">ASEE</div><div class="aff-name">American Society for Engineering Education</div><div class="aff-yr">Member since 2024</div></div>
-    <div class="aff-card"><div class="aff-abbr" style="font-size:18px;line-height:1.3">ASME JAVS</div><div class="aff-name">Associate Editor, ASME Journal of Autonomous Vehicles and Systems</div><div class="aff-yr">Editorial Board since 2025</div></div>
+<div class="sec-dark blueprint on-dark">
+  <div class="eyebrow" data-reveal>Memberships &amp; Editorial Service</div>
+  <h2 class="sec-title" data-reveal><em>Affiliations</em></h2>
+  <div class="aff-grid" style="margin-top: 40px;">
+    <div class="aff-card" data-reveal><div class="aff-abbr">HFES</div><div class="aff-name">Human Factors and Ergonomics Society</div><div class="aff-yr">Member since 2018</div></div>
+    <div class="aff-card" data-reveal style="--rd: 60ms"><div class="aff-abbr">ACM</div><div class="aff-name">Association for Computing Machinery</div><div class="aff-yr">Member since 2020</div></div>
+    <div class="aff-card" data-reveal style="--rd: 120ms"><div class="aff-abbr">IEEE</div><div class="aff-name">Institute of Electrical and Electronics Engineers</div><div class="aff-yr">Member since 2024</div></div>
+    <div class="aff-card" data-reveal style="--rd: 180ms"><div class="aff-abbr">IISE</div><div class="aff-name">Institute of Industrial and System Engineers</div><div class="aff-yr">Member since 2024</div></div>
+    <div class="aff-card" data-reveal style="--rd: 240ms"><div class="aff-abbr">ASEE</div><div class="aff-name">American Society for Engineering Education</div><div class="aff-yr">Member since 2024</div></div>
+    <div class="aff-card" data-reveal style="--rd: 300ms"><div class="aff-abbr" style="font-size:19px;">ASME JAVS</div><div class="aff-name">Associate Editor, ASME Journal of Autonomous Vehicles and Systems</div><div class="aff-yr">Editorial Board since 2025</div></div>
   </div>
 </div>
 
-<div class="sec">
-  <div class="section-eyebrow">Education &amp; Training</div>
-  <div class="sh">Teaching at UTK</div>
-  <div class="teach-grid">
-    <div class="tc"><div class="tc-code">IE 304</div><div class="tc-title">Introduction to Human Factors Engineering</div><div class="tc-meta">Instructor of Record · Tickle College of Engineering</div></div>
-    <div class="tc"><div class="tc-code">IE 423</div><div class="tc-title">Industrial Safety</div><div class="tc-meta">Instructor of Record · Tickle College of Engineering</div></div>
-    <div class="tc"><div class="tc-code">IE 691</div><div class="tc-title">Human-AI Teaming Measurement, Evaluation, and Development</div><div class="tc-meta">Instructor of Record · Tickle College of Engineering</div></div>
+<div class="sec" style="background: var(--paper-2);">
+  <div class="eyebrow" data-reveal>Education &amp; Training</div>
+  <h2 class="sec-title" data-reveal>Teaching at <em>UTK</em></h2>
+  <div class="teach-grid" style="margin-top: 40px;">
+    <div class="tc" data-reveal><div class="tc-code">IE 304</div><div class="tc-title">Introduction to Human Factors Engineering</div><div class="tc-meta">Instructor of Record · Tickle College of Engineering</div></div>
+    <div class="tc" data-reveal style="--rd: 80ms"><div class="tc-code">IE 423</div><div class="tc-title">Industrial Safety</div><div class="tc-meta">Instructor of Record · Tickle College of Engineering</div></div>
+    <div class="tc" data-reveal style="--rd: 160ms"><div class="tc-code">IE 691</div><div class="tc-title">Human-AI Teaming Measurement, Evaluation, and Development</div><div class="tc-meta">Instructor of Record · Tickle College of Engineering</div></div>
   </div>
 </div>
 </BaseLayout>

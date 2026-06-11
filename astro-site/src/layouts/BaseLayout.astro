@@ -2,8 +2,13 @@
 interface Props {
   title: string;
   activePage?: string;
+  description?: string;
 }
-const { title, activePage = '' } = Astro.props;
+const {
+  title,
+  activePage = '',
+  description = 'The AI & Robotics for Collaborative Systems (ARCS) Lab at the University of Tennessee, Knoxville advances the science and engineering of human-AI teaming.',
+} = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <!DOCTYPE html>
@@ -12,27 +17,30 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title}</title>
+  <meta name="description" content={description}>
+  <link rel="icon" type="image/png" href={`${base}/assets/Frame 3.png`}>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Space+Grotesk:wght@300..700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
   <style is:global>
     @import '../styles/global.css';
   </style>
   <slot name="head" />
 </head>
 <body>
-  <nav>
+  <div class="signal-line" aria-hidden="true"></div>
+  <nav class="site-nav">
     <a href={`${base}/`} class="nav-logo">
-      <img src={`${base}/assets/Frame 3.png`} style="height:56px;width:auto;display:block;" alt="ARCS Lab logo">
-      <div class="nav-logo-text">
-        ARCS Lab
-        <span class="nav-logo-sub">University of Tennessee, Knoxville</span>
-      </div>
+      <img src={`${base}/assets/Frame 3.png`} alt="ARCS Lab logo">
+      <span class="nav-logo-text">
+        ARCS LAB
+        <span class="nav-logo-sub">Human–AI Teaming · UT Knoxville</span>
+      </span>
     </a>
-    <button class="nav-toggle" aria-label="Toggle navigation">
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
     <div class="nav-links">
-      <a href={`${base}/`} class={activePage === 'home' ? 'active' : ''}>Home</a>
       <a href={`${base}/research`} class={activePage === 'research' ? 'active' : ''}>Research</a>
       <a href={`${base}/publications`} class={activePage === 'publications' ? 'active' : ''}>Publications</a>
       <a href={`${base}/team`} class={activePage === 'team' ? 'active' : ''}>Team</a>
@@ -45,24 +53,109 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   <slot />
 
-  <footer>
-    <p>&copy; 2026 ARCS Lab &middot; University of Tennessee, Knoxville &middot; Department of Industrial &amp; Systems Engineering</p>
-    <div class="footer-links">
-      <a href={`${base}/`}>Home</a>
-      <a href={`${base}/research`}>Research</a>
-      <a href={`${base}/publications`}>Publications</a>
-      <a href={`${base}/team`}>Team</a>
-      <a href={`${base}/pi`}>PI</a>
-      <a href={`${base}/funding`}>Funding</a>
-      <a href={`${base}/talks`}>Talks</a>
-      <a href={`${base}/contact`}>Contact</a>
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="fb-mark">Engineering the future of <em>human–AI teamwork.</em></div>
+        <p>The AI &amp; Robotics for Collaborative Systems Lab — Department of Industrial &amp; Systems Engineering, Tickle College of Engineering, University of Tennessee, Knoxville.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href={`${base}/research`}>Research</a></li>
+          <li><a href={`${base}/publications`}>Publications</a></li>
+          <li><a href={`${base}/team`}>Team</a></li>
+          <li><a href={`${base}/pi`}>Principal Investigator</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Lab</h4>
+        <ul>
+          <li><a href={`${base}/funding`}>Funding</a></li>
+          <li><a href={`${base}/talks`}>Talks &amp; News</a></li>
+          <li><a href={`${base}/contact`}>Contact</a></li>
+          <li><a href={`${base}/team#join`}>Join the Lab</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <address class="addr">
+          515 John D. Tickle Engineering Building<br>
+          851 Neyland Drive, Knoxville, TN 37996<br>
+          <a href="mailto:bschelbl@utk.edu">bschelbl@utk.edu</a>
+        </address>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 ARCS Lab &middot; University of Tennessee, Knoxville</p>
+      <div class="footer-coords"><span class="status-dot"></span>35.9544° N / 83.9295° W &middot; Knoxville, TN</div>
     </div>
   </footer>
 
   <script>
-    document.querySelector('.nav-toggle')?.addEventListener('click', () => {
-      document.querySelector('.nav-links')?.classList.toggle('open');
+    // mobile nav
+    const toggle = document.querySelector('.nav-toggle');
+    const links = document.querySelector('.nav-links');
+    toggle?.addEventListener('click', () => {
+      const open = links?.classList.toggle('open');
+      toggle.classList.toggle('open', !!open);
+      toggle.setAttribute('aria-expanded', String(!!open));
     });
+
+    // nav shadow on scroll
+    const nav = document.querySelector('.site-nav');
+    const onScroll = () => nav?.classList.toggle('scrolled', window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // scroll reveal
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const revealEls = document.querySelectorAll('[data-reveal]');
+    if (!reduced && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      revealEls.forEach((el) => io.observe(el));
+    } else {
+      revealEls.forEach((el) => el.classList.add('in'));
+    }
+
+    // count-up stats: <span data-count="2055" data-prefix="$" data-suffix="+">
+    const counters = document.querySelectorAll('[data-count]');
+    const animate = (el: Element) => {
+      const target = parseFloat((el as HTMLElement).dataset.count || '0');
+      const prefix = (el as HTMLElement).dataset.prefix || '';
+      const suffix = (el as HTMLElement).dataset.suffix || '';
+      const dur = 1400;
+      const t0 = performance.now();
+      const fmt = (n: number) => prefix + Math.round(n).toLocaleString('en-US') + suffix;
+      if (reduced) { el.textContent = fmt(target); return; }
+      const step = (t: number) => {
+        const p = Math.min((t - t0) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = fmt(target * eased);
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    if ('IntersectionObserver' in window) {
+      const cio = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            animate(e.target);
+            cio.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.4 });
+      counters.forEach((el) => cio.observe(el));
+    } else {
+      counters.forEach(animate);
+    }
   </script>
 </body>
 </html>

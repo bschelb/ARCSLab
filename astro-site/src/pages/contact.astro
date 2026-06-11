@@ -1,100 +1,138 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
-
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+import Icon from '../components/Icon.astro';
 ---
-<BaseLayout title="Contact | ARCS Lab | UTK" activePage="contact">
+<BaseLayout title="Contact | ARCS Lab | UT Knoxville" activePage="contact"
+  description="Contact the ARCS Lab at UT Knoxville — inquiries from prospective graduate students, research collaborators, industry partners, and press are welcome.">
 <style>
-  .page-header::before { content: 'CONTACT'; }
-  .contact-body { display: grid; grid-template-columns: 1fr 1fr; min-height: 60vh; }
-  .contact-left { padding: 80px; background: var(--stone-100); }
-  .contact-right { padding: 80px; background: white; }
-  .sh { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--stone-900); margin-bottom: 32px; }
+  .contact-body { display: grid; grid-template-columns: 1fr 1fr; }
+  .contact-left { padding: 88px var(--gutter) 88px; background: var(--paper-2); }
+  .contact-right { padding: 88px var(--gutter) 88px; background: #fff; border-left: 1px solid var(--line); }
+  .panel-h { font-family: var(--serif); font-size: 28px; font-weight: 600; color: var(--text-strong); margin-bottom: 36px; }
 
-  .info-items { display: flex; flex-direction: column; gap: 28px; margin-bottom: 48px; }
-  .info-item { display: flex; gap: 16px; align-items: flex-start; }
-  .info-icon { width: 44px; height: 44px; background: white; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; border: 1px solid var(--stone-200); }
-  .info-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--stone-500); margin-bottom: 4px; }
-  .info-val { font-size: 14px; color: var(--stone-900); line-height: 1.6; }
-  .info-val a { color: var(--utk-orange); text-decoration: none; }
+  .info-items { display: flex; flex-direction: column; gap: 26px; margin-bottom: 44px; }
+  .info-item { display: flex; gap: 18px; align-items: flex-start; }
+  .info-icon {
+    width: 46px; height: 46px; background: #fff; border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--orange-deep); flex-shrink: 0;
+  }
+  .info-label {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px;
+  }
+  .info-val { font-size: 14.5px; color: var(--text-strong); line-height: 1.65; }
+  .info-val a { color: var(--orange-deep); text-decoration: none; }
   .info-val a:hover { text-decoration: underline; }
 
-  .map-embed { width: 100%; height: 220px; background: var(--stone-200); position: relative; overflow: hidden; margin-top: 32px; }
-  .map-embed iframe { width: 100%; height: 100%; border: none; }
+  .map-embed {
+    width: 100%; height: 240px; background: var(--paper-2);
+    position: relative; overflow: hidden; border: 1px solid var(--line);
+  }
+  .map-embed iframe { width: 100%; height: 100%; border: none; filter: grayscale(0.5) sepia(0.12); }
+  .map-coords {
+    position: absolute; bottom: 0; left: 0;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+    color: #fff; background: rgba(20,16,11,0.82); padding: 6px 12px;
+  }
 
   .form-group { margin-bottom: 20px; }
-  .form-label { display: block; font-size: 12px; font-weight: 600; color: var(--stone-700); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 8px; }
-  .form-input, .form-select, .form-textarea { width: 100%; padding: 12px 16px; border: 1.5px solid var(--stone-200); background: var(--stone-50); font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--stone-900); outline: none; transition: border-color 0.2s; resize: vertical; }
-  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--utk-orange); }
-  .form-textarea { height: 120px; }
+  .form-label {
+    display: block; font-family: var(--mono); font-size: 10.5px; font-weight: 500;
+    color: var(--text); letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 9px;
+  }
+  .form-input, .form-select, .form-textarea {
+    width: 100%; padding: 13px 16px; border: 1.5px solid var(--line);
+    background: var(--paper); font-family: var(--sans); font-size: 14.5px;
+    color: var(--text-strong); outline: none; transition: border-color 0.2s;
+    resize: vertical;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--orange); }
+  .form-textarea { height: 130px; }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .btn-submit { background: var(--utk-orange); color: white; border: none; padding: 14px 40px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; cursor: pointer; width: 100%; transition: background 0.2s; }
-  .btn-submit:hover { background: var(--utk-orange-deep); }
-  .form-note { font-size: 12px; color: var(--smoke); margin-top: 12px; line-height: 1.6; }
+  .btn-submit {
+    background: var(--orange); color: white; border: none; padding: 16px 40px;
+    font-family: var(--mono); font-size: 12.5px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;
+    width: 100%; transition: background 0.2s, transform 0.2s;
+  }
+  .btn-submit:hover { background: var(--orange-deep); transform: translateY(-1px); }
+  .form-note { font-size: 12.5px; color: var(--text-muted); margin-top: 14px; line-height: 1.65; }
+  .form-note a { color: var(--orange-deep); }
 
-  .join-sec { padding: 80px; background: var(--stone-900); }
-  .join-sec .sh { color: white; font-size: 32px; margin-bottom: 16px; }
-  .join-lead { font-size: 16px; color: rgba(255,255,255,0.92); max-width: 700px; line-height: 1.75; margin-bottom: 48px; }
-  .join-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .join-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 32px; }
-  .join-icon { font-size: 28px; margin-bottom: 12px; }
-  .join-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: white; margin-bottom: 10px; }
-  .join-desc { font-size: 13px; color: rgba(255,255,255,0.90); line-height: 1.65; margin-bottom: 16px; }
-  .join-req { font-size: 12px; color: rgba(255,255,255,0.88); font-style: italic; }
+  .join-sec { padding: 96px var(--gutter); }
+  .join-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line-dark); border: 1px solid var(--line-dark); }
+  .join-card { background: var(--ink); padding: 38px 34px; transition: background 0.25s; }
+  .join-card:hover { background: var(--ink-2); }
+  .join-icon { color: var(--orange); margin-bottom: 18px; }
+  .join-title { font-family: var(--serif); font-size: 20px; font-weight: 600; color: white; margin-bottom: 12px; }
+  .join-desc { font-size: 13.5px; color: var(--dk-text-2); line-height: 1.7; margin-bottom: 18px; }
+  .join-req {
+    font-family: var(--mono); font-size: 11px; color: var(--dk-muted);
+    line-height: 1.7; border-top: 1px solid var(--line-dark); padding-top: 14px;
+  }
 
   @media (max-width: 900px) {
     .contact-body, .form-row, .join-grid { grid-template-columns: 1fr; }
-    .contact-left, .contact-right, .join-sec { padding: 48px 28px; }
+    .contact-right { border-left: none; border-top: 1px solid var(--line); }
   }
 </style>
 
-<PageHeader eyebrow="ARCS Lab · UTK ISE" title="Get in Touch" description="We welcome inquiries from prospective graduate students, research collaborators, industry partners, and members of the press. Don't hesitate to reach out." />
+<PageHeader
+  index="07"
+  crumb="Communication"
+  title="Open"
+  titleEm="channel."
+  lead="We welcome inquiries from prospective graduate students, research collaborators, industry partners, and members of the press. Don't hesitate to reach out."
+/>
 
 <div class="contact-body">
   <div class="contact-left">
-    <div class="section-eyebrow">Lab Information</div>
-    <div class="sh">Contact &amp; Location</div>
+    <div class="eyebrow" data-reveal>Lab Information</div>
+    <div class="panel-h" data-reveal>Contact &amp; Location</div>
     <div class="info-items">
-      <div class="info-item">
-        <div class="info-icon">📍</div>
-        <div><div class="info-label">Location</div><div class="info-val">851 Neyland Drive<br>Knoxville, TN 37996</div></div>
+      <div class="info-item" data-reveal>
+        <div class="info-icon"><Icon name="pin" size={19} /></div>
+        <div><div class="info-label">Location</div><div class="info-val">515 John D. Tickle Engineering Building<br>851 Neyland Drive, Knoxville, TN 37996</div></div>
       </div>
-      <div class="info-item">
-        <div class="info-icon">✉️</div>
+      <div class="info-item" data-reveal style="--rd: 60ms">
+        <div class="info-icon"><Icon name="mail" size={19} /></div>
         <div><div class="info-label">Email</div><div class="info-val"><a href="mailto:bschelbl@utk.edu">bschelbl@utk.edu</a></div></div>
       </div>
-      <div class="info-item">
-        <div class="info-icon">🌐</div>
-        <div><div class="info-label">Lab Website</div><div class="info-val"><a href="https://bschelb.github.io/ARCSLab" target="_blank">bschelb.github.io/ARCSLab</a></div></div>
+      <div class="info-item" data-reveal style="--rd: 120ms">
+        <div class="info-icon"><Icon name="globe" size={19} /></div>
+        <div><div class="info-label">Lab Website</div><div class="info-val"><a href="https://arcslab.io">arcslab.io</a></div></div>
       </div>
-      <div class="info-item">
-        <div class="info-icon">👤</div>
-        <div><div class="info-label">PI Personal Site</div><div class="info-val"><a href="https://beauschelble.com" target="_blank">beauschelble.com</a></div></div>
+      <div class="info-item" data-reveal style="--rd: 180ms">
+        <div class="info-icon"><Icon name="user" size={19} /></div>
+        <div><div class="info-label">PI Personal Site</div><div class="info-val"><a href="https://beauschelble.com" target="_blank" rel="noopener">beauschelble.com</a></div></div>
       </div>
-      <div class="info-item">
-        <div class="info-icon">🏛️</div>
-        <div><div class="info-label">Department</div><div class="info-val"><a href="https://tickle.utk.edu/ise/" target="_blank">Industrial &amp; Systems Engineering<br>Tickle College of Engineering, UTK</a></div></div>
+      <div class="info-item" data-reveal style="--rd: 240ms">
+        <div class="info-icon"><Icon name="building" size={19} /></div>
+        <div><div class="info-label">Department</div><div class="info-val"><a href="https://tickle.utk.edu/ise/" target="_blank" rel="noopener">Industrial &amp; Systems Engineering<br>Tickle College of Engineering, UTK</a></div></div>
       </div>
     </div>
-    <div class="map-embed">
-      <iframe src="https://maps.google.com/maps?q=851+Neyland+Drive,+Knoxville,+TN+37996&output=embed" allowfullscreen loading="lazy"></iframe>
+    <div class="map-embed" data-reveal>
+      <iframe src="https://maps.google.com/maps?q=851+Neyland+Drive,+Knoxville,+TN+37996&output=embed" allowfullscreen loading="lazy" title="Map to the ARCS Lab"></iframe>
+      <div class="map-coords">35.9544° N / 83.9295° W</div>
     </div>
   </div>
   <div class="contact-right">
-    <div class="section-eyebrow">Send a Message</div>
-    <div class="sh">Contact Form</div>
-    <form action="https://formspree.io/f/xvzwzoal" method="POST">
+    <div class="eyebrow" data-reveal>Send a Message</div>
+    <div class="panel-h" data-reveal>Contact Form</div>
+    <form action="https://formspree.io/f/xvzwzoal" method="POST" data-reveal>
       <input type="hidden" name="_subject" value="ARCS Lab Website Inquiry">
       <div class="form-row">
-        <div class="form-group"><label class="form-label">First Name</label><input type="text" name="first_name" class="form-input" placeholder="Jane" required></div>
-        <div class="form-group"><label class="form-label">Last Name</label><input type="text" name="last_name" class="form-input" placeholder="Smith" required></div>
+        <div class="form-group"><label class="form-label" for="cf-first">First Name</label><input id="cf-first" type="text" name="first_name" class="form-input" placeholder="Jane" required></div>
+        <div class="form-group"><label class="form-label" for="cf-last">Last Name</label><input id="cf-last" type="text" name="last_name" class="form-input" placeholder="Smith" required></div>
       </div>
-      <div class="form-group"><label class="form-label">Email</label><input type="email" name="email" class="form-input" placeholder="jane@university.edu" required></div>
-      <div class="form-group"><label class="form-label">Affiliation</label><input type="text" name="affiliation" class="form-input" placeholder="University / Organization"></div>
+      <div class="form-group"><label class="form-label" for="cf-email">Email</label><input id="cf-email" type="email" name="email" class="form-input" placeholder="jane@university.edu" required></div>
+      <div class="form-group"><label class="form-label" for="cf-aff">Affiliation</label><input id="cf-aff" type="text" name="affiliation" class="form-input" placeholder="University / Organization"></div>
       <div class="form-group">
-        <label class="form-label">Inquiry Type</label>
-        <select name="inquiry_type" class="form-select form-input">
+        <label class="form-label" for="cf-type">Inquiry Type</label>
+        <select id="cf-type" name="inquiry_type" class="form-select form-input">
           <option>Prospective Graduate Student</option>
           <option>Research Collaboration</option>
           <option>Industry Partnership</option>
@@ -103,35 +141,35 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <option>General Inquiry</option>
         </select>
       </div>
-      <div class="form-group"><label class="form-label">Message</label><textarea name="message" class="form-textarea" placeholder="Tell us about your interest or inquiry..." required></textarea></div>
-      <button type="submit" class="btn-submit">Send Message</button>
-      <p class="form-note">We typically respond within 2–3 business days. For urgent inquiries, email Dr. Schelble directly at <a href="mailto:bschelbl@utk.edu" style="color:var(--utk-orange);">bschelbl@utk.edu</a>.</p>
+      <div class="form-group"><label class="form-label" for="cf-msg">Message</label><textarea id="cf-msg" name="message" class="form-textarea" placeholder="Tell us about your interest or inquiry..." required></textarea></div>
+      <button type="submit" class="btn-submit">Send Message →</button>
+      <p class="form-note">We typically respond within 2–3 business days. For urgent inquiries, email Dr. Schelble directly at <a href="mailto:bschelbl@utk.edu">bschelbl@utk.edu</a>.</p>
     </form>
   </div>
 </div>
 
-<div class="join-sec" id="join">
-  <div class="section-eyebrow">Prospective Members</div>
-  <div class="sh">Join the ARCS Lab</div>
-  <p class="join-lead">The ARCS Lab recruits motivated students and researchers interested in human-AI teaming, human factors, HCI, and collaborative systems. We offer a rigorous, supportive, and interdisciplinary research environment at a leading research university.</p>
+<div class="join-sec blueprint on-dark" id="join">
+  <div class="eyebrow" data-reveal>Prospective Members</div>
+  <h2 class="sec-title" data-reveal>Join the <em>ARCS Lab</em></h2>
+  <p class="sec-lead" data-reveal>The ARCS Lab recruits motivated students and researchers interested in human-AI teaming, human factors, HCI, and collaborative systems. We offer a rigorous, supportive, and interdisciplinary research environment at a leading research university.</p>
   <div class="join-grid">
-    <div class="join-card">
-      <div class="join-icon">🎓</div>
+    <div class="join-card" data-reveal>
+      <div class="join-icon"><Icon name="cap" size={28} /></div>
       <div class="join-title">PhD Students</div>
-      <div class="join-desc">We admit PhD students through the UTK ISE department. We are actively recruiting for positions starting Fall 2025 and beyond. Research assistantships available for qualified candidates.</div>
-      <div class="join-req">Preferred background: Human Factors, HCI, CS, Cognitive Science, Psychology, or Systems Engineering.</div>
+      <div class="join-desc">We admit PhD students through the UTK ISE department and are actively recruiting. Research assistantships available for qualified candidates.</div>
+      <div class="join-req">PREFERRED BACKGROUND: human factors, HCI, CS, cognitive science, psychology, or systems engineering.</div>
     </div>
-    <div class="join-card">
-      <div class="join-icon">🔧</div>
+    <div class="join-card" data-reveal style="--rd: 90ms">
+      <div class="join-icon"><Icon name="wrench" size={28} /></div>
       <div class="join-title">DEng Students</div>
-      <div class="join-desc">The Doctor of Engineering (DEng) program at UTK allows working professionals to pursue applied doctoral research. ARCS Lab welcomes DEng students with strong applied research interests.</div>
-      <div class="join-req">Professional experience in engineering, defense, manufacturing, or technology preferred.</div>
+      <div class="join-desc">The Doctor of Engineering program at UTK allows working professionals to pursue applied doctoral research. ARCS Lab welcomes DEng students with strong applied research interests.</div>
+      <div class="join-req">PROFESSIONAL EXPERIENCE in engineering, defense, manufacturing, or technology preferred.</div>
     </div>
-    <div class="join-card">
-      <div class="join-icon">🏫</div>
+    <div class="join-card" data-reveal style="--rd: 180ms">
+      <div class="join-icon"><Icon name="school" size={28} /></div>
       <div class="join-title">Undergraduate Researchers</div>
       <div class="join-desc">UTK undergraduates in ISE, CS, or related fields are welcome to apply for part-time research positions (typically 4 hours/week) in the ARCS Lab.</div>
-      <div class="join-req">Open to motivated undergraduates with strong academic records and genuine interest in research.</div>
+      <div class="join-req">OPEN TO motivated undergraduates with strong academic records and genuine interest in research.</div>
     </div>
   </div>
 </div>

@@ -4,9 +4,9 @@
     {
       "status": "Active",
       "title": "Preventing, Identifying, and Mitigating the Impact of Compromised AI Teammates Using Shared Situation Awareness and Mental Model Accuracy",
-      "funder": "Army Research Laboratory (ARL)",
+      "funder": "Army Research Office (ARO)",
       "piRole": "PI — 100%",
-      "amount": "$718,690",
+      "amount": null,
       "description": "This project investigates how human-AI teams can detect, respond to, and recover from scenarios in which AI teammates are compromised or provide inaccurate information. The research develops frameworks rooted in shared situational awareness and mental model accuracy to maintain team performance and safety in electronically contested and adversarial environments. Work directly supports Army priorities in human-machine teaming for command and control."
     },
     {

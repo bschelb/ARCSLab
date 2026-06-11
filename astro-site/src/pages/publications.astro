@@ -4,118 +4,124 @@ import PageHeader from '../components/PageHeader.astro';
 import publications from '../data/publications.json';
 
 const years = [...new Set(publications.filter(p => typeof p.year === 'number').map(p => p.year))].sort((a, b) => b - a);
-const types = [...new Set(publications.map(p => p.type))];
 const journalCount = publications.filter(p => p.type === 'journal').length;
 const confCount = publications.filter(p => p.type === 'conference').length;
 const bookCount = publications.filter(p => p.type === 'book chapter').length;
 const awardCount = publications.filter(p => p.award && p.award !== 'In Press').length;
+const highlightSchelble = (authors: string) =>
+  authors.replace(/Schelble, B\.G\./g, '<strong>Schelble, B.G.</strong>').replace(/Schelble(?![^<]*<\/strong>)/g, '<strong>Schelble</strong>');
 ---
-<BaseLayout title="Publications | ARCS Lab | UTK" activePage="publications">
+<BaseLayout title="Publications | ARCS Lab | UT Knoxville" activePage="publications"
+  description={`${publications.length}+ peer-reviewed publications from the ARCS Lab on human-AI teaming, trust in AI, and collaborative systems.`}>
 <style>
-  .page-header::before {
-    content: 'PUBLICATIONS'; position: absolute; right: 60px; top: 50%; transform: translateY(-50%);
-    font-family: 'Playfair Display', serif; font-size: 120px; font-weight: 900;
-    color: rgba(255,255,255,0.03); letter-spacing: -4px; white-space: nowrap;
-  }
-  .stats-bar {
-    display: flex; gap: 48px; padding: 40px 80px;
-    background: var(--stone-100); border-bottom: 1px solid var(--stone-200);
-  }
-  .stat-box { text-align: center; }
-  .stat-box-num { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 900; color: var(--stone-900); }
-  .stat-box-num span { color: var(--utk-orange); }
-  .stat-box-label { font-size: 11px; color: var(--stone-500); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
   .filter-bar {
-    display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
-    padding: 32px 80px; border-bottom: 1px solid var(--stone-200);
+    position: sticky; top: calc(var(--nav-h) + 3px); z-index: 50;
+    display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+    padding: 20px var(--gutter);
+    background: rgba(250, 248, 243, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
   }
-  .filter-bar label { font-size: 12px; font-weight: 600; color: var(--stone-700); text-transform: uppercase; letter-spacing: 0.06em; margin-right: 8px; }
+  .filter-bar .fl {
+    font-family: var(--mono); font-size: 10.5px; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text-muted); margin-right: 10px;
+  }
   .filter-btn {
-    padding: 6px 16px; font-size: 12px; font-weight: 500;
-    border: 1px solid var(--stone-200); background: white; color: var(--stone-700);
-    cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+    padding: 8px 18px; font-family: var(--mono); font-size: 11px;
+    font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+    border: 1px solid var(--line-strong); background: transparent;
+    color: var(--text); cursor: pointer; transition: all 0.2s;
   }
-  .filter-btn:hover, .filter-btn.active { background: var(--utk-orange); color: white; border-color: var(--utk-orange); }
-  .pub-list { padding: 0 80px 80px; }
-  .year-group { margin-top: 48px; }
+  .filter-btn:hover { border-color: var(--orange); color: var(--orange-deep); }
+  .filter-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+  .pub-list { padding: 24px var(--gutter) 100px; }
+  .year-group { margin-top: 56px; }
+  .year-head { display: flex; align-items: baseline; gap: 18px; margin-bottom: 8px; }
   .year-label {
-    font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700;
-    color: var(--stone-900); padding-bottom: 16px;
-    border-bottom: 2px solid var(--utk-orange); margin-bottom: 0;
+    font-family: var(--serif); font-size: 40px; font-weight: 600;
+    color: var(--text-strong); line-height: 1;
+  }
+  .year-rule { flex: 1; height: 1px; background: var(--line); position: relative; top: -6px; }
+  .year-count {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
+    color: var(--text-muted); white-space: nowrap; position: relative; top: -6px;
   }
   .pub-row {
-    display: grid; grid-template-columns: 80px 1fr auto; gap: 20px;
-    padding: 20px 0; border-bottom: 1px solid var(--stone-200); align-items: start;
-    transition: padding-left 0.2s;
+    display: grid; grid-template-columns: 110px 1fr auto; gap: 24px;
+    padding: 22px 0; border-bottom: 1px solid var(--line); align-items: start;
+    position: relative; transition: padding-left 0.22s ease;
   }
-  .pub-row:hover { padding-left: 8px; }
+  .pub-row::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 2px; background: var(--orange); opacity: 0; transition: opacity 0.22s;
+  }
+  .pub-row:hover { padding-left: 16px; }
+  .pub-row:hover::before { opacity: 1; }
   .pub-type {
-    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em;
-    text-transform: uppercase; padding-top: 4px;
+    font-family: var(--mono); font-size: 9.5px; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 4px 10px; height: fit-content; width: fit-content;
+    margin-top: 3px; white-space: nowrap;
   }
-  .pub-type.journal { color: var(--utk-orange); }
-  .pub-type.conference { color: #2563eb; }
-  .pub-type.book { color: #7c3aed; }
-  .pub-type.workshop { color: #059669; }
-  .pub-title-text { font-size: 15px; font-weight: 500; color: var(--stone-900); line-height: 1.5; margin-bottom: 4px; }
-  .pub-authors { font-size: 13px; color: var(--smoke); margin-bottom: 2px; }
-  .pub-authors strong { color: var(--stone-900); font-weight: 600; }
-  .pub-venue { font-size: 12px; color: var(--stone-500); font-style: italic; }
+  .pub-type.journal { color: var(--orange-deep); background: var(--orange-glow); }
+  .pub-type.conference { color: var(--text-strong); background: var(--paper-2); border: 1px solid var(--line); }
+  .pub-type.book { color: #fff; background: var(--ink); }
+  .pub-type.workshop { color: var(--text-muted); border: 1px dashed var(--line-strong); }
+  .pub-title-text { font-size: 15.5px; font-weight: 500; color: var(--text-strong); line-height: 1.55; margin-bottom: 5px; }
+  .pub-authors { font-size: 13px; color: var(--text); margin-bottom: 3px; }
+  .pub-authors :global(strong) { color: var(--text-strong); font-weight: 600; }
+  .pub-venue { font-size: 12.5px; color: var(--text-muted); font-style: italic; }
   .pub-award-badge {
-    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.06em;
-    color: var(--utk-orange); background: rgba(255,102,0,0.1);
-    padding: 4px 10px; white-space: nowrap; height: fit-content;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em;
+    color: var(--orange-deep); background: var(--orange-glow);
+    padding: 5px 11px; white-space: nowrap; height: fit-content;
   }
-  @media (max-width: 1024px) {
-    .stats-bar, .filter-bar, .pub-list { padding-left: 40px; padding-right: 40px; }
-    .stats-bar { flex-wrap: wrap; gap: 24px; }
+  @media (max-width: 768px) {
+    .pub-row { grid-template-columns: 1fr; gap: 10px; }
+    .pub-award-badge { justify-self: start; }
   }
 </style>
 
-<PageHeader eyebrow="ARCS Lab · Scholarly Output" title="Publications" description="A complete record of peer-reviewed journal articles, conference papers, book chapters, and workshop contributions from the ARCS Lab and its collaborators." />
-
-<div class="stats-bar">
-  <div class="stat-box">
-    <div class="stat-box-num">{publications.length}<span>+</span></div>
-    <div class="stat-box-label">Total Publications</div>
-  </div>
-  <div class="stat-box">
-    <div class="stat-box-num">{journalCount}</div>
-    <div class="stat-box-label">Journal Articles</div>
-  </div>
-  <div class="stat-box">
-    <div class="stat-box-num">{confCount}</div>
-    <div class="stat-box-label">Conference Papers</div>
-  </div>
-  <div class="stat-box">
-    <div class="stat-box-num">{bookCount}</div>
-    <div class="stat-box-label">Book Chapters</div>
-  </div>
-  <div class="stat-box">
-    <div class="stat-box-num">{awardCount}</div>
-    <div class="stat-box-label">Best Paper Awards</div>
-  </div>
-</div>
+<PageHeader
+  index="02"
+  crumb="Scholarly Output"
+  title="What we've"
+  titleEm="published."
+  lead="A complete record of peer-reviewed journal articles, conference papers, book chapters, and workshop contributions from the ARCS Lab and its collaborators."
+  stats={[
+    { value: `${publications.length}<span>+</span>`, label: 'Total Publications' },
+    { value: `${journalCount}`, label: 'Journal Articles' },
+    { value: `${confCount}`, label: 'Conference Papers' },
+    { value: `${bookCount}`, label: 'Book Chapters' },
+    { value: `${awardCount}`, label: 'Best Paper Awards' },
+  ]}
+/>
 
 <div class="filter-bar">
-  <label>Filter:</label>
+  <span class="fl">Filter //</span>
   <button class="filter-btn active" data-filter="all">All</button>
   <button class="filter-btn" data-filter="journal">Journals</button>
   <button class="filter-btn" data-filter="conference">Conference</button>
   <button class="filter-btn" data-filter="book chapter">Book Chapters</button>
-  <button class="filter-btn" data-filter="award">Award-Winning</button>
+  <button class="filter-btn" data-filter="award">★ Award-Winning</button>
 </div>
 
 <div class="pub-list">
   {years.map(year => (
     <div class="year-group" data-year={year}>
-      <div class="year-label">{year}</div>
+      <div class="year-head">
+        <div class="year-label">{year}</div>
+        <div class="year-rule"></div>
+        <div class="year-count">{publications.filter(p => p.year === year).length} works</div>
+      </div>
       {publications.filter(p => p.year === year).map(pub => (
         <div class="pub-row" data-type={pub.type} data-award={pub.award && pub.award !== 'In Press' ? 'yes' : 'no'}>
           <div class={`pub-type ${pub.type === 'book chapter' ? 'book' : pub.type}`}>{pub.type === 'book chapter' ? 'Book Ch.' : pub.type}</div>
           <div>
             <div class="pub-title-text">{pub.title}</div>
-            <div class="pub-authors" set:html={pub.authors.replace(/Schelble, B\.G\./g, '<strong>Schelble, B.G.</strong>').replace(/Schelble/g, '<strong>Schelble</strong>')} />
+            <div class="pub-authors" set:html={highlightSchelble(pub.authors)} />
             <div class="pub-venue">{pub.venue}</div>
           </div>
           {pub.award && pub.award !== 'In Press' ? <div class="pub-award-badge">★ {pub.award}</div> : <div></div>}
@@ -125,13 +131,17 @@ const awardCount = publications.filter(p => p.award && p.award !== 'In Press').l
   ))}
   {publications.filter(p => typeof p.year !== 'number').length > 0 && (
     <div class="year-group" data-year="inpress">
-      <div class="year-label">In Press</div>
+      <div class="year-head">
+        <div class="year-label">In Press</div>
+        <div class="year-rule"></div>
+        <div class="year-count">{publications.filter(p => typeof p.year !== 'number').length} works</div>
+      </div>
       {publications.filter(p => typeof p.year !== 'number').map(pub => (
         <div class="pub-row" data-type={pub.type} data-award="no">
           <div class={`pub-type ${pub.type === 'book chapter' ? 'book' : pub.type}`}>{pub.type === 'book chapter' ? 'Book Ch.' : pub.type}</div>
           <div>
             <div class="pub-title-text">{pub.title}</div>
-            <div class="pub-authors" set:html={pub.authors.replace(/Schelble, B\.G\./g, '<strong>Schelble, B.G.</strong>').replace(/Schelble/g, '<strong>Schelble</strong>')} />
+            <div class="pub-authors" set:html={highlightSchelble(pub.authors)} />
             <div class="pub-venue">{pub.venue}</div>
           </div>
           <div></div>
@@ -146,7 +156,7 @@ const awardCount = publications.filter(p => p.award && p.award !== 'In Press').l
     btn.addEventListener('click', () => {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      const filter = btn.dataset.filter;
+      const filter = (btn as HTMLElement).dataset.filter;
       document.querySelectorAll('.pub-row').forEach(row => {
         const el = row as HTMLElement;
         if (filter === 'all') { el.style.display = ''; }

@@ -1,15 +1,37 @@
 ---
-interface Props {
-  eyebrow: string;
-  title: string;
-  description: string;
-  watermark?: string;
+// Dark "mission briefing" page header with index, crumb, headline, and
+// optional stat readouts. Pass `title` as plain text; wrap a phrase in
+// `titleEm` to render it as an italic orange accent after `title`.
+interface Stat {
+  value: string;
+  label: string;
 }
-const { eyebrow, title, description, watermark } = Astro.props;
+interface Props {
+  index: string;        // e.g. "01"
+  crumb: string;        // e.g. "Research Program"
+  title: string;
+  titleEm?: string;
+  lead: string;
+  stats?: Stat[];
+}
+const { index, crumb, title, titleEm, lead, stats } = Astro.props;
 ---
-<div class="page-header">
-  {watermark && <Fragment><style>{`.page-header::before{content:'${watermark}';position:absolute;right:60px;top:50%;transform:translateY(-50%);font-family:'Playfair Display',serif;font-size:120px;font-weight:900;color:rgba(255,255,255,0.025);letter-spacing:-4px;white-space:nowrap;}`}</style></Fragment>}
-  <div class="page-header-eyebrow">{eyebrow}</div>
-  <h1>{title}</h1>
-  <p>{description}</p>
-</div>
+<header class="page-head">
+  <div class="ph-crumb" data-reveal>
+    <span class="ph-index">{index}</span>
+    <span class="ph-sep"></span>
+    <span>ARCS Lab — {crumb}</span>
+  </div>
+  <h1 data-reveal style="--rd: 80ms">{title} {titleEm && <em>{titleEm}</em>}</h1>
+  <p class="ph-lead" data-reveal style="--rd: 160ms">{lead}</p>
+  {stats && stats.length > 0 && (
+    <div class="ph-meta" data-reveal style="--rd: 240ms">
+      {stats.map((s) => (
+        <div class="ph-meta-item">
+          <div class="v" set:html={s.value} />
+          <div class="k">{s.label}</div>
+        </div>
+      ))}
+    </div>
+  )}
+</header>
