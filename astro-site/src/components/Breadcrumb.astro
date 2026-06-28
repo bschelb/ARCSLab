@@ -1,0 +1,11 @@
+---
+// Emits BreadcrumbList JSON-LD. Place on a subpage with `slot="head"` so it is
+// forwarded into <head> by BaseLayout, e.g.:
+//   <Breadcrumb slot="head" trail={[['Home','/'], ['Research','/research']]} />
+import { breadcrumbNode, ldjson } from '../lib/seo';
+interface Props {
+  trail: [string, string][];
+}
+const { trail } = Astro.props;
+---
+<script type="application/ld+json" is:inline set:html={ldjson(breadcrumbNode(trail))} />

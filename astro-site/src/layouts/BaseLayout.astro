@@ -1,15 +1,35 @@
 ---
+import { absoluteUrl, researchKeywords, site } from '../data/site';
+import { ldjson, siteGraph } from '../lib/seo';
+
 interface Props {
   title: string;
   activePage?: string;
   description?: string;
+  /** Canonical path override (e.g. "/research"); defaults to the current URL. */
+  path?: string;
+  /** Social share image (site-relative); defaults to the site OG image. */
+  image?: string;
+  /** Open Graph type — "website" for most pages, "article" for papers. */
+  ogType?: string;
 }
 const {
   title,
   activePage = '',
-  description = 'The AI & Robotics for Collaborative Systems (ARCS) Lab at the University of Tennessee, Knoxville advances the science and engineering of human-AI teaming.',
+  description = site.description,
+  path,
+  image = site.ogImage,
+  ogType = 'website',
 } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Canonical: prefer an explicit path, else the current URL, normalized to the
+// extensionless form the rest of the site links to.
+const rawPath = (path ?? Astro.url.pathname).replace(/index\.html$/, '').replace(/\.html$/, '');
+const cleanPath = rawPath === '' ? '/' : rawPath.replace(/\/+$/, '') || '/';
+const canonicalURL = new URL(cleanPath, Astro.site ?? site.url).href;
+const ogImageURL = absoluteUrl(image);
+const keywords = researchKeywords.join(', ');
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -18,13 +38,43 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title}</title>
   <meta name="description" content={description}>
+  <link rel="canonical" href={canonicalURL}>
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <meta name="keywords" content={keywords}>
+  <meta name="author" content="Beau G. Schelble">
+  <meta name="publisher" content={site.name}>
+  <meta name="theme-color" content={site.themeColor}>
+
+  <!-- Open Graph -->
+  <meta property="og:type" content={ogType}>
+  <meta property="og:site_name" content={site.shortName}>
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  <meta property="og:url" content={canonicalURL}>
+  <meta property="og:image" content={ogImageURL}>
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content={title}>
+  <meta name="twitter:description" content={description}>
+  <meta name="twitter:image" content={ogImageURL}>
+
   <link rel="icon" type="image/png" href={`${base}/assets/Frame 3.png`}>
+  <link rel="apple-touch-icon" href={`${base}/assets/apple-touch-icon.png`}>
+  <link rel="manifest" href={`${base}/site.webmanifest`}>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Space+Grotesk:wght@300..700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
   <style is:global>
     @import '../styles/global.css';
   </style>
+
+  <!-- Site-wide structured data: Organization (ARCS Lab) + Person (PI) + WebSite -->
+  <script type="application/ld+json" is:inline set:html={ldjson(siteGraph())} />
+
   <slot name="head" />
 </head>
 <body>

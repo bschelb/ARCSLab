@@ -1,346 +1,1056 @@
 [
   {
+    "id": "gonzalez-2026-complementarity-framework",
     "year": 2026,
     "type": "journal",
     "title": "Toward a Science of Human–AI Teaming for Decision-Making: A Complementarity Framework",
     "authors": "Gonzalez, C., Donahue, K., Goldstein, D., Heidari, H., Jalali, M., Schelble, B.G., Singh, A., & Woolley, A.W.",
+    "authorsList": [
+      "Cleotilde Gonzalez",
+      "Kyle Donahue",
+      "Daniel Goldstein",
+      "Hoda Heidari",
+      "Mohammad Jalali",
+      "Beau G. Schelble",
+      "Aarti Singh",
+      "Anita W. Woolley"
+    ],
     "venue": "PNAS Nexus, 1–30",
+    "venueShort": "PNAS Nexus",
+    "doi": "10.1093/pnasnexus/pgag030",
+    "abstract": "As artificial intelligence (AI) becomes embedded in critical decisions involving health, safety, finance, and governance, the key challenge is no longer whether humans and AI will collaborate, but rather how to structure this collaboration to achieve true complementarity. Human-AI complementarity refers to the conditions under which human-AI teams outperform either humans alone or AI systems alone. This paper advances the science of human-AI teaming for decision making by integrating insights from cognitive science, AI, human factors, organizational behavior, and ethics. We propose a framework grounded in collective intelligence and anchored in the foundational cognitive processes—reasoning, memory, and attention—to understand and engineer effective human-AI teams. We examine the sociotechnical factors that shape team effectiveness, including team composition, trust calibration, shared mental models, training, and task structure. We then outline design principles for achieving complementarity: defining goals and constraints, partitioning roles, orchestrating attention and interrogation, building knowledge infrastructures, and establishing continuous training and evaluation. We conclude with theoretical, practical, and policy implications, emphasizing alignment with human values, accountability, and equity. Together, these insights offer a roadmap for building human-AI teams that are not only high-performing and adaptive, but also transparent, trustworthy, and fundamentally human-centered.",
+    "tags": [
+      "human-AI teaming",
+      "decision-making"
+    ],
+    "pdf": "gonzalez-2026-complementarity-framework.pdf",
     "award": null
   },
   {
+    "id": "gurney-2026-cybersecurity-behavior",
     "year": 2026,
     "type": "book chapter",
     "title": "Modeling Human Behavior in Cybersecurity: Leveraging Structural Equation Modeling to Address Cognitive Biases and Enhance Defense Strategies",
     "authors": "Gurney, N., Wu, P., Molinaro, K., Jones, F., Schelble, B.G., & Zhu, Q.",
+    "authorsList": [
+      "Nikolos Gurney",
+      "Peggy Wu",
+      "Kristin Molinaro",
+      "Fred Jones",
+      "Beau G. Schelble",
+      "Quanyan Zhu"
+    ],
     "venue": "Foundations of Cyber Deception (pp. 155–180). Springer Nature",
+    "venueShort": "Springer",
+    "doi": "10.1007/978-3-031-93867-2",
+    "tags": [
+      "cybersecurity",
+      "methods"
+    ],
     "award": null
   },
   {
+    "id": "schelble-2026-human-or-ai-advice",
     "year": 2025,
     "type": "journal",
     "title": "Human or AI Advice? Examining Trust, Influence, and Responsibility in Ethically-Charged Human-AI Team Decision-Making",
     "authors": "Schelble, B.G., Flathmann, C., Aly, H., Lyons, J., & McNeese, N.",
+    "authorsList": [
+      "Beau G. Schelble",
+      "Christopher Flathmann",
+      "Heba Aly",
+      "Joseph B. Lyons",
+      "Nathan J. McNeese"
+    ],
     "venue": "Journal of Cognitive Engineering and Decision Making",
+    "venueShort": "JCEDM",
+    "doi": "10.1177/15553434261434613",
+    "abstract": "AI systems are rapidly being placed in positions where they can directly influence decisions that require a strong consideration of ethics. This article reports on an experiment in which humans worked with a teammate acting as an expert advisor with expert-level knowledge, who informed and influenced their ethical decision-making. The identity of this expert advisor was manipulated to be either human or AI, and the influence exerted by the expert advisor was manipulated to be either low or high. Further, participants completed four scenarios, each exploring a different ethically charged decision. Results indicated that working with an AI teammate expert advisor led participants to perceive significantly lower levels of stress and responsibility when making ethical decisions, but AI expert advisors were also perceived as performing worse than human expert advisors. Additionally, when expert advisors exerted high influence levels, participants felt significantly less stress during the decision-making process. Finally, the scenario and ethical decisions made by participants had pervasive effects on trust, trustworthiness, perceived performance, and perceived power for both human and AI expert advisors. Future research efforts must ensure that the use of AI expert advisors in human-AI teams does not reduce the responsibility humans bear when making various ethical decisions.",
+    "tags": [
+      "trust",
+      "AI ethics",
+      "decision-making"
+    ],
+    "pdf": "schelble-2026-human-or-ai-advice.pdf",
     "award": "In Press"
   },
   {
+    "id": "schelble-2026-transition-phases",
     "year": 2025,
     "type": "journal",
     "title": "A Mixed Methods Approach to Analyzing the Role of AI Teammates in Transition Phases",
     "authors": "Schelble, B.G., Mallick, R., & McNeese, N.",
+    "authorsList": [
+      "Beau G. Schelble",
+      "Rohit Mallick",
+      "Nathan J. McNeese"
+    ],
     "venue": "Proceedings of the ACM on Human-Computer Interaction (GROUP)",
+    "venueShort": "PACM HCI",
+    "doi": "10.1145/3799438",
+    "abstract": "Recent innovations in AI have allowed AI agents to work as collaborative teammates; however, these human-AI teams still face significant challenges in achieving high levels of effective coordination and collaboration. Focusing on the temporal nature of teaming, collaboration is often evaluated and improved through transition-phase discussions, held among teammates before or after achieving team goals. Using a mixed-methods approach, this study examines how AI teammates participate in transition-phase discussions and share various types of information, with a focus on situation awareness, impact on team cognition, trust, and performance in human-AI teams. Data from 31 teams completing a three-hour simulated uncrewed aerial system task, comprising four distinct rounds and two transition phases, were analyzed. Quantitative results indicated that AI involvement later in the team's life cycle fostered more trust in the AI teammate, as compared across the four rounds, and was associated with higher performance. Perceived team effectiveness also improved following transition phases the AI teammate participated in, irrespective of whether it occurred early or late in the team's life cycle. Qualitative findings revealed that AI involvement benefits transition phases, particularly when it prompts teammates to recall task details and develop shared knowledge. Based on these results, we demonstrate the value of AI teammates engaging in transition-phase discussions for human-AI teams and provide design recommendations for researchers and practitioners to improve the efficacy of HATs by implementing transition phases.",
+    "tags": [
+      "human-AI teaming",
+      "team cognition",
+      "methods"
+    ],
+    "pdf": "schelble-2026-transition-phases.pdf",
     "award": "In Press"
   },
   {
+    "id": "zhou-2025-spread-of-trust",
     "year": 2025,
     "type": "journal",
     "title": "The Spread of Trust and Distrust in Human-AI Teams",
     "authors": "Zhou, S., Duan, W., Yin, X., Scalia, M., Hao, R., Weng, N., Funke, G., Tolston, M., Freeman, G., Schelble, B.G., Gorman, J., & McNeese, N.J.",
+    "authorsList": [
+      "Shiwen Zhou",
+      "Wen Duan",
+      "Xiaoyun Yin",
+      "Matthew J. Scalia",
+      "Ruihao Hao",
+      "Nan Weng",
+      "Gregory Funke",
+      "Michael Tolston",
+      "Guo Freeman",
+      "Beau G. Schelble",
+      "Jamie Gorman",
+      "Nathan J. McNeese"
+    ],
     "venue": "Applied Ergonomics, 130, Article 104648",
+    "venueShort": "Appl. Ergonomics",
+    "doi": "10.1016/j.apergo.2025.104648",
+    "tags": [
+      "trust",
+      "human-AI teaming",
+      "team cognition"
+    ],
+    "pdf": "zhou-2025-spread-of-trust.pdf",
     "award": null
   },
   {
+    "id": "schelble-2025-context-trust-high-risk",
     "year": 2025,
     "type": "journal",
     "title": "Addressing the Role of Context on Trust in Human-AI Teams: The Influence of Team Role and Violation Type in High-Risk Tasks",
     "authors": "Schelble, B.G., Textor, C., Zhang, R., Lopez, J., Tavarez, N., Ku, C., McNeese, N.J., Pak, R., Freeman, G., Tossell, C., & de Visser, E.",
+    "authorsList": [
+      "Beau G. Schelble",
+      "Claire Textor",
+      "Rui Zhang",
+      "Jeremy Lopez",
+      "Noah Tavarez",
+      "Christine Ku",
+      "Nathan J. McNeese",
+      "Richard Pak",
+      "Guo Freeman",
+      "Chad Tossell",
+      "Ewart de Visser"
+    ],
     "venue": "Ergonomics, 1–21",
+    "venueShort": "Ergonomics",
+    "doi": "10.1080/00140139.2025.2570300",
+    "abstract": "The current paper reports on an experiment examining how contextual factors influence trust, perceived ethicality, and performance in human-AI teams undertaking a high-risk, action-based task within a military setting. The study examined the impact of team role and trust violation framing on trust, perceived ethicality, and the efficacy of four trust repair strategies when an AI teammate commits an unethical action. Results indicated that trust and perceived ethicality of the AI team member were significantly higher when ethical violations were framed as integrity-based violations rather than competency-based violations. Additionally, those in the Ground role, who relied more on the AI for their safety, also had higher trust and ethicality ratings for the AI. However, trust repair strategies did not significantly impact trust in the AI team member after an ethical violation. These results highlight the significance of context in determining trust in response to AI ethical violations.",
+    "tags": [
+      "trust",
+      "high-risk environments",
+      "human-AI teaming"
+    ],
+    "pdf": "schelble-2025-context-trust-high-risk.pdf",
     "award": null
   },
   {
+    "id": "schelble-2025-ai-information-sharing",
     "year": 2025,
     "type": "journal",
     "title": "Should AI Teammates Give All the Answers? Examining the Role of Different AI Information-Sharing Techniques on Team Cognition in Human-AI Teams",
     "authors": "Schelble, B.G., Mallick, R., Hauptman, A., & McNeese, N.J.",
+    "authorsList": [
+      "Beau G. Schelble",
+      "Rohit Mallick",
+      "Allyson I. Hauptman",
+      "Nathan J. McNeese"
+    ],
     "venue": "International Journal of Human-Computer Interaction, 42(4), 2463–2488",
+    "venueShort": "IJHCI",
+    "doi": "10.1080/10447318.2025.2528988",
+    "abstract": "This study investigated how the information-sharing traits of an AI teammate, such as augmenting team memory (ATM) and changes in intra- and extra-team information (IET), can enhance situation awareness (SA) and responses to unexpected events in human-AI teams. Thirty-one teams of two participants and one AI flew a simulated UAV task with the AI's information-sharing attribute set to ATM, IET, or control. Results showed that IET teams, whose AI provided direct solutions to task disruptions, were the most likely to overcome them. The ATM teams, whose AI helped teammates find the solution themselves, also outperformed the control group, but also exhibited more action communication, a better perceived shared mental model with the AI, and a more positive perception of SA compared to the IET condition. These results highlight that while providing direct, immediate AI solutions can improve responses to task disruptions, there can be a cost to team development.",
+    "tags": [
+      "information sharing",
+      "team cognition",
+      "human-AI teaming"
+    ],
+    "pdf": "schelble-2025-ai-information-sharing.pdf",
     "award": null
   },
   {
+    "id": "hauptman-2025-ethical-adaptation-healthcare",
     "year": 2025,
     "type": "journal",
     "title": "Ethical Adaptation: Exploring the Use of Adaptive Autonomy in the Design of Ethical AI Teammates in Healthcare",
     "authors": "Hauptman, A., Schelble, B.G., Flathmann, C., Mallick, R., Macdonald, J., & McNeese, N.J.",
+    "authorsList": [
+      "Allyson I. Hauptman",
+      "Beau G. Schelble",
+      "Christopher Flathmann",
+      "Rohit Mallick",
+      "Jeremy Macdonald",
+      "Nathan J. McNeese"
+    ],
     "venue": "AI and Ethics, 5(5), 5397–5414",
+    "venueShort": "AI & Ethics",
+    "doi": "10.1007/s43681-025-00782-w",
+    "abstract": "Modern advancements in AI technologies have allowed for their more seamless integration within society, including as full-fledged teammates tasked with making and executing independent decisions. This increased integration amplifies the burden on designers to determine if and when AI is capable of making such decisions when confronted with an ethical dilemma. In this mixed-methods study, we conducted a factorial survey (N=200) and interviewed fifteen medical professionals to understand how the principles of medical ethics should affect AI teammate autonomy and behavior. The results of this study enabled the creation of important themes and design recommendations that can guide the design of ethical AI teammates that can appropriately recognize and adapt to ethical dilemmas.",
+    "tags": [
+      "AI ethics",
+      "adaptive autonomy",
+      "healthcare"
+    ],
+    "pdf": "hauptman-2025-ethical-adaptation-healthcare.pdf",
     "award": null
   },
   {
+    "id": "schelble-2025-info-sharing-trust-hfes",
     "year": 2025,
     "type": "conference",
     "title": "Examining the Role of AI Information-Sharing on Trust in Human-AI Teams",
     "authors": "Schelble, B.G., Filer, G., Flathmann, C., & Madathil, K.",
+    "authorsList": [
+      "Beau G. Schelble",
+      "Gracyn Filer",
+      "Christopher Flathmann",
+      "Kapil Chalil Madathil"
+    ],
     "venue": "Proc. Human Factors & Ergonomics Society Annual Meeting",
+    "venueShort": "HFES",
+    "doi": "10.1177/10711813251367726",
+    "abstract": "Creating reliable human-AI teams with strong team cognition requires a deeper understanding of how humans perceive and react to various information-sharing tactics employed by an AI teammate. The current study details a factorial survey investigating how participants' trust in their AI and human teammates changes across various forms of AI information sharing. These information-sharing attributes included backup behavior, explainability, team member statuses, intra- and extra-team changes, augmenting team memory, and control. The study found that participants' trust in their AI teammate benefited most from information about changes inside and outside the team, but all conditions outperformed the control. Further, the back-up behavior information negatively affected the participants' trust in their human teammate as the AI corrected the human teammates' actions. These findings demonstrate the utility of a specific form of situation awareness information, while highlighting that corrective back-up behavior information from an AI may harm perceptions between human teammates.",
+    "tags": [
+      "information sharing",
+      "trust",
+      "human-AI teaming"
+    ],
+    "pdf": "schelble-2025-info-sharing-trust-hfes.pdf",
     "award": null
   },
   {
+    "id": "flathmann-2025-generative-ai-simulations",
     "year": 2025,
     "type": "conference",
     "title": "Leveraging Generative AI to Create Lightweight Simulations for Far-Future Autonomous Teammates",
     "authors": "Flathmann, C., Ihekweazu, C., & Schelble, B.G.",
+    "authorsList": [
+      "Christopher Flathmann",
+      "Christian Ihekweazu",
+      "Beau G. Schelble"
+    ],
     "venue": "Proc. Human Factors & Ergonomics Society Annual Meeting",
+    "venueShort": "HFES",
+    "doi": "10.1177/10711813251357885",
+    "abstract": "As the domain of AI advances, the design and capability of human-AI teams are becoming increasingly complex. Unfortunately, this complexity has increased the pace at which research needs to be performed. On the one hand, low-fidelity survey-based experiments have provided an opportunity for rapid human-AI teaming research. High-fidelity research studies that use full-fledged simulations remain relevant, but their development overhead often slows the pace of research. This article proposes a system design that splits the difference to explore human-AI teams at a medium fidelity that allows for rapid prototyping from researchers and interaction from participants. The proposed platform consists of a predictive simulation engine that uses generative AI to ingest, modify, and predict simulation states. Researchers can describe teammate capabilities, environments, and goals, which can be stored in a traditional JSON game state. The proposed simulation provides an interactive opportunity to explore modern and far-future HATs.",
+    "tags": [
+      "generative AI",
+      "simulation",
+      "methods"
+    ],
+    "pdf": "flathmann-2025-generative-ai-simulations.pdf",
     "award": null
   },
   {
+    "id": "sengupta-2024-moral-persona",
     "year": 2024,
     "type": "journal",
     "title": "An Analysis of Ethical Rationales and Their Impact on the Perceived Moral Persona of AI Teammates",
     "authors": "Sengupta, S., Schelble, B.G., Flathmann, C., McNeese, N.J., & Lyons, J.",
+    "authorsList": [
+      "Subhasree Sengupta",
+      "Beau G. Schelble",
+      "Christopher Flathmann",
+      "Nathan J. McNeese",
+      "Joseph B. Lyons"
+    ],
     "venue": "AI and Ethics, 5, 2667–2679",
+    "venueShort": "AI & Ethics",
+    "doi": "10.1007/s43681-024-00515-5",
+    "abstract": "Morality of action, intention, and overall collaborative context is vital for any teaming endeavor, especially as we enter the milieu of human-AI teaming. Particularly, communication of intent and ethical reasoning can be crucial to how human actors perceive and construe the moral persona of AI teammates. We conducted an online experimental study comprised of four ethical justification conditions (deontology, utilitarianism, virtue, and control) alongside two contextual outcomes (Positive and Negative) to understand how different ethical justification frameworks given by AI impact human teammates' moral perceptions of the AI in human-AI teams. The results indicate that deontology-based justifications led to heightened moral perceptions compared to other frameworks when the outcomes of decisions were contextually negative. Such findings can have vital implications for the robust design of AI teammates to manage contextual variations when engaged in critical decision-making contexts with ethical implications.",
+    "tags": [
+      "AI ethics",
+      "human-AI teaming"
+    ],
+    "pdf": "sengupta-2024-moral-persona.pdf",
     "award": null
   },
   {
+    "id": "schelble-2024-perceived-information-needs",
     "year": 2024,
     "type": "journal",
     "title": "Modeling Perceived Information Needs in Human-AI Teams: Improving AI Teammate Utility and Driving Team Cognition",
     "authors": "Schelble, B.G., Flathmann, C., Macdonald, J., Knijnenburg, B., Brady, C., & McNeese, N.J.",
+    "authorsList": [
+      "Beau G. Schelble",
+      "Christopher Flathmann",
+      "Jeremy Macdonald",
+      "Bart Knijnenburg",
+      "Camden Brady",
+      "Nathan J. McNeese"
+    ],
     "venue": "Behaviour & Information Technology, 44(9), 2069–2092",
+    "venueShort": "BIT",
+    "doi": "10.1080/0144929X.2024.2396476",
+    "abstract": "As AI technologies advance, teams are beginning to see AI transition from a tool to a full-fledged teammate. Introducing an AI teammate brings several challenges, ranging from how human teammates perceive their new AI teammates from an affective standpoint to how AI should engage in the various teaming behaviors that make up effective teamwork. The current study used a mixed factorial survey and structural equation modeling to assess how participants in hypothetical human-AI teams respond to various forms of AI information-sharing, including information related to explainability, back-up behavior, situational awareness, and augmenting team memory. The study's results found that AI design features related to situational awareness and augmenting the teams' memory had the strongest effect on participants' attitudes and perceived team cognition with their teammates. However, much of this effect was mediated by participants' affective attitudes towards the AI as a teammate, with higher ratings leading directly to higher levels of perceived team cognition constructs. These results highlight the importance of fostering positive attitudes towards AI teammates, such as trust and cohesion in human-AI teams, to support the development of effective team cognition and the ability of AI information-sharing to bring about such positive impacts.",
+    "tags": [
+      "information sharing",
+      "team cognition",
+      "human-AI teaming"
+    ],
+    "pdf": "schelble-2024-perceived-information-needs.pdf",
     "award": null
   },
   {
+    "id": "mallick-2024-emotional-expressions",
     "year": 2024,
     "type": "journal",
     "title": "What You Say vs What You Do: Utilizing Positive Emotional Expressions to Relay AI Teammate Intent within Human-AI Teams",
     "authors": "Mallick, R., Flathmann, C., Duan, W., Schelble, B.G., & McNeese, N.J.",
+    "authorsList": [
+      "Rohit Mallick",
+      "Christopher Flathmann",
+      "Wen Duan",
+      "Beau G. Schelble",
+      "Nathan J. McNeese"
+    ],
     "venue": "International Journal of Human-Computer Studies, 192, 103355",
+    "venueShort": "IJHCS",
+    "doi": "10.1016/j.ijhcs.2024.103355",
+    "abstract": "With the expansive growth of AI's capabilities in recent years, researchers have been tasked with developing and improving human-centered AI collaborations, necessitating the creation of human-AI teams (HATs). However, the differences in communication styles between humans and AI often prevent human teammates from fully understanding the intent and needs of AI teammates. One core difference is that humans naturally leverage a positive emotional tone during communication to convey their confidence or lack thereof to convey doubt in their ability to complete a task. Yet, this communication strategy must be explicitly designed in order for an AI teammate to be human-centered. In this mixed-methods study, 45 participants completed a study examining how human teammates interpret the behaviors of their AI teammates when they express different positive emotions via specific words/phrases. Quantitative results show that, based on corresponding behaviors, AI teammates were able to use displays of emotion to increase trust in AI teammates and the positive mood of the human teammate. Additionally, our qualitative findings indicate that participants preferred their AI teammates to increase the intensity of their displayed emotions to help reduce the perceived risk of their AI teammate's behavior. When taken in sum, these findings describe the relevance of AI teammates expressing intensities of emotion while performing various behavioral decisions as a continued means to provide social support to the wider team and better task performance.",
+    "tags": [
+      "human-AI teaming",
+      "communication"
+    ],
+    "pdf": "mallick-2024-emotional-expressions.pdf",
     "award": null
   },
   {
+    "id": "hauptman-2024-autonomy-explainability",
     "year": 2024,
     "type": "journal",
     "title": "Understanding the Influence of AI Autonomy on AI Explainability in Human-AI Teams Using a Mixed Methods Approach",
     "authors": "Hauptman, A.I., Schelble, B.G., Flathmann, C., Duan, W., & McNeese, N.J.",
+    "authorsList": [
+      "Allyson I. Hauptman",
+      "Beau G. Schelble",
+      "Christopher Flathmann",
+      "Wen Duan",
+      "Nathan J. McNeese"
+    ],
     "venue": "Cognition, Technology & Work, 26, 435–455",
+    "venueShort": "Cogn. Tech. Work",
+    "doi": "10.1007/s10111-024-00765-7",
+    "abstract": "An obstacle to effective teaming between humans and AI is the agent's \"black box\" design. AI explanations have proven benefits, but few studies have explored the effects that explanations can have in a teaming environment with AI agents operating at heightened levels of autonomy. We conducted two complementary studies, an experiment and participatory design sessions, investigating the effect that varying levels of AI explainability and AI autonomy have on the participants' perceived trust and competence of an AI teammate to address this research gap. The results of the experiment were counter-intuitive, where the participants actually perceived the lower explainability agent as both more trustworthy and more competent. The participatory design sessions further revealed how a team's need to know influences when and what teammates need explained from AI teammates. Based on these findings, several design recommendations were developed for the HCI community to guide how AI teammates should share decision information with their human counterparts considering the careful balance between trust and competence in human-AI teams.",
+    "tags": [
+      "explainability",
+      "adaptive autonomy",
+      "methods"
+    ],
+    "pdf": "hauptman-2024-autonomy-explainability.pdf",
     "award": null
   },
   {
+    "id": "oneill-2024-comment-future-hrt",
     "year": 2024,
     "type": "journal",
     "title": "A Comment on \"Can You Outsmart the Robot?\" — Calling for a Different Path for the Future of Human–Robot Teaming",
     "authors": "O'Neill, T., Flathmann, C., McNeese, N.J., Jones, S., & Schelble, B.G.",
+    "authorsList": [
+      "Thomas A. O'Neill",
+      "Christopher Flathmann",
+      "Nathan J. McNeese",
+      "S. Jones",
+      "Beau G. Schelble"
+    ],
     "venue": "Academy of Management Discoveries, 10(1), 150–153",
+    "venueShort": "AMD",
+    "doi": "10.5465/amd.2024.0009",
+    "tags": [
+      "future of work",
+      "human-AI teaming"
+    ],
+    "pdf": "oneill-2024-comment-future-hrt.pdf",
     "award": null
   },
   {
+    "id": "zhang-2024-when-ai-should-explain",
     "year": 2024,
     "type": "journal",
     "title": "I Know This Looks Bad, But I Can Explain: Understanding When AI Should Explain Actions In Human-AI Teams",
     "authors": "Zhang, R., Flathmann, C., Musick, G., Schelble, B.G., McNeese, N.J., Knijnenburg, B., & Duan, W.",
+    "authorsList": [
+      "Rui Zhang",
+      "Christopher Flathmann",
+      "Geoff Musick",
+      "Beau G. Schelble",
+      "Nathan J. McNeese",
+      "Bart Knijnenburg",
+      "Wen Duan"
+    ],
     "venue": "ACM Transactions on Interactive Intelligent Systems, 14(1), 1–23",
+    "venueShort": "ACM TiiS",
+    "doi": "10.1145/3635474",
+    "abstract": "Explanation of artificial intelligence (AI) decision-making has become an important research area in human-computer interaction (HCI) and computer-supported teamwork research. While plenty of research has investigated AI explanations with an intent to improve AI transparency and human trust in AI, how AI explanations function in teaming environments remains unclear. Given that a major benefit of AI giving explanations is to increase human trust, understanding how AI explanations impact human trust is crucial to effective human-AI teamwork. An online experiment was conducted with 156 participants to explore this question by examining how a teammate's explanations impact the perceived trust of the teammate and the effectiveness of the team and how these impacts vary based on whether the teammate is a human or an AI. This study shows that explanations facilitate trust in AI teammates when explaining why AI disobeyed humans' orders but hindered trust when explaining why an AI lied to humans. In addition, participants' personal characteristics (e.g., their gender and the individual's ethical framework) impacted their perceptions of AI teammates both directly and indirectly in different scenarios. Our study contributes to interactive intelligent systems and HCI by shedding light on how an AI teammate's actions and corresponding explanations are perceived by humans while identifying factors that impact trust and perceived effectiveness. This work provides an initial understanding of AI explanations in human-AI teams, which can be used for future research to build upon in exploring AI explanation implementation in collaborative environments.",
+    "tags": [
+      "explainability",
+      "trust",
+      "human-AI teaming"
+    ],
+    "pdf": "zhang-2024-when-ai-should-explain.pdf",
     "award": "2023 & 2024 Featured Article"
   },
   {
+    "id": "schelble-2024-ad-hoc-teams",
     "year": 2024,
     "type": "conference",
     "title": "A Comparative Evaluation of Ad Hoc Team Performance, Effectiveness, and Interactions in Modern Collaborative Technology",
     "authors": "Schelble, B.G., Lancaster, C., Mallick, R., McNeese, N.J., Freeman, G., & Pak, R.",
+    "authorsList": [
+      "Beau G. Schelble",
+      "Caitlin Lancaster",
+      "Rohit Mallick",
+      "Nathan J. McNeese",
+      "Guo Freeman",
+      "Richard Pak"
+    ],
     "venue": "Proc. HFES Annual Meeting, 68(1), 1254–1260",
+    "venueShort": "HFES",
+    "doi": "10.1177/10711813241280939",
+    "abstract": "The current study utilizes a mixed-method approach to investigate the efficacy and affordances of three modern collaborative technologies (Slack, Google Hangouts, and Microsoft Teams). Distributed teams of three participants collaborated to plan a simulated trip with various requirements using one of three modern collaborative technologies (Slack, Google Hangouts, Microsoft Teams). The study elicited team performance, perceived platform usability, and qualitative focus group data. Quantitative results show that Microsoft Teams resulted in significantly worse team performance than Slack and Google Hangouts; additionally, only Slack was positively associated with its usability and team members' perceptions of team effectiveness. Two themes were identified regarding how these technologies afforded and shaped team practices and social interactions: (a) technology leads to a loosely defined (or no) leadership, and (b) technology promotes the sense of team and trust in ad hoc teams performing fast-paced and time-sensitive tasks.",
+    "tags": [
+      "team cognition",
+      "collaborative technology"
+    ],
+    "pdf": "schelble-2024-ad-hoc-teams.pdf",
     "award": null
   },
   {
+    "id": "flathmann-2024-training-impacts",
     "year": 2024,
     "type": "conference",
     "title": "Empirical Impacts of Independent and Collaborative Training on Task Performance and Improvement in Human-AI Teams",
     "authors": "Flathmann, C., Schelble, B.G., & Galeano, A.",
+    "authorsList": [
+      "Christopher Flathmann",
+      "Beau G. Schelble",
+      "Alexandra Galeano"
+    ],
     "venue": "Proc. HFES Annual Meeting, 68(1), 1447–1453",
+    "venueShort": "HFES",
+    "doi": "10.1177/10711813241274425",
+    "abstract": "With improving AI technology, human-AI teams are becoming increasingly common in research. Within these teams, humans and AI can work collaboratively to complete shared tasks. However, continuing research efforts highlight that humans are ill-prepared to work in human-AI teams. As such, recent efforts have called for training to become a greater focus. This paper reports on an empirical in-person experiment that explored the impact of individual and collaborative task-focused training in human-AI teams. Participants were tasked with either training together or separately prior to collaborative working in a human-AI team. Results show that having humans train together prior to joining a human-AI team can negatively impact their performance and ability to improve at a task when they begin working in a human-AI team. As such, results suggest that human-AI teams need to identify ideal ways to collaboratively train humans on task-related skills in human-AI teams.",
+    "tags": [
+      "training",
+      "human-AI teaming"
+    ],
+    "pdf": "flathmann-2024-training-impacts.pdf",
     "award": null
   },
   {
+    "id": "hauptman-2024-safer-ai-teammates",
     "year": 2024,
     "type": "conference",
     "title": "The Role of Autonomy Levels and Contextual Risk in Designing Safer AI Teammates",
     "authors": "Hauptman, A., Schelble, B.G., Flathmann, C., & McNeese, N.",
+    "authorsList": [
+      "Allyson I. Hauptman",
+      "Beau G. Schelble",
+      "Christopher Flathmann",
+      "Nathan J. McNeese"
+    ],
     "venue": "2024 IEEE International Conference on Human-Machine Systems (ICHMS)",
+    "venueShort": "ICHMS",
+    "doi": "10.1109/ICHMS59971.2024.10555844",
+    "abstract": "As AI becomes more intelligent and autonomous, the concept of human-AI teaming has become more realistic and attractive. Despite the promises of AI teammates, human-AI teams face new, unique challenges. One such challenge is the declining ability of human team members to detect and respond to AI failures as they become further removed from the AI's decision-making loop. In this study, we conducted virtual experiments with twelve experts in two different teaming contexts, cyber incident response and medical triage, to understand how contextual risk impacts human teammate situational awareness and failure performance over a human-AI team's action cycle. Our results indicate that situational awareness is more closely tied to context, while failure performance is more closely tied to the team's action cycle. These results provide the foundation for future research into using contextual risk in determining optimal autonomy levels for AI teammates.",
+    "tags": [
+      "adaptive autonomy",
+      "safety",
+      "high-risk environments"
+    ],
+    "pdf": "hauptman-2024-safer-ai-teammates.pdf",
     "award": null
   },
   {
+    "id": "flathmann-2023-purposeful-presentation",
     "year": 2023,
     "type": "journal",
     "title": "The Purposeful Presentation of AI Teammates: Impacts on Human Acceptance and Perception",
     "authors": "Flathmann, C., Schelble, B.G., McNeese, N.J., Knijnenberg, B., Gramopadhye, A., & Madathil, K.C.",
+    "authorsList": [
+      "Christopher Flathmann",
+      "Beau G. Schelble",
+      "Nathan J. McNeese",
+      "Bart Knijnenburg",
+      "Anand Gramopadhye",
+      "Kapil Chalil Madathil"
+    ],
     "venue": "Int. Journal of Human-Computer Interaction, 40(20), 6510–6527",
+    "venueShort": "IJHCI",
+    "doi": "10.1080/10447318.2023.2254984",
+    "abstract": "The paper reports on two empirical studies that provide the first examination into how the presentation of an AI teammate's identity, responsibility, and capability impacts humans' perception surrounding AI teammate adoption before interacting as teammates. Study 1's results indicated that AI teammates are accepted when they share equal responsibility on a task with humans, but other perceptions such as job security generally decline the more responsibility AI teammates have. Study 1 also revealed that identifying an AI as a tool instead of a teammate can have small benefits to human perceptions of job security and adoption. Study 2 revealed that the negative impacts of increasing responsibility can be mitigated by presenting AI teammates' capabilities as being endorsed by coworkers and one's own past experience. This paper discusses how to use these results to best balance the presentation of AI teammates' capabilities and responsibilities, as well as identifying AI as teammates.",
+    "tags": [
+      "human-AI teaming",
+      "acceptance"
+    ],
+    "pdf": "flathmann-2023-purposeful-presentation.pdf",
     "award": null
   },
   {
+    "id": "lopez-2023-ai-ethics-trust-smes",
     "year": 2023,
     "type": "journal",
     "title": "The Complex Relationship of AI Ethics and Trust in Human-AI Teaming: Insights from Advanced Real-World Subject Matter Experts",
     "authors": "Lopez, J., Textor, C., Lancaster, C., Schelble, B.G., Freeman, G., Zhang, R., McNeese, N.J., & Pak, R.",
+    "authorsList": [
+      "Jeremy Lopez",
+      "Claire Textor",
+      "Caitlin Lancaster",
+      "Beau G. Schelble",
+      "Guo Freeman",
+      "Rui Zhang",
+      "Nathan J. McNeese",
+      "Richard Pak"
+    ],
     "venue": "AI and Ethics, 4(4), 1213–1233",
+    "venueShort": "AI & Ethics",
+    "doi": "10.1007/s43681-023-00303-7",
+    "abstract": "Human-autonomy teams will likely first see use within environments with ethical considerations (e.g., military, healthcare). Therefore, we must consider how to best design an ethical autonomous teammate that can promote trust within teams, an antecedent to team effectiveness. In the current study, we conducted 14 semi-structured interviews with US Air Force pilots on the topics of autonomous teammates, trust, and ethics. A thematic analysis revealed that the pilots see themselves serving a parental role alongside a developing machine teammate. As parents, the pilots would feel responsible for their machine teammate's behavior, and their unethical actions may not lead to a loss of trust. However, once the pilots feel their teammate has matured, their unethical actions would likely lower trust. To repair that trust, the pilots would want to understand their teammate's processing, yet they are concerned about their ability to understand a machine's processing. Additionally, the pilots would expect their teammates to indicate that it is improving or plans to improve. The findings from this study highlight the nuanced relationship between trust and ethics, as well as a duality of infantilized teammates that cannot bear moral weight and advanced machines whose decision-making processes may be incomprehensibly complex. Future investigations should further explore this parent-child paradigm and its relation to trust development and maintenance in human-autonomy teams.",
+    "tags": [
+      "AI ethics",
+      "trust",
+      "defense"
+    ],
+    "pdf": "lopez-2023-ai-ethics-trust-smes.pdf",
     "award": null
   },
   {
+    "id": "flathmann-2023-ai-teammate-influence",
     "year": 2023,
     "type": "journal",
     "title": "Examining the Impact of Varying Levels of AI Teammate Influence on Human-AI Teams",
     "authors": "Flathmann, C., Schelble, B.G., Rosopa, P.J., McNeese, N.J., Mallick, R., & Madathil, K.",
+    "authorsList": [
+      "Christopher Flathmann",
+      "Beau G. Schelble",
+      "Patrick J. Rosopa",
+      "Nathan J. McNeese",
+      "Rohit Mallick",
+      "Kapil Chalil Madathil"
+    ],
     "venue": "Int. Journal of Human-Computer Studies, 177, 103061",
+    "venueShort": "IJHCS",
+    "doi": "10.1016/j.ijhcs.2023.103061",
+    "abstract": "The implementation of AI teammates is creating a wealth of research that examines how AI teammates impact human-AI teams. However, AI teammates themselves are not static, and their roles and responsibilities in human-AI teams are likely to change as technologies advance in the coming years. As a result of this advancement, AI teammates will gain influence in teams, which refers to their ability to change and manipulate a team's shared resources. This study uses a mixed-methods experiment to examine how the amount of influence AI teammates have on a team's shared resources can impact the team outcomes of human teammate performance, teammate perceptions, and whole-team perception. Results indicate that AI teammates that increase their influence on shared resources over time can stagnate the improvement of human performance, but AI teammates that decrease their influence on shared resources can actually encourage humans to improve their own performance. Additionally, AI teammates that are highly influential on shared resources can make humans perceive a greater cognitive workload. However, qualitative results indicate that these impacts on human performance and perception do not consistently impact the acceptance humans form for AI teammates. Rather, humans form acceptance for AI teammates if said AI use its influence to manipulate resources to benefit the personal goals of human teammates. These results have critical implications for human-AI teaming as it shows that the influence AI teammates have on shared resources can be designed in a way that improves human performance. However, future research is going to need to focus more critically on how the personal goals humans have, which may not align with a team's overall goals, are going to mediate the effectiveness of the AI teammate influence.",
+    "tags": [
+      "human-AI teaming",
+      "team dynamics"
+    ],
+    "pdf": "flathmann-2023-ai-teammate-influence.pdf",
     "award": null
   },
   {
+    "id": "flathmann-2023-ai-teammate-etiquette",
     "year": 2023,
     "type": "journal",
     "title": "Understanding the Impact and Design of AI Teammate Etiquette",
     "authors": "Flathmann, C., McNeese, N.J., Schelble, B.G., Knijnenburg, B., & Freeman, G.",
+    "authorsList": [
+      "Christopher Flathmann",
+      "Nathan J. McNeese",
+      "Beau G. Schelble",
+      "Bart Knijnenburg",
+      "Guo Freeman"
+    ],
     "venue": "Human-Computer Interaction, 39(5–6), 444–471",
+    "venueShort": "HCI",
+    "doi": "10.1080/07370024.2023.2189595",
+    "abstract": "Technical and practical advancements in Artificial Intelligence (AI) have led to AI teammates working alongside humans in an area known as human-agent teaming. While critical past research has shown the benefit to trust driven by the incorporation of interaction rules and structures (i.e. etiquette) in both AI tools and robotic teammates, research has yet to explicitly examine etiquette for digital AI teammates. Given the historic importance of trust within human-agent teams, the identification of etiquette's impact within said teams should be paramount. Thus, this study empirically evaluates the impact of AI teammate etiquette through a mixed-methods study that compares AI teammates that either adhere to or ignore traditional etiquette standards for machine systems. The quantitative results show that traditional etiquette adherence leads to greater trust, perceived performance of the AI, and perceived performance of the team as a whole. However, qualitative results reveal that not all traditional etiquette behaviors have universal appeal due to the presence of individual differences. This research provides the first empirical and explicit exploration of etiquette within human-agent teams, and the results of this study should be used to further design specific etiquette behaviors for AI teammates.",
+    "tags": [
+      "human-AI teaming",
+      "design"
+    ],
+    "pdf": "flathmann-2023-ai-teammate-etiquette.pdf",
     "award": null
   },
   {
+    "id": "flathmann-2023-teamwork-lens",
     "year": 2023,
     "type": "book chapter",
     "title": "Refocusing Human-AI Interaction Through a Teamwork Lens",
     "authors": "Flathmann, C., Schelble, B.G., & McNeese, N.J.",
+    "authorsList": [
+      "Christopher Flathmann",
+      "Beau G. Schelble",
+      "Nathan J. McNeese"
+    ],
     "venue": "Handbook on Virtual Work (pp. 109–127). Edward Elgar Publishing",
+    "venueShort": "Edward Elgar",
+    "doi": "10.4337/9781802200508.00013",
+    "tags": [
+      "human-AI teaming",
+      "future of work"
+    ],
+    "pdf": "flathmann-2023-teamwork-lens.pdf",
     "award": null
   },
   {
+    "id": "schelble-2023-ethical-unethical-ai-actions",
     "year": 2023,
     "type": "conference",
     "title": "The Effect of Ethical and Unethical AI Actions on Outcomes of Trust and Performance in Human-AI Teams",
     "authors": "Schelble, B.G., Lancaster, C., Duan, W., Mallick, R., McNeese, N.J., & Lopez, J.",
+    "authorsList": [
+      "Beau G. Schelble",
+      "Caitlin Lancaster",
+      "Wen Duan",
+      "Rohit Mallick",
+      "Nathan J. McNeese",
+      "Jeremy Lopez"
+    ],
     "venue": "HICSS-56 (pp. 332–341)",
+    "venueShort": "HICSS",
+    "url": "https://hdl.handle.net/10125/102668",
+    "abstract": "This study improves the understanding of trust in human-AI teams by investigating the relationship of AI teammate ethicality on individual outcomes of trust (i.e., monitoring, confidence, fear) in AI teammates and human teammates over time. Specifically, a synthetic task environment was built to support a three-person team with two human teammates and one AI teammate (simulated by a confederate). The AI teammate performed either an ethical or unethical action in three missions, and measures of trust in the human and AI teammate were taken after each mission. Results from the study revealed that unethical actions by the AI had a significant effect on nearly all of the outcomes of trust measured and that levels of trust were dynamic over time for both the AI and human teammate, with the AI teammate recovering trust in Mission 1 levels by Mission 3. AI ethicality was mostly unrelated to participants' trust in their fellow human teammates but did decrease perceptions of fear, paranoia, and skepticism in them, and trust in the human and AI teammate was not significantly related to individual performance outcomes, which both diverge from previous trust research in human-AI teams utilizing competency-based trust violations.",
+    "tags": [
+      "AI ethics",
+      "trust",
+      "human-AI teaming"
+    ],
+    "pdf": "schelble-2023-ethical-unethical-ai-actions.pdf",
     "award": null
   },
   {
+    "id": "musick-2023-intelligent-sharing-is-caring",
     "year": 2023,
     "type": "conference",
     "title": "Intelligent Sharing is Caring: Toward the Design of an Intelligent System to Facilitate Team Sharing",
     "authors": "Musick, G., Schelble, B.G., Mallick, R., & McNeese, N.J.",
+    "authorsList": [
+      "Geoff Musick",
+      "Beau G. Schelble",
+      "Rohit Mallick",
+      "Nathan J. McNeese"
+    ],
     "venue": "HICSS-56 (pp. 428–437)",
+    "venueShort": "HICSS",
+    "url": "https://hdl.handle.net/10125/102681",
+    "abstract": "Temporary teams are commonly limited by the amount of experience with their new teammates, leading to poor understanding and coordination. Collaborative tools can promote teammate team mental models (e.g., teammate attitudes, tendencies, and preferences) by sharing personal information between teammates during team formation. The current study utilizes 89 participants engaging in real-world temporary teams to better understand user perceptions of sharing personal information. Qualitative and quantitative results revealed unique findings including: 1) Users perceived personality and conflict management style assessments to be accurate and sharing these assessments to be helpful, but had mixed perceptions regarding the appropriateness of sharing; 2) Users of the collaborative tool had higher perceptions of sharing in terms of helpfulness and appropriateness; and 3) User feedback highlighted the need for tools to selectively share less data with more context to improve appropriateness and helpfulness while reducing the amount of time to read.",
+    "tags": [
+      "information sharing",
+      "design"
+    ],
+    "pdf": "musick-2023-intelligent-sharing-is-caring.pdf",
     "award": null
   },
   {
+    "id": "schelble-2022-i-see-you",
     "year": 2022,
     "type": "journal",
     "title": "I See You: Examining the Role of Spatial Information in Human-Agent Teams",
     "authors": "Schelble, B.G., Flathmann, C., Musick, G., McNeese, N.J., & Freeman, G.",
+    "authorsList": [
+      "Beau G. Schelble",
+      "Christopher Flathmann",
+      "Geoff Musick",
+      "Nathan J. McNeese",
+      "Guo Freeman"
+    ],
     "venue": "Proc. ACM on Human-Computer Interaction, 6(CSCW2), 1–27",
+    "venueShort": "CSCW",
+    "doi": "10.1145/3555099",
+    "abstract": "Awareness, and specifically, spatial awareness, has long played a pivotal role in Computer-Supported Cooperative Work research in both theory and design. This significant background gives awareness the ability to answer challenges facing human-agent teams in communication and shared understanding. As such, the current study investigates the effects of spatial information level (low, high) on the development of team cognition and its outcomes in varying compositions of human-agent teams (human-human-agent, human-agent-agent) versus human-only (human-human-human) teams. The mixed-methods study had teams complete several rounds of the NeoCITIES emergency response management simulation and complete various team cognition and perception measures, followed by qualitative free-response questions. The study found that human-only teams did not perform at the same level as human-agent teams, with multi-agent human-agent teams having the best performance. A significant interaction, though with inconclusive simple main effects, displayed the trend that human-agent teams had better team mental model similarity when spatial awareness was high rather than low, while human-only teams experienced the reverse trend. Qualitative findings identified that high spatial awareness jump-started team cognition development, fostered more accurate shared mental models, enhanced the explainability of the agent, and helped the iterative development of team cognition over time.",
+    "tags": [
+      "situational awareness",
+      "human-AI teaming"
+    ],
+    "pdf": "schelble-2022-i-see-you.pdf",
     "award": null
   },
   {
+    "id": "hauptman-2022-adapt-and-overcome",
     "year": 2022,
     "type": "journal",
     "title": "Adapt and Overcome: Perceptions of Adaptive Autonomous Agents for Human-AI Teaming",
     "authors": "Hauptman, A.I., Schelble, B.G., McNeese, N.J., & Madathil, K.",
+    "authorsList": [
+      "Allyson I. Hauptman",
+      "Beau G. Schelble",
+      "Nathan J. McNeese",
+      "Kapil Chalil Madathil"
+    ],
     "venue": "Computers in Human Behavior, 138, 107451",
+    "venueShort": "CHB",
+    "doi": "10.1016/j.chb.2022.107451",
+    "abstract": "Rapid advances in AI technologies have caused teams to explore the use of AI agents as full, active members of the team. The complex environments that teams occupy require human team members to constantly adapt their behaviors, and thus the ability of AI teammates to similarly adapt to changing situations significantly enhances the team's chances to succeed. In order to design such agents, it is important that we understand not only how to identify the amount of autonomous control AI agents have over their decisions, but also how changes to this control cognitively affects the rest of the team. Professional organizations often break their work cycles into phases that set limits on the team members' actions, and we propose that a similar process could be used to define the autonomy levels of AI teammates. Cyber incident response is an ideal context for this proposal, as we were able to use incident response phases to explore how a team's work cycle could guide an AI agent's changing level of autonomy. Using a mixed methods approach, we recruited 103 participants to complete a factorial survey containing ten contextual vignettes focused on an AI teammate's level of autonomy in incident response contexts, and from these participants we conducted twenty-two follow-on qualitative interviews that further explored how the participants felt an AI agent's adaptive capabilities would affect team performance and cohesiveness. Our results showed that work cycles can be used to assign autonomy levels to adaptive AI agents based upon the degree of formal processes and predictability of the team's tasks during the cycle, and that dynamic, human-like adaptation methods are vital to effective human-AI teams. This research provides significant contributions to the HCI community by proposing design recommendations for the development of adaptive autonomous teammates that both enhance human-AI teams' productivity and promote positive team dynamics.",
+    "tags": [
+      "adaptive autonomy",
+      "human-AI teaming"
+    ],
+    "pdf": "hauptman-2022-adapt-and-overcome.pdf",
     "award": null
   },
   {
+    "id": "schelble-2022-towards-ethical-ai",
     "year": 2022,
     "type": "journal",
     "title": "Towards Ethical AI: Empirically Investigating Dimensions of AI Ethics, Trust, and Performance in Human-AI Teaming",
     "authors": "Schelble, B.G., Lopez, J., Textor, C., Zhang, R., McNeese, N.J., Pak, R., & Freeman, G.",
+    "authorsList": [
+      "Beau G. Schelble",
+      "Jeremy Lopez",
+      "Claire Textor",
+      "Rui Zhang",
+      "Nathan J. McNeese",
+      "Richard Pak",
+      "Guo Freeman"
+    ],
     "venue": "Human Factors, 66(4), 1037–1055",
+    "venueShort": "Human Factors",
+    "doi": "10.1177/00187208221116952",
+    "abstract": "Objective: Determining the efficacy of two trust repair strategies (apology and denial) for trust violations of an ethical nature by an autonomous teammate. Background: While ethics in human-AI interaction is extensively studied, little research has investigated how decisions with ethical implications impact trust and performance within human-AI teams and their subsequent repair. Method: Forty teams of two participants and one autonomous teammate completed three team missions within a synthetic task environment. The autonomous teammate made an ethical or unethical action during each mission, followed by an apology or denial. Measures of individual team trust, autonomous teammate trust, human teammate trust, perceived autonomous teammate ethicality, and team performance were taken. Results: Teams with unethical autonomous teammates had significantly lower trust in the team and trust in the autonomous teammate. Unethical autonomous teammates were also perceived as substantially more unethical. Neither trust repair strategy effectively restored trust after an ethical violation, and autonomous teammate ethicality was not related to the team score, but unethical autonomous teammates did have shorter times. Conclusion: Ethical violations significantly harm trust in the overall team and autonomous teammate but do not negatively impact team score. However, current trust repair strategies like apologies and denials appear ineffective in restoring trust after this type of violation. Application: This research highlights the need to develop trust repair strategies specific to human-AI teams and trust violations of an ethical nature.",
+    "tags": [
+      "AI ethics",
+      "trust",
+      "human-AI teaming"
+    ],
+    "pdf": "schelble-2022-towards-ethical-ai.pdf",
     "award": null
   },
   {
+    "id": "textor-2022-ethics-trust-mixed-methods",
     "year": 2022,
     "type": "journal",
     "title": "Exploring the Relationship Between Ethics and Trust in Human-AI Teaming: A Mixed Methods Approach",
     "authors": "Textor, C., Zhang, R., Lopez, J., Schelble, B.G., McNeese, N.J., Freeman, G., Pak, R., Tossell, C., & de Visser, E.J.",
+    "authorsList": [
+      "Claire Textor",
+      "Rui Zhang",
+      "Jeremy Lopez",
+      "Beau G. Schelble",
+      "Nathan J. McNeese",
+      "Guo Freeman",
+      "Richard Pak",
+      "Chad Tossell",
+      "Ewart J. de Visser"
+    ],
     "venue": "Journal of Cognitive Engineering and Decision Making, 16(4), 252–281",
+    "venueShort": "JCEDM",
+    "doi": "10.1177/15553434221113964",
+    "abstract": "Advancements and implementations of autonomous systems coincide with an increased concern for the ethical implications resulting from their use. This is increasingly relevant as autonomy fulfills teammate roles in contexts that demand ethical considerations. As AI teammates (ATs) enter these roles, research is needed to explore how an AT's ethics influences human trust. This current research presents two studies which explore how an AT's ethical or unethical behavior impacts trust in that teammate. In Study 1, participants responded to scenarios of an AT recommending actions which violated or abided by a set of ethical principles. The results suggest that ethicality perceptions and trust are influenced by ethical violations, but only ethicality depends on the type of ethical violation. Participants in Study 2 completed a focus group interview after performing a team task with a simulated AT that committed ethical violations and attempted to repair trust (apology or denial). The focus group responses suggest that ethical violations worsened perceptions of the AT and decreased trust, but it could still be trusted to perform tasks. The AT's apologies and denials did not repair damaged trust. The studies' findings suggest a nuanced relationship between trust and ethics and a need for further investigation into trust repair strategies following ethical violations.",
+    "tags": [
+      "AI ethics",
+      "trust",
+      "methods"
+    ],
+    "pdf": "textor-2022-ethics-trust-mixed-methods.pdf",
     "award": "Best JCEDM Article of 2022"
   },
   {
+    "id": "schelble-2022-perceived-artificiality",
     "year": 2022,
     "type": "journal",
     "title": "Investigating the Effects of Perceived Teammate Artificiality on Human Performance and Cognition",
     "authors": "Schelble, B.G., Flathmann, C., McNeese, N.J., O'Neill, T., Pak, R., & Namara, M.",
+    "authorsList": [
+      "Beau G. Schelble",
+      "Christopher Flathmann",
+      "Nathan J. McNeese",
+      "Thomas A. O'Neill",
+      "Richard Pak",
+      "Moses Namara"
+    ],
     "venue": "Int. Journal of Human-Computer Interaction, 39(13), 2686–2701",
+    "venueShort": "IJHCI",
+    "doi": "10.1080/10447318.2022.2085191",
+    "abstract": "Teammates powered by artificial intelligence (AI) are becoming more prevalent and capable in their abilities as a teammate. While these teammates have great potential in improving team performance, empirical work that explores the impacts of these teammates on the humans they work with is still in its infancy. Thus, this study explores how the inclusion of AI teammates impacts both the performative abilities of human-AI teams in addition to the perceptions those humans form. The current study found that participants perceiving their third teammate as artificial performed worse than those perceiving them as human. Furthermore, these performance differences were significantly moderated by the task's difficulty, with participants in the AI teammate condition significantly outperforming participants perceiving a human teammate in the highest difficulty task, which diverges from previous human-AI teaming literature. Alternatively, no significant effect of perceived teammate artificiality was found on shared mental model similarity. However, it did significantly affect participants' levels of perceived team cognition. Individual performance on medium difficulty maps also mediated the effect of perceived teammate artificiality on perceived team cognition. These results further build on the current understanding of how AI teammates impact perceptions of individual human teammates and how those perceptions subsequently impact their objective performance, which is critical in building more effective AI teammates to incorporate alongside humans.",
+    "tags": [
+      "team cognition",
+      "human-AI teaming"
+    ],
+    "pdf": "schelble-2022-perceived-artificiality.pdf",
     "award": null
   },
   {
+    "id": "hauptman-2022-adaptive-autonomy-shared-ethics",
     "year": 2022,
     "type": "conference",
     "title": "Adaptive Autonomy as A Means for Implementing Shared Ethics in Human-AI Teams",
     "authors": "Hauptman, A., Schelble, B.G., & McNeese, N.J.",
+    "authorsList": [
+      "Allyson I. Hauptman",
+      "Beau G. Schelble",
+      "Nathan J. McNeese"
+    ],
     "venue": "AAAI Spring Symposium on AI Engineering",
+    "venueShort": "AAAI SSS",
+    "url": "https://resources.sei.cmu.edu/asset_files/ConferencePaper/2022_021_001_884147.pdf",
+    "abstract": "Rapid increases in artificial intelligence technologies are resulting in closer, more symbiotic interactions between artificially intelligent agents and human beings in a variety of contexts. One of those contexts that has only recently been receiving much attention is human-AI teaming, where an AI agent operates an interdependent teammate, rather than a tool. These teams present unique challenges in creating and maintaining shared team understanding, specifically when it comes to a shared team ethical code. Because teams change in composition, goals, and environments it is imperative that AI teammates be capable of updating their ethical codes in concert with their human teammates. This paper proposes a two-part model in order to implement a dynamic ethical code for AI teammates in human-AI teams. The first part of the model proposes that the ethical code, in addition to its team role, be used to inform an adaptive AI-agent of when and how to adapt its level of autonomy. The second part of the model explains how that ethical code is consistently updated based upon the AI agent's iterative observations of team interactions. This model makes multiple contributions to the community of human-centered computing, because teams with higher levels of team cognition exhibit higher levels of performance and longevity. More importantly, it proposes a model for more ethical use of AI teammates on human-AI teams that is applicable to a variety of human-AI teaming contexts and permits room for future innovation.",
+    "tags": [
+      "adaptive autonomy",
+      "AI ethics"
+    ],
+    "pdf": "hauptman-2022-adaptive-autonomy-shared-ethics.pdf",
     "award": null
   },
   {
+    "id": "schelble-2022-lets-think-together",
     "year": 2021,
     "type": "journal",
     "title": "Let's Think Together! Assessing Shared Mental Models, Performance, and Trust in Human-Agent Teams",
     "authors": "Schelble, B.G., Flathmann, C., McNeese, N.J., Freeman, G., & Mallick, R.",
+    "authorsList": [
+      "Beau G. Schelble",
+      "Christopher Flathmann",
+      "Nathan J. McNeese",
+      "Guo Freeman",
+      "Rohit Mallick"
+    ],
     "venue": "Proc. ACM on Human-Computer Interaction, 6(GROUP), 1–29",
+    "venueShort": "GROUP",
+    "doi": "10.1145/3492832",
+    "abstract": "An emerging research agenda in Computer-Supported Cooperative Work focuses on human-agent teaming and AI agent's roles and effects in modern teamwork. In particular, one understudied key question centers around the construct of team cognition within human-agent teams. This study explores the unique nature of team dynamics in human-agent teams compared to human-human teams and the impact of team composition on perceived team cognition, team performance, and trust. In doing so, a mixed-method approach, including three team composition conditions (all human, human-human-agent, human-agent-agent), completed the team simulation NeoCITIES and completed shared mental model, trust, and perception measures. Results found that human-agent teams are similar to human-only teams in the iterative development of team cognition and the importance of communication to accelerating its development; however, human-agent teams are different in that action-related communication and explicitly shared goals are beneficial to developing team cognition. Additionally, human-agent teams trusted agent teammates less when working with only agents and no other humans, perceived less team cognition with agent teammates than human ones, and had significantly inconsistent levels of team mental model similarity when compared to human-only teams. This study contributes to Computer-Supported Cooperative Work in three significant ways: 1) advancing the existing research on human-agent teaming by shedding light on the relationship between humans and agents operating in collaborative environments, 2) characterizing team cognition development in human-agent teams; and 3) advancing real-world design recommendations that promote human-centered teaming agents and better integrate the two.",
+    "tags": [
+      "shared mental models",
+      "trust",
+      "team cognition"
+    ],
+    "pdf": "schelble-2022-lets-think-together.pdf",
     "award": "Best Paper Honorable Mention (ACM GROUP)"
   },
   {
+    "id": "mcneese-2021-who-what-is-my-teammate",
     "year": 2021,
     "type": "journal",
     "title": "Who/What is My Teammate? Team Composition Considerations in Human-AI Teaming",
     "authors": "McNeese, N.J., Schelble, B.G., Canonico, L.B., & Demir, M.",
+    "authorsList": [
+      "Nathan J. McNeese",
+      "Beau G. Schelble",
+      "Lorenzo Barberis Canonico",
+      "Mustafa Demir"
+    ],
     "venue": "IEEE Trans. on Human-Machine Systems, 51(4), 288–299",
+    "venueShort": "IEEE THMS",
+    "doi": "10.1109/THMS.2021.3086018",
+    "abstract": "There are many unknowns regarding the characteristics and dynamics of human-AI teams, including a lack of understanding of how certain human-human teaming concepts may or may not apply to human-AI teams and how this composition affects team performance. This article outlines an experimental research study that investigates essential aspects of human-AI teaming such as team performance, team situation awareness, and perceived team cognition in various mixed composition teams (human-only, human-human-AI, human-AI-AI, and AI-only) through a simulated emergency response management scenario. Results indicate dichotomous outcomes regarding perceived team cognition and performance metrics, as perceived team cognition was not predictive of performance. Performance metrics like team situational awareness and team score showed that teams composed of all human participants performed at a lower level than mixed human-AI teams, with the AI-only teams attaining the highest performance. Perceived team cognition was highest in human-only teams, with mixed composition teams reporting perceived team cognition 58% below the all-human teams. These results inform future mixed teams of the potential performance gains in utilizing mixed teams' over human-only teams in certain applications, while also highlighting mixed teams' adverse effects on perceived team cognition.",
+    "tags": [
+      "human-AI teaming",
+      "team composition"
+    ],
+    "pdf": "mcneese-2021-who-what-is-my-teammate.pdf",
     "award": null
   },
   {
+    "id": "musick-2021-believe-teammate-is-ai",
     "year": 2021,
     "type": "journal",
     "title": "What Happens When Humans Believe Their Teammate is an AI? An Investigation into Humans Teaming with Autonomy",
     "authors": "Musick, G., O'Neill, T.A., Schelble, B.G., McNeese, N.J., & Henke, J.",
+    "authorsList": [
+      "Geoff Musick",
+      "Thomas A. O'Neill",
+      "Beau G. Schelble",
+      "Nathan J. McNeese",
+      "Jonn Henke"
+    ],
     "venue": "Computers in Human Behavior, 122, 106825",
+    "venueShort": "CHB",
+    "doi": "10.1016/j.chb.2021.106852",
+    "abstract": "As artificial intelligence (AI) continues to grow in proficiency, the potential for AI to be used as team members rather than tools is becoming closer to realization. This advancement is driving new research investigations into the applicability of human-human teamwork knowledge to the context of human-autonomy teaming. In the current study, we apply qualitative methods to explore how the perceived composition of a team (how many humans and how many agents on the team) affects sentiments toward teammates, team processes, cognitive states, and the emergence of a system of team cognition. A total of 46 teams completed a teamwork simulation task and were interviewed afterwards regarding their teamwork experience. All of the teams were comprised of only humans; however, two conditions were led to believe that their teammate(s) were autonomous agents. Interviews were analyzed using grounded theory and the Gioia methodology, which revealed thematic differences between the team compositions. In light of our results, we offer a new model that describes how early-stage action teams achieve effective team processes and emergent cognitive states.",
+    "tags": [
+      "human-AI teaming",
+      "perception"
+    ],
+    "pdf": "musick-2021-believe-teammate-is-ai.pdf",
     "award": null
   },
   {
+    "id": "flathmann-2021-team-leadership",
     "year": 2021,
     "type": "conference",
     "title": "Fostering Human-Agent Team Leadership by Leveraging Human Teaming Principles",
     "authors": "Flathmann, C., Schelble, B.G., & McNeese, N.J.",
+    "authorsList": [
+      "Christopher Flathmann",
+      "Beau G. Schelble",
+      "Nathan J. McNeese"
+    ],
     "venue": "2nd IEEE ICHMS, 1–6",
+    "venueShort": "ICHMS",
+    "doi": "10.1109/ICHMS53169.2021.9582649",
+    "abstract": "With human-agent teams beginning to enter the workforce, it is important that humans are well equipped to lead their future teams. Due to the addition of artificial intelligence to teams, the behavioral functions of leaders need to be critically examined to determine their fit with the future of human-agent teamwork. This paper identifies these functional behaviors as resource management behaviors and information behaviors based on past research in teamwork. These behaviors are reviewed within the context of human-human teamwork to define human-oriented leadership behaviors. Based on the review of human-human teamwork along with recent research in human-agent teamwork, an adaptable framework is created for leadership behaviors that will help guide human leaders in human-agent teams. This framework provides a foundation for future human-agent teams to empower and guide human leaders of human-agent teams who need to mediate the integration of agents alongside humans.",
+    "tags": [
+      "leadership",
+      "human-AI teaming"
+    ],
+    "pdf": "flathmann-2021-team-leadership.pdf",
     "award": null
   },
   {
+    "id": "flathmann-2021-ethical-team-creation",
     "year": 2021,
     "type": "conference",
     "title": "Modeling and Guiding the Creation of Ethical Human-AI Teams",
     "authors": "Flathmann, C., Schelble, B.G., Zhang, R., & McNeese, N.J.",
+    "authorsList": [
+      "Christopher Flathmann",
+      "Beau G. Schelble",
+      "Rui Zhang",
+      "Nathan J. McNeese"
+    ],
     "venue": "ACM/AAAI AIES, 469–479",
+    "venueShort": "AIES",
+    "doi": "10.1145/3461702.3462573",
+    "abstract": "With artificial intelligence continuing to advance, so too do the ethical concerns that can potentially negatively impact humans and the greater society. When these systems begin to interact with humans, these concerns become much more complex and much more important. The field of human-AI teaming provides a relevant example of how AI ethics can have significant and continued effects on humans. This paper reviews research in ethical artificial intelligence, as well as ethical teamwork through the lens of the rapidly advancing field of human-AI teaming, resulting in a model demonstrating the requirements and outcomes of building ethical human-AI teams. The model is created to guide the prioritization of ethics in human-AI teaming by outlining the ethical teaming process, outcomes of ethical teams, and external requirements necessary to ensure ethical human-AI teams. A final discussion is presented on how the developed model will influence the implementation of AI teammates, as well as the development of policy and regulation surrounding the domain in the coming years.",
+    "tags": [
+      "AI ethics",
+      "human-AI teaming"
+    ],
+    "pdf": "flathmann-2021-ethical-team-creation.pdf",
     "award": null
   },
   {
+    "id": "schelble-2021-game-theory-rl",
     "year": 2021,
     "type": "conference",
     "title": "Understanding Human-AI Cooperation Through Game Theory and Reinforcement Learning Models",
     "authors": "Schelble, B.G., Flathmann, C., Canonico, L.B., & McNeese, N.J.",
+    "authorsList": [
+      "Beau G. Schelble",
+      "Christopher Flathmann",
+      "Lorenzo Barberis Canonico",
+      "Nathan J. McNeese"
+    ],
     "venue": "HICSS-54, 348–358",
+    "venueShort": "HICSS",
+    "url": "http://hdl.handle.net/10125/70652",
+    "abstract": "For years, researchers have demonstrated the viability and applicability of game theory principles to the field of artificial intelligence. Furthermore, game theory has been shown as a useful tool for researching human-machine interaction, specifically their cooperation, by creating an environment where cooperation can initially form before reaching a continuous and stable presence in a human-machine system. Additionally, recent developments in reinforcement learning artificial intelligence have led to artificial agents cooperating more efficiently with humans, especially in more complex environments. This research conducts an empirical study to understand how different modern reinforcement learning algorithms and game theory scenarios could create different cooperation levels in human-machine teams. Three different reinforcement learning algorithms (Vanilla Policy Gradient, Proximal Policy Optimization, and Deep Q-Network) and two different game theory scenarios (Hawk Dove and Prisoners dilemma) were examined in a large-scale experiment. The results indicated that different reinforcement learning models interact differently with humans with Deep-Q engendering higher cooperation levels. The Hawk Dove game theory scenario elicited significantly higher levels of cooperation in the human-artificial intelligence system. A multiple regression using these two independent variables also found a significant ability to predict cooperation in the human-artificial intelligence systems. The results highlight the importance of social and task framing in human-artificial intelligence systems and noted the importance of choosing reinforcement learning models.",
+    "tags": [
+      "reinforcement learning",
+      "methods",
+      "human-AI teaming"
+    ],
+    "pdf": "schelble-2021-game-theory-rl.pdf",
     "award": "Nominated Best Overall Paper (HICSS)"
   },
   {
+    "id": "oneill-2020-hat-review",
     "year": 2020,
     "type": "journal",
     "title": "Human–Autonomy Teaming: A Review and Analysis of the Empirical Literature",
     "authors": "O'Neill, T.A., McNeese, N.J., Barron, A., & Schelble, B.G.",
+    "authorsList": [
+      "Thomas A. O'Neill",
+      "Nathan J. McNeese",
+      "Amy Barron",
+      "Beau G. Schelble"
+    ],
     "venue": "Human Factors, 64(5), 904–938",
+    "venueShort": "Human Factors",
+    "doi": "10.1177/0018720820960865",
+    "abstract": "Objective: We define human-autonomy teaming and offer a synthesis of the existing empirical research on the topic. Specifically, we identify the research environments, dependent variables, themes representing the key findings, and critical future research directions. Background: Whereas a burgeoning literature on high-performance teamwork identifies the factors critical to success, much less is known about how human-autonomy teams (HATs) achieve success. Human-autonomy teamwork involves humans working interdependently toward a common goal along with autonomous agents. Autonomous agents involve a degree of self-government and self-directed behavior (agency), and autonomous agents take on a unique role or set of tasks and work interdependently with human team members to achieve a shared objective. Method: We searched the literature on human-autonomy teaming. To meet our criteria for inclusion, the paper needed to involve empirical research and meet our definition of human-autonomy teaming. We found 76 articles that met our criteria for inclusion. Results: We report on research environments and we find that the key independent variables involve autonomous agent characteristics, team composition, task characteristics, human individual differences, training, and communication. We identify themes for each of these and discuss the future research needs. Conclusion: There are areas where research findings are clear and consistent, but there are many opportunities for future research. Particularly important will be research that identifies mechanisms linking team input to team output variables.",
+    "tags": [
+      "human-AI teaming",
+      "review"
+    ],
+    "pdf": "oneill-2020-hat-review.pdf",
     "award": null
   },
   {
+    "id": "schelble-2020-rl-experiments",
     "year": 2020,
     "type": "conference",
     "title": "Designing Human-Autonomy Teaming Experiments Through Reinforcement Learning",
     "authors": "Schelble, B.G., Canonico, L.B., McNeese, N.J., Carroll, J., & Hird, C.",
+    "authorsList": [
+      "Beau G. Schelble",
+      "Lorenzo Barberis Canonico",
+      "Nathan J. McNeese",
+      "Jack Carroll",
+      "Casey Hird"
+    ],
     "venue": "Proc. HFES Annual Meeting, 64(1), 1426–1430",
+    "venueShort": "HFES",
+    "doi": "10.1177/1071181320641340",
+    "abstract": "This paper creates and defines a framework for building and implementing human-autonomy teaming experiments that enable the utilization of modern reinforcement learning models. These models are used to train artificial agents to then interact alongside humans in a human-autonomy team. The framework was synthesized from experience gained redesigning a previously known and validated team task simulation environment known as NeoCITIES. Through this redesign, several important high-level distinctions were made that regarded both the artificial agent and the task simulation itself. The distinctions within the framework include gamification, access to high-performance computing, a proper reward function, an appropriate team task simulation, and customizability. This framework enables researchers to create experiments that are more usable for the human and more closely resemble real-world human-autonomy interactions. The framework also allows researchers to create veritable and robust experimental platforms meant to study human-autonomy teaming for years to come.",
+    "tags": [
+      "reinforcement learning",
+      "methods"
+    ],
+    "pdf": "schelble-2020-rl-experiments.pdf",
     "award": null
   },
   {
+    "id": "flathmann-2020-groupware-principles",
     "year": 2020,
     "type": "conference",
     "title": "Invoking Principles of Groupware to Develop and Evaluate Present and Future Human-Agent Teams",
     "authors": "Flathmann, C., Schelble, B.G., Tubre, B., McNeese, N.J., & Rodeghero, P.",
+    "authorsList": [
+      "Christopher Flathmann",
+      "Beau G. Schelble",
+      "Brock Tubre",
+      "Nathan J. McNeese",
+      "Paige Rodeghero"
+    ],
     "venue": "8th Int. Conf. on Human-Agent Interaction (HAI '20), 15–24",
+    "venueShort": "HAI",
+    "doi": "10.1145/3406499.3415072",
+    "abstract": "Advances in artificial intelligence are constantly increasing its validity as a team member enabling it to effectively work alongside humans and other artificial teammates. Unfortunately, the digital nature of artificial teammates and their restrictive communication and coordination requirements complicate the interaction patterns that exist. In light of this challenge, we create a theoretical framework that details the possible interactions in human-agent teams, emphasizing interactions through groupware, which is based on literature regarding groupware and human-agent teamwork. As artificial intelligence changes and advances, the interaction in human-agent teams will also advance, meaning interaction frameworks and groupware must adapt to these changes. We provide examples and a discussion of the framework's ability to adapt based on advancements in relevant research areas like natural language processing and artificial general intelligence. The results are a framework that details human-agent interaction throughout the coming years, which can be used to guide groupware development.",
+    "tags": [
+      "human-AI teaming",
+      "design"
+    ],
+    "pdf": "flathmann-2020-groupware-principles.pdf",
     "award": "Best Overall Paper (ACM HAI)"
   },
   {
+    "id": "schelble-2020-applied-hat",
     "year": 2020,
     "type": "conference",
     "title": "Towards Meaningfully Integrating Human-Autonomy Teaming in Applied Settings",
     "authors": "Schelble, B.G., Flathmann, C., & McNeese, N.J.",
+    "authorsList": [
+      "Beau G. Schelble",
+      "Christopher Flathmann",
+      "Nathan J. McNeese"
+    ],
     "venue": "8th Int. Conf. on Human-Agent Interaction (HAI '20), 149–156",
+    "venueShort": "HAI",
+    "doi": "10.1145/3406499.3415077",
+    "abstract": "Technological advancement goes hand in hand with economic advancement, meaning applied industries like manufacturing, medicine, and retail are set to leverage new practices like human-autonomy teams. These human-autonomy teams call for deep integration between artificial intelligence and the human workers that make up a majority of the workforce. This paper identifies the core principles of the human-autonomy teaming literature relevant to the integration of human-autonomy teams in applied contexts and research due to this large scale implementation of human-autonomy teams. A framework is built and defined from these fundamental concepts, with specific examples of its use in applied contexts and the interactions between various components of the framework. This framework can be utilized by practitioners of human-autonomy teams, allowing them to make informed decisions regarding the integration and training of human-autonomy teams.",
+    "tags": [
+      "human-AI teaming",
+      "applied settings"
+    ],
+    "pdf": "schelble-2020-applied-hat.pdf",
     "award": null
   },
   {
+    "id": "sawant-2026-ai-vulnerabilities",
     "year": 2025,
     "type": "book chapter",
     "title": "Addressing AI Vulnerabilities Through Human-Centered Approaches and Risk Frameworks",
     "authors": "Sawant, S., Bhanu, A., Schelble, B.G., & Madathil, K.",
+    "authorsList": [
+      "Shubham Sawant",
+      "Anjali Bhanu",
+      "Beau G. Schelble",
+      "Kapil Chalil Madathil"
+    ],
     "venue": "Advances in Human-AI Collaboration. John Wiley and Sons",
+    "venueShort": "Wiley",
+    "tags": [
+      "responsible AI",
+      "risk frameworks"
+    ],
+    "pdf": "sawant-2026-ai-vulnerabilities.pdf",
     "award": "In Press"
   }
 ]

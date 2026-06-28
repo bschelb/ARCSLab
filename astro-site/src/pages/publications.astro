@@ -1,8 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import publications from '../data/publications.json';
 
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const years = [...new Set(publications.filter(p => typeof p.year === 'number').map(p => p.year))].sort((a, b) => b - a);
 const journalCount = publications.filter(p => p.type === 'journal').length;
 const confCount = publications.filter(p => p.type === 'conference').length;
@@ -13,6 +15,7 @@ const highlightSchelble = (authors: string) =>
 ---
 <BaseLayout title="Publications | ARCS Lab | UT Knoxville" activePage="publications"
   description={`${publications.length}+ peer-reviewed publications from the ARCS Lab on human-AI teaming, trust in AI, and collaborative systems.`}>
+  <Breadcrumb slot="head" trail={[['Home', '/'], ['Publications', '/publications']]} />
 <style>
   .filter-bar {
     position: sticky; top: calc(var(--nav-h) + 3px); z-index: 50;
@@ -52,6 +55,7 @@ const highlightSchelble = (authors: string) =>
     display: grid; grid-template-columns: 110px 1fr auto; gap: 24px;
     padding: 22px 0; border-bottom: 1px solid var(--line); align-items: start;
     position: relative; transition: padding-left 0.22s ease;
+    text-decoration: none; color: inherit;
   }
   .pub-row::before {
     content: ''; position: absolute; left: 0; top: 0; bottom: 0;
@@ -59,6 +63,7 @@ const highlightSchelble = (authors: string) =>
   }
   .pub-row:hover { padding-left: 16px; }
   .pub-row:hover::before { opacity: 1; }
+  .pub-row:hover .pub-title-text { color: var(--orange-deep); }
   .pub-type {
     font-family: var(--mono); font-size: 9.5px; font-weight: 500;
     letter-spacing: 0.12em; text-transform: uppercase;
@@ -73,14 +78,22 @@ const highlightSchelble = (authors: string) =>
   .pub-authors { font-size: 13px; color: var(--text); margin-bottom: 3px; }
   .pub-authors :global(strong) { color: var(--text-strong); font-weight: 600; }
   .pub-venue { font-size: 12.5px; color: var(--text-muted); font-style: italic; }
+  .pub-aside { display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
   .pub-award-badge {
     font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em;
     color: var(--orange-deep); background: var(--orange-glow);
     padding: 5px 11px; white-space: nowrap; height: fit-content;
   }
+  .pub-pdf-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: var(--mono); font-size: 9.5px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap;
+    color: #fff; background: var(--orange); padding: 4px 9px; height: fit-content;
+  }
+  .pub-pdf-badge .dotpdf { width: 5px; height: 5px; border-radius: 50%; background: #fff; }
   @media (max-width: 768px) {
     .pub-row { grid-template-columns: 1fr; gap: 10px; }
-    .pub-award-badge { justify-self: start; }
+    .pub-aside { flex-direction: row; align-items: flex-start; }
   }
 </style>
 
@@ -117,15 +130,18 @@ const highlightSchelble = (authors: string) =>
         <div class="year-count">{publications.filter(p => p.year === year).length} works</div>
       </div>
       {publications.filter(p => p.year === year).map(pub => (
-        <div class="pub-row" data-type={pub.type} data-award={pub.award && pub.award !== 'In Press' ? 'yes' : 'no'}>
+        <a class="pub-row" href={`${base}/papers/${pub.id}`} data-type={pub.type} data-award={pub.award && pub.award !== 'In Press' ? 'yes' : 'no'}>
           <div class={`pub-type ${pub.type === 'book chapter' ? 'book' : pub.type}`}>{pub.type === 'book chapter' ? 'Book Ch.' : pub.type}</div>
           <div>
             <div class="pub-title-text">{pub.title}</div>
             <div class="pub-authors" set:html={highlightSchelble(pub.authors)} />
             <div class="pub-venue">{pub.venue}</div>
           </div>
-          {pub.award && pub.award !== 'In Press' ? <div class="pub-award-badge">★ {pub.award}</div> : <div></div>}
-        </div>
+          <div class="pub-aside">
+            {pub.award && pub.award !== 'In Press' && <div class="pub-award-badge">★ {pub.award}</div>}
+            {pub.pdf && <div class="pub-pdf-badge"><span class="dotpdf"></span> Free PDF</div>}
+          </div>
+        </a>
       ))}
     </div>
   ))}
@@ -137,15 +153,17 @@ const highlightSchelble = (authors: string) =>
         <div class="year-count">{publications.filter(p => typeof p.year !== 'number').length} works</div>
       </div>
       {publications.filter(p => typeof p.year !== 'number').map(pub => (
-        <div class="pub-row" data-type={pub.type} data-award="no">
+        <a class="pub-row" href={`${base}/papers/${pub.id}`} data-type={pub.type} data-award="no">
           <div class={`pub-type ${pub.type === 'book chapter' ? 'book' : pub.type}`}>{pub.type === 'book chapter' ? 'Book Ch.' : pub.type}</div>
           <div>
             <div class="pub-title-text">{pub.title}</div>
             <div class="pub-authors" set:html={highlightSchelble(pub.authors)} />
             <div class="pub-venue">{pub.venue}</div>
           </div>
-          <div></div>
-        </div>
+          <div class="pub-aside">
+            {pub.pdf && <div class="pub-pdf-badge"><span class="dotpdf"></span> Free PDF</div>}
+          </div>
+        </a>
       ))}
     </div>
   )}

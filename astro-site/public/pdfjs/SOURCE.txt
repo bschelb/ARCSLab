@@ -1,0 +1,3 @@
+Vendored from pdfjs-dist v6.1.200 (npm). Files: pdf.min.mjs, pdf.worker.min.mjs.
+These are static runtime assets loaded by /papers/[slug] via dynamic import.
+To update: npm i pdfjs-dist@latest, copy build/pdf.min.mjs + build/pdf.worker.min.mjs here.

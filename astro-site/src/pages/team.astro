@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import Icon from '../components/Icon.astro';
 import team from '../data/team.json';
 
@@ -9,6 +10,7 @@ const memberCount = 1 + team.phdStudents.length + team.dengStudents.length + tea
 ---
 <BaseLayout title="Team | ARCS Lab | UT Knoxville" activePage="team"
   description="Meet the ARCS Lab team — PI Dr. Beau Schelble, PhD and DEng students, undergraduate researchers, and collaborators across leading institutions.">
+  <Breadcrumb slot="head" trail={[['Home', '/'], ['Team', '/team']]} />
 <style>
   .roster-label {
     display: flex; align-items: baseline; gap: 18px; margin-bottom: 44px;

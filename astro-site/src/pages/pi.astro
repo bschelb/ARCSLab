@@ -1,13 +1,24 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import Icon from '../components/Icon.astro';
 import team from '../data/team.json';
+import { absoluteUrl } from '../data/site';
+import { ldjson, profilePageNode } from '../lib/seo';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const pi = team.pi;
 ---
 <BaseLayout title="Dr. Beau Schelble | Principal Investigator | ARCS Lab" activePage="pi"
   description="Dr. Beau G. Schelble — Assistant Professor of Industrial & Systems Engineering at UT Knoxville and Founding Director of the ARCS Lab. Expert in human-AI teaming.">
+  <Fragment slot="head">
+    <Breadcrumb trail={[['Home', '/'], ['Principal Investigator', '/pi']]} />
+    <script type="application/ld+json" is:inline set:html={ldjson(profilePageNode({
+      url: absoluteUrl('/pi'),
+      name: 'Dr. Beau G. Schelble — Principal Investigator, ARCS Lab',
+      description: 'Dr. Beau G. Schelble, Founding Director of the ARCS Lab and Assistant Professor of Industrial & Systems Engineering at the University of Tennessee, Knoxville. Research on human-AI teaming, trust, and team cognition.',
+    }))} />
+  </Fragment>
 <style>
   .pi-hero {
     padding-top: calc(var(--nav-h) + 3px);

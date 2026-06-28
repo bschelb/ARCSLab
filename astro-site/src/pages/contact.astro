@@ -1,10 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import Icon from '../components/Icon.astro';
 ---
 <BaseLayout title="Contact | ARCS Lab | UT Knoxville" activePage="contact"
   description="Contact the ARCS Lab at UT Knoxville — inquiries from prospective graduate students, research collaborators, industry partners, and press are welcome.">
+  <Breadcrumb slot="head" trail={[['Home', '/'], ['Contact', '/contact']]} />
 <style>
   .contact-body { display: grid; grid-template-columns: 1fr 1fr; }
   .contact-left { padding: 88px var(--gutter) 88px; background: var(--paper-2); }

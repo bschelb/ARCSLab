@@ -1,0 +1,391 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+import publicationsRaw from '../../data/publications.json';
+import { getRelated, toBibtex, typeLabel, type Paper } from '../../lib/papers';
+import { breadcrumbNode, citationMetaTags, ldjson, scholarlyArticleNode } from '../../lib/seo';
+
+const publications = publicationsRaw as unknown as Paper[];
+
+export function getStaticPaths() {
+  const all = publicationsRaw as unknown as Paper[];
+  return all.map((paper) => ({ params: { slug: paper.id }, props: { paper } }));
+}
+
+const { paper } = Astro.props as { paper: Paper };
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const related = getRelated(paper, publications, 4);
+const bibtex = toBibtex(paper);
+const inPress = paper.award === 'In Press';
+const hasAward = paper.award && !inPress;
+const publisherLink = paper.doi ? `https://doi.org/${paper.doi}` : paper.url;
+
+// SEO description: prefer the abstract, else a generated one-liner.
+const fallbackDescription =
+  `${typeLabel(paper.type)} by ${paper.authors} (${paper.year}). Published in ${paper.venue}.`;
+const description = (paper.abstract
+  ? paper.abstract.slice(0, 300)
+  : fallbackDescription).replace(/\s+/g, ' ').trim();
+
+const trail: [string, string][] = [
+  ['Home', '/'],
+  ['Publications', '/publications'],
+  [paper.venueShort ?? paper.title, `/papers/${paper.id}`],
+];
+
+const highlightSchelble = (authors: string) =>
+  authors
+    .replace(/Schelble, B\.G\./g, '<strong>Schelble, B.G.</strong>')
+    .replace(/Schelble(?![^<]*<\/strong>)/g, '<strong>Schelble</strong>');
+---
+<BaseLayout
+  title={`${paper.title} | ARCS Lab`}
+  description={description}
+  activePage="publications"
+  path={`/papers/${paper.id}`}
+  ogType="article"
+>
+  <Fragment slot="head">
+    {citationMetaTags(paper).map(([name, content]) => <meta name={name} content={content} />)}
+    <script type="application/ld+json" is:inline set:html={ldjson(scholarlyArticleNode(paper))} />
+    <script type="application/ld+json" is:inline set:html={ldjson(breadcrumbNode(trail))} />
+  </Fragment>
+
+  <style>
+    .paper-head {
+      padding: calc(var(--nav-h) + 3px + 60px) var(--gutter) 56px;
+      position: relative; overflow: hidden;
+    }
+    .ph-crumb-link {
+      display: inline-flex; align-items: center; gap: 14px;
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--dk-muted); margin-bottom: 26px;
+      text-decoration: none;
+    }
+    .ph-crumb-link:hover { color: var(--orange); }
+    .ph-crumb-link .ph-index { color: var(--orange); font-weight: 500; }
+    .ph-crumb-link .ph-sep { width: 28px; height: 1px; background: rgba(255,255,255,0.25); }
+
+    .paper-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+    .pchip {
+      font-family: var(--mono); font-size: 10px; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 12px;
+    }
+    .pchip.type { color: var(--orange); background: rgba(255,102,0,0.14); }
+    .pchip.year { color: var(--dk-text); background: rgba(255,255,255,0.08); }
+    .pchip.award { color: #fff; background: var(--orange); }
+    .pchip.inpress { color: var(--dk-text); border: 1px dashed rgba(255,255,255,0.3); }
+
+    .paper-title {
+      font-family: var(--serif); font-optical-sizing: auto;
+      font-size: clamp(28px, 3.8vw, 46px); font-weight: 600;
+      letter-spacing: -0.015em; color: #fff; line-height: 1.12;
+      margin-bottom: 22px; max-width: 940px;
+    }
+    .paper-authors { font-size: 15px; color: var(--dk-text-2); line-height: 1.7; max-width: 880px; }
+    .paper-authors :global(strong) { color: #fff; font-weight: 600; }
+    .paper-venue {
+      font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.04em;
+      color: var(--orange); margin-top: 12px;
+    }
+    .paper-venue .muted { color: var(--dk-muted); }
+
+    .paper-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+
+    .paper-body { padding: 64px var(--gutter) 96px; max-width: 1100px; }
+    .pb-section { margin-bottom: 56px; }
+    .pb-section:last-child { margin-bottom: 0; }
+    .pb-h {
+      font-family: var(--mono); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted);
+      margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
+    }
+    .pb-h::before { content: ''; width: 24px; height: 1.5px; background: var(--orange); }
+    .abstract { font-size: 16.5px; line-height: 1.85; color: var(--text); max-width: 820px; }
+
+    .pdf-reader { border: 1px solid var(--line); background: var(--paper-2); }
+    .pdf-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 18px; border-bottom: 1px solid var(--line);
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text-muted);
+    }
+    .pdf-bar a { color: var(--orange-deep); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+    .pdf-bar a:hover { color: var(--orange); }
+    .pdf-zoom { display: flex; align-items: center; gap: 5px; }
+    .pdf-zoom button {
+      font-family: var(--mono); font-size: 14px; line-height: 1;
+      min-width: 28px; height: 26px; display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid var(--line-strong); background: #fff; color: var(--text-strong);
+      cursor: pointer; transition: border-color 0.2s, color 0.2s; padding: 0 6px;
+    }
+    .pdf-zoom button:hover { border-color: var(--orange); color: var(--orange-deep); }
+    .pdf-zoom .pdf-fit { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 0 11px; }
+    #pdf-zoom-label { font-size: 11px; color: var(--text-muted); min-width: 44px; text-align: center; }
+    .pdf-host {
+      max-height: min(85vh, 1100px); overflow: auto; background: #4a4f54;
+    }
+    .pdf-pages {
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+      width: max-content; min-width: 100%; margin: 0 auto; padding: 22px 16px; box-sizing: border-box;
+    }
+    .pdf-page { background: #fff; box-shadow: 0 2px 14px rgba(0, 0, 0, 0.4); flex: 0 0 auto; }
+    .pdf-canvas { display: block; width: 100%; height: 100%; }
+    .pdf-status {
+      color: rgba(255, 255, 255, 0.82); font-family: var(--mono); text-align: center;
+      font-size: 12px; letter-spacing: 0.08em; padding: 48px;
+    }
+    .pdf-fallback {
+      padding: 44px 32px; font-size: 14px; line-height: 1.75; color: var(--text);
+      background: var(--paper-2); text-align: center;
+    }
+    .pdf-fallback a { color: var(--orange-deep); font-weight: 500; }
+
+    .pdf-missing {
+      border: 1px dashed var(--line-strong); background: var(--paper-2);
+      padding: 32px; font-size: 15px; line-height: 1.7; color: var(--text);
+    }
+    .pdf-missing a { color: var(--orange-deep); }
+
+    .bibtex-wrap { position: relative; }
+    .bibtex {
+      font-family: var(--mono); font-size: 12.5px; line-height: 1.7;
+      background: var(--ink); color: var(--dk-text); padding: 24px 26px;
+      overflow-x: auto; white-space: pre; margin: 0;
+    }
+    .copy-btn {
+      position: absolute; top: 12px; right: 12px;
+      font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 8px 14px; cursor: pointer;
+      background: rgba(255,255,255,0.1); color: #fff; border: none; transition: background 0.2s;
+    }
+    .copy-btn:hover { background: var(--orange); }
+
+    .topics { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    .related-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+    .rel-card { background: #fff; padding: 26px 28px; text-decoration: none; display: block; transition: background 0.2s; }
+    .rel-card:hover { background: var(--paper-2); }
+    .rel-type { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange-deep); margin-bottom: 10px; }
+    .rel-title { font-size: 15px; font-weight: 500; color: var(--text-strong); line-height: 1.5; margin-bottom: 8px; }
+    .rel-venue { font-size: 12.5px; color: var(--text-muted); font-style: italic; }
+
+    @media (max-width: 768px) {
+      .related-grid { grid-template-columns: 1fr; }
+      .pdf-frame { height: 70vh; }
+    }
+  </style>
+
+  <header class="paper-head blueprint on-dark">
+    <a class="ph-crumb-link" href={`${base}/publications`}>
+      <span class="ph-index">02</span>
+      <span class="ph-sep"></span>
+      <span>Publications — Back to all</span>
+    </a>
+    <div class="paper-chips">
+      <span class="pchip type">{typeLabel(paper.type)}</span>
+      <span class="pchip year">{paper.year}</span>
+      {hasAward && <span class="pchip award">★ {paper.award}</span>}
+      {inPress && <span class="pchip inpress">In Press</span>}
+    </div>
+    <h1 class="paper-title">{paper.title}</h1>
+    <div class="paper-authors" set:html={highlightSchelble(paper.authors)} />
+    <div class="paper-venue">{paper.venue}{paper.doi && <span class="muted"> · DOI {paper.doi}</span>}</div>
+
+    <div class="paper-actions">
+      {paper.pdf && (
+        <a class="btn" href={`${base}/papers/${paper.pdf}`} download>
+          <Icon name="doc" size={15} /> Download PDF
+        </a>
+      )}
+      <button class="btn-light" id="copy-bibtex" type="button">
+        <Icon name="book" size={15} /> Copy BibTeX
+      </button>
+      {publisherLink && (
+        <a class="btn-light" href={publisherLink} target="_blank" rel="noopener">
+          <Icon name="link" size={15} /> Publisher <span class="arr">↗</span>
+        </a>
+      )}
+    </div>
+  </header>
+
+  <div class="paper-body">
+    {paper.abstract && (
+      <section class="pb-section">
+        <div class="pb-h">Abstract</div>
+        <p class="abstract">{paper.abstract}</p>
+      </section>
+    )}
+
+    <section class="pb-section">
+      <div class="pb-h">{paper.pdf ? 'Read online' : 'Full text'}</div>
+      {paper.pdf ? (
+        <div class="pdf-reader">
+          <div class="pdf-bar">
+            <div class="pdf-zoom">
+              <button type="button" id="pdf-zoom-out" aria-label="Zoom out">−</button>
+              <span id="pdf-zoom-label">100%</span>
+              <button type="button" id="pdf-zoom-in" aria-label="Zoom in">+</button>
+              <button type="button" id="pdf-zoom-fit" class="pdf-fit">Fit width</button>
+            </div>
+            <a href={`${base}/papers/${paper.pdf}`} target="_blank" rel="noopener">Open in new tab <span>↗</span></a>
+          </div>
+          <div class="pdf-host" id="pdf-host" data-pdf={`${base}/papers/${paper.pdf}`}>
+            <div class="pdf-pages" id="pdf-pages"></div>
+            <div class="pdf-status" id="pdf-status">Loading PDF…</div>
+          </div>
+        </div>
+      ) : (
+        <div class="pdf-missing">
+          A shareable copy of this work is not posted here{publisherLink ? ' — read the published version via the Publisher link above' : ''}.
+          For an author copy, email <a href="mailto:bschelbl@utk.edu">bschelbl@utk.edu</a>.
+        </div>
+      )}
+    </section>
+
+    <section class="pb-section">
+      <div class="pb-h">Cite this work</div>
+      <div class="bibtex-wrap">
+        <button class="copy-btn" id="copy-bibtex-2" type="button">Copy</button>
+        <pre class="bibtex" id="bibtex-block">{bibtex}</pre>
+      </div>
+    </section>
+
+    {paper.tags && paper.tags.length > 0 && (
+      <section class="pb-section">
+        <div class="pb-h">Topics</div>
+        <div class="topics">
+          {paper.tags.map((t) => <span class="tag">{t}</span>)}
+        </div>
+      </section>
+    )}
+
+    {related.length > 0 && (
+      <section class="pb-section">
+        <div class="pb-h">Related work</div>
+        <div class="related-grid">
+          {related.map((r) => (
+            <a class="rel-card" href={`${base}/papers/${r.id}`}>
+              <div class="rel-type">{typeLabel(r.type)} · {r.year}</div>
+              <div class="rel-title">{r.title}</div>
+              <div class="rel-venue">{r.venueShort ?? r.venue}</div>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+  </div>
+
+  <script is:inline define:vars={{ bibtex }}>
+    function copyBibtex(btn) {
+      navigator.clipboard.writeText(bibtex).then(() => {
+        const original = btn.innerHTML;
+        btn.textContent = 'Copied ✓';
+        setTimeout(() => { btn.innerHTML = original; }, 1600);
+      });
+    }
+    document.getElementById('copy-bibtex')?.addEventListener('click', (e) => copyBibtex(e.currentTarget));
+    document.getElementById('copy-bibtex-2')?.addEventListener('click', (e) => copyBibtex(e.currentTarget));
+  </script>
+
+  <!-- In-page PDF reader via self-hosted PDF.js (canvas render). Works regardless of the
+       browser's "open vs. download PDFs" setting and needs no custom server headers, so it
+       behaves identically in dev and on static GitHub Pages. Pages render lazily at the
+       current zoom; off-screen pages are released to bound memory. -->
+  <script type="module" is:inline>
+    const host = document.getElementById('pdf-host');
+    const pagesEl = document.getElementById('pdf-pages');
+    if (host && pagesEl && host.dataset.pdf) {
+      const url = host.dataset.pdf;
+      const label = document.getElementById('pdf-zoom-label');
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const items = [];
+      let refW = 612 * 4 / 3;   // a page's "actual size" CSS width (=100%); refined at load
+      let pageW = 700;          // current display width of a page, in CSS px
+
+      const fail = () => {
+        host.innerHTML =
+          '<div class="pdf-fallback">Couldn\'t render the PDF inline. ' +
+          '<a href="' + url + '" target="_blank" rel="noopener">Open it in a new tab</a> or ' +
+          '<a href="' + url + '" download>download it</a>.</div>';
+      };
+      const contentW = () => host.clientWidth - 32; // minus .pdf-pages horizontal padding
+
+      const renderItem = (it) => {
+        if (it.task && it.task.cancel) it.task.cancel();
+        const scale = (pageW * dpr) / it.ptW;
+        const vp = it.page.getViewport({ scale });
+        it.canvas.width = Math.round(vp.width);
+        it.canvas.height = Math.round(vp.height);
+        it.renderedW = pageW;
+        it.task = it.page.render({ canvasContext: it.canvas.getContext('2d'), viewport: vp });
+        it.task.promise.catch(() => {});
+      };
+      const releaseItem = (it) => {
+        if (it.renderedW == null) return;
+        if (it.task && it.task.cancel) it.task.cancel();
+        it.canvas.width = 0; it.canvas.height = 0;
+        it.renderedW = null;
+      };
+      const io = new IntersectionObserver((entries) => {
+        for (const e of entries) {
+          const it = items[Number(e.target.dataset.i)];
+          if (!it) continue;
+          it.visible = e.isIntersecting;
+          if (e.isIntersecting) { if (it.renderedW !== pageW) renderItem(it); }
+          else releaseItem(it);
+        }
+      }, { root: host, rootMargin: '700px 0px' });
+
+      const applyWidth = () => {
+        const w = Math.round(pageW) + 'px';
+        for (const it of items) {
+          it.wrap.style.width = w;
+          if (it.visible) renderItem(it);
+          else releaseItem(it);
+        }
+        if (label) label.textContent = Math.round((pageW / refW) * 100) + '%';
+      };
+      const zoom = (factor) => {
+        pageW = Math.max(260, Math.min(pageW * factor, contentW() * 3));
+        applyWidth();
+      };
+
+      (async () => {
+        try {
+          const pdfjs = await import('/pdfjs/pdf.min.mjs');
+          pdfjs.GlobalWorkerOptions.workerSrc = '/pdfjs/pdf.worker.min.mjs';
+          const doc = await pdfjs.getDocument({ url }).promise;
+          document.getElementById('pdf-status')?.remove();
+          const first = await doc.getPage(1);
+          refW = first.getViewport({ scale: 1 }).width * 4 / 3;
+          pageW = Math.min(refW * 0.7, contentW()); // sensible default: ~70% actual, never wider than the frame
+          for (let n = 1; n <= doc.numPages; n++) {
+            const page = n === 1 ? first : await doc.getPage(n);
+            const ptW = page.getViewport({ scale: 1 }).width;
+            const ptH = page.getViewport({ scale: 1 }).height;
+            const wrap = document.createElement('div');
+            wrap.className = 'pdf-page';
+            wrap.style.aspectRatio = ptW + ' / ' + ptH;
+            wrap.style.width = Math.round(pageW) + 'px';
+            wrap.dataset.i = String(n - 1);
+            const canvas = document.createElement('canvas');
+            canvas.className = 'pdf-canvas';
+            wrap.appendChild(canvas);
+            pagesEl.appendChild(wrap);
+            items.push({ wrap, canvas, page, ptW, renderedW: null, visible: false });
+            io.observe(wrap);
+          }
+          if (label) label.textContent = Math.round((pageW / refW) * 100) + '%';
+          document.getElementById('pdf-zoom-in')?.addEventListener('click', () => zoom(1.2));
+          document.getElementById('pdf-zoom-out')?.addEventListener('click', () => zoom(1 / 1.2));
+          document.getElementById('pdf-zoom-fit')?.addEventListener('click', () => { pageW = contentW(); applyWidth(); });
+        } catch (err) {
+          console.error('PDF render failed:', err);
+          fail();
+        }
+      })();
+    }
+  </script>
+</BaseLayout>
