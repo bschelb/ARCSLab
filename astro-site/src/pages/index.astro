@@ -41,7 +41,7 @@ const researchAreas = [
   }
   .hero-inner {
     position: relative; z-index: 2;
-    padding: 80px var(--gutter) 0;
+    padding: 80px var(--gutter) 88px;
     max-width: 1100px;
   }
   .hero-eyebrow {
@@ -79,32 +79,6 @@ const researchAreas = [
     display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 72px;
     animation: fadeUp 0.8s 0.3s ease both;
   }
-  .hero-console {
-    position: relative; z-index: 2;
-    border-top: 1px solid rgba(255,255,255,0.12);
-    background: rgba(20,16,11,0.55);
-    backdrop-filter: blur(6px);
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    padding: 0 var(--gutter);
-  }
-  .hc-stat {
-    padding: 30px 24px 30px 0;
-    border-right: 1px solid rgba(255,255,255,0.08);
-  }
-  .hc-stat:last-child { border-right: none; }
-  .hc-stat + .hc-stat { padding-left: 24px; }
-  .hc-num {
-    font-family: var(--serif); font-size: clamp(26px, 2.6vw, 38px);
-    font-weight: 600; color: #fff; line-height: 1;
-    font-variant-numeric: tabular-nums;
-  }
-  .hc-num .accent { color: var(--orange); }
-  .hc-label {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
-    text-transform: uppercase; color: var(--dk-muted); margin-top: 9px;
-  }
-
   /* ── MISSION BAND ── */
   .mission {
     background: var(--orange);
@@ -274,16 +248,6 @@ const researchAreas = [
     font-family: var(--mono); font-size: 9.5px; color: var(--text-muted);
     text-transform: uppercase; letter-spacing: 0.12em; margin-top: 10px;
   }
-  .fb-total { margin-left: auto; text-align: right; }
-  .fb-total .n {
-    font-family: var(--serif); font-size: 46px; font-weight: 600;
-    color: var(--text-strong); line-height: 1; font-variant-numeric: tabular-nums;
-  }
-  .fb-total .n span { color: var(--orange); }
-  .fb-total .l {
-    font-family: var(--mono); font-size: 10px; color: var(--text-muted);
-    text-transform: uppercase; letter-spacing: 0.14em; margin-top: 8px;
-  }
 
   /* ── CONTACT CTA ── */
   .cta {
@@ -308,11 +272,6 @@ const researchAreas = [
 
   /* ── RESPONSIVE ── */
   @media (max-width: 1024px) {
-    .hero-console { grid-template-columns: repeat(3, 1fr); }
-    .hc-stat:nth-child(3) { border-right: none; }
-    .hc-stat:nth-child(n+4) { border-top: 1px solid rgba(255,255,255,0.08); }
-    .hc-stat { padding-left: 24px; }
-    .hc-stat:first-child, .hc-stat:nth-child(4) { padding-left: 0; }
     .research-grid { grid-template-columns: 1fr 1fr; }
     .team-grid { grid-template-columns: 1fr 1fr; }
     .cta { grid-template-columns: 1fr; gap: 48px; }
@@ -326,9 +285,6 @@ const researchAreas = [
     .hero { min-height: 88vh; }
     .research-grid { grid-template-columns: 1fr; }
     .team-grid { grid-template-columns: 1fr; }
-    .hero-console { grid-template-columns: 1fr 1fr; }
-    .hc-stat { border-right: none !important; border-top: 1px solid rgba(255,255,255,0.08); padding-left: 0; }
-    .hc-stat:first-child, .hc-stat:nth-child(2) { border-top: none; }
   }
 </style>
 
@@ -348,28 +304,6 @@ const researchAreas = [
     <div class="hero-actions">
       <a href={`${base}/research`} class="btn">Explore the Research <span class="arr">→</span></a>
       <a href={`${base}/publications`} class="btn-light">Publications <span class="arr">→</span></a>
-    </div>
-  </div>
-  <div class="hero-console">
-    <div class="hc-stat">
-      <div class="hc-num"><span data-count="46">0</span><span class="accent">+</span></div>
-      <div class="hc-label">Publications</div>
-    </div>
-    <div class="hc-stat">
-      <div class="hc-num"><span data-count="2055">0</span><span class="accent">+</span></div>
-      <div class="hc-label">Citations</div>
-    </div>
-    <div class="hc-stat">
-      <div class="hc-num"><span data-count="722" data-prefix="$" data-suffix="K">$0</span></div>
-      <div class="hc-label">PI Funding Awarded</div>
-    </div>
-    <div class="hc-stat">
-      <div class="hc-num"><span data-count="5">0</span></div>
-      <div class="hc-label">Best Paper Awards</div>
-    </div>
-    <div class="hc-stat">
-      <div class="hc-num"><span data-count="7">0</span></div>
-      <div class="hc-label">Invited Talks</div>
     </div>
   </div>
 </section>
@@ -425,7 +359,7 @@ const researchAreas = [
     ))}
   </div>
   <div class="pubs-cta" data-reveal>
-    <a href={`${base}/publications`} class="btn">All {publications.length} publications <span class="arr">→</span></a>
+    <a href={`${base}/publications`} class="btn">All publications <span class="arr">→</span></a>
   </div>
 </section>
 
@@ -487,10 +421,6 @@ const researchAreas = [
       <div class="b">UTK</div>
       <div class="s">University of Tennessee</div>
     </div>
-  </div>
-  <div class="fb-total">
-    <div class="n"><span data-count="722" data-prefix="$" data-suffix="K">$0</span><span>+</span></div>
-    <div class="l">Total Awarded as PI</div>
   </div>
 </section>
 
