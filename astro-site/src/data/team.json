@@ -30,7 +30,6 @@
     {
       "name": "Sarah Mendoza",
       "role": "PhD Student, Industrial & Systems Engineering",
-      "email": "smendoz9@vols.utk.edu",
       "photo": "assets/sarahHeadshot.jpg",
       "cropPosition": "center 15%",
       "education": "BS Psychology (Minor in Computer Science), Clemson University, 2025",
@@ -43,7 +42,6 @@
     {
       "name": "Yayun Tian",
       "role": "PhD Student, Industrial & Systems Engineering",
-      "email": "ytian21@vols.utk.edu",
       "photo": "assets/yayunHeadshot.jpg",
       "cropPosition": "center 60%",
       "education": "MS Analytics, USC, 2022 · BS Applied Math & Statistics + Economics, Stony Brook, 2020",
@@ -54,7 +52,6 @@
     {
       "name": "Naveena Nagaraju",
       "role": "PhD Student, Industrial & Systems Engineering",
-      "email": "nnagaraj@vols.utk.edu",
       "photo": "assets/naveenaHeadshot.jpg",
       "cropPosition": "center 20%",
       "education": "MS Information Science, University of Pittsburgh, 2025",

@@ -213,7 +213,6 @@ const memberCount = 1 + team.phdStudents.length + team.dengStudents.length + tea
           <div class="student-edu">{s.education}</div>
           <p class="student-bio">{s.bio}</p>
           <div class="student-links">
-            {s.email && <a href={`mailto:${s.email}`} class="student-link">Email</a>}
             {s.links?.googleScholar && <a href={s.links.googleScholar} target="_blank" rel="noopener" class="student-link">Scholar</a>}
           </div>
         </div>
