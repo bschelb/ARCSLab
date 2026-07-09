@@ -50,6 +50,16 @@
       "bio": "Hi, I'm Yayun Tian, and I'm a Ph.D. student in Industrial and Systems Engineering at the University of Tennessee, Knoxville. I graduated from Stony Brook University in 2020 with a Bachelor's degree in Applied Mathematics and Statistics, a double major in Economics, and a minor in Computer Science. In 2022, I earned my Master's degree in Analytics from the University of Southern California, and then spent three years working as a software engineer in Los Angeles. These experiences led me to think about how technology could play a more active and supportive role in teamwork — not just as a tool, but as a trusted and capable teammate.",
       "shortBio": "Background in applied mathematics, statistics, and software engineering. Exploring AI as trusted teammate.",
       "links": {}
+    },
+    {
+      "name": "Naveena Nagaraju",
+      "role": "PhD Student, Industrial & Systems Engineering",
+      "photo": "assets/naveenaHeadshot.jpg",
+      "cropPosition": "center 20%",
+      "education": "MS Information Science, University of Pittsburgh, 2025",
+      "bio": "Hi, I'm Naveena Nagaraju, and I'm a Ph.D. student in Industrial and Systems Engineering at the University of Tennessee, Knoxville. I graduated from the University of Pittsburgh in 2025 with a Master's degree in Information Science. During my master's, I worked with research labs at Pitt focused on AI, and after graduating I worked as a Data Analyst, which grew my interest in AI and how humans interact with it in everyday life even further. This interest goes back to my undergrad, and I'm excited to bring that experience into the ARCS lab and contribute to research on human-AI teaming.",
+      "shortBio": "Background in information science and data analytics. Exploring how humans interact with AI in everyday life.",
+      "links": {}
     }
   ],
   "dengStudents": [
