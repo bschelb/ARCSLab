@@ -62,12 +62,6 @@
   ],
   "dengStudents": [
     {
-      "name": "Joey Burdin",
-      "role": "Doctor of Engineering Student, ISE",
-      "tenure": "2025–Present",
-      "bio": "Applied doctoral research in industrial and systems engineering with a focus on practical implementation of human-AI teaming principles in professional settings."
-    },
-    {
       "name": "Cody Gaspar",
       "role": "Doctor of Engineering Student, ISE",
       "tenure": "2024–Present",
@@ -83,18 +77,41 @@
       "bio": "Multiple ARCS Lab projects"
     },
     {
-      "name": "Carson Bogue",
-      "role": "Undergraduate Researcher",
-      "degree": "BS Industrial & Systems Engineering",
-      "tenure": "2024–Present",
-      "bio": "Multiple ARCS Lab projects"
-    },
-    {
       "name": "Gracyn Filer",
       "role": "Undergraduate Researcher",
       "degree": "BS Industrial & Systems Engineering",
       "tenure": "2024–Present",
       "bio": "Co-author on HFES 2025 paper on AI information-sharing and trust"
+    },
+    {
+      "name": "Brooke Henley",
+      "role": "Undergraduate Researcher",
+      "degree": "BS Industrial & Systems Engineering",
+      "tenure": "2026–Present",
+      "bio": "Multiple ARCS Lab projects"
+    },
+    {
+      "name": "Owen Fair",
+      "role": "Undergraduate Researcher",
+      "degree": "BS Supply Chain Management",
+      "tenure": "2026–Present",
+      "bio": "Multiple ARCS Lab projects"
+    },
+    {
+      "name": "Aiden Conklin",
+      "role": "Undergraduate Researcher",
+      "degree": "BS Industrial & Systems Engineering",
+      "tenure": "2026–Present",
+      "bio": "Multiple ARCS Lab projects"
+    }
+  ],
+  "alumni": [
+    {
+      "name": "Carson Bogue",
+      "role": "Lab Alumnus",
+      "degree": "BS Industrial & Systems Engineering",
+      "tenure": "2024–2026",
+      "outcome": "Graduate Student in ISE"
     }
   ],
   "collaborators": [
