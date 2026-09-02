@@ -53,17 +53,6 @@ const internalGrants = funding.active.filter(g => g.funder.startsWith('Universit
   .int-title { font-size: 15.5px; font-weight: 600; color: var(--text-strong); margin-bottom: 8px; line-height: 1.45; }
   .int-meta { font-size: 13px; color: var(--text-muted); }
 
-  .prior { padding: 96px var(--gutter); }
-  .prior p { font-size: 15.5px; color: var(--dk-text-2); line-height: 1.8; max-width: 720px; margin-bottom: 36px; }
-  .prior p strong { color: #fff; }
-  .prior-agencies { display: flex; gap: 14px; flex-wrap: wrap; }
-  .agency-pill {
-    padding: 12px 22px; border: 1px solid rgba(255,255,255,0.16);
-    font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em;
-    color: var(--dk-text-2); transition: border-color 0.2s, color 0.2s;
-  }
-  .agency-pill:hover { border-color: var(--orange); color: var(--orange); }
-
   @media (max-width: 900px) {
     .int-grid { grid-template-columns: 1fr; }
     .gc-meta { gap: 28px; }
@@ -79,7 +68,6 @@ const internalGrants = funding.active.filter(g => g.funder.startsWith('Universit
   stats={[
     { value: funding.totalAwardedAsPI, label: 'Total Awarded as PI' },
     { value: `${funding.active.length}`, label: 'Active Awards' },
-    { value: '$2.6M+', label: 'Contributed To (Pre-UTK)' },
   ]}
 />
 
@@ -114,17 +102,6 @@ const internalGrants = funding.active.filter(g => g.funder.startsWith('Universit
         <div class="int-title">{g.title}</div>
         <div class="int-meta">{g.funder} · {g.piRole}</div>
       </div>
-    ))}
-  </div>
-</div>
-
-<div class="prior blueprint on-dark">
-  <div class="eyebrow" data-reveal>Prior Contributions</div>
-  <h2 class="sec-title" data-reveal>Funded research <em>before UTK</em></h2>
-  <p data-reveal>As a PhD student and research assistant at Clemson University, Dr. Schelble made significant contributions to <strong>over $2.6 million</strong> in externally funded research across multiple federal agencies.</p>
-  <div class="prior-agencies" data-reveal>
-    {funding.prior.agencies.map(a => (
-      <div class="agency-pill">{a}</div>
     ))}
   </div>
 </div>
