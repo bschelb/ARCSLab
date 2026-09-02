@@ -2,7 +2,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../../components/Icon.astro';
 import publicationsRaw from '../../data/publications.json';
-import { getRelated, toBibtex, typeLabel, type Paper } from '../../lib/papers';
+import team from '../../data/team.json';
+import { getRelated, highlightLabMembers, toBibtex, typeLabel, type Paper } from '../../lib/papers';
 import { breadcrumbNode, citationMetaTags, ldjson, scholarlyArticleNode } from '../../lib/seo';
 
 const publications = publicationsRaw as unknown as Paper[];
@@ -34,10 +35,10 @@ const trail: [string, string][] = [
   [paper.venueShort ?? paper.title, `/papers/${paper.id}`],
 ];
 
-const highlightSchelble = (authors: string) =>
-  authors
-    .replace(/Schelble, B\.G\./g, '<strong>Schelble, B.G.</strong>')
-    .replace(/Schelble(?![^<]*<\/strong>)/g, '<strong>Schelble</strong>');
+const labMembers = [
+  ...team.phdStudents, ...team.dengStudents, ...team.undergraduates, ...team.alumni,
+].map(m => m.name);
+const highlightAuthors = (authors: string) => highlightLabMembers(authors, labMembers);
 ---
 <BaseLayout
   title={`${paper.title} | ARCS Lab`}
@@ -190,7 +191,7 @@ const highlightSchelble = (authors: string) =>
       {inPress && <span class="pchip inpress">In Press</span>}
     </div>
     <h1 class="paper-title">{paper.title}</h1>
-    <div class="paper-authors" set:html={highlightSchelble(paper.authors)} />
+    <div class="paper-authors" set:html={highlightAuthors(paper.authors)} />
     <div class="paper-venue">{paper.venue}{paper.doi && <span class="muted"> · DOI {paper.doi}</span>}</div>
 
     <div class="paper-actions">
