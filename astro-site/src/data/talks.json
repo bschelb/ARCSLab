@@ -1,6 +1,30 @@
 {
   "invitedTalks": [
     {
+      "date": "July 2026",
+      "title": "Human-AI Teaming: Methodology and Complementarity",
+      "venue": "Eindhoven University of Technology",
+      "location": "Eindhoven, Netherlands",
+      "speaker": "Beau Schelble",
+      "link": null
+    },
+    {
+      "date": "July 2026",
+      "title": "Keynote — Expanding Beyond the Dyad: Trust in Human-Agent Teams",
+      "venue": "5th International Workshop on Multidisciplinary Perspectives on Human-AI Team Trust (MULTITRUST), HHAI 2026",
+      "location": "Vrije Universiteit Brussel, Brussels, Belgium",
+      "speaker": "Beau Schelble",
+      "link": null
+    },
+    {
+      "date": "April 2026",
+      "title": "Human-AI Teaming: The Importance of Human-AI Complementarity",
+      "venue": "Psychology & Neuroscience Department Seminar, University of Tennessee",
+      "location": "Knoxville, TN",
+      "speaker": "Beau Schelble",
+      "link": null
+    },
+    {
       "date": "September 2025",
       "title": "Performance Optimization in Human-AI Teams",
       "venue": "National Academies of Sciences, Engineering, and Medicine — Board on Human-Systems Integration (BOHSI) Webinar",

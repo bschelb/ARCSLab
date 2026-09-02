@@ -1,5 +1,123 @@
 [
   {
+    "id": "olatunji-2026-bridging-hai-hri",
+    "year": 2026,
+    "type": "conference",
+    "title": "Bridging Human–AI Interaction and Human–Robot Interaction: Shared Challenges, Converging Futures",
+    "authors": "Olatunji, S., Schelble, B.G., Tian, Y., Moss, B., Lyons, J., Rogers, W., Yang, J., & Robert, L.",
+    "authorsList": [
+      "Samuel Olatunji",
+      "Beau G. Schelble",
+      "Yayun Tian",
+      "Bethany Moss",
+      "Joseph B. Lyons",
+      "Wendy Rogers",
+      "Jessie Yang",
+      "Lionel Robert"
+    ],
+    "venue": "Proc. Human Factors & Ergonomics Society Annual Meeting",
+    "venueShort": "HFES",
+    "tags": [
+      "human-AI teaming",
+      "review"
+    ],
+    "award": "In Press"
+  },
+  {
+    "id": "mendoza-2026-catems",
+    "year": 2026,
+    "type": "conference",
+    "title": "CATEMS: A Lifecycle Model of Compromised AI Teammate Attacks, Effects, and Mitigation Strategies for Enhanced Resilience",
+    "authors": "Mendoza, S., Tian, Y., Schelble, B.G., Hauptman, A., & Robert, L.",
+    "authorsList": [
+      "Sarah Mendoza",
+      "Yayun Tian",
+      "Beau G. Schelble",
+      "Allyson I. Hauptman",
+      "Lionel Robert"
+    ],
+    "venue": "Proc. Human Factors & Ergonomics Society Annual Meeting",
+    "venueShort": "HFES",
+    "doi": "10.1177/10711813261475221",
+    "tags": [
+      "human-AI teaming",
+      "cybersecurity",
+      "safety"
+    ],
+    "award": null
+  },
+  {
+    "id": "benda-2026-trust-repair",
+    "year": 2026,
+    "type": "conference",
+    "title": "From Breakdown to Renewal: Trust Repair Across Contexts",
+    "authors": "Benda, A., Kim, P., Mayer, R., Sharma, K., Schelble, B.G., & Kramer, W.",
+    "authorsList": [
+      "Angie Benda",
+      "Peter Kim",
+      "Roger Mayer",
+      "Kinshuk Sharma",
+      "Beau G. Schelble",
+      "William Kramer"
+    ],
+    "venue": "Academy of Management Proceedings, 2026(1). Briarcliff Manor, NY: Academy of Management",
+    "venueShort": "AOM",
+    "doi": "10.5465/AMPROC.2026.21002symposium",
+    "tags": [
+      "trust",
+      "team dynamics"
+    ],
+    "award": null
+  },
+  {
+    "id": "schelble-2026-transition-phases",
+    "year": 2026,
+    "type": "journal",
+    "title": "A Mixed Methods Approach to Analyzing the Role of AI Teammates in Transition Phases",
+    "authors": "Schelble, B.G., Mallick, R., & McNeese, N.",
+    "authorsList": [
+      "Beau G. Schelble",
+      "Rohit Mallick",
+      "Nathan J. McNeese"
+    ],
+    "venue": "Proc. ACM on Human-Computer Interaction, 10(1), 1–26",
+    "venueShort": "PACM HCI",
+    "doi": "10.1145/3799438",
+    "abstract": "Recent innovations in AI have allowed AI agents to work as collaborative teammates; however, these human-AI teams still face significant challenges in achieving high levels of effective coordination and collaboration. Focusing on the temporal nature of teaming, collaboration is often evaluated and improved through transition-phase discussions, held among teammates before or after achieving team goals. Using a mixed-methods approach, this study examines how AI teammates participate in transition-phase discussions and share various types of information, with a focus on situation awareness, impact on team cognition, trust, and performance in human-AI teams. Data from 31 teams completing a three-hour simulated uncrewed aerial system task, comprising four distinct rounds and two transition phases, were analyzed. Quantitative results indicated that AI involvement later in the team's life cycle fostered more trust in the AI teammate, as compared across the four rounds, and was associated with higher performance. Perceived team effectiveness also improved following transition phases the AI teammate participated in, irrespective of whether it occurred early or late in the team's life cycle. Qualitative findings revealed that AI involvement benefits transition phases, particularly when it prompts teammates to recall task details and develop shared knowledge. Based on these results, we demonstrate the value of AI teammates engaging in transition-phase discussions for human-AI teams and provide design recommendations for researchers and practitioners to improve the efficacy of HATs by implementing transition phases.",
+    "tags": [
+      "human-AI teaming",
+      "team cognition",
+      "methods"
+    ],
+    "pdf": "schelble-2026-transition-phases.pdf",
+    "award": null
+  },
+  {
+    "id": "schelble-2026-human-or-ai-advice",
+    "year": 2026,
+    "type": "journal",
+    "title": "Human or AI Advice? Examining Trust, Influence, and Responsibility in Ethically-Charged Human-AI Team Decision-Making",
+    "authors": "Schelble, B.G., Flathmann, C., Aly, H., Lyons, J., & McNeese, N.",
+    "authorsList": [
+      "Beau G. Schelble",
+      "Christopher Flathmann",
+      "Heba Aly",
+      "Joseph B. Lyons",
+      "Nathan J. McNeese"
+    ],
+    "venue": "Journal of Cognitive Engineering and Decision Making, 1–35",
+    "venueShort": "JCEDM",
+    "doi": "10.1177/15553434261434613",
+    "abstract": "AI systems are rapidly being placed in positions where they can directly influence decisions that require a strong consideration of ethics. This article reports on an experiment in which humans worked with a teammate acting as an expert advisor with expert-level knowledge, who informed and influenced their ethical decision-making. The identity of this expert advisor was manipulated to be either human or AI, and the influence exerted by the expert advisor was manipulated to be either low or high. Further, participants completed four scenarios, each exploring a different ethically charged decision. Results indicated that working with an AI teammate expert advisor led participants to perceive significantly lower levels of stress and responsibility when making ethical decisions, but AI expert advisors were also perceived as performing worse than human expert advisors. Additionally, when expert advisors exerted high influence levels, participants felt significantly less stress during the decision-making process. Finally, the scenario and ethical decisions made by participants had pervasive effects on trust, trustworthiness, perceived performance, and perceived power for both human and AI expert advisors. Future research efforts must ensure that the use of AI expert advisors in human-AI teams does not reduce the responsibility humans bear when making various ethical decisions.",
+    "tags": [
+      "trust",
+      "AI ethics",
+      "decision-making"
+    ],
+    "pdf": "schelble-2026-human-or-ai-advice.pdf",
+    "award": null
+  },
+  {
     "id": "gonzalez-2026-complementarity-framework",
     "year": 2026,
     "type": "journal",
@@ -48,54 +166,6 @@
       "methods"
     ],
     "award": null
-  },
-  {
-    "id": "schelble-2026-human-or-ai-advice",
-    "year": 2025,
-    "type": "journal",
-    "title": "Human or AI Advice? Examining Trust, Influence, and Responsibility in Ethically-Charged Human-AI Team Decision-Making",
-    "authors": "Schelble, B.G., Flathmann, C., Aly, H., Lyons, J., & McNeese, N.",
-    "authorsList": [
-      "Beau G. Schelble",
-      "Christopher Flathmann",
-      "Heba Aly",
-      "Joseph B. Lyons",
-      "Nathan J. McNeese"
-    ],
-    "venue": "Journal of Cognitive Engineering and Decision Making",
-    "venueShort": "JCEDM",
-    "doi": "10.1177/15553434261434613",
-    "abstract": "AI systems are rapidly being placed in positions where they can directly influence decisions that require a strong consideration of ethics. This article reports on an experiment in which humans worked with a teammate acting as an expert advisor with expert-level knowledge, who informed and influenced their ethical decision-making. The identity of this expert advisor was manipulated to be either human or AI, and the influence exerted by the expert advisor was manipulated to be either low or high. Further, participants completed four scenarios, each exploring a different ethically charged decision. Results indicated that working with an AI teammate expert advisor led participants to perceive significantly lower levels of stress and responsibility when making ethical decisions, but AI expert advisors were also perceived as performing worse than human expert advisors. Additionally, when expert advisors exerted high influence levels, participants felt significantly less stress during the decision-making process. Finally, the scenario and ethical decisions made by participants had pervasive effects on trust, trustworthiness, perceived performance, and perceived power for both human and AI expert advisors. Future research efforts must ensure that the use of AI expert advisors in human-AI teams does not reduce the responsibility humans bear when making various ethical decisions.",
-    "tags": [
-      "trust",
-      "AI ethics",
-      "decision-making"
-    ],
-    "pdf": "schelble-2026-human-or-ai-advice.pdf",
-    "award": "In Press"
-  },
-  {
-    "id": "schelble-2026-transition-phases",
-    "year": 2025,
-    "type": "journal",
-    "title": "A Mixed Methods Approach to Analyzing the Role of AI Teammates in Transition Phases",
-    "authors": "Schelble, B.G., Mallick, R., & McNeese, N.",
-    "authorsList": [
-      "Beau G. Schelble",
-      "Rohit Mallick",
-      "Nathan J. McNeese"
-    ],
-    "venue": "Proceedings of the ACM on Human-Computer Interaction (GROUP)",
-    "venueShort": "PACM HCI",
-    "doi": "10.1145/3799438",
-    "abstract": "Recent innovations in AI have allowed AI agents to work as collaborative teammates; however, these human-AI teams still face significant challenges in achieving high levels of effective coordination and collaboration. Focusing on the temporal nature of teaming, collaboration is often evaluated and improved through transition-phase discussions, held among teammates before or after achieving team goals. Using a mixed-methods approach, this study examines how AI teammates participate in transition-phase discussions and share various types of information, with a focus on situation awareness, impact on team cognition, trust, and performance in human-AI teams. Data from 31 teams completing a three-hour simulated uncrewed aerial system task, comprising four distinct rounds and two transition phases, were analyzed. Quantitative results indicated that AI involvement later in the team's life cycle fostered more trust in the AI teammate, as compared across the four rounds, and was associated with higher performance. Perceived team effectiveness also improved following transition phases the AI teammate participated in, irrespective of whether it occurred early or late in the team's life cycle. Qualitative findings revealed that AI involvement benefits transition phases, particularly when it prompts teammates to recall task details and develop shared knowledge. Based on these results, we demonstrate the value of AI teammates engaging in transition-phase discussions for human-AI teams and provide design recommendations for researchers and practitioners to improve the efficacy of HATs by implementing transition phases.",
-    "tags": [
-      "human-AI teaming",
-      "team cognition",
-      "methods"
-    ],
-    "pdf": "schelble-2026-transition-phases.pdf",
-    "award": "In Press"
   },
   {
     "id": "zhou-2025-spread-of-trust",
@@ -649,6 +719,26 @@
     "award": null
   },
   {
+    "id": "schelble-2023-trust-repair-ethicality",
+    "year": 2023,
+    "type": "workshop",
+    "title": "Addressing Trust Repair for AI Ethicality: The Influence of Team Role and Violation Type",
+    "authors": "Schelble, B.G., Sengupta, S., Williams, A., & McNeese, N.J.",
+    "authorsList": [
+      "Beau G. Schelble",
+      "Subhasree Sengupta",
+      "Alyssa Williams",
+      "Nathan J. McNeese"
+    ],
+    "venue": "Workshop on Trust and Reliance in AI-Human Teams (TRAIT), ACM CHI '23, Hamburg, Germany",
+    "venueShort": "TRAIT @ CHI '23",
+    "tags": [
+      "trust",
+      "AI ethics"
+    ],
+    "award": null
+  },
+  {
     "id": "schelble-2022-i-see-you",
     "year": 2022,
     "type": "journal",
@@ -799,6 +889,31 @@
     "award": null
   },
   {
+    "id": "schelble-2022-trust-distrust-constellations",
+    "year": 2022,
+    "type": "workshop",
+    "title": "Addressing the Spread of Trust and Distrust in Distributed Human-AI Teaming Constellations",
+    "authors": "Schelble, B.G., Flathmann, C., Scalia, M., Zhou, S., Myers, C., McNeese, N.J., Gorman, J., & Freeman, G.",
+    "authorsList": [
+      "Beau G. Schelble",
+      "Christopher Flathmann",
+      "Matthew J. Scalia",
+      "Shiwen Zhou",
+      "Christopher Myers",
+      "Nathan J. McNeese",
+      "Jamie Gorman",
+      "Guo Freeman"
+    ],
+    "venue": "Workshop on Trust and Reliance in AI-Human Teams (TRAIT), ACM CHI '22, New Orleans, LA",
+    "venueShort": "TRAIT @ CHI '22",
+    "tags": [
+      "trust",
+      "human-AI teaming",
+      "team dynamics"
+    ],
+    "award": null
+  },
+  {
     "id": "schelble-2022-lets-think-together",
     "year": 2021,
     "type": "journal",
@@ -938,6 +1053,26 @@
     ],
     "pdf": "schelble-2021-game-theory-rl.pdf",
     "award": "Nominated Best Overall Paper (HICSS)"
+  },
+  {
+    "id": "schelble-2021-multicultural-teams",
+    "year": 2021,
+    "type": "workshop",
+    "title": "Reducing Bias by Prioritizing Multi-Cultural Human-Agent Teams",
+    "authors": "Schelble, B.G., Flathmann, C., & McNeese, N.J.",
+    "authorsList": [
+      "Beau G. Schelble",
+      "Christopher Flathmann",
+      "Nathan J. McNeese"
+    ],
+    "venue": "Workshop on Human-Machine Partnerships in the Future of Work, ACM CSCW '21",
+    "venueShort": "CSCW '21 Workshop",
+    "tags": [
+      "responsible AI",
+      "human-AI teaming",
+      "future of work"
+    ],
+    "award": null
   },
   {
     "id": "oneill-2020-hat-review",

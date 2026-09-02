@@ -185,10 +185,10 @@ const memberCount = 1 + team.phdStudents.length + team.dengStudents.length + tea
         <a href={team.pi.links.personalWebsite} target="_blank" rel="noopener" class="pi-link"><Icon name="globe" size={14} /> Personal Site</a>
       </div>
       <div class="pi-stats">
-        <div><div class="pi-stat-num">46+</div><div class="pi-stat-label">Publications</div></div>
-        <div><div class="pi-stat-num">$722K</div><div class="pi-stat-label">PI Funding</div></div>
-        <div><div class="pi-stat-num">5</div><div class="pi-stat-label">Best Paper Awards</div></div>
-        <div><div class="pi-stat-num">7</div><div class="pi-stat-label">Invited Talks</div></div>
+        <div><div class="pi-stat-num">{team.pi.stats.publications}</div><div class="pi-stat-label">Publications</div></div>
+        <div><div class="pi-stat-num">{team.pi.stats.piFunding}</div><div class="pi-stat-label">PI Funding</div></div>
+        <div><div class="pi-stat-num">{team.pi.stats.bestPaperAwards}</div><div class="pi-stat-label">Best Paper Awards</div></div>
+        <div><div class="pi-stat-num">{team.pi.stats.invitedTalks}</div><div class="pi-stat-label">Invited Talks</div></div>
       </div>
     </div>
   </div>
@@ -263,7 +263,7 @@ const memberCount = 1 + team.phdStudents.length + team.dengStudents.length + tea
         <div class="small-name">{s.name}</div>
         <div class="small-role">{s.role}</div>
         <div class="small-tenure">{s.degree} · {s.tenure}</div>
-        <p class="small-bio">Now: {s.outcome}</p>
+        {s.outcome && <p class="small-bio">Now: {s.outcome}</p>}
       </div>
     ))}
   </div>

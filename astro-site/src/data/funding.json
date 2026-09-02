@@ -1,6 +1,14 @@
 {
-  "totalAwardedAsPI": "$722,190",
+  "totalAwardedAsPI": "$2,802,201",
   "active": [
+    {
+      "status": "Active",
+      "title": "Formation, Drift, and Reconciliation of Shared World Models in Human-AI Teams Under Degraded Information Environments",
+      "funder": "Army Research Office (ARO)",
+      "piRole": "PI — 90%",
+      "amount": null,
+      "description": "This project studies how human-AI teams build a shared model of their world, how that shared model drifts apart when information is delayed, partial, or corrupted, and how teams can reconcile it before performance degrades. The work develops measures and interventions for maintaining a common operating picture in degraded and contested information environments, supporting Army needs for resilient human-machine teaming at the tactical edge."
+    },
     {
       "status": "Active",
       "title": "Preventing, Identifying, and Mitigating the Impact of Compromised AI Teammates Using Shared Situation Awareness and Mental Model Accuracy",
@@ -24,9 +32,29 @@
       "piRole": "PI — 100%",
       "amount": "$1,750",
       "description": "Internal UTK award supporting student research on the design and evaluation of personalized, adaptive AI teammates."
+    },
+    {
+      "status": "Active — Internal",
+      "title": "Augmenting Situation Awareness · Understanding the Acceptance of AI Teammates in High-Risk Contexts",
+      "funder": "University of Tennessee — ISE Department Undergraduate Researcher Support Program",
+      "piRole": "PI — 100%",
+      "amount": "$2,200",
+      "description": "Internal UTK award funding undergraduate researchers working on situation awareness augmentation and AI teammate acceptance in high-risk contexts."
     }
   ],
   "pending": [
+    {
+      "title": "Transference of AI-Learned Skills in Operational Settings (TALOS)",
+      "funder": "Army Research Institute (ARI)",
+      "piRole": "Co-PI",
+      "amount": "$1,024,632"
+    },
+    {
+      "title": "UNITE — Understanding Novel Interdependence Topologies for Human-AI Ensembles",
+      "funder": "Army Research Institute (ARI)",
+      "piRole": "PI — 100%",
+      "amount": "$866,869"
+    },
     {
       "title": "Ethical Shared Mental Models for Adaptive HAT",
       "funder": "Army Futures Command (AFC)",

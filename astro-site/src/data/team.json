@@ -15,10 +15,10 @@
       "bs": "Psychology, Clemson University, 2018"
     },
     "stats": {
-      "publications": "43+",
-      "piFunding": "$722K",
+      "publications": "49+",
+      "piFunding": "$2.8M",
       "bestPaperAwards": 5,
-      "invitedTalks": 7
+      "invitedTalks": 10
     },
     "links": {
       "personalWebsite": "https://beauschelble.com",
@@ -68,20 +68,25 @@
       "bio": "Applied doctoral research in industrial and systems engineering, exploring human factors and systems-level approaches to emerging human-AI collaborative environments."
     },
     {
+      "name": "Joey Burdin",
+      "role": "Doctor of Engineering Student, ISE",
+      "tenure": "2025–Present",
+      "bio": "Applied doctoral research in industrial and systems engineering, exploring human factors and systems-level approaches to emerging human-AI collaborative environments."
+    },
+    {
       "name": "Victoria Lalena",
       "role": "Doctor of Engineering Student, ISE",
       "tenure": "2025–Present",
       "bio": "Applied doctoral research in industrial and systems engineering, exploring human factors and systems-level approaches to emerging human-AI collaborative environments."
+    },
+    {
+      "name": "Daniel Opong-Duah",
+      "role": "Doctor of Engineering Student, ISE",
+      "tenure": "2026–Present",
+      "bio": "Applied doctoral research in industrial and systems engineering, exploring human factors and systems-level approaches to emerging human-AI collaborative environments."
     }
   ],
   "undergraduates": [
-    {
-      "name": "Elizabeth Hughes",
-      "role": "Undergraduate Researcher",
-      "degree": "BS Industrial & Systems Engineering",
-      "tenure": "2024–Present",
-      "bio": "Multiple ARCS Lab projects"
-    },
     {
       "name": "Gracyn Filer",
       "role": "Undergraduate Researcher",
@@ -93,14 +98,14 @@
       "name": "Brooke Henley",
       "role": "Undergraduate Researcher",
       "degree": "BS Industrial & Systems Engineering",
-      "tenure": "2026–Present",
+      "tenure": "2025–Present",
       "bio": "Multiple ARCS Lab projects"
     },
     {
       "name": "Owen Fair",
       "role": "Undergraduate Researcher",
-      "degree": "BS Supply Chain Management",
-      "tenure": "2026–Present",
+      "degree": "BS Information Systems",
+      "tenure": "2025–Present",
       "bio": "Multiple ARCS Lab projects"
     },
     {
@@ -118,6 +123,13 @@
       "degree": "BS Industrial & Systems Engineering",
       "tenure": "2024–2026",
       "outcome": "Graduate Student in ISE"
+    },
+    {
+      "name": "Elizabeth Hughes",
+      "role": "Lab Alumna",
+      "degree": "BS Applied Artificial Intelligence",
+      "tenure": "2024–2026",
+      "outcome": null
     }
   ],
   "collaborators": [

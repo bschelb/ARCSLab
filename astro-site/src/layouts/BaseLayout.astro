@@ -183,7 +183,10 @@ const keywords = researchKeywords.join(', ');
       const suffix = (el as HTMLElement).dataset.suffix || '';
       const dur = 1400;
       const t0 = performance.now();
-      const fmt = (n: number) => prefix + Math.round(n).toLocaleString('en-US') + suffix;
+      const dp = ((el as HTMLElement).dataset.count || '').split('.')[1]?.length ?? 0;
+      const fmt = (n: number) => prefix + n.toLocaleString('en-US', {
+        minimumFractionDigits: dp, maximumFractionDigits: dp,
+      }) + suffix;
       if (reduced) { el.textContent = fmt(target); return; }
       const step = (t: number) => {
         const p = Math.min((t - t0) / dur, 1);
