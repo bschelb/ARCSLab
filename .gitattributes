@@ -1,0 +1,19 @@
+# Store every text file with LF in the repository and check it out with LF.
+#
+# Without this, the JSON data files under astro-site/src/data/ sat in the repo
+# with CRLF while the .astro/.ts sources used LF. Any scripted edit (Python,
+# sed) silently rewrote them as LF, so a two-line content change showed up as a
+# whole-file diff and buried the real edit. Normalizing here makes line endings
+# a non-issue regardless of how a file gets written.
+* text=auto eol=lf
+
+# Binaries: never inspected or converted.
+*.pdf   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.webp  binary
+*.woff  binary
+*.woff2 binary
