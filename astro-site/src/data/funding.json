@@ -6,7 +6,7 @@
       "title": "Formation, Drift, and Reconciliation of Shared World Models in Human-AI Teams Under Degraded Information Environments",
       "funder": "Army Research Office (ARO)",
       "piRole": "PI — 90%",
-      "amount": null,
+      "amount": "$2,077,811",
       "description": "This project studies how human-AI teams build a shared model of their world, how that shared model drifts apart when information is delayed, partial, or corrupted, and how teams can reconcile it before performance degrades. The work develops measures and interventions for maintaining a common operating picture in degraded and contested information environments, supporting Army needs for resilient human-machine teaming at the tactical edge."
     },
     {
@@ -14,7 +14,7 @@
       "title": "Preventing, Identifying, and Mitigating the Impact of Compromised AI Teammates Using Shared Situation Awareness and Mental Model Accuracy",
       "funder": "Army Research Office (ARO)",
       "piRole": "PI — 100%",
-      "amount": null,
+      "amount": "$718,690",
       "description": "This project investigates how human-AI teams can detect, respond to, and recover from scenarios in which AI teammates are compromised or provide inaccurate information. The research develops frameworks rooted in shared situational awareness and mental model accuracy to maintain team performance and safety in electronically contested and adversarial environments. Work directly supports Army priorities in human-machine teaming for command and control."
     },
     {
@@ -56,13 +56,7 @@
       "amount": "$866,869"
     },
     {
-      "title": "Ethical Shared Mental Models for Adaptive HAT",
-      "funder": "Army Futures Command (AFC)",
-      "piRole": "PI — 70%",
-      "amount": "$762,778"
-    },
-    {
-      "title": "AI Teammate Augmented Transactive Memory Systems",
+      "title": "Collaborative Research: Enhancing Team Process Execution Using AI Teammate Augmented Transactive Memory Systems",
       "funder": "National Science Foundation (NSF)",
       "piRole": "PI — 80%",
       "amount": "$387,256"

@@ -4,12 +4,12 @@
     "year": 2026,
     "type": "conference",
     "title": "Bridging Human–AI Interaction and Human–Robot Interaction: Shared Challenges, Converging Futures",
-    "authors": "Olatunji, S., Schelble, B.G., Tian, Y., Moss, B., Lyons, J., Rogers, W., Yang, J., & Robert, L.",
+    "authors": "Olatunji, S., Schelble, B.G., Tian, Y., Cole, B., Lyons, J., Rogers, W., Yang, J., & Robert, L.",
     "authorsList": [
       "Samuel Olatunji",
       "Beau G. Schelble",
       "Yayun Tian",
-      "Bethany Moss",
+      "B. Cole",
       "Joseph B. Lyons",
       "Wendy Rogers",
       "Jessie Yang",
@@ -165,6 +165,28 @@
       "cybersecurity",
       "methods"
     ],
+    "award": null
+  },
+  {
+    "id": "sawant-2026-ai-vulnerabilities",
+    "year": 2026,
+    "type": "book chapter",
+    "title": "Addressing AI Vulnerabilities Through Human-Centered Approaches and Risk Frameworks",
+    "authors": "Sawant, S., Bhanu, A., Schelble, B.G., & Madathil, K.",
+    "authorsList": [
+      "Shubham Sawant",
+      "Anjali Bhanu",
+      "Beau G. Schelble",
+      "Kapil Chalil Madathil"
+    ],
+    "venue": "Advances in Human-AI Collaboration (pp. 325–339). John Wiley and Sons",
+    "venueShort": "Wiley",
+    "doi": "10.1002/9781394266401.ch17",
+    "tags": [
+      "responsible AI",
+      "risk frameworks"
+    ],
+    "pdf": "sawant-2026-ai-vulnerabilities.pdf",
     "award": null
   },
   {
@@ -1166,26 +1188,5 @@
     ],
     "pdf": "schelble-2020-applied-hat.pdf",
     "award": null
-  },
-  {
-    "id": "sawant-2026-ai-vulnerabilities",
-    "year": 2025,
-    "type": "book chapter",
-    "title": "Addressing AI Vulnerabilities Through Human-Centered Approaches and Risk Frameworks",
-    "authors": "Sawant, S., Bhanu, A., Schelble, B.G., & Madathil, K.",
-    "authorsList": [
-      "Shubham Sawant",
-      "Anjali Bhanu",
-      "Beau G. Schelble",
-      "Kapil Chalil Madathil"
-    ],
-    "venue": "Advances in Human-AI Collaboration. John Wiley and Sons",
-    "venueShort": "Wiley",
-    "tags": [
-      "responsible AI",
-      "risk frameworks"
-    ],
-    "pdf": "sawant-2026-ai-vulnerabilities.pdf",
-    "award": "In Press"
   }
 ]

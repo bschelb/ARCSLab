@@ -44,7 +44,7 @@
       "date": "February 2025",
       "title": "Human-Machine Teaming Deep Dive",
       "venue": "Technical Advisory Panel on the Use of AI Systems in Warfare",
-      "location": "United States Military Academy (West Point), West Point, NY",
+      "location": "Virtual",
       "speaker": "Beau Schelble",
       "link": null
     },
@@ -67,8 +67,8 @@
     {
       "date": "September 2024",
       "title": "From Assistance to Autonomy: Ethical Considerations in Human-AI Teaming",
-      "venue": "Department of Information, Risk, and Operations Management",
-      "location": "University of Texas at Austin, Austin, TX",
+      "venue": "NSF NRT Seminar Speaker Series, University of Texas at Austin",
+      "location": "Virtual",
       "speaker": "Beau Schelble",
       "link": "https://ethicalai.utexas.edu/2024/09/15/nrt-ethical-ai-talk-series/"
     },
@@ -91,11 +91,19 @@
       "link": "https://tickle.utk.edu/news/artificial-enhancements/"
     },
     {
+      "date": "Spring 2026",
+      "icon": "doc",
+      "tag": "Press",
+      "title": "“Detecting Compromised AI Teammates” · Tennessee Engineer",
+      "description": "Tennessee Engineer magazine profiled the lab's Army Research Office–funded study of how to prevent, recognize, and quickly recover from attacks on AI teammates before they undermine human-AI team performance.",
+      "link": "https://engineer.utk.edu/detecting-compromised-ai-teammates/"
+    },
+    {
       "date": "April 2026",
       "icon": "doc",
       "tag": "Press",
-      "title": "ARO research featured by EurekAlert!",
-      "description": "Coverage of the lab's Army Research Office cooperative agreement on preventing and recovering from compromised AI teammates, including how human-AI teams can recognize when an AI may have been attacked.",
+      "title": "“Schelble's ARO Agreement to Help Create More Secure Human-AI Teams”",
+      "description": "Tickle College of Engineering news on the lab's Army Research Office cooperative agreement on preventing and recovering from compromised AI teammates (also carried by EurekAlert!), including how human-AI teams can recognize when an AI may have been attacked.",
       "link": "https://www.eurekalert.org/news-releases/1122888"
     },
     {
@@ -143,7 +151,7 @@
       "icon": "mic",
       "tag": "Talk",
       "title": "Technical Advisory Panel on AI in warfare",
-      "description": "Dr. Schelble delivered a Human-Machine Teaming Deep Dive for the Technical Advisory Panel on the Use of AI Systems in Warfare at West Point.",
+      "description": "Dr. Schelble delivered a Human-Machine Teaming Deep Dive for the Technical Advisory Panel on the Use of AI Systems in Warfare.",
       "link": "/pi"
     },
     {
@@ -167,7 +175,7 @@
       "icon": "mic",
       "tag": "Talk",
       "title": "Invited talks at CMU and UT Austin",
-      "description": "Dr. Schelble spoke at Carnegie Mellon's AI Institute for Societal Decision Making and at the University of Texas at Austin on ethics and team cognition in human-AI teams.",
+      "description": "Dr. Schelble spoke at Carnegie Mellon's AI Institute for Societal Decision Making and at the University of Texas at Austin's NSF NRT seminar series on ethics and team cognition in human-AI teams.",
       "link": "/pi"
     },
     {

@@ -100,7 +100,7 @@ const internalGrants = funding.active.filter(g => g.funder.startsWith('Universit
       <div class="int-card" data-reveal style={`--rd: ${i * 90}ms`}>
         <div class="int-status"><span class="status-dot"></span> Active — Internal</div>
         <div class="int-title">{g.title}</div>
-        <div class="int-meta">{g.funder} · {g.piRole}</div>
+        <div class="int-meta">{g.funder} · {g.piRole}{g.amount && ` · ${g.amount}`}</div>
       </div>
     ))}
   </div>
