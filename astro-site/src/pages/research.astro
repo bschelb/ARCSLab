@@ -170,7 +170,7 @@ const domains = [
           {area.pubs.map((pub: any) => (
             <div class="pubs-mini-item">
               <strong set:html={`${markLabMembers(pub.authors, labMembers)} (${pub.venue.match(/\d{4}/)?.[0] || ''}).`} /> {pub.title}. <em>{pub.venue}</em>
-              {pub.award && <span class="aw">★ {pub.award}</span>}
+              {pub.award && <span class="aw"><Icon name="trophy" size={12} class="badge-ico" />{pub.award}</span>}
             </div>
           ))}
         </div>

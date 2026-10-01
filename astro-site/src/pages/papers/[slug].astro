@@ -185,7 +185,7 @@ const markedAuthors = markLabMembers(paper.authors, labMembers);
     <div class="paper-chips">
       <span class="pchip type">{typeLabel(paper.type)}</span>
       <span class="pchip year">{paper.year}</span>
-      {hasAward && <span class="pchip award">★ {paper.award}</span>}
+      {hasAward && <span class="pchip award"><Icon name="trophy" size={12} class="badge-ico" />{paper.award}</span>}
       {inPress && <span class="pchip inpress">In Press</span>}
     </div>
     <h1 class="paper-title">{paper.title}</h1>

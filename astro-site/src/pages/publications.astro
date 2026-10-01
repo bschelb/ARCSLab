@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
+import Icon from '../components/Icon.astro';
 import publications from '../data/publications.json';
 import team from '../data/team.json';
 import { labRoster, markLabMembers } from '../lib/papers';
@@ -121,7 +122,7 @@ const markAuthors = (authors: string) => markLabMembers(authors, labMembers);
   <button class="filter-btn" data-filter="conference">Conference</button>
   <button class="filter-btn" data-filter="book chapter">Book Chapters</button>
   <button class="filter-btn" data-filter="workshop">Workshops</button>
-  <button class="filter-btn" data-filter="award">★ Award-Winning</button>
+  <button class="filter-btn" data-filter="award"><Icon name="trophy" size={12} class="badge-ico" />Award-Winning</button>
   <span class="lab-mark-key filter-key"><span class="lab-mark" aria-hidden="true">★</span>ARCS Lab member</span>
 </div>
 
@@ -142,7 +143,7 @@ const markAuthors = (authors: string) => markLabMembers(authors, labMembers);
             <div class="pub-venue">{pub.venue}</div>
           </div>
           <div class="pub-aside">
-            {pub.award && pub.award !== 'In Press' && <div class="pub-award-badge">★ {pub.award}</div>}
+            {pub.award && pub.award !== 'In Press' && <div class="pub-award-badge"><Icon name="trophy" size={12} class="badge-ico" />{pub.award}</div>}
             {pub.pdf && <div class="pub-pdf-badge"><span class="dotpdf"></span> Free PDF</div>}
           </div>
         </a>

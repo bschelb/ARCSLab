@@ -357,7 +357,7 @@ const researchAreas = [
           <div class="pub-title-text">{pub.title}</div>
           <div class="pub-meta" set:html={`${markLabMembers(pub.authors, labMembers)} · <em>${pub.venue}</em>`} />
         </div>
-        {pub.award ? <span class="pub-award">★ {pub.award}</span> : <span></span>}
+        {pub.award ? <span class="pub-award"><Icon name="trophy" size={12} class="badge-ico" />{pub.award}</span> : <span></span>}
       </div>
     ))}
   </div>

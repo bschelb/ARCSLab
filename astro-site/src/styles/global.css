@@ -553,6 +553,14 @@ nav.site-nav.scrolled {
   background: rgba(255, 102, 0, 0.14);
 }
 
+/* ── INLINE BADGE ICON (e.g. award trophy) ───────────────────── */
+.badge-ico {
+  display: inline-block;
+  vertical-align: -0.2em;
+  margin-right: 0.45em;
+  flex-shrink: 0;
+}
+
 /* ── LAB-MEMBER MARK (author lists) ──────────────────────────── */
 .lab-mark {
   color: var(--orange-deep);
