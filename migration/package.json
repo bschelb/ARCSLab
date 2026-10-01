@@ -1,0 +1,15 @@
+{
+  "name": "arcslab-migration-tools",
+  "private": true,
+  "type": "module",
+  "description": "Phase 0 baseline tooling (SEO capture, screenshots, Lighthouse). Not deployed.",
+  "scripts": {
+    "capture:seo": "node scripts/capture-seo.mjs",
+    "capture:screens": "node scripts/capture-screens.mjs",
+    "capture:lighthouse": "node scripts/capture-lighthouse.mjs"
+  },
+  "devDependencies": {
+    "lighthouse": "^13.5.0",
+    "playwright": "^1.63.0"
+  }
+}
