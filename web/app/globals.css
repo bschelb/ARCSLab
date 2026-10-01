@@ -1,0 +1,18 @@
+@import 'tailwindcss';
+
+/* Phase 1 skeleton. Phase 3 moves the full design-token set here (plan 4.2). */
+@theme inline {
+  --font-serif: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-space-grotesk), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+}
+
+@theme {
+  --color-ink: #14100b;
+  --color-paper: #faf8f3;
+}
+
+body {
+  background: var(--color-paper);
+  font-family: var(--font-sans);
+}
