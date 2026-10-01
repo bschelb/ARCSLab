@@ -15,8 +15,10 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "validate:data": "node scripts/validate-data.mjs",
-    "copy:pdfjs": "node scripts/copy-pdfjs.mjs"
+    "validate:data": "tsx scripts/validate-data.ts",
+    "copy:pdfjs": "node scripts/copy-pdfjs.mjs",
+    "migrate:data": "node scripts/migrate-data.mjs",
+    "optimize:images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
@@ -39,7 +41,9 @@
     "eslint-config-next": "16.3.8",
     "prettier": "^3.9.9",
     "prettier-plugin-tailwindcss": "^0.8.1",
+    "sharp": "^0.35.5",
     "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.15",
     "typescript": "~5.9.3",
     "vitest": "^5.0.3"
   },

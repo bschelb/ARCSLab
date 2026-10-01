@@ -1,0 +1,165 @@
+[
+  {
+    "id": "2026-06-artificial-enhancements-tickle-college-of-engineering",
+    "date": "2026-06",
+    "kind": "press",
+    "title": "“Artificial Enhancements” · Tickle College of Engineering",
+    "description": "The Tickle College of Engineering featured the lab's work on AI teammates: AI agents built to act as genuine collaborators rather than chatbots, and the ARO-funded effort to detect and recover from compromised teammates across manufacturing, nuclear energy, disaster recovery, and healthcare.",
+    "icon": "doc",
+    "link": "https://tickle.utk.edu/news/artificial-enhancements/"
+  },
+  {
+    "id": "2026-04-detecting-compromised-ai-teammates-tennessee-engineer",
+    "date": "2026-04",
+    "dateLabel": "Spring 2026",
+    "kind": "press",
+    "title": "“Detecting Compromised AI Teammates” · Tennessee Engineer",
+    "description": "Tennessee Engineer magazine profiled the lab's Army Research Office–funded study of how to prevent, recognize, and quickly recover from attacks on AI teammates before they undermine human-AI team performance.",
+    "icon": "doc",
+    "link": "https://engineer.utk.edu/detecting-compromised-ai-teammates/"
+  },
+  {
+    "id": "2026-04-schelbles-aro-agreement-to-help-create-more-secure-human",
+    "date": "2026-04",
+    "kind": "press",
+    "title": "“Schelble's ARO Agreement to Help Create More Secure Human-AI Teams”",
+    "description": "Tickle College of Engineering news on the lab's Army Research Office cooperative agreement on preventing and recovering from compromised AI teammates (also carried by EurekAlert!), including how human-AI teams can recognize when an AI may have been attacked.",
+    "icon": "doc",
+    "link": "https://www.eurekalert.org/news-releases/1122888"
+  },
+  {
+    "id": "2026-04-invited-seminar-at-utk-psychology-neuroscience",
+    "date": "2026-04",
+    "kind": "talk",
+    "title": "Invited seminar at UTK Psychology & Neuroscience",
+    "description": "Dr. Schelble delivered \"Human-AI Teaming: The Importance of Human-AI Complementarity\" at the University of Tennessee Psychology & Neuroscience Department Seminar.",
+    "icon": "mic",
+    "link": "/pi"
+  },
+  {
+    "id": "2026-04-new-pacm-hci-article-on-ai-teammates-in-transition-phase",
+    "date": "2026-04",
+    "kind": "publication",
+    "title": "New PACM HCI article on AI teammates in transition phases",
+    "description": "\"A Mixed Methods Approach to Analyzing the Role of AI Teammates in Transition Phases\" appears in the Proceedings of the ACM on Human-Computer Interaction.",
+    "icon": "book",
+    "link": "/papers/schelble-2026-transition-phases"
+  },
+  {
+    "id": "2026-02-complementarity-framework-published-in-pnas-nexus",
+    "date": "2026-02",
+    "kind": "publication",
+    "title": "Complementarity framework published in PNAS Nexus",
+    "description": "\"Toward a Science of Human-AI Teaming for Decision-Making: A Complementarity Framework\", a multi-institution collaboration including Carnegie Mellon, is out in PNAS Nexus.",
+    "icon": "book",
+    "link": "/papers/gonzalez-2026-complementarity-framework"
+  },
+  {
+    "id": "2025-09-national-academies-webinar-on-human-ai-team-performance",
+    "date": "2025-09",
+    "kind": "talk",
+    "title": "National Academies webinar on human-AI team performance",
+    "description": "Dr. Schelble presented \"Performance Optimization in Human-AI Teams\" to the National Academies of Sciences, Engineering, and Medicine Board on Human-Systems Integration.",
+    "icon": "mic",
+    "link": "https://www.nationalacademies.org/event/45507_09-2025_performance-optimization-in-human-ai-teams"
+  },
+  {
+    "id": "2025-06-ai-on-the-battlefield-west-point",
+    "date": "2025-06",
+    "kind": "talk",
+    "title": "AI on the Battlefield · West Point",
+    "description": "Invited talk \"Mitigating the Risks of Compromised AI Teammates\" at the AI on the Battlefield Workshop, United States Military Academy at West Point.",
+    "icon": "mic",
+    "link": "/pi"
+  },
+  {
+    "id": "2025-02-technical-advisory-panel-on-ai-in-warfare",
+    "date": "2025-02",
+    "kind": "talk",
+    "title": "Technical Advisory Panel on AI in warfare",
+    "description": "Dr. Schelble delivered a Human-Machine Teaming Deep Dive for the Technical Advisory Panel on the Use of AI Systems in Warfare.",
+    "icon": "mic",
+    "link": "/pi"
+  },
+  {
+    "id": "2025-01-acm-tiis-featured-article-honors",
+    "date": "2025-01",
+    "kind": "award",
+    "title": "ACM TiiS Featured Article honors",
+    "description": "\"I Know This Looks Bad, But I Can Explain\" was selected as a 2023 & 2024 Featured Article for ACM Transactions on Interactive Intelligent Systems.",
+    "icon": "award",
+    "link": "/papers/zhang-2024-when-ai-should-explain"
+  },
+  {
+    "id": "2024-09-aro-funds-arcs-lab-research-on-compromised-ai-teammates",
+    "date": "2024-09",
+    "kind": "funding",
+    "title": "ARO funds ARCS Lab research on compromised AI teammates",
+    "description": "The Army Research Office awarded a cooperative agreement to study preventing, identifying, and mitigating compromised AI teammates using shared situation awareness and mental model accuracy.",
+    "icon": "briefcase",
+    "link": "/research"
+  },
+  {
+    "id": "2024-09-invited-talks-at-cmu-and-ut-austin",
+    "date": "2024-09",
+    "kind": "talk",
+    "title": "Invited talks at CMU and UT Austin",
+    "description": "Dr. Schelble spoke at Carnegie Mellon's AI Institute for Societal Decision Making and at the University of Texas at Austin's NSF NRT seminar series on ethics and team cognition in human-AI teams.",
+    "icon": "mic",
+    "link": "/pi"
+  },
+  {
+    "id": "2024-08-arcs-lab-launches-at-the-university-of-tennessee",
+    "date": "2024-08",
+    "kind": "lab",
+    "title": "ARCS Lab launches at the University of Tennessee",
+    "description": "Dr. Schelble joined UTK Industrial & Systems Engineering as Assistant Professor and founded the AI & Robotics for Collaborative Systems (ARCS) Lab.",
+    "icon": "building",
+    "link": "/"
+  },
+  {
+    "id": "2024-05-most-outstanding-graduate-student-clemson-hcc",
+    "date": "2024-05",
+    "kind": "award",
+    "title": "Most Outstanding Graduate Student, Clemson HCC",
+    "description": "Recognized as the Most Outstanding Graduate Student in Clemson University's Human-Centered Computing PhD program.",
+    "icon": "award",
+    "link": "/pi"
+  },
+  {
+    "id": "2023-09-invited-industry-talk-at-rtx",
+    "date": "2023-09",
+    "kind": "talk",
+    "title": "Invited industry talk at RTX",
+    "description": "\"Human-AI Teaming: Ethics, Trust, & Shared Knowledge\" presented at RTX (Raytheon Technologies), East Hartford, CT.",
+    "icon": "mic",
+    "link": "/pi"
+  },
+  {
+    "id": "2023-01-best-jcedm-article-of-2022",
+    "date": "2023-01",
+    "kind": "award",
+    "title": "Best JCEDM Article of 2022",
+    "description": "\"Exploring the Relationship Between Ethics and Trust in Human-AI Teaming\" named Best Journal of Cognitive Engineering and Decision Making Article of 2022.",
+    "icon": "award",
+    "link": "/papers/textor-2022-ethics-trust-mixed-methods"
+  },
+  {
+    "id": "2022-11-best-paper-honorable-mention-at-acm-group",
+    "date": "2022-11",
+    "kind": "award",
+    "title": "Best Paper Honorable Mention at ACM GROUP",
+    "description": "\"Let's Think Together!\" received a Best Paper Honorable Mention at the ACM International Conference on Supporting Group Work.",
+    "icon": "award",
+    "link": "/papers/schelble-2022-lets-think-together"
+  },
+  {
+    "id": "2020-11-best-overall-paper-at-hai-2020",
+    "date": "2020-11",
+    "kind": "award",
+    "title": "Best Overall Paper at HAI 2020",
+    "description": "\"Invoking Principles of Groupware to Develop and Evaluate Present and Future Human-Agent Teams\" won Best Overall Paper at the 8th International Conference on Human-Agent Interaction.",
+    "icon": "award",
+    "link": "/papers/flathmann-2020-groupware-principles"
+  }
+]

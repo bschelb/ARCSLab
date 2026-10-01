@@ -1,0 +1,229 @@
+{
+  "people": [
+    {
+      "slug": "beau-schelble",
+      "name": "Dr. Beau G. Schelble",
+      "group": "pi",
+      "role": "Principal Investigator",
+      "photo": "/images/people/beau-schelble.jpg",
+      "cropPosition": "center 40%",
+      "startYear": 2024,
+      "bio": "Dr. Schelble is an interdisciplinary researcher whose work sits at the intersection of human factors, human-centered computing, and AI. For nearly a decade he has explored how humans and AI can work together more effectively and safely — investigating trust, shared mental models, situational awareness, ethical AI behavior, and intelligent information sharing. His research spans defense, advanced manufacturing, healthcare, cybersecurity, and emergency response. He received his PhD in Human-Centered Computing from Clemson University in 2023 under advisor Nathan McNeese, and his BS in Psychology from Clemson in 2018.",
+      "shortBio": "Assistant Professor of ISE. PhD in Human-Centered Computing, Clemson University 2023.",
+      "authorAliases": [
+        "Beau G. Schelble"
+      ],
+      "links": {
+        "website": "https://beauschelble.com",
+        "scholar": "https://scholar.google.com/citations?user=ggHXV-4AAAAJ&hl=en",
+        "orcid": "https://orcid.org/0000-0003-3704-697X"
+      },
+      "title": "Assistant Professor, Industrial & Systems Engineering",
+      "subtitle": "Founding Director, AI & Robotics for Collaborative Systems Lab",
+      "department": "Tickle College of Engineering, University of Tennessee, Knoxville",
+      "email": "bschelbl@utk.edu",
+      "degrees": {
+        "phd": "Human-Centered Computing, Clemson University, 2023",
+        "bs": "Psychology, Clemson University, 2018"
+      }
+    },
+    {
+      "slug": "sarah-mendoza",
+      "name": "Sarah Mendoza",
+      "group": "phd",
+      "role": "PhD Student, Industrial & Systems Engineering",
+      "photo": "/images/people/sarah-mendoza.jpg",
+      "cropPosition": "center 15%",
+      "education": "BS Psychology (Minor in Computer Science), Clemson University, 2025",
+      "startYear": 2025,
+      "bio": "Hello hello! I'm Sarah Mendoza and I'm from Clemson, South Carolina. Guided by my curiosity for people and interpersonal behaviors, I graduated from Clemson University with my bachelor's degree in Psychology in May 2025. I was brought into the world of human-AI teams during my time there — researching everything from trust perceptions, to autonomy levels, to teamwork versus taskwork. This, coupled with my minor in Computer Science, has prompted me to further explore the various dimensions of human-AI teams within the ARCS lab! When I'm not working, I'm probably in the gym, checking out a new café, or playing The Sims 3.",
+      "shortBio": "Research focus: trust perceptions, autonomy levels, and teamwork dimensions in human-AI teams.",
+      "authorAliases": [
+        "Sarah Mendoza"
+      ],
+      "links": {
+        "scholar": "https://scholar.google.com/citations?user=rYofT7YAAAAJ&hl=en"
+      }
+    },
+    {
+      "slug": "yayun-tian",
+      "name": "Yayun Tian",
+      "group": "phd",
+      "role": "PhD Student, Industrial & Systems Engineering",
+      "photo": "/images/people/yayun-tian.jpg",
+      "cropPosition": "center 60%",
+      "education": "MS Analytics, USC, 2022 · BS Applied Math & Statistics + Economics, Stony Brook, 2020",
+      "startYear": 2025,
+      "bio": "Hi, I'm Yayun Tian, and I'm a Ph.D. student in Industrial and Systems Engineering at the University of Tennessee, Knoxville. I graduated from Stony Brook University in 2020 with a Bachelor's degree in Applied Mathematics and Statistics, a double major in Economics, and a minor in Computer Science. In 2022, I earned my Master's degree in Analytics from the University of Southern California, and then spent three years working as a software engineer in Los Angeles. These experiences led me to think about how technology could play a more active and supportive role in teamwork — not just as a tool, but as a trusted and capable teammate.",
+      "shortBio": "Background in applied mathematics, statistics, and software engineering. Exploring AI as trusted teammate.",
+      "authorAliases": [
+        "Yayun Tian"
+      ]
+    },
+    {
+      "slug": "naveena-nagaraju",
+      "name": "Naveena Nagaraju",
+      "group": "phd",
+      "role": "PhD Student, Industrial & Systems Engineering",
+      "photo": "/images/people/naveena-nagaraju.jpg",
+      "cropPosition": "center 20%",
+      "education": "MS Information Science, University of Pittsburgh, 2025",
+      "startYear": 2026,
+      "bio": "Hi, I'm Naveena Nagaraju, and I'm a Ph.D. student in Industrial and Systems Engineering at the University of Tennessee, Knoxville. I graduated from the University of Pittsburgh in 2025 with a Master's degree in Information Science. During my master's, I worked with research labs at Pitt focused on AI, and after graduating I worked as a Data Analyst, which grew my interest in AI and how humans interact with it in everyday life even further. This interest goes back to my undergrad, and I'm excited to bring that experience into the ARCS lab and contribute to research on human-AI teaming.",
+      "shortBio": "Background in information science and data analytics. Exploring how humans interact with AI in everyday life."
+    },
+    {
+      "slug": "cody-gaspar",
+      "name": "Cody Gaspar",
+      "group": "deng",
+      "role": "Doctor of Engineering Student, ISE",
+      "startYear": 2024,
+      "bio": "Applied doctoral research in industrial and systems engineering, exploring human factors and systems-level approaches to emerging human-AI collaborative environments."
+    },
+    {
+      "slug": "joey-burdin",
+      "name": "Joey Burdin",
+      "group": "deng",
+      "role": "Doctor of Engineering Student, ISE",
+      "startYear": 2025,
+      "bio": "Applied doctoral research in industrial and systems engineering, exploring human factors and systems-level approaches to emerging human-AI collaborative environments."
+    },
+    {
+      "slug": "victoria-lalena",
+      "name": "Victoria Lalena",
+      "group": "deng",
+      "role": "Doctor of Engineering Student, ISE",
+      "startYear": 2025,
+      "bio": "Applied doctoral research in industrial and systems engineering, exploring human factors and systems-level approaches to emerging human-AI collaborative environments."
+    },
+    {
+      "slug": "daniel-opong-duah",
+      "name": "Daniel Opong-Duah",
+      "group": "deng",
+      "role": "Doctor of Engineering Student, ISE",
+      "startYear": 2026,
+      "bio": "Applied doctoral research in industrial and systems engineering, exploring human factors and systems-level approaches to emerging human-AI collaborative environments."
+    },
+    {
+      "slug": "gracyn-filer",
+      "name": "Gracyn Filer",
+      "group": "undergrad",
+      "role": "Undergraduate Researcher",
+      "degree": "BS Industrial & Systems Engineering",
+      "startYear": 2024,
+      "bio": "Co-author on HFES 2025 paper on AI information-sharing and trust",
+      "authorAliases": [
+        "Gracyn Filer"
+      ]
+    },
+    {
+      "slug": "brooke-henley",
+      "name": "Brooke Henley",
+      "group": "undergrad",
+      "role": "Undergraduate Researcher",
+      "degree": "BS Industrial & Systems Engineering",
+      "startYear": 2025,
+      "bio": "Multiple ARCS Lab projects"
+    },
+    {
+      "slug": "owen-fair",
+      "name": "Owen Fair",
+      "group": "undergrad",
+      "role": "Undergraduate Researcher",
+      "degree": "BS Information Systems",
+      "startYear": 2025,
+      "bio": "Multiple ARCS Lab projects"
+    },
+    {
+      "slug": "aiden-conklin",
+      "name": "Aiden Conklin",
+      "group": "undergrad",
+      "role": "Undergraduate Researcher",
+      "degree": "BS Industrial & Systems Engineering",
+      "startYear": 2026,
+      "bio": "Multiple ARCS Lab projects"
+    },
+    {
+      "slug": "carson-bogue",
+      "name": "Carson Bogue",
+      "group": "alumni",
+      "role": "Lab Alumnus",
+      "degree": "BS Industrial & Systems Engineering",
+      "startYear": 2024,
+      "endYear": 2026,
+      "outcome": "Graduate Student in ISE"
+    },
+    {
+      "slug": "elizabeth-hughes",
+      "name": "Elizabeth Hughes",
+      "group": "alumni",
+      "role": "Lab Alumna",
+      "degree": "BS Applied Artificial Intelligence",
+      "startYear": 2024,
+      "endYear": 2026,
+      "outcome": null
+    }
+  ],
+  "collaborators": [
+    {
+      "name": "Christopher Flathmann",
+      "institution": "Clemson University",
+      "area": "Human-Centered Computing"
+    },
+    {
+      "name": "Allyson I. Hauptman",
+      "institution": "U.S. Military Academy (West Point)",
+      "area": "Human-AI Teaming"
+    },
+    {
+      "name": "Chad Tossell",
+      "institution": "Embry-Riddle Aeronautical University",
+      "area": "Human-AI Teaming & Trust"
+    },
+    {
+      "name": "Thomas A. O'Neill",
+      "institution": "University of Calgary",
+      "area": "Organizational Psychology"
+    },
+    {
+      "name": "Ewart de Visser",
+      "institution": "George Mason University",
+      "area": "Human-Robot Trust"
+    },
+    {
+      "name": "Jamie Gorman",
+      "institution": "Arizona State University",
+      "area": "Team Coordination Dynamics"
+    },
+    {
+      "name": "Kapil Chalil Madathil",
+      "institution": "Clemson University",
+      "area": "Industrial Engineering"
+    },
+    {
+      "name": "Gregory Funke",
+      "institution": "Air Force Research Laboratory",
+      "area": "Team Workload & Cyber Human Factors"
+    },
+    {
+      "name": "Joseph B. Lyons",
+      "institution": "Air Force Research Laboratory",
+      "area": "Trust in Automation"
+    },
+    {
+      "name": "Cleotilde Gonzalez",
+      "institution": "Carnegie Mellon University",
+      "area": "Dynamic Decision Making"
+    },
+    {
+      "name": "Xueping Li",
+      "institution": "University of Tennessee, Knoxville",
+      "area": "Healthcare Systems & Optimization"
+    },
+    {
+      "name": "Anahita Khojandi",
+      "institution": "University of Tennessee, Knoxville",
+      "area": "Machine Learning & Predictive Modeling"
+    }
+  ]
+}

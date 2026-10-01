@@ -1,0 +1,105 @@
+[
+  {
+    "id": "2026-07-human-ai-teaming-methodology-and-complementarity",
+    "date": "2026-07",
+    "kind": "invited-talk",
+    "title": "Human-AI Teaming: Methodology and Complementarity",
+    "venue": "Eindhoven University of Technology",
+    "location": "Eindhoven, Netherlands",
+    "speaker": "Beau Schelble",
+    "link": null
+  },
+  {
+    "id": "2026-07-keynote-expanding-beyond-the-dyad-trust-in-human-agent-t",
+    "date": "2026-07",
+    "kind": "keynote",
+    "title": "Keynote — Expanding Beyond the Dyad: Trust in Human-Agent Teams",
+    "venue": "5th International Workshop on Multidisciplinary Perspectives on Human-AI Team Trust (MULTITRUST), HHAI 2026",
+    "location": "Vrije Universiteit Brussel, Brussels, Belgium",
+    "speaker": "Beau Schelble",
+    "link": null
+  },
+  {
+    "id": "2026-04-human-ai-teaming-the-importance-of-human-ai-complementar",
+    "date": "2026-04",
+    "kind": "invited-talk",
+    "title": "Human-AI Teaming: The Importance of Human-AI Complementarity",
+    "venue": "Psychology & Neuroscience Department Seminar, University of Tennessee",
+    "location": "Knoxville, TN",
+    "speaker": "Beau Schelble",
+    "link": null
+  },
+  {
+    "id": "2025-09-performance-optimization-in-human-ai-teams",
+    "date": "2025-09",
+    "kind": "invited-talk",
+    "title": "Performance Optimization in Human-AI Teams",
+    "venue": "National Academies of Sciences, Engineering, and Medicine — Board on Human-Systems Integration (BOHSI) Webinar",
+    "location": "National Academies, Washington, DC (Virtual)",
+    "virtual": true,
+    "speaker": "Beau Schelble",
+    "link": "https://www.nationalacademies.org/units/DBASSE-DBASSE-10-07/event/45507"
+  },
+  {
+    "id": "2025-06-mitigating-the-risks-of-compromised-ai-teammates",
+    "date": "2025-06",
+    "kind": "invited-talk",
+    "title": "Mitigating the Risks of Compromised AI Teammates",
+    "venue": "AI on the Battlefield Workshop",
+    "location": "United States Military Academy (West Point), West Point, NY",
+    "speaker": "Beau Schelble",
+    "link": null
+  },
+  {
+    "id": "2025-02-human-machine-teaming-deep-dive",
+    "date": "2025-02",
+    "kind": "invited-talk",
+    "title": "Human-Machine Teaming Deep Dive",
+    "venue": "Technical Advisory Panel on the Use of AI Systems in Warfare",
+    "location": "Virtual",
+    "virtual": true,
+    "speaker": "Beau Schelble",
+    "link": null
+  },
+  {
+    "id": "2025-02-emerging-technologies-panel",
+    "date": "2025-02",
+    "kind": "invited-talk",
+    "title": "Emerging Technologies Panel",
+    "venue": "IISE Mid-Atlantic Regional Conference",
+    "location": "Knoxville, TN",
+    "speaker": "Beau Schelble",
+    "link": null
+  },
+  {
+    "id": "2024-09-getting-on-the-same-page-information-sharing-team-cognit",
+    "date": "2024-09",
+    "kind": "invited-talk",
+    "title": "Getting on the Same Page: Information-Sharing, Team Cognition, Trust, and Ethics in Human-AI Teams",
+    "venue": "CMU AI Institute for Societal Decision Making",
+    "location": "Carnegie Mellon University, Pittsburgh, PA",
+    "speaker": "Beau Schelble",
+    "link": null
+  },
+  {
+    "id": "2024-09-from-assistance-to-autonomy-ethical-considerations-in-hu",
+    "date": "2024-09",
+    "kind": "invited-talk",
+    "title": "From Assistance to Autonomy: Ethical Considerations in Human-AI Teaming",
+    "venue": "NSF NRT Seminar Speaker Series, University of Texas at Austin",
+    "location": "Virtual",
+    "virtual": true,
+    "speaker": "Beau Schelble",
+    "link": "https://ethicalai.utexas.edu/2024/09/15/nrt-ethical-ai-talk-series/"
+  },
+  {
+    "id": "2023-09-human-ai-teaming-ethics-trust-shared-knowledge",
+    "date": "2023-09",
+    "kind": "invited-talk",
+    "title": "Human-AI Teaming: Ethics, Trust, & Shared Knowledge",
+    "venue": "RTX (Raytheon Technologies)",
+    "location": "East Hartford, CT",
+    "speaker": "Beau Schelble",
+    "link": null
+  }
+]
