@@ -25,8 +25,15 @@ jobs:
         with:
           node-version-file: web/.nvmrc
           cache: npm
-          cache-dependency-path: web/package-lock.json
+          cache-dependency-path: |
+            web/package-lock.json
+            astro-site/package-lock.json
       - run: npm ci
+      # The parity tests import the original Astro libs, whose tsconfig extends
+      # astro/tsconfigs/strict. Removed with astro-site/ in Phase 8.
+      - name: Install astro-site deps for parity tests
+        run: npm ci --ignore-scripts --no-audit --no-fund
+        working-directory: astro-site
       - run: npm run lint
       - run: npm run typecheck
       - run: npm run validate:data
