@@ -135,3 +135,84 @@ dominate its 8.4 MB and 21.5 s LCP. `/contact`'s LCP includes the Google Maps if
 
 **Open questions for Dr. Schelble.** None block Phase 1. Recruiting status and Join FAQ
 answers are needed before Phase 5.
+
+### Phase 1: Scaffold, tooling, CI and Vercel project (1 October 2026)
+
+**Summary.** `web/` now holds an empty Next.js 16 app with the full toolchain:
+- scaffolded with `create-next-app@16.3.8` (TypeScript, Tailwind, ESLint, App Router, no
+  `src/`, `@/*` alias, npm, with its `AGENTS.md`);
+- a placeholder home page reading "ARCS Lab — migration in progress";
+- CI on GitHub Actions, Dependabot, and the Vercel ignore step.
+
+CI run `36941498105` is green.
+
+**Exact installed versions.**
+
+| Package | Version | Package | Version |
+|---|---|---|---|
+| next | 16.3.8 | eslint | 9.39.5 |
+| react, react-dom | 19.2.8 | eslint-config-next | 16.3.8 |
+| typescript | 5.9.3 | prettier | 3.9.9 |
+| tailwindcss, @tailwindcss/postcss | 4.3.3 | prettier-plugin-tailwindcss | 0.8.1 |
+| zod | 4.6.5 | vitest | 5.0.3 |
+| @vercel/analytics | 2.0.1 | @playwright/test | 1.63.0 |
+| @vercel/speed-insights | 2.0.0 | @axe-core/playwright | 4.13.0 |
+| pdfjs-dist | 6.3.289 | @lhci/cli | 0.15.1 |
+| @types/node | 24.19.1 | Node (local, `.nvmrc`, `engines`) | 24.15.0 / `24` / `>=24 <25` |
+
+**Config decisions.**
+
+- **TypeScript stays on 5.9.3** (`~5.9.3`) although `typescript@latest` is 7.0.2. The plan
+  pins 5.x, and the TS 7 native compiler is a new major.
+- **ESLint stays on 9.39.5** although 10.11.0 is out. `eslint-config-next` 16.3.8 depends on
+  plugins (react 7.37, jsx-a11y 6.10, import 2.32) that still target ESLint 9.
+- **Fonts.** next/font exposes `--font-fraunces`, `--font-space-grotesk` and
+  `--font-plex-mono`. `@theme inline` maps them to `--font-serif`, `--font-sans` and
+  `--font-mono`, which avoids a self-referencing variable now that Tailwind owns `--font-*`.
+  Weights and styles match the Astro Google Fonts URL: Fraunces opsz with italics, Space
+  Grotesk variable, Plex Mono 400/500 with italics.
+- **`next.config.ts`:**
+  - `poweredByHeader: false` and `trailingSlash: false`;
+  - images: AVIF/WebP formats, `qualities: [75]`;
+  - `headers()` with the plan 3.9 set. HSTS has no `preload`. The CSP is report-only and
+    adds `'unsafe-eval'` only under `next dev`, as the bundled CSP guide requires;
+  - PDF headers on `/papers/:file([^/]+\.pdf)`: `application/pdf`, `inline`, one-hour cache;
+  - `redirects()`: `/index.html` → `/`, `/:path(.+)\.html` → `/:path`, and both Astro
+    sitemaps → `/sitemap.xml`, all as 308s.
+- **The PDF.js copy also writes `/pdfjs/SOURCE.txt`**, because that path is in
+  `url-inventory.txt`.
+- **Scripts:** `typecheck` is `next typegen && tsc --noEmit`, so the `LayoutProps` and
+  `PageProps` globals exist in CI before any build. `prebuild` runs `copy:pdfjs` and then
+  `validate:data`.
+- **Vitest config is `vitest.config.mts`.** Vite 8 warns about ESM in a `.ts` config when the
+  package has no `"type": "module"`.
+- **Playwright** has three projects. It reads `PLAYWRIGHT_BASE_URL`, falling back to
+  `npm run start` locally. When `VERCEL_AUTOMATION_BYPASS_SECRET` is set, it sends
+  `x-vercel-protection-bypass` and `x-vercel-set-bypass-cookie`.
+- **Ignored Build Step** is in `web/vercel.json`: `ignoreCommand: git diff --quiet HEAD^ HEAD -- .`.
+  Vercel's vercel.json docs (checked 1 Oct 2026) say the file lives in the project's root
+  directory and that exit 0 skips the build.
+- **Action versions:** CI uses `actions/checkout@v7` and `actions/setup-node@v7`, the latest
+  releases. Node comes from `web/.nvmrc`, and the npm cache is keyed on `web/package-lock.json`.
+
+**Verification.**
+
+- Locally: `lint`, `typecheck`, `test` (4 unit tests on the headers and redirects config) and
+  `build` all pass.
+- Against `next start`: `curl -I` shows every security header and no `X-Powered-By`.
+  `/papers/x.html` → 308 `/papers/x`, `/index.html` → 308 `/`, `/sitemap-0.xml` → 308
+  `/sitemap.xml`, and `/pdfjs/pdf.min.mjs` → 200 `application/javascript`.
+- The Playwright smoke test (home renders with `noindex`; `.html` redirect is a 308) passes in
+  Chromium, WebKit and Firefox.
+
+**Vercel status.** No Vercel project is connected yet: the commit has no Vercel status, and
+the only GitHub deployments are `github-pages`.
+
+**Deviations and notes.**
+
+- **Main will fail on Vercel until cutover.** Once the project is imported with Root
+  Directory `web` and production branch `main`, production deploys from `main` fail, because
+  `main` has no `web/` until Phase 7. This is harmless while DNS points at GitHub Pages.
+  Previews from `migrate/nextjs` work normally.
+- **`web/CLAUDE.md` is not committed.** create-next-app generated it containing only
+  `@AGENTS.md`, and the root `.gitignore` ignores every `CLAUDE.md`. `AGENTS.md` is committed.
