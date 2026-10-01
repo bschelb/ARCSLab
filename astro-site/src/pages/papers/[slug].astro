@@ -3,7 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../../components/Icon.astro';
 import publicationsRaw from '../../data/publications.json';
 import team from '../../data/team.json';
-import { getRelated, highlightLabMembers, toBibtex, typeLabel, type Paper } from '../../lib/papers';
+import { getRelated, labRoster, markLabMembers, toBibtex, typeLabel, type Paper } from '../../lib/papers';
 import { breadcrumbNode, citationMetaTags, ldjson, scholarlyArticleNode } from '../../lib/seo';
 
 const publications = publicationsRaw as unknown as Paper[];
@@ -35,10 +35,8 @@ const trail: [string, string][] = [
   [paper.venueShort ?? paper.title, `/papers/${paper.id}`],
 ];
 
-const labMembers = [
-  ...team.phdStudents, ...team.dengStudents, ...team.undergraduates, ...team.alumni,
-].map(m => m.name);
-const highlightAuthors = (authors: string) => highlightLabMembers(authors, labMembers);
+const labMembers = labRoster(team);
+const markedAuthors = markLabMembers(paper.authors, labMembers);
 ---
 <BaseLayout
   title={`${paper.title} | ARCS Lab`}
@@ -84,8 +82,8 @@ const highlightAuthors = (authors: string) => highlightLabMembers(authors, labMe
       letter-spacing: -0.015em; color: #fff; line-height: 1.12;
       margin-bottom: 22px; max-width: 940px;
     }
+    .paper-key { margin-top: 6px; }
     .paper-authors { font-size: 15px; color: var(--dk-text-2); line-height: 1.7; max-width: 880px; }
-    .paper-authors :global(strong) { color: #fff; font-weight: 600; }
     .paper-venue {
       font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.04em;
       color: var(--orange); margin-top: 12px;
@@ -191,7 +189,8 @@ const highlightAuthors = (authors: string) => highlightLabMembers(authors, labMe
       {inPress && <span class="pchip inpress">In Press</span>}
     </div>
     <h1 class="paper-title">{paper.title}</h1>
-    <div class="paper-authors" set:html={highlightAuthors(paper.authors)} />
+    <div class="paper-authors" set:html={markedAuthors} />
+    {markedAuthors.includes('lab-mark') && <div class="paper-key"><span class="lab-mark-key"><span class="lab-mark" aria-hidden="true">★</span>ARCS Lab member</span></div>}
     <div class="paper-venue">{paper.venue}{paper.doi && <span class="muted"> · DOI {paper.doi}</span>}</div>
 
     <div class="paper-actions">

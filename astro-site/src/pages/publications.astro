@@ -4,7 +4,7 @@ import PageHeader from '../components/PageHeader.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import publications from '../data/publications.json';
 import team from '../data/team.json';
-import { highlightLabMembers } from '../lib/papers';
+import { labRoster, markLabMembers } from '../lib/papers';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const years = [...new Set(publications.filter(p => typeof p.year === 'number').map(p => p.year))].sort((a, b) => b - a);
@@ -12,10 +12,8 @@ const journalCount = publications.filter(p => p.type === 'journal').length;
 const confCount = publications.filter(p => p.type === 'conference').length;
 const bookCount = publications.filter(p => p.type === 'book chapter').length;
 const awardCount = publications.filter(p => p.award && p.award !== 'In Press').length;
-const labMembers = [
-  ...team.phdStudents, ...team.dengStudents, ...team.undergraduates, ...team.alumni,
-].map(m => m.name);
-const highlightAuthors = (authors: string) => highlightLabMembers(authors, labMembers);
+const labMembers = labRoster(team);
+const markAuthors = (authors: string) => markLabMembers(authors, labMembers);
 ---
 <BaseLayout title="Publications | ARCS Lab | UT Knoxville" activePage="publications"
   description={`${publications.length}+ peer-reviewed publications from the ARCS Lab on human-AI teaming, trust in AI, and collaborative systems.`}>
@@ -43,6 +41,7 @@ const highlightAuthors = (authors: string) => highlightLabMembers(authors, labMe
   .filter-btn:hover { border-color: var(--orange); color: var(--orange-deep); }
   .filter-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
 
+  .filter-key { margin-left: auto; }
   .pub-list { padding: 24px var(--gutter) 100px; }
   .year-group { margin-top: 56px; }
   .year-head { display: flex; align-items: baseline; gap: 18px; margin-bottom: 8px; }
@@ -80,7 +79,6 @@ const highlightAuthors = (authors: string) => highlightLabMembers(authors, labMe
   .pub-type.workshop { color: var(--text-muted); border: 1px dashed var(--line-strong); }
   .pub-title-text { font-size: 15.5px; font-weight: 500; color: var(--text-strong); line-height: 1.55; margin-bottom: 5px; }
   .pub-authors { font-size: 13px; color: var(--text); margin-bottom: 3px; }
-  .pub-authors :global(strong) { color: var(--text-strong); font-weight: 600; }
   .pub-venue { font-size: 12.5px; color: var(--text-muted); font-style: italic; }
   .pub-aside { display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
   .pub-award-badge {
@@ -124,6 +122,7 @@ const highlightAuthors = (authors: string) => highlightLabMembers(authors, labMe
   <button class="filter-btn" data-filter="book chapter">Book Chapters</button>
   <button class="filter-btn" data-filter="workshop">Workshops</button>
   <button class="filter-btn" data-filter="award">★ Award-Winning</button>
+  <span class="lab-mark-key filter-key"><span class="lab-mark" aria-hidden="true">★</span>ARCS Lab member</span>
 </div>
 
 <div class="pub-list">
@@ -139,7 +138,7 @@ const highlightAuthors = (authors: string) => highlightLabMembers(authors, labMe
           <div class={`pub-type ${pub.type === 'book chapter' ? 'book' : pub.type}`}>{pub.type === 'book chapter' ? 'Book Ch.' : pub.type}</div>
           <div>
             <div class="pub-title-text">{pub.title}</div>
-            <div class="pub-authors" set:html={highlightAuthors(pub.authors)} />
+            <div class="pub-authors" set:html={markAuthors(pub.authors)} />
             <div class="pub-venue">{pub.venue}</div>
           </div>
           <div class="pub-aside">
@@ -162,7 +161,7 @@ const highlightAuthors = (authors: string) => highlightLabMembers(authors, labMe
           <div class={`pub-type ${pub.type === 'book chapter' ? 'book' : pub.type}`}>{pub.type === 'book chapter' ? 'Book Ch.' : pub.type}</div>
           <div>
             <div class="pub-title-text">{pub.title}</div>
-            <div class="pub-authors" set:html={highlightAuthors(pub.authors)} />
+            <div class="pub-authors" set:html={markAuthors(pub.authors)} />
             <div class="pub-venue">{pub.venue}</div>
           </div>
           <div class="pub-aside">

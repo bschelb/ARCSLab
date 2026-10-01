@@ -118,35 +118,52 @@ const escapeHtml = (s: string): string =>
 
 const escapeRegExp = (s: string): string => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
+/** Everyone whose name earns a lab mark: the PI plus current members and alumni. */
+export function labRoster(team: {
+  pi: { name: string };
+  phdStudents: { name: string }[];
+  dengStudents: { name: string }[];
+  undergraduates: { name: string }[];
+  alumni: { name: string }[];
+}): string[] {
+  return [
+    team.pi,
+    ...team.phdStudents,
+    ...team.dengStudents,
+    ...team.undergraduates,
+    ...team.alumni,
+  ].map((m) => m.name.replace(/^Dr\.\s+/, ""));
+}
+
 /**
- * Bold ARCS Lab members inside a display author string ("Mendoza, S., Tian, Y., …").
+ * Star every ARCS Lab member inside a display author string.
  *
- * The PI is deliberately NOT highlighted: the emphasis exists to surface the
- * lab's students and researchers on a given paper, not to re-mark Beau on the
- * ~40 papers he authored. Pass the roster from `team.json`; each name is matched
- * on surname + first initial, tolerating trailing middle initials ("Schelble, B.G.").
+ * This is the lab's site, so the mark goes on the whole group (PI included)
+ * rather than singling anyone out. Pass `labRoster(team)`. Handles both the
+ * full house format ("Mendoza, S., Schelble, B.G., …"), matched on surname +
+ * first initial with optional middle initials, and the short surname-only
+ * lists in research.json ("Schelble, Mallick, & McNeese"). A same-surname
+ * author with a different first initial is not marked.
  *
  * Returns HTML — the input is escaped first, so it is safe for `set:html`.
  */
-export function highlightLabMembers(authors: string, memberNames: string[]): string {
-  const seen = new Set<string>();
-  let out = escapeHtml(authors);
-
+export function markLabMembers(authors: string, memberNames: string[]): string {
+  const patterns: string[] = [];
   for (const full of memberNames) {
     const parts = full.trim().split(/\s+/);
     const last = parts[parts.length - 1];
     const initial = parts[0]?.[0];
     if (!last || !initial || parts.length < 2) continue;
-
-    const key = `${last}|${initial}`;
-    if (seen.has(key)) continue;
-    seen.add(key);
-
-    const re = new RegExp(
-      `${escapeRegExp(last)}, ${initial}\\.(?:\\s?[A-Z]\\.)*`,
-      "g",
+    const l = escapeRegExp(last);
+    patterns.push(
+      `\\b${l}\\b(?!, (?!${initial}\\.)[A-Z]\\.)(?:, ${initial}\\.(?:\\s?[A-Z]\\.)*)?`,
     );
-    out = out.replace(re, (m) => `<strong>${m}</strong>`);
   }
-  return out;
+  const out = escapeHtml(authors);
+  if (!patterns.length) return out;
+  const re = new RegExp(patterns.join("|"), "g");
+  return out.replace(re, (m) => `${m}${LAB_MARK}`);
 }
+
+/** The inline marker appended after a lab member's name (styled by `.lab-mark`). */
+export const LAB_MARK = '<sup class="lab-mark" title="ARCS Lab member">★</sup>';
