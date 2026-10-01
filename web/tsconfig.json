@@ -19,7 +19,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@legacy/*": ["./tests/legacy/*"]
     },
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true
