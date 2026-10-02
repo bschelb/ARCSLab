@@ -14,8 +14,6 @@ export interface RenderOptions {
   animate: boolean;
   focus: { x: number; y: number };
   intensity: number;
-  /** No cursor (touch screens): the hill wanders the map on its own between taps. */
-  autopilot?: boolean;
 }
 
 /** Smooth value noise on the grid, used to make the field breathe a little. */
@@ -66,9 +64,6 @@ const SWELL_MS = 2400;
 const FLOW_MS = 20000; // one full uphill cycle of the contour levels
 const LIFT_M = 70; // a gentle swell under the cursor, metres (kept subtle on purpose)
 const LIFT_R = 22; // its radius, in grid cells: broad and soft
-const SWEEP_MS = 7000; // one pass of the survey sweep across the map
-const WANDER_X_MS = 4300; // autopilot path: a slow Lissajous over the upper map
-const WANDER_Y_MS = 3100;
 
 export function createRenderer(ctx: Ctx2D, base: Float32Array, opts: RenderOptions) {
   const warpA = opts.animate ? noiseField(TERRAIN_W, TERRAIN_H, 11, 22) : null;
@@ -134,16 +129,9 @@ export function createRenderer(ctx: Ctx2D, base: Float32Array, opts: RenderOptio
             (warpB[i] ?? 0) * sb +
             Math.sin((diag[i] ?? 0) - sw) * SWELL_M;
 
-        // Ease the hill toward the cursor (or the autopilot path), and in or out as it
-        // enters or leaves. A hill fading in from nothing starts where it is headed.
-        const goal =
-          target ??
-          (opts.autopilot
-            ? {
-                x: cw * (0.5 + 0.42 * Math.sin(t / WANDER_X_MS)),
-                y: ch * (0.3 + 0.2 * Math.sin(t / WANDER_Y_MS + 1.3)),
-              }
-            : null);
+        // Ease the hill toward the cursor, and in or out as it enters or leaves. A hill
+        // fading in from nothing starts where it is headed.
+        const goal = target;
         if (goal) {
           if (lift < 0.01) {
             px = goal.x;
@@ -190,24 +178,6 @@ export function createRenderer(ctx: Ctx2D, base: Float32Array, opts: RenderOptio
       ctx.clearRect(0, 0, cw, ch);
       stroke(minor, 1, `rgba(255,255,255,${(0.12 * opts.intensity).toFixed(3)})`);
       stroke(index, 1.25, `rgba(255,130,0,${(0.5 * opts.intensity).toFixed(3)})`);
-
-      if (opts.animate && t > 0) {
-        // Survey sweep: a band of light crosses the map and lights up the lines it passes.
-        const u = ((t / SWEEP_MS) % 1) * 1.4 - 0.2;
-        const cx = u * cw;
-        const bw = Math.max(120, cw * 0.14);
-        const g = ctx.createLinearGradient(cx - bw, 0, cx + bw, 0);
-        g.addColorStop(0, 'rgba(255,170,60,0)');
-        g.addColorStop(0.5, 'rgba(255,170,60,0.9)');
-        g.addColorStop(1, 'rgba(255,170,60,0)');
-        ctx.save();
-        ctx.globalCompositeOperation = 'source-atop';
-        ctx.fillStyle = g;
-        ctx.fillRect(cx - bw, 0, bw * 2, ch);
-        ctx.restore();
-        ctx.fillStyle = 'rgba(255,130,0,0.18)';
-        ctx.fillRect(Math.round(cx), 0, 1, ch);
-      }
     },
   };
 }

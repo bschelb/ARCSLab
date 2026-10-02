@@ -54,8 +54,8 @@ export interface TerrainContoursProps {
  * viewport (the footer costs nothing at load), animation pauses off-screen and in hidden
  * tabs, the device pixel ratio is capped at 2, and reduced motion draws a single still frame.
  *
- * Touch screens get no cursor, so the animated hero's hill wanders the map on its own and a tap
- * on the hero (outside links and buttons) calls it over.
+ * Touch screens get no cursor, so on the animated hero a tap (outside links and buttons) lifts
+ * the terrain there for a moment instead.
  */
 export default function TerrainContours({
   animate = false,
@@ -77,7 +77,7 @@ export default function TerrainContours({
     if (!wrap) return;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const moving = animate && !reduced;
-    const autopilot = moving && window.matchMedia('(hover: none)').matches;
+    const touch = moving && window.matchMedia('(hover: none)').matches;
     const dpr = () => Math.min(window.devicePixelRatio || 1, 2);
     const box = () => wrap.getBoundingClientRect();
     const anchor = pinLabTo ? wrap.parentElement?.querySelector(pinLabTo) : null;
@@ -150,7 +150,6 @@ export default function TerrainContours({
           animate: moving,
           focus: { x: fx, y: fy },
           intensity,
-          autopilot,
         },
         [offscreen],
       );
@@ -176,7 +175,6 @@ export default function TerrainContours({
         animate: moving,
         focus: { x: fx, y: fy },
         intensity,
-        autopilot,
       });
       const r = box();
       fallback.resize(r.width, r.height, dpr(), pinFor(r));
@@ -246,8 +244,8 @@ export default function TerrainContours({
     host?.addEventListener('pointermove', onMove, { passive: true });
     host?.addEventListener('pointerleave', onLeave);
 
-    // Tap to lift (touch): a tap that does not scroll calls the hill over for a moment, then
-    // it goes back to wandering. Taps on links and buttons are left alone.
+    // Tap to lift (touch): a tap that does not scroll lifts the terrain there for a moment.
+    // Taps on links and buttons are left alone.
     let down: { x: number; y: number } | null = null;
     let release: ReturnType<typeof setTimeout> | undefined;
     const onDown = (e: PointerEvent) => {
@@ -269,7 +267,7 @@ export default function TerrainContours({
       clearTimeout(release);
       release = setTimeout(onLeave, 1800);
     };
-    if (autopilot) {
+    if (touch) {
       host?.addEventListener('pointerdown', onDown, { passive: true });
       host?.addEventListener('pointercancel', onCancel);
       host?.addEventListener('pointerup', onUp);
@@ -325,14 +323,6 @@ export default function TerrainContours({
         )
       : [];
 
-  const rings = (
-    <span className={styles.rings}>
-      <i />
-      <i />
-      <i />
-    </span>
-  );
-
   return (
     <div ref={wrapRef} className={`${styles.wrap} ${className ?? ''}`} aria-hidden="true">
       {marks.map((m) => (
@@ -341,7 +331,6 @@ export default function TerrainContours({
           className={`${styles.mark} ${m.lab ? styles.lab : ''}`}
           style={{ left: m.x, top: m.y }}
         >
-          {m.lab && rings}
           {m.name}
         </span>
       ))}
@@ -350,7 +339,6 @@ export default function TerrainContours({
           className={`${styles.mark} ${styles.lab} ${styles.pinned}`}
           style={{ left: pin.x, top: pin.y }}
         >
-          {rings}
           {LAB.name.split(' · ').map((line) => (
             <span key={line}>{line}</span>
           ))}
