@@ -64,8 +64,8 @@ const BREATH_MS = 6000; // period scale of the breathing circle
 const SWELL_M = 14; // a long wave rolling diagonally across the map, metres
 const SWELL_MS = 2400;
 const FLOW_MS = 20000; // one full uphill cycle of the contour levels
-const LIFT_M = 480; // the hill that rises under the cursor, metres
-const LIFT_R = 13; // its radius, in grid cells
+const LIFT_M = 70; // a gentle swell under the cursor, metres (kept subtle on purpose)
+const LIFT_R = 22; // its radius, in grid cells: broad and soft
 const SWEEP_MS = 7000; // one pass of the survey sweep across the map
 const WANDER_X_MS = 4300; // autopilot path: a slow Lissajous over the upper map
 const WANDER_Y_MS = 3100;
@@ -149,10 +149,11 @@ export function createRenderer(ctx: Ctx2D, base: Float32Array, opts: RenderOptio
             px = goal.x;
             py = goal.y;
           }
-          px += (goal.x - px) * 0.2;
-          py += (goal.y - py) * 0.2;
+          // Slow follow: the swell drifts after the cursor rather than tracking it.
+          px += (goal.x - px) * 0.06;
+          py += (goal.y - py) * 0.06;
         }
-        lift += ((goal ? 1 : 0) - lift) * 0.08;
+        lift += ((goal ? 1 : 0) - lift) * 0.03;
         if (lift > 0.01) {
           const gx = (px - ox) / scale;
           const gy = (py - oy) / scale;
