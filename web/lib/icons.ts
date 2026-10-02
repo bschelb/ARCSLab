@@ -38,6 +38,8 @@ export const ICON_NAMES = [
   'award',
   'trophy',
   'arrow',
+  // Added in Phase 5 (not in the Astro set): the publications explorer's search field.
+  'search',
 ] as const;
 
 export type IconName = (typeof ICON_NAMES)[number];

@@ -28,6 +28,6 @@ test.describe('without JavaScript', () => {
 
   test('all 49 publications are listed', async ({ page }) => {
     await page.goto('/publications');
-    await expect(page.locator('#pub-list li[data-type]')).toHaveCount(49);
+    await expect(page.locator('#pub-list li[data-paper]')).toHaveCount(49);
   });
 });

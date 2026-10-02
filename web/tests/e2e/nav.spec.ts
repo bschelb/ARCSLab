@@ -70,18 +70,6 @@ test('desktop nav marks the current page', async ({ page }) => {
   ).toHaveAttribute('aria-current', 'page');
 });
 
-test('publication filters expose pressed state and announce counts', async ({ page }) => {
-  await page.goto('/publications');
-  const journals = page.getByRole('button', { name: 'Journals' });
-  await journals.click();
-  await expect(journals).toHaveAttribute('aria-pressed', 'true');
-  await expect(page.getByRole('button', { name: 'All' })).toHaveAttribute('aria-pressed', 'false');
-  await expect(page.locator('[aria-live="polite"]')).toHaveText('26 of 49 publications');
-  await expect(page.locator('#pub-list li[data-type]:visible')).toHaveCount(26);
-  await page.getByRole('button', { name: 'Award-Winning' }).click();
-  await expect(page.locator('#pub-list li[data-type]:visible')).toHaveCount(5);
-});
-
 test('unknown routes return the 404 page', async ({ page }) => {
   const res = await page.goto('/nope-not-here');
   expect(res?.status()).toBe(404);

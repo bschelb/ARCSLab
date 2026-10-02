@@ -1,29 +1,12 @@
 import { team } from '@/lib/data';
 import { labRoster, markLabMembers } from '@/lib/papers';
+import AuthorMarks from './AuthorMarks';
 
 const roster = labRoster(team.people);
 
-/**
- * An author string with every ARCS Lab member marked the same way, PI included
- * (group framing). The mark is a small orange dot with an accessible label.
- */
+/** Server-side author marking for a display author string (see AuthorMarks). */
 export default function Authors({ authors }: { authors: string }) {
-  return (
-    <>
-      {markLabMembers(authors, roster).map((seg, i) =>
-        seg.isLabMember ? (
-          <span key={i}>
-            {seg.text}
-            <span className="lab-mark" title="ARCS Lab member">
-              <span className="sr-only"> (ARCS Lab member)</span>
-            </span>
-          </span>
-        ) : (
-          <span key={i}>{seg.text}</span>
-        ),
-      )}
-    </>
-  );
+  return <AuthorMarks segments={markLabMembers(authors, roster)} />;
 }
 
 /** The legend shown once per list. */
