@@ -143,3 +143,19 @@ export function markLabMembers(authors: string, memberNames: string[]): AuthorSe
   if (last < authors.length) segments.push({ text: authors.slice(last), isLabMember: false });
   return segments;
 }
+
+/**
+ * APA 7–style reference. The curated `authors` string is already in APA author format
+ * ("Schelble, B.G., Flathmann, C., & McNeese, N.J."), so it is used as-is.
+ */
+export function toApa(p: Paper): string {
+  const end = (s: string) => (/[.?!]$/.test(s) ? s : `${s}.`);
+  const link = p.doi ? ` https://doi.org/${p.doi}` : p.url ? ` ${p.url}` : '';
+  return `${p.authors} (${p.year}). ${end(p.title)} ${end(p.venue)}${link}`;
+}
+
+/** SEO description for a paper page, identical to the Astro paper page. */
+export function paperDescription(p: Paper): string {
+  const fallback = `${typeLabel(p.type)} by ${p.authors} (${p.year}). Published in ${p.venue}.`;
+  return (p.abstract ? p.abstract.slice(0, 300) : fallback).replace(/\s+/g, ' ').trim();
+}

@@ -62,8 +62,25 @@ const nextConfig: NextConfig = {
   },
 
   async redirects() {
-    // URL parity with the Astro site (plan 3.4). Phase 4 adds the renamed-asset rules.
+    // URL parity with the Astro site (plan 3.4). Retained images keep their paths (PI portrait,
+    // logo, PWA icons, OG image); renamed headshots 308 to their new homes. The unused 15 MB
+    // /assets/downtownPic.jpg was never referenced and is intentionally gone (404).
     return [
+      {
+        source: '/assets/sarahHeadshot.jpg',
+        destination: '/images/people/sarah-mendoza.jpg',
+        permanent: true,
+      },
+      {
+        source: '/assets/yayunHeadshot.jpg',
+        destination: '/images/people/yayun-tian.jpg',
+        permanent: true,
+      },
+      {
+        source: '/assets/naveenaHeadshot.jpg',
+        destination: '/images/people/naveena-nagaraju.jpg',
+        permanent: true,
+      },
       { source: '/index.html', destination: '/', permanent: true },
       { source: '/:path(.+)\\.html', destination: '/:path', permanent: true },
       { source: '/sitemap-index.xml', destination: '/sitemap.xml', permanent: true },

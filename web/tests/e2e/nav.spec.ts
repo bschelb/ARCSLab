@@ -62,9 +62,10 @@ test('legacy .html URLs redirect permanently', async ({ request }) => {
   expect(res.headers()['location']).toBe('/research');
 });
 
-test('pages are not indexable before launch (Phase 4 makes robots environment-aware)', async ({
-  page,
-}) => {
+test('robots meta follows the environment', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
+  const robots = page.locator('meta[name="robots"]');
+  if (process.env.EXPECT_PRODUCTION === '1')
+    await expect(robots).toHaveAttribute('content', /^index,follow/);
+  else await expect(robots).toHaveAttribute('content', 'noindex, nofollow');
 });

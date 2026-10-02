@@ -7,6 +7,7 @@ import Motion from '@/components/Motion';
 import SiteFooter from '@/components/layout/SiteFooter';
 import SiteNav from '@/components/layout/SiteNav';
 import SkipLink from '@/components/layout/SkipLink';
+import { robotsContent } from '@/lib/robots';
 import { siteGraph } from '@/lib/seo';
 import { researchKeywords, site } from '@/lib/site';
 import './globals.css';
@@ -38,8 +39,8 @@ export const metadata: Metadata = {
   keywords: researchKeywords.join(', '),
   authors: [{ name: 'Beau G. Schelble' }],
   publisher: site.name,
-  // Placeholder until Phase 4 adds environment-aware robots: previews must never be indexed.
-  robots: { index: false, follow: false },
+  // Production gets the Astro site's exact robots string; previews and local builds noindex.
+  robots: robotsContent(),
 };
 
 export const viewport: Viewport = {

@@ -213,3 +213,23 @@ describe('validate:data', () => {
     expect(displayAuthorCount("O'Neill, T.A., & de Visser, E.J.")).toBe(2);
   });
 });
+
+describe('paper helpers', () => {
+  it('formats APA references from the curated author string', async () => {
+    const { toApa, paperDescription } = await import('@/lib/papers');
+    const p = publications.find((x) => x.id === 'schelble-2022-lets-think-together')!;
+    expect(toApa(p)).toBe(
+      `${p.authors} (2021). Let's Think Together! Assessing Shared Mental Models, Performance, and Trust in ` +
+        `Human-Agent Teams. ${p.venue}. https://doi.org/10.1145/3492832`,
+    );
+    expect(
+      toApa({
+        ...p,
+        title: 'Should AI Teammates Give All the Answers?',
+        doi: undefined,
+        url: undefined,
+      }),
+    ).toBe(`${p.authors} (2021). Should AI Teammates Give All the Answers? ${p.venue}.`);
+    expect(paperDescription(p).length).toBeLessThanOrEqual(300);
+  });
+});

@@ -60,7 +60,10 @@ const elev = new Float32Array(W * H);
 console.log(`Fetching ${cols * rows} tiles at z${Z}…`);
 for (let ty = ty0; ty <= ty1; ty++) {
   for (let tx = tx0; tx <= tx1; tx++) {
-    const { data } = await sharp(await tile(tx, ty)).removeAlpha().raw().toBuffer({ resolveWithObject: true });
+    const { data } = await sharp(await tile(tx, ty))
+      .removeAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
     const ox = (tx - tx0) * 256;
     const oy = (ty - ty0) * 256;
     for (let y = 0; y < 256; y++) {
@@ -125,12 +128,15 @@ for (const v of smooth) {
 min = Math.floor(min);
 max = Math.ceil(max);
 const gray = Buffer.alloc(smooth.length);
-for (let i = 0; i < smooth.length; i++) gray[i] = Math.round(((smooth[i] - min) / (max - min)) * 255);
+for (let i = 0; i < smooth.length; i++)
+  gray[i] = Math.round(((smooth[i] - min) / (max - min)) * 255);
 
 await mkdir(path.join(root, 'public', 'terrain'), { recursive: true });
 const png = path.join(root, 'public', 'terrain', 'east-tn.webp');
 // Lossless WebP is ~40% smaller than PNG here (36 KB vs 58 KB).
-await sharp(gray, { raw: { width: OUT_W, height: OUT_H, channels: 1 } }).webp({ lossless: true, effort: 6 }).toFile(png);
+await sharp(gray, { raw: { width: OUT_W, height: OUT_H, channels: 1 } })
+  .webp({ lossless: true, effort: 6 })
+  .toFile(png);
 
 const meta = {
   source: 'Mapzen Terrain Tiles (AWS Open Data); US elevation from USGS 3DEP/NED, public domain',
@@ -144,4 +150,6 @@ const meta = {
 };
 await writeFile(path.join(root, 'lib', 'terrain.json'), JSON.stringify(meta, null, 2) + '\n');
 const { size } = await import('node:fs').then((fs) => fs.promises.stat(png));
-console.log(`Wrote public/terrain/east-tn.webp (${OUT_W}×${OUT_H}, ${Math.round(size / 1024)} KB), elevation ${min}–${max} m`);
+console.log(
+  `Wrote public/terrain/east-tn.webp (${OUT_W}×${OUT_H}, ${Math.round(size / 1024)} KB), elevation ${min}–${max} m`,
+);

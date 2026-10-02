@@ -1,0 +1,42 @@
+.nav ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: var(--step-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-dk-muted);
+}
+.nav li + li::before {
+  content: '/';
+  margin: 0 10px;
+  color: var(--color-orange);
+}
+.nav a {
+  color: var(--color-dk-text-2);
+  text-decoration: underline;
+  text-decoration-color: rgb(255 255 255 / 0.35);
+  text-underline-offset: 3px;
+}
+.nav a:hover {
+  color: var(--color-white);
+  text-decoration-color: var(--color-orange);
+}
+.nav li:last-child {
+  min-width: 0;
+  max-width: 100%;
+  display: flex;
+}
+.nav [aria-current] {
+  display: block;
+  min-width: 0;
+  color: var(--color-dk-muted);
+  max-width: 48ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

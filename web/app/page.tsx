@@ -62,6 +62,10 @@ export default function HomePage() {
 
   return (
     <>
+      {/* Exact production values Next's metadata resolver can't express (see lib/metadata.ts). */}
+      <link rel="canonical" href="https://arcslab.io/" />
+      <meta property="og:url" content="https://arcslab.io/" />
+
       {/* HERO */}
       <section className={`${styles.hero} on-dark`} aria-labelledby="hero-title">
         <TerrainContours animate places placesMinX={0.47} focus={{ x: 0.7, y: 0.5 }} />

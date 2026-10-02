@@ -25,6 +25,12 @@ jobs:
        github.event.deployment.environment == 'Preview')
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.deployment.sha || github.sha }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: web/.nvmrc
       - name: Request key routes through the protection bypass
         env:
           BASE: ${{ inputs.url || github.event.deployment_status.environment_url || github.event.deployment_status.target_url }}
@@ -46,3 +52,7 @@ jobs:
           echo "--- robots meta"
           curl -s -H "x-vercel-protection-bypass: $BYPASS" "$BASE/" | grep -o '<meta name="robots"[^>]*>' || true
           exit $fail
+      - name: URL and SEO parity against the production baseline (preview robots)
+        env:
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+        run: node web/scripts/check-parity.mjs "${{ inputs.url || github.event.deployment_status.environment_url || github.event.deployment_status.target_url }}" --robots=preview
