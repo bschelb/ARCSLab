@@ -8,14 +8,17 @@
   color: inherit;
   transition: border-color var(--duration-base) var(--ease-out-signal);
 }
+.link {
+  position: relative;
+}
 .link:hover {
   border-color: var(--color-text);
 }
-.link:hover .mediaMono {
-  aspect-ratio: 16 / 9;
-}
-.media::after {
+.link:hover .media::after {
   transform: scaleX(1);
+}
+.link:focus-within {
+  border-color: var(--color-text);
 }
 .media {
   position: relative;
@@ -35,6 +38,9 @@
   transform: scaleX(0);
   transform-origin: left;
   transition: transform var(--duration-slow) var(--ease-out-signal);
+}
+.mediaMono {
+  aspect-ratio: 16 / 9;
 }
 .media img {
   object-fit: cover;
@@ -68,6 +74,35 @@
   font-size: 1.6rem;
   line-height: 1;
   text-transform: uppercase;
+}
+/* stretched link: the whole card is clickable, but the link's name is just the person's name */
+.nameLink {
+  text-decoration: none;
+  color: inherit;
+}
+.nameLink::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.link:hover .nameLink {
+  text-decoration: underline;
+  text-decoration-color: var(--color-orange);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.nameLink:focus-visible {
+  outline: none;
+}
+.nameLink:focus-visible::after {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+}
+/* links inside the description stay clickable above the stretched link */
+.desc a {
+  position: relative;
+  z-index: 2;
 }
 .role {
   font-family: var(--font-mono);

@@ -8,7 +8,7 @@ import Icon from '@/components/ui/Icon';
 import { team } from '@/lib/data';
 import { formatTenure, formatUsdCompact } from '@/lib/format';
 import { pageMetadata } from '@/lib/metadata';
-import { byGroup, currentMembers } from '@/lib/people';
+import { byGroup, currentMembers, profileHref } from '@/lib/people';
 import { stats } from '@/lib/stats';
 import styles from './team.module.css';
 
@@ -146,6 +146,7 @@ export default function TeamPage() {
             >
               <PersonCard
                 person={s}
+                href={profileHref(s)}
                 role={s.role}
                 meta={s.education}
                 sizes="(max-width: 700px) 100vw, 33vw"
@@ -173,7 +174,12 @@ export default function TeamPage() {
               data-reveal
               style={{ ['--rd' as string]: `${i * 60}ms` }}
             >
-              <PersonCard person={s} role={s.role} meta={formatTenure(s.startYear, s.endYear)}>
+              <PersonCard
+                person={s}
+                href={profileHref(s)}
+                role={s.role}
+                meta={formatTenure(s.startYear, s.endYear)}
+              >
                 <p>{s.bio}</p>
               </PersonCard>
             </div>
@@ -192,6 +198,7 @@ export default function TeamPage() {
             >
               <PersonCard
                 person={s}
+                href={profileHref(s)}
                 role={s.role}
                 meta={`${s.degree} · ${formatTenure(s.startYear, s.endYear)}`}
               >
@@ -213,6 +220,7 @@ export default function TeamPage() {
             >
               <PersonCard
                 person={s}
+                href={profileHref(s)}
                 role={s.role}
                 meta={`${s.degree} · ${formatTenure(s.startYear, s.endYear)}`}
               >

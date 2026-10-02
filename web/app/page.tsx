@@ -6,7 +6,7 @@ import Icon from '@/components/ui/Icon';
 import { publications, researchAreas, team } from '@/lib/data';
 import type { IconName } from '@/lib/icons';
 import { pageMetadata } from '@/lib/metadata';
-import { byGroup } from '@/lib/people';
+import { byGroup, profileHref } from '@/lib/people';
 import styles from './home.module.css';
 
 export const metadata = pageMetadata({
@@ -238,7 +238,7 @@ export default function HomePage() {
           )}
           {phd.map((s, i) => (
             <div key={s.slug} data-reveal style={{ ['--rd' as string]: `${(i + 1) * 70}ms` }}>
-              <PersonCard person={s} role="PhD Student" href={`/team#${s.slug}`}>
+              <PersonCard person={s} role="PhD Student" href={profileHref(s)}>
                 {s.shortBio}
               </PersonCard>
             </div>

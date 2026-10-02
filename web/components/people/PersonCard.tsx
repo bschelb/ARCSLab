@@ -20,6 +20,8 @@ interface PersonCardProps {
 /**
  * One card design for every group (PI, PhD, DEng, undergraduates, alumni). Members
  * without a photo get a monogram on the terrain-ink ground, never a stock silhouette.
+ * With `href`, the name is a stretched link: the whole card clicks through, while the
+ * link's accessible name stays the person's name rather than the whole bio.
  */
 export default function PersonCard({
   person,
@@ -49,18 +51,20 @@ export default function PersonCard({
         )}
       </div>
       <div className={styles.body}>
-        <h3 className={styles.name}>{person.name}</h3>
+        <h3 className={styles.name}>
+          {href ? (
+            <Link href={href} className={styles.nameLink}>
+              {person.name}
+            </Link>
+          ) : (
+            person.name
+          )}
+        </h3>
         <p className={styles.role}>{role}</p>
         {meta && <p className={styles.meta}>{meta}</p>}
         {children && <div className={styles.desc}>{children}</div>}
       </div>
     </>
   );
-  return href ? (
-    <Link href={href} className={`${styles.card} ${styles.link}`}>
-      {body}
-    </Link>
-  ) : (
-    <article className={styles.card}>{body}</article>
-  );
+  return <article className={`${styles.card} ${href ? styles.link : ''}`}>{body}</article>;
 }

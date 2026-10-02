@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next';
-import { publications, researchAreas } from '@/lib/data';
+import { publications, researchAreas, team } from '@/lib/data';
 import { site } from '@/lib/site';
 
 /**
@@ -34,6 +34,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     })),
+    ...team.people
+      .filter((p) => p.group !== 'pi')
+      .map((p) => ({
+        url: `${site.url}/team/${p.slug}`,
+        changeFrequency: 'yearly' as const,
+        priority: p.group === 'alumni' ? 0.4 : 0.6,
+      })),
     ...publications.map((p) => ({
       url: `${site.url}/papers/${p.id}`,
       changeFrequency: 'yearly' as const,

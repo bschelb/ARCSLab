@@ -1,7 +1,7 @@
 import { grants, news, publications, researchAreas, talks, team } from '@/lib/data';
 import { formatUsd } from '@/lib/format';
 import { displayedGrants, piTotal } from '@/lib/funding';
-import { byGroup, plainName } from '@/lib/people';
+import { byGroup, plainName, profileHref } from '@/lib/people';
 import { absoluteUrl, site } from '@/lib/site';
 import { stats } from '@/lib/stats';
 
@@ -50,7 +50,9 @@ export function GET() {
     '',
     '## Lab members',
     '',
-    ...team.people.filter((p) => p.group !== 'alumni').map((p) => `- ${plainName(p)}: ${p.role}`),
+    ...team.people
+      .filter((p) => p.group !== 'alumni')
+      .map((p) => `- [${plainName(p)}](${absoluteUrl(profileHref(p))}): ${p.role}`),
     '',
     '## Recent news',
     '',

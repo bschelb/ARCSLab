@@ -11,4 +11,6 @@ export const ROUTES = [
   '/join',
   '/research/human-ai-teaming',
   '/research/evaluation-validation',
+  '/team/sarah-mendoza',
+  '/team/elizabeth-hughes',
 ] as const;

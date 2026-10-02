@@ -238,3 +238,39 @@ export function citationMetaTags(paper: Paper): [string, string][] {
 export function ldjson(node: unknown): string {
   return JSON.stringify(node).replace(/</g, '\\u003c');
 }
+
+/**
+ * A lab member's Person node for /team/<slug> (Phase 5, not in the Astro site). Membership
+ * is an OrganizationRole so the dates and role travel with it; alumni carry an endDate.
+ */
+export function memberPersonNode(m: {
+  slug: string;
+  name: string;
+  role: string;
+  startYear: number;
+  endYear?: number;
+  photo?: string;
+  description?: string;
+  sameAs?: string[];
+}) {
+  const url = absoluteUrl(`/team/${m.slug}`);
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': `${url}#person`,
+    name: m.name.replace(/^Dr\.\s+/, ''),
+    url,
+    jobTitle: m.role,
+    ...(m.photo ? { image: absoluteUrl(m.photo) } : {}),
+    ...(m.description ? { description: m.description } : {}),
+    ...(m.sameAs?.length ? { sameAs: m.sameAs } : {}),
+    memberOf: {
+      '@type': 'OrganizationRole',
+      roleName: m.role,
+      startDate: String(m.startYear),
+      ...(m.endYear ? { endDate: String(m.endYear) } : {}),
+      memberOf: { '@id': ORG_ID, '@type': 'ResearchOrganization', name: site.name },
+    },
+    affiliation: utkOrganization(),
+  };
+}
