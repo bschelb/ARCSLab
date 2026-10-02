@@ -1,0 +1,61 @@
+.wrap {
+  position: relative;
+  overflow: hidden;
+  min-height: 80svh;
+  display: flex;
+  align-items: center;
+  padding: calc(var(--nav-h) + 64px) var(--gutter) 80px;
+  background: var(--color-ink);
+  color: var(--color-dk-text-2);
+}
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+}
+.code {
+  font-family: var(--font-mono);
+  font-size: var(--step-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-orange);
+}
+.title {
+  margin-top: 16px;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: var(--step-h1);
+  line-height: 0.9;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+.lead {
+  margin-top: 20px;
+  max-width: 52ch;
+  font-size: var(--step-lead);
+}
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  list-style: none;
+  margin: 32px 0 0;
+  padding: 0;
+}
+.links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 16px;
+  border: 1.5px solid rgb(255 255 255 / 0.45);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-white);
+}
+.links a:hover {
+  border-color: var(--color-orange);
+}

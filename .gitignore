@@ -12,3 +12,10 @@ astro-site/.astro/
 .DS_Store
 Thumbs.db
 *.code-workspace
+
+# Migration baseline artifacts (screenshots, Lighthouse JSON) and tooling deps
+migration/baseline/
+migration/node_modules/
+
+# Backups made by setup-macbook-air.sh
+*.bak-*

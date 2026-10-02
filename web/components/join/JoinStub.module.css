@@ -1,0 +1,21 @@
+.stub {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px 48px;
+  scroll-margin-top: var(--nav-h);
+  border-top: 1px solid var(--color-line);
+}
+.ink {
+  border-top: 0;
+}
+.stub .text {
+  max-width: 62ch;
+  font-size: var(--step-lead);
+  line-height: 1.6;
+}
+.dot {
+  margin-right: 10px;
+  vertical-align: 0.15em;
+}

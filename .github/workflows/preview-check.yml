@@ -1,0 +1,161 @@
+name: Preview check
+
+# Smoke test of a protected Vercel preview, using the VERCEL_AUTOMATION_BYPASS_SECRET
+# (Deployment Protection → Protection Bypass for Automation). Runs on every successful
+# Vercel Preview deployment (the workflow file comes from the deployed commit), or manually
+# once this file is on main. Jobs: smoke + URL/SEO parity (Phase 4); the full Playwright
+# suite, Lighthouse CI against the plan 4.5 budgets, and link/image checks (Phase 6).
+# No artifacts are uploaded: reports and traces would carry the bypass header, and this
+# repository is public. Lighthouse results go to the job summary instead.
+on:
+  deployment_status:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: Preview base URL
+        required: true
+        default: https://arcslab-git-migrate-nextjs-arcs.vercel.app
+
+permissions:
+  contents: read
+
+env:
+  BASE: ${{ inputs.url || github.event.deployment_status.environment_url || github.event.deployment_status.target_url }}
+
+jobs:
+  smoke:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.deployment_status.state == 'success' &&
+       github.event.deployment.environment == 'Preview')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.deployment.sha || github.sha }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: web/.nvmrc
+      - name: Request key routes through the protection bypass
+        env:
+          BYPASS: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+        run: |
+          set -u
+          if [ -z "$BYPASS" ]; then echo "::error::VERCEL_AUTOMATION_BYPASS_SECRET is empty"; exit 1; fi
+          fail=0
+          check() {
+            code=$(curl -s -o /dev/null -w '%{http_code}' -H "x-vercel-protection-bypass: $BYPASS" "$BASE$1")
+            echo "$code $1 (want $2)"
+            [ "$code" = "$2" ] || fail=1
+          }
+          for p in / /research /publications /team /pi /funding /talks /contact /join /research/human-ai-teaming /team/sarah-mendoza /terrain/east-tn.webp /pdfjs/pdf.min.mjs /papers/schelble-2022-lets-think-together.pdf; do check "$p" 200; done
+          check /research.html 308
+          check /this-page-does-not-exist 404
+          echo "--- headers on /"
+          curl -sI -H "x-vercel-protection-bypass: $BYPASS" "$BASE/" | grep -iE '^(x-robots-tag|strict-transport-security|x-frame-options|content-security-policy|referrer-policy):' || true
+          echo "--- robots meta"
+          curl -s -H "x-vercel-protection-bypass: $BYPASS" "$BASE/" | grep -o '<meta name="robots"[^>]*>' || true
+          exit $fail
+      - name: URL and SEO parity against the production baseline (preview robots)
+        env:
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+        run: node web/scripts/check-parity.mjs "$BASE" --robots=preview
+
+  e2e:
+    name: Playwright (3 browsers) against the preview
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.deployment_status.state == 'success' &&
+       github.event.deployment.environment == 'Preview')
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.deployment.sha || github.sha }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: web/.nvmrc
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium webkit firefox
+      - name: Playwright suite (preview robots and drafts expectations)
+        env:
+          PLAYWRIGHT_BASE_URL: ${{ env.BASE }}
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+        run: npx playwright test --reporter=github,list
+
+  lighthouse:
+    name: Lighthouse budgets (plan 4.5)
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.deployment_status.state == 'success' &&
+       github.event.deployment.environment == 'Preview')
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.deployment.sha || github.sha }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: web/.nvmrc
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: npm ci
+      - name: Collect (5 runs per URL, mobile)
+        env:
+          BYPASS: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+        run: |
+          npx lhci collect --config=lighthouserc.json \
+            --url="$BASE/" --url="$BASE/publications" \
+            --url="$BASE/papers/schelble-2022-lets-think-together" \
+            --url="$BASE/team" --url="$BASE/join" \
+            --settings.extraHeaders="{\"x-vercel-protection-bypass\":\"$BYPASS\",\"x-vercel-set-bypass-cookie\":\"true\"}"
+      - name: Summary
+        if: always()
+        run: |
+          npx lhci upload --config=lighthouserc.json
+          node scripts/lhci-summary.mjs >> "$GITHUB_STEP_SUMMARY"
+          cat "$GITHUB_STEP_SUMMARY"
+      - name: Assert budgets
+        run: npx lhci assert --config=lighthouserc.json
+
+  links:
+    name: Links, images and first-load JS
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.deployment_status.state == 'success' &&
+       github.event.deployment.environment == 'Preview')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.deployment.sha || github.sha }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: web/.nvmrc
+      - name: Internal links must resolve (external links reported only)
+        env:
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+        run: node web/scripts/check-links.mjs "$BASE"
+      - name: Largest delivered image (300 kB budget)
+        env:
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+        run: node web/scripts/check-images.mjs "$BASE"
+      - name: Security headers
+        env:
+          BYPASS: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+        run: |
+          h=$(curl -sI -H "x-vercel-protection-bypass: $BYPASS" "$BASE/")
+          echo "$h" | grep -iE '^(strict-transport-security|content-security-policy|x-content-type-options|referrer-policy|permissions-policy|x-frame-options):'
+          for k in strict-transport-security content-security-policy x-content-type-options referrer-policy permissions-policy x-frame-options; do
+            echo "$h" | grep -qi "^$k:" || { echo "::error::missing $k"; exit 1; }
+          done
+          echo "$h" | grep -qi '^content-security-policy-report-only:' && { echo "::error::CSP still report-only"; exit 1; } || true
+

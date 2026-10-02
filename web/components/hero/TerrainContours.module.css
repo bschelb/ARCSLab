@@ -1,0 +1,57 @@
+.wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  opacity: 0;
+  transition: opacity 900ms var(--ease-out-signal);
+}
+.canvas[data-ready='true'] {
+  opacity: 1;
+}
+
+/* Survey marks for real places: a crosshair and a mono label, drawn over the contours. */
+.mark {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  transform: translate(-4px, -50%);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: rgb(255 255 255 / 0.5);
+}
+.mark::before {
+  content: '';
+  width: 9px;
+  height: 9px;
+  flex-shrink: 0;
+  background:
+    linear-gradient(currentColor, currentColor) center / 1px 100% no-repeat,
+    linear-gradient(currentColor, currentColor) center / 100% 1px no-repeat;
+}
+.lab {
+  gap: 10px;
+  transform: translate(-7px, -50%);
+  color: rgb(255 130 0 / 0.95);
+}
+.lab::before {
+  width: 15px;
+  height: 15px;
+  background:
+    radial-gradient(circle, transparent 2.5px, currentColor 2.5px 3.5px, transparent 3.5px),
+    linear-gradient(currentColor, currentColor) center / 1px 100% no-repeat,
+    linear-gradient(currentColor, currentColor) center / 100% 1px no-repeat;
+}

@@ -1,0 +1,96 @@
+{
+  "grants": [
+    {
+      "id": "aro-shared-world-models",
+      "status": "active",
+      "title": "Formation, Drift, and Reconciliation of Shared World Models in Human-AI Teams Under Degraded Information Environments",
+      "funder": "Army Research Office (ARO)",
+      "funderShort": "ARO",
+      "role": "PI",
+      "effortPct": 90,
+      "amount": 2077811,
+      "internal": false,
+      "description": "This project studies how human-AI teams build a shared model of their world, how that shared model drifts apart when information is delayed, partial, or corrupted, and how teams can reconcile it before performance degrades. The work develops measures and interventions for maintaining a common operating picture in degraded and contested information environments, supporting Army needs for resilient human-machine teaming at the tactical edge."
+    },
+    {
+      "id": "aro-compromised-ai-teammates",
+      "status": "active",
+      "title": "Preventing, Identifying, and Mitigating the Impact of Compromised AI Teammates Using Shared Situation Awareness and Mental Model Accuracy",
+      "funder": "Army Research Office (ARO)",
+      "funderShort": "ARO",
+      "role": "PI",
+      "effortPct": 100,
+      "amount": 718690,
+      "internal": false,
+      "description": "This project investigates how human-AI teams can detect, respond to, and recover from scenarios in which AI teammates are compromised or provide inaccurate information. The research develops frameworks rooted in shared situational awareness and mental model accuracy to maintain team performance and safety in electronically contested and adversarial environments. Work directly supports Army priorities in human-machine teaming for command and control."
+    },
+    {
+      "id": "utk-ai-teammate-acceptance",
+      "status": "active",
+      "title": "Understanding the Acceptance of AI Teammates in High-Risk Contexts",
+      "funder": "University of Tennessee — Faculty Research Assistants",
+      "funderShort": "UTK Internal",
+      "role": "PI",
+      "effortPct": 100,
+      "amount": 1750,
+      "internal": true,
+      "description": "Internal UTK award supporting student research into the human factors of AI teammate acceptance in high-stakes operational contexts."
+    },
+    {
+      "id": "utk-drap-adaptive-teammates",
+      "status": "active",
+      "title": "Developing Personalized Adaptive AI Teammates",
+      "funder": "University of Tennessee — Departmental Research Assistantship Program (DRAP)",
+      "funderShort": "UTK DRAP",
+      "role": "PI",
+      "effortPct": 100,
+      "amount": 1750,
+      "internal": true,
+      "description": "Internal UTK award supporting student research on the design and evaluation of personalized, adaptive AI teammates."
+    },
+    {
+      "id": "utk-ise-undergraduate-support",
+      "status": "active",
+      "title": "Augmenting Situation Awareness · Understanding the Acceptance of AI Teammates in High-Risk Contexts",
+      "funder": "University of Tennessee — ISE Department Undergraduate Researcher Support Program",
+      "funderShort": "UTK ISE Dept",
+      "role": "PI",
+      "effortPct": 100,
+      "amount": 2200,
+      "internal": true,
+      "description": "Internal UTK award funding undergraduate researchers working on situation awareness augmentation and AI teammate acceptance in high-risk contexts."
+    },
+    {
+      "id": "ari-talos",
+      "status": "pending",
+      "title": "Transference of AI-Learned Skills in Operational Settings (TALOS)",
+      "funder": "Army Research Institute (ARI)",
+      "funderShort": "ARI",
+      "role": "Co-PI",
+      "amount": 1024632,
+      "internal": false
+    },
+    {
+      "id": "ari-unite",
+      "status": "pending",
+      "title": "UNITE — Understanding Novel Interdependence Topologies for Human-AI Ensembles",
+      "funder": "Army Research Institute (ARI)",
+      "funderShort": "ARI",
+      "role": "PI",
+      "effortPct": 100,
+      "amount": 866869,
+      "internal": false
+    },
+    {
+      "id": "nsf-transactive-memory",
+      "status": "pending",
+      "title": "Collaborative Research: Enhancing Team Process Execution Using AI Teammate Augmented Transactive Memory Systems",
+      "funder": "National Science Foundation (NSF)",
+      "funderShort": "NSF",
+      "role": "PI",
+      "effortPct": 80,
+      "amount": 387256,
+      "internal": false
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main, migrate/nextjs]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  web:
+    name: Lint, typecheck, test, build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: web/.nvmrc
+          cache: npm
+          cache-dependency-path: |
+            web/package-lock.json
+            astro-site/package-lock.json
+      - run: npm ci
+      # The parity tests import the original Astro libs, whose tsconfig extends
+      # astro/tsconfigs/strict. Removed with astro-site/ in Phase 8.
+      - name: Install astro-site deps for parity tests
+        run: npm ci --ignore-scripts --no-audit --no-fund
+        working-directory: astro-site
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run validate:data
+      - run: npm test
+      - run: npm run build
+      - name: First-load JS per route (150 kB budget)
+        run: node scripts/measure-first-load.mjs
