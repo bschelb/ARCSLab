@@ -1,0 +1,82 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--color-white);
+  border: 1px solid var(--color-line);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color var(--duration-base) var(--ease-out-signal);
+}
+.link:hover {
+  border-color: var(--color-text);
+}
+.link:hover .media::after {
+  transform: scaleX(1);
+}
+.media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--color-ink);
+  max-width: 100%;
+}
+.media::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4px;
+  background: var(--color-orange);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-slow) var(--ease-out-signal);
+}
+.media img {
+  object-fit: cover;
+}
+.monogram {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(3.5rem, 7vw, 5rem);
+  color: var(--color-orange);
+  background:
+    repeating-radial-gradient(circle at 70% 120%, transparent 0 18px, rgb(255 255 255 / 0.05) 18px 19px),
+    var(--color-ink);
+}
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 18px 20px 22px;
+}
+.name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.6rem;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.role {
+  font-family: var(--font-mono);
+  font-size: var(--step-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-orange-text);
+}
+.meta {
+  font-family: var(--font-mono);
+  font-size: var(--step-label);
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+}
+.desc {
+  margin-top: 8px;
+  font-size: var(--step-small);
+  line-height: 1.6;
+}

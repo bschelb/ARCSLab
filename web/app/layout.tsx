@@ -1,37 +1,49 @@
-import type { Metadata } from 'next';
-import { Fraunces, IBM_Plex_Mono, Space_Grotesk } from 'next/font/google';
+import type { Metadata, Viewport } from 'next';
+import { Big_Shoulders, JetBrains_Mono, Public_Sans } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import JsonLd from '@/components/JsonLd';
+import Motion from '@/components/Motion';
+import SiteFooter from '@/components/layout/SiteFooter';
+import SiteNav from '@/components/layout/SiteNav';
+import SkipLink from '@/components/layout/SkipLink';
+import { siteGraph } from '@/lib/seo';
+import { researchKeywords, site } from '@/lib/site';
 import './globals.css';
 
-// "Two intelligences, one team": a humanist serif is the human voice, a technical mono is
-// the machine voice, bridged by a grotesk for body and UI. next/font self-hosts all three
-// at build, so visitors make no request to Google.
-const fraunces = Fraunces({
+// "Contour" type system (D14): a condensed display voice for headlines and numerals,
+// a public-service sans for reading, and a mono for coordinates and labels. All three are
+// self-hosted by next/font at build, so visitors make no request to Google.
+const bigShoulders = Big_Shoulders({
   subsets: ['latin'],
-  axes: ['opsz'],
+  weight: ['600', '700', '800', '900'],
+  variable: '--font-big-shoulders',
+  fallback: ['Archivo Narrow', 'Arial Narrow', 'Impact', 'sans-serif'],
+  adjustFontFallback: false,
+});
+const publicSans = Public_Sans({
+  subsets: ['latin'],
   style: ['normal', 'italic'],
-  variable: '--font-fraunces',
+  variable: '--font-public-sans',
 });
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-space-grotesk',
-});
-
-const plexMono = IBM_Plex_Mono({
+const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   weight: ['400', '500'],
-  style: ['normal', 'italic'],
-  variable: '--font-plex-mono',
+  variable: '--font-jetbrains-mono',
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://arcslab.io'),
-  title: 'ARCS Lab',
-  description: 'AI & Robotics for Collaborative Systems Lab, University of Tennessee, Knoxville.',
+  metadataBase: new URL(site.url),
+  description: site.description,
+  keywords: researchKeywords.join(', '),
+  authors: [{ name: 'Beau G. Schelble' }],
+  publisher: site.name,
   // Placeholder until Phase 4 adds environment-aware robots: previews must never be indexed.
   robots: { index: false, follow: false },
+};
+
+export const viewport: Viewport = {
+  themeColor: site.themeColor,
 };
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
@@ -39,10 +51,17 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${fraunces.variable} ${spaceGrotesk.variable} ${plexMono.variable}`}
+      className={`${bigShoulders.variable} ${publicSans.variable} ${jetbrainsMono.variable}`}
     >
       <body>
-        {children}
+        <JsonLd data={siteGraph()} />
+        <SkipLink />
+        <SiteNav />
+        <main id="main" tabIndex={-1}>
+          {children}
+        </main>
+        <SiteFooter />
+        <Motion />
         <Analytics />
         <SpeedInsights />
       </body>

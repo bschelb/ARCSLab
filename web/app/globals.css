@@ -1,18 +1,369 @@
 @import 'tailwindcss';
 
-/* Phase 1 skeleton. Phase 3 moves the full design-token set here (plan 4.2). */
+/* ════════════════════════════════════════════════════════════════
+   ARCS LAB — DESIGN SYSTEM "Contour" (decision D14)
+   Ink grounds carry the East Tennessee terrain and the big condensed voice
+   (Big Shoulders); light paper sections carry reading (Public Sans); JetBrains
+   Mono labels coordinates, indices and data. Official UT palette (D8):
+   Tennessee Orange for fills and signals, Smokey and Smokey X for type on light.
+   Every text/background pair below is checked by tests/unit/contrast.test.ts.
+   ════════════════════════════════════════════════════════════════ */
+
 @theme inline {
-  --font-serif: var(--font-fraunces), Georgia, serif;
-  --font-sans: var(--font-space-grotesk), system-ui, sans-serif;
-  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  --font-display: var(--font-big-shoulders), 'Archivo Narrow', Impact, sans-serif;
+  --font-sans: var(--font-public-sans), system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, 'SFMono-Regular', Menlo, monospace;
 }
 
 @theme {
+  /* surfaces */
   --color-ink: #14100b;
-  --color-paper: #faf8f3;
+  --color-ink-2: #1e1913;
+  --color-ink-3: #2a241c;
+  --color-paper: #f4f3f1;
+  --color-paper-2: #eeece8;
+  --color-white: #ffffff;
+
+  /* lines */
+  --color-line: #d8d5cf;
+  --color-line-strong: #b9b5ad;
+  --color-line-dark: rgb(255 255 255 / 0.14);
+
+  /* type on light (UT Smokey X / Smokey) */
+  --color-text: #333333;
+  --color-text-strong: #333333;
+  --color-text-muted: #58595b;
+
+  /* type on dark */
+  --color-dk-text: rgb(255 255 255 / 0.92);
+  --color-dk-text-2: rgb(255 255 255 / 0.84);
+  --color-dk-muted: rgb(255 255 255 / 0.72);
+
+  /* signal (UT Tennessee Orange) */
+  --color-orange: #ff8200;
+  --color-orange-text: #b84600; /* orange as text on light only */
+  --color-orange-deep: #b84600; /* alias kept for ported CSS */
+  --color-smokey: #58595b;
+
+  /* motion: three durations, one curve */
+  --ease-out-signal: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 160ms;
+  --duration-base: 240ms;
+  --duration-slow: 400ms;
 }
 
-body {
-  background: var(--color-paper);
-  font-family: var(--font-sans);
+:root {
+  --gutter: clamp(20px, 5vw, 80px);
+  --section-y: clamp(64px, 9vw, 110px);
+  --nav-h: 68px;
+  --measure: 68ch;
+
+  /* fluid type scale */
+  --step-display: clamp(3.1rem, 8.6vw, 8.4rem);
+  --step-h1: clamp(2.8rem, 6.8vw, 6.2rem);
+  --step-h2: clamp(2.3rem, 4.8vw, 4.2rem);
+  --step-h3: clamp(1.35rem, 1.8vw, 1.65rem);
+  --step-lead: clamp(1.06rem, 1.3vw, 1.2rem);
+  --step-body: 1.0625rem;
+  --step-small: 0.9375rem;
+  --step-label: 0.75rem;
+}
+
+/* ── BASE ─────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--nav-h) + 16px);
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-size: var(--step-body);
+    line-height: 1.65;
+    overflow-x: clip;
+    text-rendering: optimizeLegibility;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+    color: var(--color-text-strong);
+  }
+  p {
+    text-wrap: pretty;
+  }
+  a {
+    color: inherit;
+  }
+  ::selection {
+    background: var(--color-orange);
+    color: var(--color-ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-text);
+    outline-offset: 3px;
+  }
+  .on-dark :focus-visible,
+  .on-dark:focus-visible {
+    outline-color: var(--color-orange);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ── SHARED PRIMITIVES ────────────────────────────────────────── */
+@layer components {
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .wrap {
+    padding-inline: var(--gutter);
+  }
+  .section {
+    padding: var(--section-y) var(--gutter);
+  }
+  .section-ink {
+    background: var(--color-ink);
+    color: var(--color-dk-text-2);
+  }
+  .section-paper-2 {
+    background: var(--color-paper-2);
+  }
+
+  /* mono label / eyebrow: "01 · Research Program" */
+  .eyebrow,
+  .label {
+    font-family: var(--font-mono);
+    font-size: var(--step-label);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background: var(--color-orange);
+    flex-shrink: 0;
+  }
+  .on-dark .eyebrow,
+  .on-dark .label {
+    color: var(--color-dk-muted);
+  }
+
+  /* condensed display voice */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 0.88;
+    letter-spacing: 0.005em;
+  }
+  .sec-title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: var(--step-h2);
+    line-height: 0.92;
+    letter-spacing: 0.01em;
+    margin-bottom: 20px;
+  }
+  .sec-title em {
+    font-style: normal;
+    color: var(--color-orange-text);
+  }
+  .on-dark .sec-title {
+    color: var(--color-white);
+  }
+  .on-dark .sec-title em {
+    color: var(--color-orange);
+  }
+  .sec-lead {
+    font-size: var(--step-lead);
+    line-height: 1.6;
+    max-width: 62ch;
+    margin-bottom: clamp(36px, 5vw, 56px);
+  }
+  .on-dark .sec-lead {
+    color: var(--color-dk-text-2);
+  }
+
+  /* the signature emphasis: an orange block behind the words (from the hero) */
+  .mark-block {
+    background: var(--color-orange);
+    color: var(--color-ink);
+    padding: 0 0.1em;
+    font-style: normal;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  /* buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 12px 22px;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    transition:
+      background var(--duration-fast) var(--ease-out-signal),
+      color var(--duration-fast) var(--ease-out-signal),
+      border-color var(--duration-fast) var(--ease-out-signal);
+  }
+  .btn .arr {
+    transition: transform var(--duration-base) var(--ease-out-signal);
+  }
+  .btn:hover .arr {
+    transform: translateX(4px);
+  }
+  /* primary: Tennessee Orange fill + Smokey X text (5.08:1); hover: orange-text fill + white (5.37:1) */
+  .btn-primary {
+    background: var(--color-orange);
+    color: var(--color-text);
+  }
+  .btn-primary:hover {
+    background: var(--color-orange-text);
+    color: var(--color-white);
+  }
+  .on-dark .btn-primary {
+    color: var(--color-ink);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-text);
+    border-color: var(--color-text-muted);
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-text);
+  }
+  .btn-light {
+    background: transparent;
+    color: var(--color-dk-text);
+    border-color: rgb(255 255 255 / 0.55);
+  }
+  .btn-light:hover {
+    border-color: var(--color-orange);
+    color: var(--color-white);
+  }
+
+  .tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border: 1px solid var(--color-line-strong);
+    color: var(--color-text);
+  }
+  .on-dark .tag {
+    border-color: var(--color-line-dark);
+    color: var(--color-dk-text-2);
+  }
+
+  .status-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-orange);
+    box-shadow: 0 0 0 0 rgb(255 130 0 / 0.55);
+    animation: status-pulse 2.4s var(--ease-out-signal) infinite;
+    flex-shrink: 0;
+  }
+
+  /* lab-member mark in author lists: every member, PI included, gets the same dot */
+  .lab-mark {
+    display: inline-block;
+    width: 0.42em;
+    height: 0.42em;
+    margin-left: 0.18em;
+    border-radius: 50%;
+    background: var(--color-orange);
+    vertical-align: 0.18em;
+  }
+  .lab-mark-key {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .lab-mark-key .lab-mark {
+    margin-left: 0;
+    vertical-align: middle;
+  }
+
+  .badge-ico {
+    display: inline-block;
+    vertical-align: -2px;
+    margin-right: 5px;
+  }
+
+  /* scroll reveal: only elements below the fold at load are hidden, by components/Motion */
+  [data-reveal].reveal-pending {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  [data-reveal] {
+    transition:
+      opacity var(--duration-slow) var(--ease-out-signal),
+      transform var(--duration-slow) var(--ease-out-signal);
+    transition-delay: var(--rd, 0ms);
+  }
+
+  .stat-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@keyframes status-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgb(255 130 0 / 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgb(255 130 0 / 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgb(255 130 0 / 0);
+  }
 }

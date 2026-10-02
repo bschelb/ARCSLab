@@ -116,9 +116,15 @@ export function marchContours(
  * Separable box blur, `passes` times (3 passes ≈ Gaussian). Removes the 8-bit stair steps of
  * the heightmap so low-relief valleys draw as smooth lines instead of jitter.
  */
-export function smoothHeights(src: Float32Array, w: number, h: number, radius = 1, passes = 2): Float32Array {
-  let a = src;
-  let b = new Float32Array(src.length);
+export function smoothHeights(
+  src: Float32Array,
+  w: number,
+  h: number,
+  radius = 1,
+  passes = 2,
+): Float32Array {
+  let cur = Float32Array.from(src);
+  const tmp = new Float32Array(src.length);
   for (let p = 0; p < passes; p++) {
     for (let y = 0; y < h; y++) {
       for (let x = 0; x < w; x++) {
@@ -127,12 +133,13 @@ export function smoothHeights(src: Float32Array, w: number, h: number, radius = 
         for (let d = -radius; d <= radius; d++) {
           const xx = x + d;
           if (xx < 0 || xx >= w) continue;
-          s += a[y * w + xx] ?? 0;
+          s += cur[y * w + xx] ?? 0;
           n++;
         }
-        b[y * w + x] = s / n;
+        tmp[y * w + x] = s / n;
       }
     }
+    const next = new Float32Array(src.length);
     for (let y = 0; y < h; y++) {
       for (let x = 0; x < w; x++) {
         let s = 0;
@@ -140,13 +147,13 @@ export function smoothHeights(src: Float32Array, w: number, h: number, radius = 
         for (let d = -radius; d <= radius; d++) {
           const yy = y + d;
           if (yy < 0 || yy >= h) continue;
-          s += b[yy * w + x] ?? 0;
+          s += tmp[yy * w + x] ?? 0;
           n++;
         }
-        a = a === src ? new Float32Array(src.length) : a;
-        a[y * w + x] = s / n;
+        next[y * w + x] = s / n;
       }
     }
+    cur = next;
   }
-  return a === src ? Float32Array.from(src) : a;
+  return cur;
 }
