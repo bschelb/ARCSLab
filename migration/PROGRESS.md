@@ -507,10 +507,14 @@ Done by Claude Cowork in Dr. Schelble's logged-in browser, using the brief from 
   requests 302 to `vercel.com/sso-api`, and Vercel adds `x-robots-tag: noindex`, so previews
   are doubly kept out of indexes (along with the app's own `noindex` meta tag). A
   "Protection Bypass for Automation" secret labeled "GitHub Actions" exists in Vercel.
-- **Still to do (Dr. Schelble):** save that secret in GitHub as
-  `VERCEL_AUTOMATION_BYPASS_SECRET`. Cowork could not copy the value out of Vercel. Until it
-  is saved, the agent cannot inspect previews: Phase 4's preview parity run and Phase 6's
-  preview CI both need it.
+- **GitHub secret:** Dr. Schelble saved `VERCEL_AUTOMATION_BYPASS_SECRET` (2 Oct 2026,
+  02:20 UTC). `.github/workflows/preview-check.yml` runs on every successful Preview
+  `deployment_status`, using the workflow file from the deployed commit. Manual dispatch only
+  works once the file is on `main`. Run `36955279220` (`d275ee1`) passed:
+  - all 8 routes, `/terrain/east-tn.webp`, `/pdfjs/pdf.min.mjs` and a paper PDF → 200;
+  - `/research.html` → 308; an unknown path → 404;
+  - HSTS, X-Frame-Options, Referrer-Policy and the report-only CSP all present;
+  - `x-robots-tag: noindex` plus meta `noindex, nofollow`.
 - **Deviations from the brief:**
   - Root Directory could not be chosen at import, because `web/` does not exist on `main`. It
     was set in Settings after the expected failed first deploy.
