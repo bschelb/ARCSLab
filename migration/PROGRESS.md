@@ -488,3 +488,37 @@ listed below.
   `/papers/<id>`.
 - **Nav labels:** "Join" and "News & Talks" arrive in Phase 5 (D9). The P1 items stay out of
   scope.
+
+### Vercel project setup (2 October 2026)
+
+Done by Claude Cowork in Dr. Schelble's logged-in browser, using the brief from this session.
+
+- **Project:** `arcslab` under the "ARCS" Vercel team, Hobby plan (D5). Dashboard:
+  https://vercel.com/arcs/arcslab
+- **Branch preview alias:** https://arcslab-git-migrate-nextjs-arcs.vercel.app
+- **Settings:** Root Directory `web`, Next.js preset, Node.js 24.x, Ignored Build Step
+  Automatic (so `web/vercel.json` `ignoreCommand` applies). Vercel also turned on "Skip
+  deployments when there are no changes to the root directory"; it was left on, since it
+  agrees with the ignore step.
+- **Analytics:** Web Analytics on (Hobby, 50k events a month). Speed Insights showed "Not
+  Enabled" on the first deployment only. The app already renders `<SpeedInsights />`, and
+  the next preview (`264590a`) built after it was turned on. Confirm in the dashboard.
+- **Deployment Protection:** Vercel Authentication protects previews. Unauthenticated
+  requests 302 to `vercel.com/sso-api`, and Vercel adds `x-robots-tag: noindex`, so previews
+  are doubly kept out of indexes (along with the app's own `noindex` meta tag). A
+  "Protection Bypass for Automation" secret labeled "GitHub Actions" exists in Vercel.
+- **Still to do (Dr. Schelble):** save that secret in GitHub as
+  `VERCEL_AUTOMATION_BYPASS_SECRET`. Cowork could not copy the value out of Vercel. Until it
+  is saved, the agent cannot inspect previews: Phase 4's preview parity run and Phase 6's
+  preview CI both need it.
+- **Deviations from the brief:**
+  - Root Directory could not be chosen at import, because `web/` does not exist on `main`. It
+    was set in Settings after the expected failed first deploy.
+  - The Vercel GitHub app was already installed with access to other repos (cat-site,
+    beauschelble-com, Beau__Personal_Website). It was left unchanged; narrowing it to
+    ARCSLab is optional (GitHub → Settings → Applications).
+- **Verified by the agent:**
+  - The push of `264590a` produced a Preview deployment with Vercel status "Deployment has
+    completed".
+  - Production deploys from `main` fail as expected until cutover, because `main` has no
+    `web/`.
