@@ -1,0 +1,82 @@
+{
+  "roles": [
+    {
+      "id": "phd",
+      "icon": "cap",
+      "title": "PhD Students",
+      "desc": "We admit PhD students through the UTK Department of Industrial & Systems Engineering. Research assistantships are available for qualified candidates.",
+      "req": "Preferred background: human factors, HCI, CS, cognitive science, psychology, or systems engineering."
+    },
+    {
+      "id": "deng",
+      "icon": "wrench",
+      "title": "DEng Students",
+      "desc": "The Doctor of Engineering program at UTK allows working professionals to pursue applied doctoral research. ARCS Lab welcomes DEng students with strong applied research interests.",
+      "req": "Professional experience in engineering, defense, manufacturing, or technology preferred."
+    },
+    {
+      "id": "undergrad",
+      "icon": "school",
+      "title": "Undergraduate Researchers",
+      "desc": "UTK undergraduates in ISE, CS, or related fields are welcome to apply for part-time research positions (typically 4 hours/week) in the ARCS Lab.",
+      "req": "Open to motivated undergraduates with strong academic records and genuine interest in research."
+    }
+  ],
+  "lookingFor": {
+    "intro": "We recruit graduate students (PhD and DEng) in Industrial & Systems Engineering, Computer Science, Human-Computer Interaction, and Psychology. Undergraduate research opportunities are also available.",
+    "backgrounds": [
+      "Industrial & systems engineering",
+      "Human factors",
+      "Human-computer interaction",
+      "Computer science",
+      "Cognitive science",
+      "Psychology"
+    ]
+  },
+  "steps": [
+    {
+      "title": "Explore the research",
+      "body": "Read about the lab's research areas and recent publications to see where your interests fit."
+    },
+    {
+      "title": "Email Dr. Schelble",
+      "body": "Send your CV, a brief statement of research interests, and any relevant publications or projects to bschelbl@utk.edu, or use the contact form."
+    },
+    {
+      "title": "Apply to the program",
+      "body": "PhD students are admitted through the UTK Department of Industrial & Systems Engineering, and working professionals through UTK's Doctor of Engineering program."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Is funding available for PhD students?",
+      "a": "Research assistantships are available for qualified PhD candidates."
+    },
+    {
+      "q": "What backgrounds do you look for?",
+      "a": "Human factors, HCI, computer science, cognitive science, psychology, and systems engineering. We recruit graduate students in Industrial & Systems Engineering, Computer Science, Human-Computer Interaction, and Psychology."
+    },
+    {
+      "q": "Can I join while working full time?",
+      "a": "Yes, through the Doctor of Engineering program at UTK, which allows working professionals to pursue applied doctoral research. Professional experience in engineering, defense, manufacturing, or technology is preferred."
+    },
+    {
+      "q": "What do undergraduate positions involve?",
+      "a": "Part-time research positions, typically about 4 hours per week, open to UTK undergraduates in ISE, CS, or related fields with strong academic records and a genuine interest in research."
+    },
+    {
+      "q": "How soon will I hear back?",
+      "a": "We typically respond within 2–3 business days. For urgent inquiries, email Dr. Schelble directly at bschelbl@utk.edu."
+    },
+    {
+      "q": "When should I reach out for a 2027 start?",
+      "a": "Answer to come from Dr. Schelble.",
+      "draft": true
+    },
+    {
+      "q": "Do you accept master's students or visiting researchers?",
+      "a": "Answer to come from Dr. Schelble.",
+      "draft": true
+    }
+  ]
+}

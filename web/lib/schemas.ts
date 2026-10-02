@@ -218,6 +218,24 @@ export const talksSchema = z
 /** Press, awards and other lab news (the "Media & Recent News" cards). */
 export const newsSchema = z.array(newsItemSchema);
 
+// ── Join (recruiting) ───────────────────────────────────────────────────────
+
+/** Content not yet confirmed by Dr. Schelble: shown with a "Draft" tag on previews, hidden in production. */
+const draft = z.boolean().optional();
+
+export const joinSchema = z
+  .object({
+    roles: z.array(
+      z
+        .object({ id: slug, icon: iconName, title: nonEmpty, desc: nonEmpty, req: nonEmpty, draft })
+        .strict(),
+    ),
+    lookingFor: z.object({ intro: nonEmpty, backgrounds: z.array(nonEmpty).min(1) }).strict(),
+    steps: z.array(z.object({ title: nonEmpty, body: nonEmpty, draft }).strict()).min(1),
+    faq: z.array(z.object({ q: nonEmpty, a: nonEmpty, draft }).strict()),
+  })
+  .strict();
+
 export type Publication = z.infer<typeof publicationSchema>;
 export type PaperType = z.infer<typeof paperType>;
 export type ResearchArea = z.infer<typeof researchAreaSchema>;
@@ -229,3 +247,4 @@ export type Team = z.infer<typeof teamSchema>;
 export type Grant = z.infer<typeof grantSchema>;
 export type NewsItem = z.infer<typeof newsItemSchema>;
 export type NewsKind = z.infer<typeof newsKind>;
+export type Join = z.infer<typeof joinSchema>;

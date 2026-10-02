@@ -45,6 +45,7 @@ export function GET() {
     `- [Principal Investigator](${absoluteUrl('/pi')}): Biography, honors, service and teaching`,
     `- [Funding](${absoluteUrl('/funding')}): Sponsored research`,
     `- [Talks & News](${absoluteUrl('/talks')}): Invited talks and lab news`,
+    `- [Join](${absoluteUrl('/join')}): Recruiting status, open positions and how to apply`,
     `- [Contact](${absoluteUrl('/contact')}): Prospective students, collaborators, press`,
     '',
     '## Lab members',

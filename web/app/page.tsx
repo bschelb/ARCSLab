@@ -243,7 +243,7 @@ export default function HomePage() {
               </PersonCard>
             </div>
           ))}
-          <Link href="/team#join" className={styles.joinTile} data-reveal>
+          <Link href="/join" className={styles.joinTile} data-reveal>
             <span className={styles.joinPlus} aria-hidden="true">
               +
             </span>
@@ -294,7 +294,7 @@ export default function HomePage() {
                 →
               </span>
             </Link>
-            <Link href="/team#join" className="btn btn-light">
+            <Link href="/join" className="btn btn-light">
               Prospective Students{' '}
               <span className="arr" aria-hidden="true">
                 →

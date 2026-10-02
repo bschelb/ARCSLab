@@ -4,6 +4,7 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import fundingJson from '../data/funding.json';
+import joinJson from '../data/join.json';
 import newsJson from '../data/news.json';
 import publicationsJson from '../data/publications.json';
 import researchJson from '../data/research.json';
@@ -20,6 +21,7 @@ const { errors, warnings } = validateContent(
     'funding.json': fundingJson,
     'talks.json': talksJson,
     'news.json': newsJson,
+    'join.json': joinJson,
   },
   path.join(root, 'public'),
 );

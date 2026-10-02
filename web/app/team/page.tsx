@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import PageHeader from '@/components/layout/PageHeader';
+import JoinStub from '@/components/join/JoinStub';
 import PersonCard from '@/components/people/PersonCard';
 import Icon from '@/components/ui/Icon';
 import { team } from '@/lib/data';
@@ -244,45 +245,7 @@ export default function TeamPage() {
         </ul>
       </section>
 
-      <section id="join" className={`section ${styles.join}`} aria-labelledby="join-title">
-        <div>
-          <p className="eyebrow" data-reveal>
-            Opportunities
-          </p>
-          <h2 id="join-title" className="sec-title" data-reveal>
-            Join the <em>ARCS Lab</em>
-          </h2>
-          <p data-reveal>
-            We are actively recruiting graduate students (PhD and DEng) in Industrial &amp; Systems
-            Engineering, Computer Science, Human-Computer Interaction, and Psychology. Undergraduate
-            research opportunities are also available.
-          </p>
-          <p data-reveal>
-            To apply, email Dr. Schelble at <a href="mailto:bschelbl@utk.edu">bschelbl@utk.edu</a>{' '}
-            with your CV, a brief statement of research interests, and any relevant publications or
-            projects.
-          </p>
-          <div className={styles.joinCta} data-reveal>
-            <Link href="/contact" className="btn btn-primary">
-              Contact Dr. Schelble{' '}
-              <span className="arr" aria-hidden="true">
-                →
-              </span>
-            </Link>
-          </div>
-        </div>
-        <div className={`${styles.joinPanel} on-dark`} data-reveal>
-          <p className={styles.joinK}>
-            <span className="status-dot" aria-hidden="true" /> Now Recruiting
-          </p>
-          <ul>
-            <li>PhD students — research assistantships available for qualified candidates</li>
-            <li>DEng students — applied doctoral research for working professionals</li>
-            <li>UTK undergraduates — part-time research positions (~4 hrs/week)</li>
-            <li>Backgrounds: ISE, human factors, HCI, CS, cognitive science, psychology</li>
-          </ul>
-        </div>
-      </section>
+      <JoinStub />
     </>
   );
 }

@@ -7,6 +7,7 @@ import path from 'node:path';
 import type { z } from 'zod';
 import {
   fundingSchema,
+  joinSchema,
   newsSchema,
   publicationsSchema,
   researchAreasSchema,
@@ -27,6 +28,7 @@ export interface RawContent {
   'funding.json': unknown;
   'talks.json': unknown;
   'news.json': unknown;
+  'join.json': unknown;
 }
 
 const EMOJI = /\p{Extended_Pictographic}/u;
@@ -41,6 +43,14 @@ function walkStrings(value: unknown, at: string, visit: (s: string, at: string) 
   else if (Array.isArray(value)) value.forEach((v, i) => walkStrings(v, `${at}[${i}]`, visit));
   else if (value && typeof value === 'object') {
     for (const [k, v] of Object.entries(value)) walkStrings(v, at ? `${at}.${k}` : k, visit);
+  }
+}
+
+function walkDrafts(value: unknown, at: string, visit: (at: string) => void): void {
+  if (Array.isArray(value)) value.forEach((v, i) => walkDrafts(v, `${at}[${i}]`, visit));
+  else if (value && typeof value === 'object') {
+    if ((value as { draft?: unknown }).draft === true) visit(at || '(root)');
+    for (const [k, v] of Object.entries(value)) walkDrafts(v, at ? `${at}.${k}` : k, visit);
   }
 }
 
@@ -83,6 +93,14 @@ export function validateContent(raw: RawContent, publicDir: string): ValidationR
   const funding = parse('funding.json', fundingSchema);
   const talks = parse('talks.json', talksSchema);
   const news = parse('news.json', newsSchema);
+  parse('join.json', joinSchema);
+
+  // Drafts are hidden in production; list them so they are not forgotten.
+  for (const [file, data] of Object.entries(raw)) {
+    walkDrafts(data, '', (at) =>
+      warnings.push(`data/${file} → ${at}: draft (hidden in production)`),
+    );
+  }
 
   const pubIds = new Set(pubs?.map((p) => p.id) ?? []);
 

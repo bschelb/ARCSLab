@@ -8,4 +8,5 @@ export const ROUTES = [
   '/funding',
   '/talks',
   '/contact',
+  '/join',
 ] as const;

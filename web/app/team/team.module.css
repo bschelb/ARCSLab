@@ -170,55 +170,6 @@
   font-size: var(--step-small);
   color: var(--color-dk-text-2);
 }
-.join {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-  gap: clamp(32px, 5vw, 72px);
-  align-items: center;
-  scroll-margin-top: var(--nav-h);
-}
-.join p {
-  max-width: var(--measure);
-  margin-bottom: 14px;
-  line-height: 1.75;
-}
-.join a {
-  color: var(--color-orange-text);
-}
-.joinCta {
-  margin-top: 24px;
-}
-.joinCta a {
-  color: var(--color-text);
-}
-.joinPanel {
-  background: var(--color-ink);
-  color: var(--color-dk-text-2);
-  padding: clamp(24px, 3vw, 36px);
-  border-top: 4px solid var(--color-orange);
-}
-.joinK {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--font-mono);
-  font-size: var(--step-label);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--color-orange);
-  margin-bottom: 16px;
-}
-.joinPanel ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.joinPanel li {
-  padding: 10px 0;
-  border-bottom: 1px solid var(--color-line-dark);
-  font-size: var(--step-small);
-  line-height: 1.6;
-}
 @media (max-width: 1100px) {
   .smallGrid,
   .collabs {
@@ -226,8 +177,7 @@
   }
 }
 @media (max-width: 860px) {
-  .pi,
-  .join {
+  .pi {
     grid-template-columns: minmax(0, 1fr);
   }
   .piImg {

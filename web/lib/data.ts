@@ -6,6 +6,7 @@
  */
 import type { z } from 'zod';
 import fundingJson from '@/data/funding.json';
+import joinJson from '@/data/join.json';
 import newsJson from '@/data/news.json';
 import publicationsJson from '@/data/publications.json';
 import researchJson from '@/data/research.json';
@@ -13,6 +14,7 @@ import talksJson from '@/data/talks.json';
 import teamJson from '@/data/team.json';
 import {
   fundingSchema,
+  joinSchema,
   newsSchema,
   publicationsSchema,
   researchAreasSchema,
@@ -37,3 +39,4 @@ export const team = parseData('team.json', teamSchema, teamJson);
 export const grants = parseData('funding.json', fundingSchema, fundingJson).grants;
 export const talks = parseData('talks.json', talksSchema, talksJson);
 export const news = parseData('news.json', newsSchema, newsJson);
+export const join = parseData('join.json', joinSchema, joinJson);

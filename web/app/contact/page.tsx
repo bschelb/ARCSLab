@@ -1,7 +1,7 @@
 import Breadcrumbs from '@/components/Breadcrumbs';
+import JoinStub from '@/components/join/JoinStub';
 import PageHeader from '@/components/layout/PageHeader';
 import Icon from '@/components/ui/Icon';
-import type { IconName } from '@/lib/icons';
 import { pageMetadata } from '@/lib/metadata';
 import styles from './contact.module.css';
 
@@ -14,27 +14,6 @@ export const metadata = pageMetadata({
 
 const MAPS_URL =
   'https://www.google.com/maps/search/?api=1&query=851+Neyland+Drive,+Knoxville,+TN+37996';
-
-const JOIN: { icon: IconName; title: string; desc: string; req: string }[] = [
-  {
-    icon: 'cap',
-    title: 'PhD Students',
-    desc: 'We admit PhD students through the UTK ISE department and are actively recruiting. Research assistantships available for qualified candidates.',
-    req: 'PREFERRED BACKGROUND: human factors, HCI, CS, cognitive science, psychology, or systems engineering.',
-  },
-  {
-    icon: 'wrench',
-    title: 'DEng Students',
-    desc: 'The Doctor of Engineering program at UTK allows working professionals to pursue applied doctoral research. ARCS Lab welcomes DEng students with strong applied research interests.',
-    req: 'PROFESSIONAL EXPERIENCE in engineering, defense, manufacturing, or technology preferred.',
-  },
-  {
-    icon: 'school',
-    title: 'Undergraduate Researchers',
-    desc: 'UTK undergraduates in ISE, CS, or related fields are welcome to apply for part-time research positions (typically 4 hours/week) in the ARCS Lab.',
-    req: 'OPEN TO motivated undergraduates with strong academic records and genuine interest in research.',
-  },
-];
 
 export default function ContactPage() {
   return (
@@ -206,31 +185,7 @@ export default function ContactPage() {
         </section>
       </div>
 
-      <section
-        id="join"
-        className={`section section-ink on-dark ${styles.join}`}
-        aria-labelledby="join-title"
-      >
-        <p className="eyebrow">Prospective Members</p>
-        <h2 id="join-title" className="sec-title">
-          Join the <em>ARCS Lab</em>
-        </h2>
-        <p className="sec-lead">
-          The ARCS Lab recruits motivated students and researchers interested in human-AI teaming,
-          human factors, HCI, and collaborative systems. We offer a rigorous, supportive, and
-          interdisciplinary research environment at a leading research university.
-        </p>
-        <ul className={styles.joinGrid}>
-          {JOIN.map((j, i) => (
-            <li key={j.title} data-reveal style={{ ['--rd' as string]: `${i * 80}ms` }}>
-              <Icon name={j.icon} size={28} className={styles.joinIcon} />
-              <h3 className={styles.joinTitle}>{j.title}</h3>
-              <p className={styles.joinDesc}>{j.desc}</p>
-              <p className={styles.joinReq}>{j.req}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
+      <JoinStub tone="ink" />
     </>
   );
 }

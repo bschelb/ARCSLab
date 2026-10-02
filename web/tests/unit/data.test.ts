@@ -4,6 +4,7 @@ import legacyFunding from '../../../astro-site/src/data/funding.json';
 import legacyTalks from '../../../astro-site/src/data/talks.json';
 import legacyTeam from '../../../astro-site/src/data/team.json';
 import fundingJson from '@/data/funding.json';
+import joinJson from '@/data/join.json';
 import newsJson from '@/data/news.json';
 import publicationsJson from '@/data/publications.json';
 import researchJson from '@/data/research.json';
@@ -32,6 +33,7 @@ const raw = (): RawContent =>
     'funding.json': fundingJson,
     'talks.json': talksJson,
     'news.json': newsJson,
+    'join.json': joinJson,
   });
 
 describe('funding totals (computed, never typed)', () => {
