@@ -12,26 +12,42 @@ export default function SiteFooter() {
             Engineering the future of <em>human–AI teamwork.</em>
           </p>
           <p>
-            The AI &amp; Robotics for Collaborative Systems Lab — Department of Industrial &amp; Systems
-            Engineering, Tickle College of Engineering, University of Tennessee, Knoxville.
+            The AI &amp; Robotics for Collaborative Systems Lab — Department of Industrial &amp;
+            Systems Engineering, Tickle College of Engineering, University of Tennessee, Knoxville.
           </p>
         </div>
         <nav aria-label="Explore" className={styles.col}>
           <h2>Explore</h2>
           <ul>
-            <li><Link href="/research">Research</Link></li>
-            <li><Link href="/publications">Publications</Link></li>
-            <li><Link href="/team">Team</Link></li>
-            <li><Link href="/pi">Principal Investigator</Link></li>
+            <li>
+              <Link href="/research">Research</Link>
+            </li>
+            <li>
+              <Link href="/publications">Publications</Link>
+            </li>
+            <li>
+              <Link href="/team">Team</Link>
+            </li>
+            <li>
+              <Link href="/pi">Principal Investigator</Link>
+            </li>
           </ul>
         </nav>
         <nav aria-label="Lab" className={styles.col}>
           <h2>Lab</h2>
           <ul>
-            <li><Link href="/funding">Funding</Link></li>
-            <li><Link href="/talks">Talks &amp; News</Link></li>
-            <li><Link href="/contact">Contact</Link></li>
-            <li><Link href="/team#join">Join the Lab</Link></li>
+            <li>
+              <Link href="/funding">Funding</Link>
+            </li>
+            <li>
+              <Link href="/talks">Talks &amp; News</Link>
+            </li>
+            <li>
+              <Link href="/contact">Contact</Link>
+            </li>
+            <li>
+              <Link href="/team#join">Join the Lab</Link>
+            </li>
           </ul>
         </nav>
         <div className={styles.col}>

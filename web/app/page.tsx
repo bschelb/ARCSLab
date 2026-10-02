@@ -17,12 +17,42 @@ export const metadata = pageMetadata({
 // Home-page summaries of the six areas (verbatim from the Astro home page). Each links to the
 // matching area on /research by position.
 const PILLARS: { num: string; icon: IconName; title: string; desc: string }[] = [
-  { num: '01', icon: 'network', title: 'Intelligent Information Sharing', desc: 'Modeling information-sharing, team cognition, and workload to create synergistic human–machine partnerships across complex, high-stakes environments.' },
-  { num: '02', icon: 'shield', title: 'Trustworthy AI', desc: 'Designing transparent AI behaviors that accurately calibrate trust, support responsible AI adoption, and contribute to meaningful AI acceptance.' },
-  { num: '03', icon: 'layers', title: 'Training', desc: 'Improving skill transference from training to operations through intelligent interventions, human-centered design, and psychological fidelity.' },
-  { num: '04', icon: 'radar', title: 'Situational Awareness', desc: 'Developing real-time adaptive interfaces that surface mission-critical cues and promote collective understanding in electronically contested environments.' },
-  { num: '05', icon: 'bot', title: 'Applied Robotics', desc: 'Integrating collaborative robots and unmanned ground vehicles into advanced manufacturing workflows and high-stakes emergency response scenarios.' },
-  { num: '06', icon: 'flask', title: 'Evaluation & Validation', desc: "Developing rigorous experimental frameworks to test AI teammates' effectiveness, safety, and resilience through mixed-methods empirical research." },
+  {
+    num: '01',
+    icon: 'network',
+    title: 'Intelligent Information Sharing',
+    desc: 'Modeling information-sharing, team cognition, and workload to create synergistic human–machine partnerships across complex, high-stakes environments.',
+  },
+  {
+    num: '02',
+    icon: 'shield',
+    title: 'Trustworthy AI',
+    desc: 'Designing transparent AI behaviors that accurately calibrate trust, support responsible AI adoption, and contribute to meaningful AI acceptance.',
+  },
+  {
+    num: '03',
+    icon: 'layers',
+    title: 'Training',
+    desc: 'Improving skill transference from training to operations through intelligent interventions, human-centered design, and psychological fidelity.',
+  },
+  {
+    num: '04',
+    icon: 'radar',
+    title: 'Situational Awareness',
+    desc: 'Developing real-time adaptive interfaces that surface mission-critical cues and promote collective understanding in electronically contested environments.',
+  },
+  {
+    num: '05',
+    icon: 'bot',
+    title: 'Applied Robotics',
+    desc: 'Integrating collaborative robots and unmanned ground vehicles into advanced manufacturing workflows and high-stakes emergency response scenarios.',
+  },
+  {
+    num: '06',
+    icon: 'flask',
+    title: 'Evaluation & Validation',
+    desc: "Developing rigorous experimental frameworks to test AI teammates' effectiveness, safety, and resilience through mixed-methods empirical research.",
+  },
 ];
 
 export default function HomePage() {
@@ -40,22 +70,30 @@ export default function HomePage() {
           <p className={styles.heroEyebrow}>
             <span className="status-dot" aria-hidden="true" />
             <span>
-              <span className={styles.hl}>ARCS Lab</span> · AI &amp; Robotics for Collaborative Systems · Knoxville, TN
+              <span className={styles.hl}>ARCS Lab</span> · AI &amp; Robotics for Collaborative
+              Systems · Knoxville, TN
             </span>
           </p>
           <h1 id="hero-title" className={styles.heroTitle}>
             Humans and AI, engineered to think as <em className="mark-block">one team.</em>
           </h1>
           <p className={styles.heroDesc}>
-            We advance the science of human-AI teaming through rigorous, human-centered research — designing
-            trustworthy AI teammates for defense, advanced manufacturing, healthcare, and emergency response.
+            We advance the science of human-AI teaming through rigorous, human-centered research —
+            designing trustworthy AI teammates for defense, advanced manufacturing, healthcare, and
+            emergency response.
           </p>
           <div className={styles.heroActions}>
             <Link href="/research" className="btn btn-primary">
-              Explore the Research <span className="arr" aria-hidden="true">→</span>
+              Explore the Research{' '}
+              <span className="arr" aria-hidden="true">
+                →
+              </span>
             </Link>
             <Link href="/publications" className="btn btn-light">
-              Publications <span className="arr" aria-hidden="true">→</span>
+              Publications{' '}
+              <span className="arr" aria-hidden="true">
+                →
+              </span>
             </Link>
           </div>
         </div>
@@ -71,9 +109,9 @@ export default function HomePage() {
           Mission
         </h2>
         <p>
-          &ldquo;Advancing human-AI teaming by understanding and optimizing collaborative systems comprising both human
-          and computational elements — to enhance performance and safety across manufacturing, healthcare, defense,
-          and beyond.&rdquo;
+          &ldquo;Advancing human-AI teaming by understanding and optimizing collaborative systems
+          comprising both human and computational elements — to enhance performance and safety
+          across manufacturing, healthcare, defense, and beyond.&rdquo;
         </p>
       </section>
 
@@ -93,8 +131,8 @@ export default function HomePage() {
           </Link>
         </div>
         <p className="sec-lead" data-reveal>
-          Our interdisciplinary program integrates quantitative, qualitative, and computational methods to understand
-          and improve human-AI collaborative systems.
+          Our interdisciplinary program integrates quantitative, qualitative, and computational
+          methods to understand and improve human-AI collaborative systems.
         </p>
         <div className={styles.pillars}>
           {PILLARS.map((p, i) => (
@@ -128,8 +166,8 @@ export default function HomePage() {
           Recent <em>publications</em>
         </h2>
         <p className="sec-lead" data-reveal>
-          Published across leading venues of the HFES, ACM, and IEEE communities — Human Factors, PACM HCI, IEEE
-          Transactions on Human-Machine Systems, and more.
+          Published across leading venues of the HFES, ACM, and IEEE communities — Human Factors,
+          PACM HCI, IEEE Transactions on Human-Machine Systems, and more.
         </p>
         <ol className={styles.pubList}>
           {recent.map((pub) => (
@@ -159,7 +197,10 @@ export default function HomePage() {
         <div className={styles.pubsFoot}>
           <LabMarkKey />
           <Link href="/publications" className="btn btn-primary">
-            All publications <span className="arr" aria-hidden="true">→</span>
+            All publications{' '}
+            <span className="arr" aria-hidden="true">
+              →
+            </span>
           </Link>
         </div>
       </section>
@@ -180,8 +221,8 @@ export default function HomePage() {
           </Link>
         </div>
         <p className="sec-lead" data-reveal>
-          A growing community of researchers advancing the science of human-AI collaboration at the University of
-          Tennessee, Knoxville.
+          A growing community of researchers advancing the science of human-AI collaboration at the
+          University of Tennessee, Knoxville.
         </p>
         <div className={styles.teamGrid}>
           {pi && (
@@ -205,7 +246,8 @@ export default function HomePage() {
             <span className={styles.joinName}>Join the ARCS Lab</span>
             <span className={styles.joinRole}>Recruiting PhD Students</span>
             <span className={styles.joinDesc}>
-              We seek motivated PhD students in ISE, CS, HCI, and Psychology. Email Dr. Schelble with your CV.
+              We seek motivated PhD students in ISE, CS, HCI, and Psychology. Email Dr. Schelble
+              with your CV.
             </span>
           </Link>
         </div>
@@ -238,59 +280,66 @@ export default function HomePage() {
             Let&apos;s build the next generation of <em>teams.</em>
           </h2>
           <p className="sec-lead" data-reveal>
-            Interested in collaboration, graduate study, or partnership? We&apos;d love to hear from you.
+            Interested in collaboration, graduate study, or partnership? We&apos;d love to hear from
+            you.
           </p>
           <div className={styles.heroActions} data-reveal>
             <Link href="/contact" className="btn btn-primary">
-              Contact the Lab <span className="arr" aria-hidden="true">→</span>
+              Contact the Lab{' '}
+              <span className="arr" aria-hidden="true">
+                →
+              </span>
             </Link>
             <Link href="/team#join" className="btn btn-light">
-              Prospective Students <span className="arr" aria-hidden="true">→</span>
+              Prospective Students{' '}
+              <span className="arr" aria-hidden="true">
+                →
+              </span>
             </Link>
           </div>
         </div>
-        <dl className={styles.ctaInfo}>
-          <div className={styles.ctaItem} data-reveal>
+        <ul className={styles.ctaInfo}>
+          <li className={styles.ctaItem} data-reveal>
             <Icon name="pin" size={20} className={styles.ctaIcon} />
             <div>
-              <dt className="label">Location</dt>
-              <dd>
+              <p className="label">Location</p>
+              <p>
                 515 John D. Tickle Engineering Building
                 <br />
                 851 Neyland Drive, Knoxville, TN 37996
-              </dd>
+              </p>
             </div>
-          </div>
-          <div className={styles.ctaItem} data-reveal>
+          </li>
+          <li className={styles.ctaItem} data-reveal>
             <Icon name="mail" size={20} className={styles.ctaIcon} />
             <div>
-              <dt className="label">Email</dt>
-              <dd>
+              <p className="label">Email</p>
+              <p>
                 <a href="mailto:bschelbl@utk.edu">bschelbl@utk.edu</a>
-              </dd>
+              </p>
             </div>
-          </div>
-          <div className={styles.ctaItem} data-reveal>
+          </li>
+          <li className={styles.ctaItem} data-reveal>
             <Icon name="building" size={20} className={styles.ctaIcon} />
             <div>
-              <dt className="label">Department</dt>
-              <dd>
+              <p className="label">Department</p>
+              <p>
                 Industrial &amp; Systems Engineering
                 <br />
                 Tickle College of Engineering, UTK
-              </dd>
+              </p>
             </div>
-          </div>
-          <div className={styles.ctaItem} data-reveal>
+          </li>
+          <li className={styles.ctaItem} data-reveal>
             <Icon name="globe" size={20} className={styles.ctaIcon} />
             <div>
-              <dt className="label">Lab Website</dt>
-              <dd>
+              <p className="label">Lab Website</p>
+              <p>
                 <a href="https://arcslab.io">arcslab.io</a>
-              </dd>
+              </p>
             </div>
-          </div>
-        </dl>
+          </li>
+        </ul>
       </section>
     </>
   );

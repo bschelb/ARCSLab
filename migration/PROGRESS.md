@@ -337,3 +337,153 @@ parity tests prove the outputs match both the Astro libs and production. CI run
 - **New dev dependencies:** `sharp` 0.35.5 and `tsx` 4.23.15.
 - **Phase 3 is blocked on D14.** The plan's "faithful port" would reproduce the design that
   overlaps the personal site, so Phase 3 now builds the chosen direction instead.
+
+### Phase 3: Design system, layout and page port (1–2 October 2026)
+
+**Summary.** Every existing page is rebuilt in React 19 / Next 16 in the D14 "Contour"
+identity, with content copied verbatim from the `.astro` sources and the P0 fixes applied.
+Routes: `/`, `/research`, `/publications`, `/team`, `/pi`, `/funding`, `/talks`, `/contact`,
+and the 404 page, all statically prerendered.
+
+**Scope change (D14).** The plan called Phase 3 a faithful visual port. Dr. Schelble instead
+chose a new, distinct identity, so this phase ports content and structure faithfully into the
+new design. The screenshot comparison against `migration/baseline/screens` therefore differs
+on every page by design. The only differences are the D14 visual language plus the changes
+listed below.
+
+**Design system.**
+
+- **Tokens** in `app/globals.css` `@theme`:
+  - official UT palette (D8): Tennessee Orange `#FF8200`, `--orange-text` `#b84600`, Smokey
+    `#58595B`, Smokey X `#333333` for text;
+  - ink `#14100b` for dark grounds;
+  - neutral warm-gray paper: `--paper` `#f4f3f1`, `--paper-2` `#eeece8`. `paper-2` is
+    lightened from `#eae8e4`, where orange text measured only 4.38:1;
+  - lines `#d8d5cf` / `#b9b5ad`;
+  - fluid type scale, `--section-y`, and motion tokens (160/240/400 ms, one curve).
+- **`tests/unit/contrast.test.ts`** reads the tokens from the CSS and checks 18 text and UI
+  pairs (all pass). Examples: text on paper 11.39:1, orange-text on paper 4.84:1 and on
+  paper-2 4.55:1, Smokey X on orange 5.08:1, ink on orange 7.62:1.
+- **Fonts** via next/font: Big Shoulders (display, numerals, uppercase), Public Sans (body),
+  JetBrains Mono (labels and coordinates). Big Shoulders has no automatic fallback metrics, so
+  an explicit fallback stack is set.
+- **Signature emphasis:** `.mark-block`, an orange block behind the words (from Dr.
+  Schelble's screenshot). It is used in the hero, page headers and the PI name. It is
+  `inline-block` with its own line box, so the fill never covers the line above.
+- **Icons:** the Icon set is ported verbatim from `Icon.astro` (34 icons) as JSX data in
+  `lib/icon-paths.ts`, with no `innerHTML`.
+
+**Components.**
+
+- **`SiteNav`:**
+  - fixed ink bar with the current nav items;
+  - `aria-current` marks the active page;
+  - mobile full-height sheet with `aria-expanded`/`aria-controls`, a focus trap, Escape to
+    close (focus returns to the toggle), body scroll lock, and closing on navigation.
+- **Other layout pieces:** `SiteFooter`, `SkipLink`, `PageHeader`.
+- **`TerrainContours`** draws the real East Tennessee heightmap:
+  - marching squares over 40 power-spaced levels, with a slow uphill phase plus a ±16 m
+    noise "breath";
+  - survey marks at Clingmans Dome, Mt. Le Conte, Hardin Valley, Oak Ridge, the Crab Orchard
+    Mountains and the ARCS Lab;
+  - pauses when off-screen or the tab is hidden; device pixel ratio capped at 2; a single
+    still frame under reduced motion; `aria-hidden`.
+  - It animates in the home hero, and draws still crops in page headers, the PI panel, the
+    footer and the 404 page.
+- **`TechFigure`** renders six technical-drawing team topologies, one per research area
+  (option A's figure, as Dr. Schelble asked), with orange signals on the routes. Each is SVG
+  with `role="img"` and descriptive alt text, and its signals are static under reduced motion.
+- **`PersonCard`** is one design for all groups. Members without a photo get a monogram
+  (16:9 tile).
+- **`Authors`** marks every lab member with the same orange dot, PI included, with a visually
+  hidden "(ARCS Lab member)".
+- **`Motion`** is one island for reveals and count-ups. Only elements below the fold at load
+  are hidden; content and final stat values are always in the HTML.
+- **`PublicationFilters`** uses `aria-pressed` and a polite live count.
+- **`JsonLd`** emits the site graph from the root layout; breadcrumbs and ProfilePage JSON-LD
+  are emitted per page.
+
+**P0 fixes delivered.**
+
+- skip link, visible focus, one `h1` per page, landmarks (`main#main`);
+- the mobile sheet behavior above;
+- 404 page;
+- hero canvas pause, device-pixel-ratio cap and reduced motion;
+- home publication rows link to `/papers/<id>` (the route arrives in Phase 4);
+- home research cards link to `/research#<slug>` (by position), and home student cards link
+  to `/team#<slug>`;
+- one PersonCard design; collaborators kept separate (ink section);
+- `/pi` stats rendered on the server and computed from data (F5, F6); the bio's
+  "$2,802,201" now also comes from data;
+- `next/image` for every portrait;
+- the sponsor band keeps text wordmarks.
+
+**Intentional differences beyond the redesign (all logged here).**
+
+1. **Contact map:** the Google Maps iframe is replaced by an address card with an "Open in
+   Google Maps" link. This P1 item was pulled forward because the iframe loaded third-party
+   scripts and conflicts with the planned `frame-src 'none'` CSP. The form itself is
+   unchanged and still posts to Formspree (`xvzwzoal`). Required fields are now marked in
+   text, and inputs have `autocomplete`.
+2. **New copy (two small additions):**
+   - the hero caption "35.9544° N / 83.9295° W · Terrain · Great Smoky Mountains to the
+     Cumberland Plateau · USGS 3DEP" (data attribution, and coordinates the footer already
+     showed);
+   - the 404 page copy ("404 · Off the map", "This page is not here.", "The address may have
+     changed or never existed. These sections will get you back on course.").
+3. **Hero headline:** set uppercase in CSS (the source text is unchanged), with "one team."
+   on the orange block, per Dr. Schelble's screenshot.
+4. **Team page:** the PI card gains a "Full PI profile →" link to `/pi`.
+5. **Research page:** representative publications link to their paper pages where
+   `paperId` exists (all 18 do).
+6. **Talks page:** dates display from ISO data. They are identical to before ("July 2026",
+   "Spring 2026").
+7. **Lab-member mark:** a ★ before; now an orange dot (D14 comparison table).
+
+**Verification.**
+
+- `lint`, `typecheck` and `validate:data` pass; 350 unit tests pass (parity, data, contrast,
+  config).
+- Playwright: 54 tests pass across Chromium, WebKit and Firefox (axe runs in Chromium only).
+  They cover:
+  - axe with zero serious or critical violations on all 8 routes plus the 404 page, at
+    390 px and 1440 px;
+  - one `h1`, a main landmark and a skip link on every page;
+  - the mobile sheet: focus, Escape, return focus, scroll lock, closing on navigation;
+  - desktop `aria-current`;
+  - filters: `aria-pressed`, the live count "26 of 49", award filter = 5;
+  - 404 status;
+  - the `.html` 308;
+  - `noindex` before launch;
+  - with JavaScript disabled: every page visible with nothing left reveal-hidden, PI stats
+    `49 / $2.8M / 5 / 10`, the 6 home paper links, all 49 publications listed.
+- axe initially flagged an invalid `dl` structure in the home contact block (now a list) and
+  in-text links distinguished only by color. In-text links are now underlined site-wide.
+- No horizontal overflow on any route at 390 or 1440 px. Every route was reviewed by
+  screenshot at both widths.
+
+**Lighthouse (mobile, local production build, median of 3).**
+
+| Route | Perf | A11y | Best practices | SEO | LCP | CLS | TBT | Weight |
+|---|---|---|---|---|---|---|---|---|
+| `/` | 95 | 100 | 96 | 66 | 2.9 s | 0 | 52 ms | 424 KB |
+| `/publications` | 94 | 100 | 96 | 66 | 3.1 s | 0 | 1 ms | 403 KB |
+| `/research` | 94 | 100 | 96 | 66 | 3.1 s | 0 | 7 ms | 405 KB |
+| `/team` | 93 | 100 | 96 | 66 | 3.2 s | 0 | 50 ms | 520 KB |
+| `/contact` | 98 | 100 | 96 | 66 | 2.4 s | 0 | 9 ms | 389 KB |
+
+- SEO 66 is the deliberate `noindex` of Phase 1; Phase 4 makes robots environment-aware.
+- Best practices 96 is the local 404s for `/_vercel/insights` and `/_vercel/speed-insights`,
+  which exist only on Vercel.
+- `/team` LCP went from 21.5 s on production to 3.2 s.
+- LCP is above the 2.0 s budget everywhere. That is a Phase 6 gate; the likely lever is the
+  Big Shoulders font on the hero `h1`.
+
+**Notes for later phases.**
+
+- **Report-only CSP:** browsers ignore `upgrade-insecure-requests` while the policy is
+  report-only (a console notice). It takes effect when Phase 6 enforces the CSP.
+- **Paper links 404 until Phase 4:** the home, research and publication rows already link to
+  `/papers/<id>`.
+- **Nav labels:** "Join" and "News & Talks" arrive in Phase 5 (D9). The P1 items stay out of
+  scope.

@@ -9,7 +9,11 @@ export default function JsonLd({ data }: { data: object | object[] }) {
   return (
     <>
       {items.map((item, i) => (
-        <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: ldjson(item) }} />
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: ldjson(item) }}
+        />
       ))}
     </>
   );

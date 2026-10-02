@@ -117,7 +117,8 @@ export default function TerrainContours({
       const theta = t / 9000;
       const ca = Math.cos(theta) * 16;
       const sb = Math.sin(theta) * 16;
-      for (let i = 0; i < work.length; i++) work[i] = (base[i] ?? 0) + (warpA[i] ?? 0) * ca + (warpB[i] ?? 0) * sb;
+      for (let i = 0; i < work.length; i++)
+        work[i] = (base[i] ?? 0) + (warpA[i] ?? 0) * ca + (warpB[i] ?? 0) * sb;
       const phase = (t / 32000) % 1;
       const levels = contourLevels(meta.minElevationM, meta.maxElevationM, {
         count: 40,
@@ -199,7 +200,8 @@ export default function TerrainContours({
         const px = octx.getImageData(0, 0, W, H).data;
         const raw = new Float32Array(W * H);
         const span = meta.maxElevationM - meta.minElevationM;
-        for (let i = 0; i < raw.length; i++) raw[i] = meta.minElevationM + ((px[i * 4] ?? 0) / 255) * span;
+        for (let i = 0; i < raw.length; i++)
+          raw[i] = meta.minElevationM + ((px[i * 4] ?? 0) / 255) * span;
         base = smoothHeights(raw, W, H, 1, 1);
         warpA = noiseField(W, H, 11, 22);
         warpB = noiseField(W, H, 29, 22);

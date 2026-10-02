@@ -11,7 +11,10 @@
 .link:hover {
   border-color: var(--color-text);
 }
-.link:hover .media::after {
+.link:hover .mediaMono {
+  aspect-ratio: 16 / 9;
+}
+.media::after {
   transform: scaleX(1);
 }
 .media {
@@ -46,7 +49,11 @@
   font-size: clamp(3.5rem, 7vw, 5rem);
   color: var(--color-orange);
   background:
-    repeating-radial-gradient(circle at 70% 120%, transparent 0 18px, rgb(255 255 255 / 0.05) 18px 19px),
+    repeating-radial-gradient(
+      circle at 70% 120%,
+      transparent 0 18px,
+      rgb(255 255 255 / 0.05) 18px 19px
+    ),
     var(--color-ink);
 }
 .body {

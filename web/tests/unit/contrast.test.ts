@@ -66,6 +66,8 @@ describe('token contrast (WCAG 2.2 AA)', () => {
 
   it('never uses Tennessee Orange as text on light backgrounds', () => {
     expect(ratio('orange', 'paper')).toBeLessThan(3);
-    expect(css).not.toMatch(/color:\s*var\(--color-orange\);[^}]*\n[^}]*background:\s*var\(--color-paper/);
+    expect(css).not.toMatch(
+      /color:\s*var\(--color-orange\);[^}]*\n[^}]*background:\s*var\(--color-paper/,
+    );
   });
 });

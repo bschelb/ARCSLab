@@ -21,10 +21,18 @@ interface PersonCardProps {
  * One card design for every group (PI, PhD, DEng, undergraduates, alumni). Members
  * without a photo get a monogram on the terrain-ink ground, never a stock silhouette.
  */
-export default function PersonCard({ person, role, children, href, meta, sizes, priority }: PersonCardProps) {
+export default function PersonCard({
+  person,
+  role,
+  children,
+  href,
+  meta,
+  sizes,
+  priority,
+}: PersonCardProps) {
   const body = (
     <>
-      <div className={styles.media}>
+      <div className={`${styles.media} ${person.photo ? '' : styles.mediaMono}`}>
         {person.photo ? (
           <Image
             src={person.photo}

@@ -20,7 +20,15 @@ interface PageHeaderProps {
 }
 
 /** Dark subpage header over a still crop of the terrain contours. */
-export default function PageHeader({ index, crumb, title, titleEm, lead, stats, focus }: PageHeaderProps) {
+export default function PageHeader({
+  index,
+  crumb,
+  title,
+  titleEm,
+  lead,
+  stats,
+  focus,
+}: PageHeaderProps) {
   return (
     <header className={`${styles.head} on-dark`}>
       <TerrainContours focus={focus ?? { x: 0.5, y: 0.5 }} intensity={0.8} />

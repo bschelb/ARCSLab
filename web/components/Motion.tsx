@@ -19,7 +19,9 @@ export default function Motion() {
     if (!('IntersectionObserver' in window)) return;
     const below = (el: Element) => el.getBoundingClientRect().top > window.innerHeight * 0.92;
 
-    const reveals = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]')).filter(below);
+    const reveals = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]')).filter(
+      below,
+    );
     reveals.forEach((el) => el.classList.add('reveal-pending'));
     const rio = new IntersectionObserver(
       (entries) => {
@@ -33,7 +35,9 @@ export default function Motion() {
     );
     reveals.forEach((el) => rio.observe(el));
 
-    const counters = Array.from(document.querySelectorAll<HTMLElement>('[data-count]')).filter(below);
+    const counters = Array.from(document.querySelectorAll<HTMLElement>('[data-count]')).filter(
+      below,
+    );
     const run = (el: HTMLElement) => {
       const target = Number(el.dataset.count ?? '0');
       const decimals = (el.dataset.count ?? '').split('.')[1]?.length ?? 0;

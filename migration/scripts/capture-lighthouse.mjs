@@ -16,7 +16,8 @@ import { fileURLToPath } from 'node:url';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const base = (process.argv[2] ?? 'https://arcslab.io').replace(/\/$/, '');
 const outDir = path.resolve(process.argv[3] ?? path.join(here, '..', 'baseline', 'lighthouse'));
-const ROUTES = ['/', '/publications', '/papers/schelble-2022-lets-think-together', '/team', '/contact'];
+// LH_ROUTES=/,/team overrides the plan's five key routes.
+const ROUTES = process.env.LH_ROUTES?.split(',') ?? ['/', '/publications', '/papers/schelble-2022-lets-think-together', '/team', '/contact'];
 const RUNS = 3;
 
 const routeName = (r) => (r === '/' ? 'home' : r.slice(1).replace(/\//g, '__'));
@@ -44,7 +45,7 @@ try {
       bestPractices: pct(lhr.categories['best-practices'].score),
       seo: pct(lhr.categories.seo.score),
       lcpMs: Math.round(a['largest-contentful-paint'].numericValue),
-      cls: Number(a['cumulative-layout-shift'].numericValue.toFixed(3)),
+      cls: Number((a['cumulative-layout-shift'].numericValue ?? 0).toFixed(3)),
       tbtMs: Math.round(a['total-blocking-time'].numericValue),
       totalKB: Math.round(a['total-byte-weight'].numericValue / 1024),
       lighthouseVersion: lhr.lighthouseVersion,

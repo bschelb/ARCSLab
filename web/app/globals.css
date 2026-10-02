@@ -98,6 +98,15 @@
   a {
     color: inherit;
   }
+  /* links inside running text are underlined, never distinguished by color alone */
+  p a:not([class]),
+  li a:not([class]),
+  dd a:not([class]),
+  address a:not([class]) {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
   ::selection {
     background: var(--color-orange);
     color: var(--color-ink);
@@ -219,9 +228,13 @@
 
   /* the signature emphasis: an orange block behind the words (from the hero) */
   .mark-block {
+    /* inline-block with its own tight line box, so the fill never paints over the line above */
+    display: inline-block;
+    line-height: 0.86;
+    margin-top: 0.06em;
+    padding: 0.06em 0.1em 0;
     background: var(--color-orange);
     color: var(--color-ink);
-    padding: 0 0.1em;
     font-style: normal;
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
