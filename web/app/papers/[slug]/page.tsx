@@ -137,7 +137,7 @@ export default async function PaperPage({ params }: PageProps<'/papers/[slug]'>)
               <ul className={styles.areaChips} aria-label="Research areas">
                 {areas.map((a) => (
                   <li key={a.slug}>
-                    <Link href={`/research#${a.slug}`}>
+                    <Link href={`/research/${a.slug}`}>
                       <Icon name={a.icon} size={14} /> {a.title}
                     </Link>
                   </li>

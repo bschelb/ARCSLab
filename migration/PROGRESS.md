@@ -31,6 +31,17 @@ Recruiting (for Phase 5): **open, for a Spring, Summer, or Fall 2027 start**, co
 Dr. Schelble on 2 Oct 2026 and stored in `site.recruiting`. Join page FAQ answers are still
 optional; without them Phase 5 drafts FAQs only from existing site content and flags them.
 
+**Phase 5 decisions (conservative choices, made without stopping; see the Phase 5 entry):**
+- `/talks` keeps its URL and canonical, but its title and breadcrumb become "News & Talks"
+  to match the D9 nav label (one term per concept, plan 4.6). `check-parity.mjs` records it
+  as an intentional SEO change.
+- The timeline leaves out the six `news.json` items of kind `talk`: each restates a
+  `talks.json` entry, which has the fuller record.
+- Drafts: `draft: true` items are dropped from production builds (`VERCEL_ENV=production`)
+  and shown with a dashed "Draft" tag on previews and local builds.
+- The PI has no `/team/<slug>` page; PI cards keep linking to `/pi` (D9).
+- The desktop nav switches to the menu sheet below 1280 px (it was 1100 px), per plan 4.3.
+
 ### Rollback reference: DNS as of 1 October 2026 (pre-cutover)
 
 Captured with `dig` on 1 Oct 2026. Nameservers: `finley.ns.cloudflare.com`,
@@ -658,3 +669,165 @@ baseline:
   trail stays `venueShort`, as in production.
 - **Server log noise:** Next prints `NoFallbackError` to the server log for unknown paper
   slugs. This is expected with `dynamicParams = false`; the response is a correct 404.
+
+### Phase 5: UX upgrades (P1) (2 October 2026)
+
+**Summary.** All eight Phase 5 items are built, tested and committed one by one on
+`migrate/nextjs`. Parity with production holds: locally in production mode, 117/117 URLs
+resolve and 57/57 routes match, with only the intentional differences listed below. The
+site gains 20 pages (`/join`, 6 research areas, 13 profiles), for 77 sitemap URLs.
+
+**1. Navigation (D9).** Research, Publications, Team, PI, Funding, News & Talks, Join, plus
+the Contact button. The footer matches. The desktop nav fits on one line at 1280 px
+(asserted by a test), and below that the mobile sheet takes over.
+
+**2. `/join`, the single source for recruiting.**
+- The status band comes from `site.recruiting`: "Now recruiting · For a Spring, Summer, or
+  Fall 2027 start".
+- Role cards (PhD, DEng, undergraduate), "What we look for", three numbered steps, a
+  `<details>` FAQ, and buttons to `/contact?type=prospective` and email.
+- Content lives in `data/join.json` (new Zod schema, validated with the rest). The copy is
+  drawn from the old `/team` and `/contact` join sections.
+- `/team#join` and `/contact#join` are now short stubs (`components/join/JoinStub.tsx`) that
+  keep `id="join"` and link to `/join`.
+
+**3. `/research/[slug]` area pages.**
+- Each has a visible breadcrumb, the area copy and its technical figure, and the
+  research-focus bullets.
+- **Methods:** a lab-wide mixed-methods line that links to `/research#methods`. No per-area
+  methods exist in data, so none are invented.
+- Representative publications, then every tag-matched paper, with a "Filter in
+  publications" link to `/publications?area=<slug>`.
+- Lab authors, matched through `authorAliases`, PI included.
+- Related funded projects come from a draft grant mapping (see the draft list).
+- Prev/next pager and a generated share image per area.
+- The home cards, the `/research` overview ("Explore this area") and the paper-page area
+  chips now link to these pages. The `/research#<slug>` anchors still work.
+
+**4. PublicationsExplorer** (`components/papers/PublicationsExplorer.tsx`, logic in
+`lib/explorer.ts`).
+- Search over title, authors, venue and tags; every term must match.
+- Type chips; year, research-area and sort selects; Award-Winning and Free PDF toggles;
+  Clear filters.
+- Chips expose `aria-pressed`, and a polite live region announces "N of 49 publications".
+  There is an empty state.
+- **State:** the URL query is the only state (`?q=&type=&year=&area=&award=1&pdf=1&sort=oldest`).
+  It is read through `useSyncExternalStore` with an empty server snapshot (`lib/url-search.ts`)
+  and written with `history.replaceState`.
+- **Why it stays static:** the page is still `○ static`, and its HTML lists all 49 papers
+  for crawlers and no-JS visitors. `useSearchParams` was avoided because it would push the
+  list into client-only rendering.
+- Author marks are computed on the server (`AuthorMarks`). The client chunks contain no
+  data files or Zod (checked).
+
+**5. `/team/[slug]` profiles** (all 13 members except the PI).
+- Visible breadcrumb, photo or monogram, bio, role/education/tenure facts, external links,
+  research areas and publications (via `authorAliases`).
+- **JSON-LD:** a Person whose `memberOf` is an `OrganizationRole` pointing at
+  `https://arcslab.io/#organization`, with `startDate`, plus `endDate` for alumni.
+  `lib/seo.ts` gains `memberPersonNode`; the ported builders are unchanged.
+- Every `/team` and home card links to its profile. `PersonCard` now uses a stretched link
+  on the name, so a card's link is named for the person, not the whole bio.
+
+**6. News & Talks timeline (`/talks`).**
+- Talks, keynotes and news in one ISO-sorted timeline grouped by year, with dates shown as
+  "Jul 2026" (or the stored label, e.g. "Spring 2026").
+- Chips: All / Talks / Keynotes / Press / Awards / Lab News, with `?kind=` in the URL, a
+  polite count, and the full list without JavaScript.
+- 22 items: the six restated talks are dropped (see Decisions).
+
+**7. ContactForm** (`components/contact/ContactForm.tsx`, rules in `lib/contact.ts`).
+- **Without JavaScript:** a native POST to Formspree with browser validation.
+- **With JavaScript:**
+  - inline validation, with errors linked through `aria-describedby` and focus moved to the
+    first invalid field;
+  - `fetch` with `Accept: application/json`;
+  - "Sending…" (button disabled), a success panel (its heading takes focus), and an error
+    alert offering a mailto prefilled with the visitor's message;
+  - the `_gotcha` honeypot: if filled, nothing is sent.
+- `?type=` preselects the inquiry type. The address card replaced the map iframe in
+  Phase 3.
+
+**8. Home additions.**
+- A stats strip computed from data: 49 publications, $2.8M PI funding, 5 best-paper awards,
+  10 invited talks. Each stat links to its page.
+- A "Latest" strip with the three newest News & Talks items.
+- The team preview shows all 12 current members in one card style, each linked to their
+  profile (PI → `/pi`).
+- A Tennessee Orange recruiting band from `site.recruiting`, linking to `/join`.
+
+**Fixes found along the way.**
+- **PersonCard CSS:** a Phase 3 edit had left monogram tiles changing aspect ratio on hover
+  and the orange hover bar never showing. Fixed.
+- **CSS-module scoping:** selectors targeting global classes (`.ctaItem .label`, explorer
+  `.label`) lacked `:global()`, so they never applied. Fixed, and a scan found no others.
+- **Header stats** wrapped unevenly with five stats; they now sit on an even grid.
+- **Contact errors:** a CSS `::before` "!" badge was being read as part of each error. It is
+  now an `aria-hidden` span.
+- **Icons:** added a `search` icon (the only addition to the ported set).
+
+**Intentional differences from production** (all reported by `check-parity.mjs`):
+- generated share images (since Phase 4);
+- the `/talks` title and breadcrumb renamed "News & Talks";
+- the two intentional 404s from Phase 4.
+
+**Drafts: please supply or confirm.** These are hidden in production and tagged on
+previews. `npm run validate:data` lists them as warnings.
+
+1. `data/join.json` FAQ: "When should I reach out for a 2027 start?" The answer is a
+   placeholder.
+2. `data/join.json` FAQ: "Do you accept master's students or visiting researchers?" The
+   answer is a placeholder.
+3. `data/research.json` related funded projects per area, a judgment from grant titles:
+   - Human-AI Teaming → ARO shared world models, ARO compromised AI teammates, UTK DRAP
+     adaptive teammates;
+   - Trustworthy AI → ARO compromised AI teammates, UTK AI teammate acceptance, UTK ISE
+     undergraduate support;
+   - Situational Awareness → ARO compromised AI teammates, ARO shared world models, UTK ISE
+     undergraduate support;
+   - Training, Applied Robotics and Evaluation & Validation have none.
+
+   To publish, confirm or edit the mapping and remove `"draft": true`.
+
+**Not drafts, but worth a look.** This copy is drawn from existing site text, but newly
+arranged.
+- The `/join` steps, especially the order "email Dr. Schelble, then apply to the program",
+  and the five FAQ answers.
+- **Thin profiles:**
+  - the four DEng students share one boilerplate bio;
+  - Brooke Henley, Owen Fair and Aiden Conklin have "Multiple ARCS Lab projects";
+  - the alumni have no bio.
+- **No publication matching yet:** Naveena Nagaraju, the DEng students and three
+  undergraduates have no `authorAliases`, so none of their papers can be matched. Add an
+  alias when they first publish.
+
+**Screenshots** (`migration/screenshots/phase5/`, production-mode build, full page):
+- **Before:** `before-home-{1440,390}.jpg`, `before-publications-{1440,390}.jpg`, and the
+  old join sections `before-join-team-1440.jpg` and `before-join-contact-1440.jpg`.
+- **After:** `after-home-{1440,390}.jpg`, `after-publications-{1440,390}.jpg`,
+  `after-join-{1440,390}.jpg`.
+
+**Tests.**
+- 379 unit tests. New: explorer state and filtering, recruiting copy, drafts, research-area
+  helpers, the timeline merge, contact rules, and member JSON-LD.
+- Playwright: 201 tests pass across all three browsers (60 skipped: axe, clipboard and the
+  error-state axe check run in Chromium only). New specs:
+  - `explorer.spec.ts`: search, each filter, URL round trip, clear, the empty state, no-JS;
+  - `contact.spec.ts`: the Formspree request intercepted for the success, pending, error and
+    honeypot paths; validation; `?type=`; axe in the error state; no-JS;
+  - `join.spec.ts`: status, FAQ keyboard, drafts, both `#join` stubs;
+  - `news.spec.ts`, `home.spec.ts`, `detail-pages.spec.ts`;
+  - the D9 nav-width test.
+- axe at 390 and 1440 px now covers `/join`, two area pages and two profiles: zero serious or
+  critical violations.
+- **Production mode** (`VERCEL_ENV=production`, `EXPECT_PRODUCTION=1`): drafts absent,
+  robots indexable, parity OK.
+
+**For Phase 6.**
+- Re-measure LCP and first-load JS. The explorer and timeline are new client components;
+  the home page is longer (12 cards); the team images now load on `/`.
+- **CSP:** `connect-src` already allows formspree.io for the new `fetch`.
+- **Previews and drafts:** they only stay out of production if the production deployment is
+  built with `VERCEL_ENV=production`. Do not promote a preview build to production without
+  rebuilding. The same applies to robots.
+
