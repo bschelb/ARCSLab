@@ -1,7 +1,8 @@
 import type { NextConfig } from 'next';
 
-// Content-Security-Policy (plan 3.9). Sent as Report-Only until Phase 6 measures zero
-// violations across the e2e suite and all 42 PDFs, then switched to the enforcing header.
+// Content-Security-Policy (plan 3.9). Enforced since Phase 6, after the full e2e suite (every
+// spec fails on any securitypolicyviolation, see tests/e2e/fixtures.ts) and all 42 PDFs in the
+// reader, in Chromium, WebKit and Firefox, measured zero violations under Report-Only.
 // 'unsafe-inline' for scripts is the documented trade-off for fully static pages: a nonce
 // would force every route to render dynamically. 'wasm-unsafe-eval' covers PDF.js image
 // decoders. `next dev` needs 'unsafe-eval' for React's debugging features.
@@ -19,7 +20,9 @@ export const contentSecurityPolicy = [
   "base-uri 'self'",
   "form-action 'self' https://formspree.io",
   "frame-ancestors 'none'",
-  'upgrade-insecure-requests',
+  // No upgrade-insecure-requests: every subresource is same-origin and HSTS already forces
+  // HTTPS, so it adds nothing in production, while WebKit applies it to http://localhost and
+  // breaks local test runs (Phase 6).
 ].join('; ');
 
 export const securityHeaders = [
@@ -31,7 +34,7 @@ export const securityHeaders = [
     value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()',
   },
   { key: 'X-Frame-Options', value: 'DENY' },
-  { key: 'Content-Security-Policy-Report-Only', value: contentSecurityPolicy },
+  { key: 'Content-Security-Policy', value: contentSecurityPolicy },
 ];
 
 const nextConfig: NextConfig = {

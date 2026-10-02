@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 test('research area pages: breadcrumbs, related papers, pager', async ({ page }) => {
   await page.goto('/research/trustworthy-ai');

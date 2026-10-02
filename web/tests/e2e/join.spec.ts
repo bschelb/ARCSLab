@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 const production = process.env.EXPECT_PRODUCTION === '1';
 

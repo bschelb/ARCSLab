@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 const WITH_PDF = 'schelble-2022-lets-think-together';
 const WITHOUT_PDF = 'benda-2026-trust-repair';

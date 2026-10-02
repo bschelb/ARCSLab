@@ -13,18 +13,21 @@ describe('next.config', () => {
         'Referrer-Policy',
         'Permissions-Policy',
         'X-Frame-Options',
-        'Content-Security-Policy-Report-Only',
+        'Content-Security-Policy',
       ]),
     );
     expect(securityHeaders.find((h) => h.key === 'Strict-Transport-Security')?.value).not.toContain(
       'preload',
     );
+    expect(keys).not.toContain('Content-Security-Policy-Report-Only');
   });
 
-  it('keeps the CSP in report-only mode with the plan 3.9 directives', () => {
+  it('enforces the CSP with the plan 3.9 directives', () => {
     expect(contentSecurityPolicy).toContain("frame-ancestors 'none'");
     expect(contentSecurityPolicy).toContain("connect-src 'self' https://formspree.io");
     expect(contentSecurityPolicy).not.toContain("'unsafe-eval'");
+    expect(contentSecurityPolicy).toContain("default-src 'self'");
+    expect(contentSecurityPolicy).toContain("object-src 'none'");
   });
 
   it('serves PDFs inline', async () => {

@@ -1,4 +1,4 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Page } from './fixtures';
 
 const rows = (page: Page) => page.locator('#pub-list li[data-paper]');
 const count = (page: Page) => page.locator('[aria-live="polite"]');

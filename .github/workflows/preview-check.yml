@@ -48,7 +48,7 @@ jobs:
           check /research.html 308
           check /this-page-does-not-exist 404
           echo "--- headers on /"
-          curl -sI -H "x-vercel-protection-bypass: $BYPASS" "$BASE/" | grep -iE '^(x-robots-tag|strict-transport-security|x-frame-options|content-security-policy-report-only|referrer-policy):' || true
+          curl -sI -H "x-vercel-protection-bypass: $BYPASS" "$BASE/" | grep -iE '^(x-robots-tag|strict-transport-security|x-frame-options|content-security-policy|referrer-policy):' || true
           echo "--- robots meta"
           curl -s -H "x-vercel-protection-bypass: $BYPASS" "$BASE/" | grep -o '<meta name="robots"[^>]*>' || true
           exit $fail

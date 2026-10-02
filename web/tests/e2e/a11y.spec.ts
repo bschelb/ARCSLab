@@ -1,5 +1,5 @@
 import AxeBuilder from '@axe-core/playwright';
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 import { ROUTES } from './routes';
 
 // axe at both plan widths; serious and critical violations fail (plan 4.4).
