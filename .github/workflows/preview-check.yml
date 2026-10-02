@@ -1,0 +1,42 @@
+name: Preview check
+
+# Manual smoke test of a protected Vercel preview, using the
+# VERCEL_AUTOMATION_BYPASS_SECRET (Deployment Protection → Protection Bypass for Automation).
+# Phase 4 adds the full URL/SEO parity check; Phase 6 runs Playwright and Lighthouse on
+# every successful preview deployment.
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: Preview base URL
+        required: true
+        default: https://arcslab-git-migrate-nextjs-arcs.vercel.app
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Request key routes through the protection bypass
+        env:
+          BASE: ${{ inputs.url }}
+          BYPASS: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+        run: |
+          set -u
+          if [ -z "$BYPASS" ]; then echo "::error::VERCEL_AUTOMATION_BYPASS_SECRET is empty"; exit 1; fi
+          fail=0
+          check() {
+            code=$(curl -s -o /dev/null -w '%{http_code}' -H "x-vercel-protection-bypass: $BYPASS" "$BASE$1")
+            echo "$code $1 (want $2)"
+            [ "$code" = "$2" ] || fail=1
+          }
+          for p in / /research /publications /team /pi /funding /talks /contact /terrain/east-tn.webp /pdfjs/pdf.min.mjs /papers/schelble-2022-lets-think-together.pdf; do check "$p" 200; done
+          check /research.html 308
+          check /this-page-does-not-exist 404
+          echo "--- headers on /"
+          curl -sI -H "x-vercel-protection-bypass: $BYPASS" "$BASE/" | grep -iE '^(x-robots-tag|strict-transport-security|x-frame-options|content-security-policy-report-only|referrer-policy):' || true
+          echo "--- robots meta"
+          curl -s -H "x-vercel-protection-bypass: $BYPASS" "$BASE/" | grep -o '<meta name="robots"[^>]*>' || true
+          exit $fail
