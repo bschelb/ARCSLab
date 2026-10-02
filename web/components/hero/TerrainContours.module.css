@@ -55,3 +55,86 @@
     linear-gradient(currentColor, currentColor) center / 1px 100% no-repeat,
     linear-gradient(currentColor, currentColor) center / 100% 1px no-repeat;
 }
+
+/* Range rings: pulses spreading from the lab's crosshair (one still ring under reduced motion). */
+.rings {
+  position: absolute;
+  left: 7.5px;
+  top: 50%;
+}
+.rings i {
+  position: absolute;
+  width: 132px;
+  height: 132px;
+  margin: -66px 0 0 -66px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  opacity: 0.3;
+  transform: scale(0.5);
+}
+.rings i + i {
+  display: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .rings i,
+  .rings i + i {
+    display: block;
+    opacity: 0;
+    animation: ping 3.6s cubic-bezier(0.2, 0.6, 0.35, 1) infinite;
+  }
+  .rings i:nth-child(2) {
+    animation-delay: -1.2s;
+  }
+  .rings i:nth-child(3) {
+    animation-delay: -2.4s;
+  }
+}
+@keyframes ping {
+  0% {
+    opacity: 0.85;
+    transform: scale(0.08);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+/* Narrow screens: the lab mark stands beside the headline, label stacked under the crosshair. */
+.pinned {
+  flex-direction: column;
+  gap: 10px;
+  transform: translate(-50%, -7.5px);
+  text-align: center;
+  text-shadow: 0 0 8px var(--color-ink);
+}
+.pinned::before {
+  width: 21px;
+  height: 21px;
+  background:
+    radial-gradient(circle, currentColor 2px, transparent 2.5px),
+    radial-gradient(circle, transparent 4.5px, currentColor 4.5px 5.5px, transparent 5.5px),
+    linear-gradient(currentColor, currentColor) center / 1px 100% no-repeat,
+    linear-gradient(currentColor, currentColor) center / 100% 1px no-repeat;
+}
+.pinned {
+  transform: translate(-50%, -10.5px);
+}
+.pinned .rings {
+  left: 50%;
+  top: 10.5px;
+}
+/* a soft glow, so the lab reads as the map's focal point */
+.pinned .rings::before {
+  content: '';
+  position: absolute;
+  width: 110px;
+  height: 110px;
+  margin: -55px 0 0 -55px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(255 102 0 / 0.22), transparent 68%);
+}
+.pinned > span:last-child {
+  margin-top: -5px;
+  color: rgb(255 255 255 / 0.72);
+}

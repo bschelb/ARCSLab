@@ -4,7 +4,7 @@
  */
 import { contourLevels, marchContours, smoothHeights } from '@/lib/contours';
 import meta from '@/lib/terrain.json';
-import { TERRAIN_H, TERRAIN_W, coverTransform } from './terrain-geo';
+import { TERRAIN_H, TERRAIN_W, coverTransform, type TerrainPin } from './terrain-geo';
 
 export { TERRAIN_H, TERRAIN_SRC, TERRAIN_W } from './terrain-geo';
 
@@ -14,6 +14,8 @@ export interface RenderOptions {
   animate: boolean;
   focus: { x: number; y: number };
   intensity: number;
+  /** No cursor (touch screens): the hill wanders the map on its own between taps. */
+  autopilot?: boolean;
 }
 
 /** Smooth value noise on the grid, used to make the field breathe a little. */
@@ -65,6 +67,8 @@ const FLOW_MS = 20000; // one full uphill cycle of the contour levels
 const LIFT_M = 480; // the hill that rises under the cursor, metres
 const LIFT_R = 13; // its radius, in grid cells
 const SWEEP_MS = 7000; // one pass of the survey sweep across the map
+const WANDER_X_MS = 4300; // autopilot path: a slow Lissajous over the upper map
+const WANDER_Y_MS = 3100;
 
 export function createRenderer(ctx: Ctx2D, base: Float32Array, opts: RenderOptions) {
   const warpA = opts.animate ? noiseField(TERRAIN_W, TERRAIN_H, 11, 22) : null;
@@ -79,6 +83,7 @@ export function createRenderer(ctx: Ctx2D, base: Float32Array, opts: RenderOptio
   const index: number[] = [];
   let cw = 0;
   let ch = 0;
+  let pin: TerrainPin | null = null;
   // Cursor lift: the target comes from pointer events; position and strength ease toward it.
   let target: { x: number; y: number } | null = null;
   let px = 0;
@@ -97,9 +102,11 @@ export function createRenderer(ctx: Ctx2D, base: Float32Array, opts: RenderOptio
   };
 
   return {
-    resize(width: number, height: number, dpr: number) {
+    /** Canvas size in CSS pixels, plus an optional pin (see coverTransform). */
+    resize(width: number, height: number, dpr: number, nextPin: TerrainPin | null = null) {
       cw = width;
       ch = height;
+      pin = nextPin;
       ctx.canvas.width = Math.max(1, Math.round(width * dpr));
       ctx.canvas.height = Math.max(1, Math.round(height * dpr));
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -114,7 +121,7 @@ export function createRenderer(ctx: Ctx2D, base: Float32Array, opts: RenderOptio
     },
     /** Draw one frame; `t` in ms drives all motion (0 = still). */
     draw(t: number) {
-      const { scale, ox, oy } = coverTransform(cw, ch, opts.focus);
+      const { scale, ox, oy } = coverTransform(cw, ch, opts.focus, pin);
       if (warpA && warpB && diag && work !== base) {
         const theta = t / BREATH_MS;
         const ca = Math.cos(theta) * BREATH_M;
@@ -127,12 +134,25 @@ export function createRenderer(ctx: Ctx2D, base: Float32Array, opts: RenderOptio
             (warpB[i] ?? 0) * sb +
             Math.sin((diag[i] ?? 0) - sw) * SWELL_M;
 
-        // Ease the hill toward the cursor, and in or out as it enters or leaves.
-        if (target) {
-          px += (target.x - px) * 0.2;
-          py += (target.y - py) * 0.2;
+        // Ease the hill toward the cursor (or the autopilot path), and in or out as it
+        // enters or leaves. A hill fading in from nothing starts where it is headed.
+        const goal =
+          target ??
+          (opts.autopilot
+            ? {
+                x: cw * (0.5 + 0.42 * Math.sin(t / WANDER_X_MS)),
+                y: ch * (0.3 + 0.2 * Math.sin(t / WANDER_Y_MS + 1.3)),
+              }
+            : null);
+        if (goal) {
+          if (lift < 0.01) {
+            px = goal.x;
+            py = goal.y;
+          }
+          px += (goal.x - px) * 0.2;
+          py += (goal.y - py) * 0.2;
         }
-        lift += ((target ? 1 : 0) - lift) * 0.08;
+        lift += ((goal ? 1 : 0) - lift) * 0.08;
         if (lift > 0.01) {
           const gx = (px - ox) / scale;
           const gy = (py - oy) / scale;

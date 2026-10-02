@@ -75,7 +75,13 @@ export default function HomePage() {
 
       {/* HERO */}
       <section className={`${styles.hero} on-dark`} aria-labelledby="hero-title">
-        <TerrainContours animate places placesMinX={0.53} focus={{ x: 0.7, y: 0.5 }} />
+        <TerrainContours
+          animate
+          places
+          placesMinX={0.53}
+          focus={{ x: 0.7, y: 0.5 }}
+          pinLabTo="[data-terrain-pin]"
+        />
         <div className={styles.heroShade} aria-hidden="true" />
         <div className={styles.heroInner}>
           <p className={styles.heroEyebrow}>
@@ -88,7 +94,9 @@ export default function HomePage() {
           {/* Four set lines, so every browser breaks the headline the same way. */}
           <h1 id="hero-title" className={styles.heroTitle}>
             <span>Humans and AI,</span> <span>engineered to</span> <span>think as</span>{' '}
-            <em className="mark-block">one team.</em>
+            <em className="mark-block" data-terrain-pin="">
+              one team.
+            </em>
           </h1>
           <p className={styles.heroDesc}>
             We advance the science of human-AI teaming through rigorous, human-centered research —

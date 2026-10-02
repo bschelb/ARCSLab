@@ -3,11 +3,12 @@
  * Draws the terrain contours on an OffscreenCanvas transferred from TerrainContours, so the
  * per-frame marching squares never touch the main thread.
  *
- * Messages in:  init { canvas, src, width, height, dpr, animate, still, focus, intensity }
- *               resize { width, height, dpr } · visible { visible }
+ * Messages in:  init { canvas, src, width, height, dpr, pin, animate, focus, intensity, autopilot }
+ *               resize { width, height, dpr, pin } · visible { visible }
  *               pointer { x, y } · pointer-leave
  * Messages out: ready
  */
+import type { TerrainPin } from './terrain-geo';
 import {
   TERRAIN_H,
   TERRAIN_W,
@@ -23,12 +24,13 @@ type InitMessage = {
   width: number;
   height: number;
   dpr: number;
+  pin: TerrainPin | null;
   /** Animate (home hero) or a single frame. */
   animate: boolean;
-} & Pick<RenderOptions, 'focus' | 'intensity'>;
+} & Pick<RenderOptions, 'focus' | 'intensity' | 'autopilot'>;
 type Message =
   | InitMessage
-  | { type: 'resize'; width: number; height: number; dpr: number }
+  | { type: 'resize'; width: number; height: number; dpr: number; pin: TerrainPin | null }
   | { type: 'visible'; visible: boolean }
   | { type: 'pointer'; x: number; y: number }
   | { type: 'pointer-leave' };
@@ -66,13 +68,14 @@ scope.onmessage = async (e: MessageEvent<Message>) => {
       animate: msg.animate,
       focus: msg.focus,
       intensity: msg.intensity,
+      autopilot: msg.autopilot,
     });
-    renderer.resize(msg.width, msg.height, msg.dpr);
+    renderer.resize(msg.width, msg.height, msg.dpr, msg.pin);
     renderer.draw(animate ? performance.now() - t0 + 1100 : 0);
     scope.postMessage({ type: 'ready' });
     if (animate) timer = setTimeout(loop, FRAME_MS);
   } else if (msg.type === 'resize' && renderer) {
-    renderer.resize(msg.width, msg.height, msg.dpr);
+    renderer.resize(msg.width, msg.height, msg.dpr, msg.pin);
     renderer.draw(animate ? performance.now() - t0 + 1100 : 0);
   } else if (msg.type === 'pointer') {
     renderer?.setPointer({ x: msg.x, y: msg.y });

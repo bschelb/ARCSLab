@@ -1,7 +1,14 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { TERRAIN_H, TERRAIN_SRC, TERRAIN_W, coverTransform, toGrid } from './terrain-geo';
+import {
+  TERRAIN_H,
+  TERRAIN_SRC,
+  TERRAIN_W,
+  coverTransform,
+  toGrid,
+  type TerrainPin,
+} from './terrain-geo';
 import type { createRenderer } from './terrain-render';
 import styles from './TerrainContours.module.css';
 
@@ -14,6 +21,10 @@ const PLACES: { name: string; lat: number; lon: number; lab?: boolean }[] = [
   { name: 'Crab Orchard Mtns', lat: 36.0, lon: -84.73 },
   { name: 'ARCS Lab · Knoxville', lat: 35.9544, lon: -83.9295, lab: true },
 ];
+const LAB = PLACES.find((p) => p.lab)!;
+
+/** Survey marks need this much width; below it the lab mark is pinned instead (`pinLabTo`). */
+const WIDE = 760;
 
 export interface TerrainContoursProps {
   /** Animate (home hero) or draw one still frame (page headers, footer). */
@@ -26,6 +37,11 @@ export interface TerrainContoursProps {
   intensity?: number;
   /** Survey marks left of this fraction of the width are skipped (keeps them out from under text). */
   placesMinX?: number;
+  /**
+   * On narrow screens, a selector (within the same parent) for an element the lab mark should
+   * sit beside: the map shifts so Knoxville lands in the space to that element's right.
+   */
+  pinLabTo?: string;
   className?: string;
 }
 
@@ -37,6 +53,9 @@ export interface TerrainContoursProps {
  * to drawing on the main thread at idle time. Work starts only once the canvas is near the
  * viewport (the footer costs nothing at load), animation pauses off-screen and in hidden
  * tabs, the device pixel ratio is capped at 2, and reduced motion draws a single still frame.
+ *
+ * Touch screens get no cursor, so the animated hero's hill wanders the map on its own and a tap
+ * on the hero (outside links and buttons) calls it over.
  */
 export default function TerrainContours({
   animate = false,
@@ -44,10 +63,12 @@ export default function TerrainContours({
   places = false,
   intensity = 1,
   placesMinX = 0,
+  pinLabTo,
   className,
 }: TerrainContoursProps) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState({ w: 0, h: 0 });
+  const [pin, setPin] = useState<TerrainPin | null>(null);
   const fx = focus.x;
   const fy = focus.y;
 
@@ -56,8 +77,22 @@ export default function TerrainContours({
     if (!wrap) return;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const moving = animate && !reduced;
+    const autopilot = moving && window.matchMedia('(hover: none)').matches;
     const dpr = () => Math.min(window.devicePixelRatio || 1, 2);
     const box = () => wrap.getBoundingClientRect();
+    const anchor = pinLabTo ? wrap.parentElement?.querySelector(pinLabTo) : null;
+    // Knoxville goes midway across the gap right of the anchor, near its top edge.
+    const pinFor = (r: DOMRect): TerrainPin | null => {
+      if (!anchor || r.width >= WIDE) return null;
+      const a = anchor.getBoundingClientRect();
+      const [gx, gy] = toGrid(LAB.lat, LAB.lon);
+      return {
+        gx,
+        gy,
+        x: (a.right - r.left + r.width) / 2,
+        y: a.top - r.top + a.height * 0.1,
+      };
+    };
 
     // The canvas is created here (not in JSX) so each effect run gets a fresh one:
     // a canvas can hand its control to an OffscreenCanvas only once.
@@ -102,18 +137,20 @@ export default function TerrainContours({
         canvas = makeCanvas();
         void startFallback().catch(() => {});
       };
-      const { width, height } = box();
+      const r = box();
       worker.postMessage(
         {
           type: 'init',
           canvas: offscreen,
           src: TERRAIN_SRC,
-          width,
-          height,
+          width: r.width,
+          height: r.height,
           dpr: dpr(),
+          pin: pinFor(r),
           animate: moving,
           focus: { x: fx, y: fy },
           intensity,
+          autopilot,
         },
         [offscreen],
       );
@@ -135,9 +172,14 @@ export default function TerrainContours({
       if (!octx) return;
       octx.drawImage(img, 0, 0);
       const base = heightsFromPixels(octx.getImageData(0, 0, TERRAIN_W, TERRAIN_H).data);
-      fallback = createRenderer(ctx, base, { animate: moving, focus: { x: fx, y: fy }, intensity });
-      const { width, height } = box();
-      fallback.resize(width, height, dpr());
+      fallback = createRenderer(ctx, base, {
+        animate: moving,
+        focus: { x: fx, y: fy },
+        intensity,
+        autopilot,
+      });
+      const r = box();
+      fallback.resize(r.width, r.height, dpr(), pinFor(r));
       fallback.draw(moving ? performance.now() : 0);
       markReady();
       if (!moving) return;
@@ -204,16 +246,50 @@ export default function TerrainContours({
     host?.addEventListener('pointermove', onMove, { passive: true });
     host?.addEventListener('pointerleave', onLeave);
 
+    // Tap to lift (touch): a tap that does not scroll calls the hill over for a moment, then
+    // it goes back to wandering. Taps on links and buttons are left alone.
+    let down: { x: number; y: number } | null = null;
+    let release: ReturnType<typeof setTimeout> | undefined;
+    const onDown = (e: PointerEvent) => {
+      down = e.pointerType === 'touch' ? { x: e.clientX, y: e.clientY } : null;
+    };
+    const onCancel = () => {
+      down = null;
+    };
+    const onUp = (e: PointerEvent) => {
+      const start = down;
+      down = null;
+      if (!start || e.pointerType !== 'touch') return;
+      if (Math.hypot(e.clientX - start.x, e.clientY - start.y) > 10) return;
+      if ((e.target as Element | null)?.closest('a, button')) return;
+      const r = wrap.getBoundingClientRect();
+      const p = { x: e.clientX - r.left, y: e.clientY - r.top };
+      if (worker) worker.postMessage({ type: 'pointer', ...p });
+      else fallback?.setPointer(p);
+      clearTimeout(release);
+      release = setTimeout(onLeave, 1800);
+    };
+    if (autopilot) {
+      host?.addEventListener('pointerdown', onDown, { passive: true });
+      host?.addEventListener('pointercancel', onCancel);
+      host?.addEventListener('pointerup', onUp);
+    }
+
+    // The anchor is observed too: its box moves when the display font finishes loading.
     const ro = new ResizeObserver(() => {
-      const { width, height } = box();
+      const r = box();
+      const { width, height } = r;
+      const p = pinFor(r);
       setSize({ w: width, h: height });
-      if (worker) worker.postMessage({ type: 'resize', width, height, dpr: dpr() });
+      setPin(p);
+      if (worker) worker.postMessage({ type: 'resize', width, height, dpr: dpr(), pin: p });
       else if (fallback) {
-        fallback.resize(width, height, dpr());
+        fallback.resize(width, height, dpr(), p);
         fallback.draw(moving ? performance.now() : 0);
       }
     });
     ro.observe(wrap);
+    if (anchor) ro.observe(anchor);
 
     return () => {
       cancelled = true;
@@ -223,14 +299,19 @@ export default function TerrainContours({
       document.removeEventListener('visibilitychange', onVis);
       host?.removeEventListener('pointermove', onMove);
       host?.removeEventListener('pointerleave', onLeave);
+      host?.removeEventListener('pointerdown', onDown);
+      host?.removeEventListener('pointercancel', onCancel);
+      host?.removeEventListener('pointerup', onUp);
+      clearTimeout(release);
       worker?.terminate();
       canvas.remove();
     };
-  }, [animate, fx, fy, intensity]);
+  }, [animate, fx, fy, intensity, pinLabTo]);
 
-  // Survey marks need room: skip them on narrow screens, where the text covers the map.
+  // Survey marks need room: on narrow screens, where the text covers the map, only the lab
+  // mark is drawn, pinned beside its anchor (when there is one).
   const marks =
-    places && size.w >= 760
+    places && size.w >= WIDE
       ? PLACES.map((p) => {
           const { scale, ox, oy } = coverTransform(size.w, size.h, { x: fx, y: fy });
           const [gx, gy] = toGrid(p.lat, p.lon);
@@ -244,6 +325,14 @@ export default function TerrainContours({
         )
       : [];
 
+  const rings = (
+    <span className={styles.rings}>
+      <i />
+      <i />
+      <i />
+    </span>
+  );
+
   return (
     <div ref={wrapRef} className={`${styles.wrap} ${className ?? ''}`} aria-hidden="true">
       {marks.map((m) => (
@@ -252,9 +341,21 @@ export default function TerrainContours({
           className={`${styles.mark} ${m.lab ? styles.lab : ''}`}
           style={{ left: m.x, top: m.y }}
         >
+          {m.lab && rings}
           {m.name}
         </span>
       ))}
+      {places && pin && size.w < WIDE && (
+        <span
+          className={`${styles.mark} ${styles.lab} ${styles.pinned}`}
+          style={{ left: pin.x, top: pin.y }}
+        >
+          {rings}
+          {LAB.name.split(' · ').map((line) => (
+            <span key={line}>{line}</span>
+          ))}
+        </span>
+      )}
     </div>
   );
 }
