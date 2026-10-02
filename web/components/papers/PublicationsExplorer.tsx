@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useCallback, useId, useMemo, useSyncExternalStore, type ReactNode } from 'react';
+import { useCallback, useId, useMemo, type ReactNode } from 'react';
 import Icon from '@/components/ui/Icon';
 import {
   EMPTY_FILTERS,
@@ -15,27 +15,12 @@ import {
   type Filters,
 } from '@/lib/explorer';
 import type { PaperType } from '@/lib/schemas';
+import { replaceSearch, useUrlSearch } from '@/lib/url-search';
 import AuthorMarks from './AuthorMarks';
 import styles from './PublicationsExplorer.module.css';
 
-// The URL query is the explorer's only state. The server snapshot is "" (no filters), so the
-// static HTML always holds the complete list for crawlers and visitors without JavaScript.
-const listeners = new Set<() => void>();
-function subscribe(onChange: () => void) {
-  listeners.add(onChange);
-  window.addEventListener('popstate', onChange);
-  return () => {
-    listeners.delete(onChange);
-    window.removeEventListener('popstate', onChange);
-  };
-}
-const getSearch = () => window.location.search;
-const getServerSearch = () => '';
-function replaceSearch(search: string) {
-  const { pathname, hash } = window.location;
-  window.history.replaceState(null, '', `${pathname}${search}${hash}`);
-  listeners.forEach((l) => l());
-}
+// The URL query is the explorer's only state (lib/url-search). The server snapshot is "",
+// so the static HTML always holds the complete list for crawlers and no-JS visitors.
 
 const TYPES: { value: PaperType | null; label: string }[] = [
   { value: null, label: 'All' },
@@ -61,7 +46,7 @@ interface Props {
 }
 
 export default function PublicationsExplorer({ papers, areas, years, legend }: Props) {
-  const search = useSyncExternalStore(subscribe, getSearch, getServerSearch);
+  const search = useUrlSearch();
   const known = useMemo(() => ({ years, areas: areas.map((a) => a.slug) }), [years, areas]);
   const filters = useMemo(() => parseFilters(search, known), [search, known]);
   const shown = useMemo(() => filterPapers(papers, filters), [papers, filters]);

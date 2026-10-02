@@ -33,6 +33,16 @@ const INTENTIONAL_MISSING = {
   '/assets/downtownPic.jpg': 'unused 15 MB hero photo, never referenced (Phase 2)',
   '/CNAME': 'GitHub Pages custom-domain file; Vercel sets the domain in project settings',
 };
+/**
+ * Intentional SEO changes, as [from, to] text substitutions applied to that route's baseline
+ * before comparing, so everything else on the route is still checked strictly.
+ */
+const INTENTIONAL_SEO = {
+  '/talks': {
+    reason: 'page renamed "News & Talks" to match the D9 nav label (Phase 5)',
+    replace: [['Talks & News', 'News & Talks']],
+  },
+};
 const PREVIEW_ROBOTS = 'noindex, nofollow';
 const IMAGE_KEY = /^(og:image|twitter:image)/;
 
@@ -103,7 +113,14 @@ const canon = (nodes) => nodes.map((n) => JSON.stringify(sortKeys(n))).sort();
 
 let seoOk = 0;
 for (const route of sections['html-routes'] ?? []) {
-  const want = baseline.pages[route];
+  let want = baseline.pages[route];
+  const intended = INTENTIONAL_SEO[route];
+  if (intended) {
+    let text = JSON.stringify(want);
+    for (const [from, to] of intended.replace) text = text.split(from).join(to);
+    want = JSON.parse(text);
+    notes.push(`intentional SEO change ${route}: ${intended.reason}`);
+  }
   const res = await fetch(base + route, { headers });
   const got = { status: res.status, ...extractSeo(await res.text()) };
   const before = problems.length;
