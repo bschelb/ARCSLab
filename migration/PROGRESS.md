@@ -59,7 +59,35 @@ Captured with `dig` on 1 Oct 2026. Nameservers: `finley.ns.cloudflare.com`,
 | `www.arcslab.io` | CNAME | `bschelb.github.io.` | 300 |
 
 The TTLs already read 300 s (Cloudflare "Auto"), so runbook step 2 may need no change.
-Phase 7 re-checks this.
+Phase 7 re-checks this. **Re-checked 2 Oct 2026 with `dig`:** unchanged, still 300 s, and no
+CAA records (Vercel's certificate issues without changes). Runbook step 2 is done.
+
+### Cutover target: Vercel records (runbook step 3, done 2 Oct 2026)
+
+Cowork added the domains to the `arcslab` project (team ARCS, Hobby):
+- `arcslab.io` → Production;
+- `www.arcslab.io` → **308 redirect to `arcslab.io`**. Vercel's default was the reverse,
+  which would have changed the canonical host.
+
+Both show "Invalid Configuration" until DNS moves; that is expected. Vercel asked for no TXT
+verification.
+
+**Runbook step 5, after the PR is merged and a production build succeeds.** In Cloudflare:
+1. Delete the four `arcslab.io` A records (`185.199.108–111.153`).
+2. Add these records:
+
+| Name | Type | Value | Proxy |
+|---|---|---|---|
+| `arcslab.io` (`@`) | CNAME | `6f7168e135aabbd7.vercel-dns-017.com` | DNS only (grey cloud) |
+| `www` | CNAME (edit the existing one) | `6f7168e135aabbd7.vercel-dns-017.com` | DNS only (grey cloud) |
+
+3. Keep the `google-site-verification` TXT record.
+
+If Cloudflare refuses the root CNAME next to the TXT record, use Vercel's legacy apex record
+instead (still supported): `@ A 76.76.21.21`.
+
+**Do not switch before the merge.** Vercel's production deployment builds from `main`, which
+has no `web/` app yet, so `arcslab.vercel.app` shows "No Deployment".
 
 ---
 
