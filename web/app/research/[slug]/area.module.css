@@ -1,0 +1,298 @@
+/* ── OVERVIEW ─────────────────────────────────────────────────── */
+.overview {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 80px);
+  align-items: start;
+}
+.lede {
+  max-width: 60ch;
+  margin-bottom: 36px;
+  font-size: var(--step-lead);
+  line-height: 1.65;
+}
+.bullets {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  border-top: 2px solid var(--color-text);
+}
+.bullets li {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-line);
+  line-height: 1.55;
+}
+.bulletNum {
+  font-family: var(--font-mono);
+  font-size: var(--step-label);
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  padding-top: 3px;
+}
+.methods {
+  margin-top: 36px;
+}
+.methods p {
+  margin-top: 10px;
+  line-height: 2;
+}
+.inline {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 6px 0;
+  font-size: var(--step-small);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-orange-text);
+  border-bottom: 2px solid var(--color-orange);
+}
+.figure {
+  position: sticky;
+  top: calc(var(--nav-h) + 24px);
+}
+
+/* ── REPRESENTATIVE (ink) ─────────────────────────────────────── */
+.featured {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--color-line-dark);
+  border-left: 1px solid var(--color-line-dark);
+}
+.featured li {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: clamp(22px, 3vw, 34px);
+  border-right: 1px solid var(--color-line-dark);
+  border-bottom: 1px solid var(--color-line-dark);
+}
+.featVenue {
+  font-family: var(--font-mono);
+  font-size: var(--step-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-orange);
+}
+.featTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--color-white);
+}
+.featTitle a {
+  text-decoration: none;
+}
+.featTitle a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--color-orange);
+  text-underline-offset: 4px;
+}
+.featAuthors {
+  font-size: var(--step-small);
+  color: var(--color-dk-text-2);
+}
+.award {
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  background: var(--color-orange);
+  padding: 3px 8px;
+}
+
+/* ── ALL PAPERS ───────────────────────────────────────────────── */
+.headRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px 24px;
+}
+.viewAll {
+  margin-bottom: 24px;
+  padding: 8px 0;
+  font-size: var(--step-small);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-orange-text);
+  border-bottom: 2px solid var(--color-orange);
+}
+.key {
+  display: inline-flex;
+  margin-bottom: 12px;
+}
+.rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 2px solid var(--color-text);
+}
+.row {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr) auto;
+  gap: 20px;
+  align-items: baseline;
+  padding: 18px 12px;
+  margin: 0 -12px;
+  border-bottom: 1px solid var(--color-line);
+  text-decoration: none;
+  color: inherit;
+  transition: background var(--duration-fast) var(--ease-out-signal);
+}
+.row:hover {
+  background: var(--color-white);
+}
+.row:hover .title {
+  text-decoration: underline;
+  text-decoration-color: var(--color-orange);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.year {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--color-text);
+}
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.title {
+  font-weight: 600;
+  line-height: 1.4;
+}
+.authors {
+  font-size: var(--step-small);
+}
+.venue {
+  font-size: var(--step-small);
+  font-style: italic;
+  color: var(--color-text-muted);
+}
+.badges {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+.awardTag {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 3px 8px;
+  background: var(--color-orange);
+  color: var(--color-text);
+}
+
+/* ── PEOPLE / GRANTS ──────────────────────────────────────────── */
+.people {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+.grants {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.grants li {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 24px;
+  background: var(--color-white);
+  border: 1px solid var(--color-line);
+  border-top: 4px solid var(--color-orange);
+}
+.grantTitle {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.grantMeta {
+  font-size: var(--step-small);
+  color: var(--color-text-muted);
+}
+
+/* ── PAGER (ink) ──────────────────────────────────────────────── */
+.pager {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  background: var(--color-ink);
+  border-top: 1px solid var(--color-line-dark);
+}
+.pagerLink {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: clamp(28px, 4vw, 48px) var(--gutter);
+  text-decoration: none;
+  color: var(--color-white);
+  transition: background var(--duration-base) var(--ease-out-signal);
+}
+.pagerLink:hover {
+  background: var(--color-ink-2);
+}
+.pagerNext {
+  align-items: flex-end;
+  text-align: right;
+  border-left: 1px solid var(--color-line-dark);
+}
+.pagerTitle {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  line-height: 1;
+  text-transform: uppercase;
+}
+.pagerLink:hover .pagerTitle {
+  color: var(--color-orange);
+}
+
+@media (max-width: 960px) {
+  .overview,
+  .featured {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .figure {
+    position: static;
+  }
+}
+@media (max-width: 640px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+  }
+  .badges {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .pager {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .pagerNext {
+    border-left: 0;
+    border-top: 1px solid var(--color-line-dark);
+  }
+}

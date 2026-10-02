@@ -35,6 +35,18 @@
   line-height: 0.95;
   text-transform: uppercase;
 }
+.explore {
+  align-self: flex-start;
+  margin-top: 6px;
+  padding: 6px 0;
+  font-size: var(--step-small);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-orange-text);
+  border-bottom: 2px solid var(--color-orange);
+}
 .body {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);

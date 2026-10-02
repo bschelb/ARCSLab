@@ -84,6 +84,11 @@ export const researchAreaSchema = z
     pubs: z.array(featuredPubSchema),
     /** Publication tags that link papers to this area (plan 5). */
     matchTags: z.array(nonEmpty).min(1),
+    /** Funded projects related to this area (grant ids in funding.json). */
+    grants: z
+      .object({ ids: z.array(slug).min(1), draft: z.boolean().optional() })
+      .strict()
+      .optional(),
   })
   .strict();
 

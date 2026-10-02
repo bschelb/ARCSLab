@@ -142,7 +142,7 @@ export default function HomePage() {
           {PILLARS.map((p, i) => (
             <Link
               key={p.num}
-              href={`/research#${researchAreas[i]?.slug ?? ''}`}
+              href={`/research/${researchAreas[i]?.slug ?? ''}`}
               className={styles.pillar}
               data-reveal
               style={{ ['--rd' as string]: `${Math.min(i, 5) * 60}ms` }}

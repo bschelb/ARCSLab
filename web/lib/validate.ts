@@ -186,6 +186,16 @@ export function validateContent(raw: RawContent, publicDir: string): ValidationR
     }
   }
 
+  if (areas && funding) {
+    const grantIds = new Set(funding.grants.map((g) => g.id));
+    for (const a of areas) {
+      for (const id of a.grants?.ids ?? []) {
+        if (!grantIds.has(id))
+          errors.push(`data/research.json → ${a.slug}: grant "${id}" is not a funding.json id`);
+      }
+    }
+  }
+
   if (funding) {
     for (const d of duplicates(funding.grants.map((g) => g.id)))
       errors.push(`data/funding.json: duplicate id "${d}"`);

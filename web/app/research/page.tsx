@@ -97,7 +97,7 @@ export default function ResearchPage() {
         titleEm="working together."
         lead="We use rigorous mixed-methods inquiry to understand and improve how humans and AI systems collaborate — building the scientific foundation for trustworthy, high-performing human-AI teams across mission-critical domains."
         stats={[
-          { value: '6', label: 'Research Areas' },
+          { value: `${researchAreas.length}`, label: 'Research Areas' },
           { value: '3', label: 'Methodological Traditions' },
           { value: '8', label: 'Applied Domains' },
         ]}
@@ -121,6 +121,10 @@ export default function ResearchPage() {
                 <h2 id={`${area.slug}-title`} className={styles.title}>
                   {area.title}
                 </h2>
+                <Link href={`/research/${area.slug}`} className={styles.explore}>
+                  Explore this area<span className="sr-only">: {area.title}</span>{' '}
+                  <span aria-hidden="true">→</span>
+                </Link>
               </div>
               <div className={styles.body}>
                 <div className={styles.text} data-reveal>
@@ -172,7 +176,7 @@ export default function ResearchPage() {
         })}
       </div>
 
-      <section className="section section-ink on-dark" aria-labelledby="methods-title">
+      <section id="methods" className="section section-ink on-dark" aria-labelledby="methods-title">
         <p className="eyebrow" data-reveal>
           Methodology
         </p>

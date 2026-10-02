@@ -17,6 +17,8 @@ interface PageHeaderProps {
   stats?: PageStat[];
   /** Which part of the East Tennessee terrain shows behind this page's header. */
   focus?: { x: number; y: number };
+  /** A visible breadcrumb trail above the index line (detail pages). */
+  breadcrumbs?: ReactNode;
 }
 
 /** Dark subpage header over a still crop of the terrain contours. */
@@ -28,11 +30,13 @@ export default function PageHeader({
   lead,
   stats,
   focus,
+  breadcrumbs,
 }: PageHeaderProps) {
   return (
     <header className={`${styles.head} on-dark`}>
       <TerrainContours focus={focus ?? { x: 0.5, y: 0.5 }} intensity={0.8} />
       <div className={styles.inner}>
+        {breadcrumbs && <div className={styles.trail}>{breadcrumbs}</div>}
         <p className={styles.crumb}>
           <span className={styles.index}>{index}</span>
           <span className={styles.sep} aria-hidden="true" />

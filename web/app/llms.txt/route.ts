@@ -34,7 +34,7 @@ export function GET() {
     '## Research areas',
     '',
     ...researchAreas.map(
-      (a) => `- ${a.title} (${absoluteUrl('/research')}#${a.slug}): ${a.description}`,
+      (a) => `- [${a.title}](${absoluteUrl(`/research/${a.slug}`)}): ${a.description}`,
     ),
     '',
     '## Pages',

@@ -9,4 +9,6 @@ export const ROUTES = [
   '/talks',
   '/contact',
   '/join',
+  '/research/human-ai-teaming',
+  '/research/evaluation-validation',
 ] as const;
