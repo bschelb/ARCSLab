@@ -25,6 +25,8 @@ All section 1 decisions were confirmed by Dr. Schelble on 1 October 2026 and are
 | D12 | Analytics | Vercel Web Analytics and Speed Insights |
 | D13 | Working copy | `~/dev/ARCSLab` on the MacBook Air, outside OneDrive |
 
+| D14 | Design identity | **Pending Dr. Schelble's choice (1 Oct 2026).** He asked that the site be built in React (it is: React 19 via Next.js 16; every page and component is a React component) and that the design be upgraded and clearly distinct from beauschelble.com. That overrides plan 2.3's "preserve the Two intelligences concept": the personal site uses the same Fraunces/grotesk/Plex Mono trio, a human/AI node canvas, a grid background and the same Reveal and count-up patterns. After a review of 20 award-winning and research sites, three directions were proposed (A Technical Drawing, recommended; B Research Report; C Contour) at https://claude.ai/artifact/Tqt7RZztoDUojMyeHqMvRA. Phase 3 waits on this choice. What stays fixed under any direction: URLs, the SEO graph, the PDF reader, group framing, no emoji, reduced motion, WCAG 2.2 AA, the D8 UT palette. |
+
 Still needed from Dr. Schelble before Phase 5: current recruiting status (open or closed, and
 for which term), and optional answers for the Join page FAQ.
 
@@ -216,3 +218,122 @@ the only GitHub deployments are `github-pages`.
   Previews from `migrate/nextjs` work normally.
 - **`web/CLAUDE.md` is not committed.** create-next-app generated it containing only
   `@AGENTS.md`, and the root `.gitignore` ignores every `CLAUDE.md`. `AGENTS.md` is committed.
+
+### Phase 2: Data layer, libraries and assets (1 October 2026)
+
+**Summary.** All content and logic are ported into `web/` with typed, validated data. The
+parity tests prove the outputs match both the Astro libs and production. CI run
+`36943011222` is green.
+
+**Data (`web/data/*.json`, written by `scripts/migrate-data.mjs`).**
+
+- 49 publications, 6 research areas, 14 people plus 12 collaborators, 8 grants (5 active,
+  3 pending), 10 talks, 18 news items.
+- The script asserts that every original string or number survives, either verbatim or as
+  one of 96 logged transformations:
+  - **publications:** `"In Press"` → `status: "in-press"` (1).
+  - **research:** emoji → icon names, using the `iconMap` in `research.astro` (6).
+  - **team:**
+    - photos → `/images/people/<slug>.jpg` (4);
+    - `tenure` → `startYear`/`endYear` (10);
+    - the PI's hand-typed `stats` (`49+`, `$2.8M`, `5`, `10`) removed. They are now
+      computed, and tests assert the computed values equal the old ones.
+  - **funding:**
+    - `amount` strings → integers (8);
+    - `piRole` → `role` + `effortPct` (8);
+    - status strings → `status` + `internal` (8);
+    - `totalAwardedAsPI` removed (computed).
+  - **talks and news:** month strings → ISO `YYYY-MM` (27); media `tag` → `kind` (18).
+- **Schema refinements against the plan 5 sketch:**
+  - `NewsItem.kind` adds `talk`, `publication`, `funding` and `lab`, because the media items
+    use those tags.
+  - Talks and news are separate files (`talks.json` holds only `invited-talk` and `keynote`,
+    so the "Invited Talks" stat is its length). `lib/news.ts` merges them.
+  - `Person` gains PI-only fields (`title`, `subtitle`, `department`, `email`, `degrees`).
+    Link keys are renamed (`personalWebsite` → `website`, `googleScholar` → `scholar`).
+  - Research `pubs` gain `paperId`.
+- **No clean month for "Spring 2026"** (a Tennessee Engineer article). It is stored as
+  `date: "2026-04"` with `dateLabel: "Spring 2026"`, so it displays as written and keeps its
+  current position in the list. This is the only date without a month.
+- **Start years for the PI and PhD students**, who have no `tenure` in the Astro data, come
+  from CLAUDE.md: Mendoza 2025, Tian 2025, Nagaraju 2026. The PI is 2024, when the lab was
+  founded.
+- **`funderShort` labels and the grant `id` slugs** follow the CLAUDE.md funding table.
+- **Research `matchTags` are a first mapping**, drawn from each area's description and
+  bullets. Every publication matches at least one area. Only Phase 5's area pages use them;
+  please review.
+- **One research featured pub has an abbreviated title** ("A Comparative Evaluation of Ad
+  Hoc Team Performance in Modern Collaborative Technology"). It maps to
+  `schelble-2024-ad-hoc-teams` through an explicit override; the other 17 match by title.
+- **`site.recruiting = { open: true }`**, from the current copy ("We admit PhD students …
+  and are actively recruiting"). `term` and `note` wait for Dr. Schelble.
+
+**Libraries (`web/lib/`).**
+
+- **`schemas.ts`:** Zod 4 schemas, with types inferred from them.
+- **`data.ts`:** parses every file when imported, so the build fails on bad data.
+- **`validate.ts` and `scripts/validate-data.ts`** (run through `tsx` in `prebuild`):
+  - errors: schema violations, duplicates, a missing PDF, `pdf` ≠ `<id>.pdf`, a missing photo,
+    an `authorsList` length that differs from the display author count, a dangling paper
+    reference, emoji (`\p{Extended_Pictographic}`), a person listed as both member and
+    collaborator;
+  - warnings: an unreferenced PDF, a publication matching no research area, a member with no
+    author alias. Ten warnings today, all for members with no publications.
+- **`papers.ts` and `seo.ts`** are ported. `markLabMembers` returns `{text, isLabMember}[]`
+  segments, so components never need `dangerouslySetInnerHTML`.
+- **New helpers:**
+  - `funding.ts`: `piTotal` = $2,802,201; pending and not-funded grants are hidden;
+  - `people.ts`: alias matching, `profileHref` (the PI → `/pi`), monograms;
+  - `news.ts`: stable ISO sort and the merged timeline;
+  - `format.ts`: `Jul 2026` and `July 2026` styles, USD, tenure;
+  - `stats.ts`: every headline number, computed from data.
+
+**Tests: 331 Vitest tests.**
+
+- **Parity:** for all 49 papers, `toBibtex`, `citationMetaTags`, `scholarlyArticleNode` and
+  `getRelated` match the Astro functions (imported from `astro-site/src/lib`). Citation and
+  DC tags, ScholarlyArticle, the site graph, ProfilePage and all 56 breadcrumb lists also
+  deep-equal `migration/seo-baseline.json`. That covers Phase 4's JSON-LD and citation
+  parity ahead of time.
+- **Mutation check:** altering one citation field failed 98 tests, and dropping one roster
+  member failed 2, so the oracles do catch regressions.
+- **Data tests:** funding totals, type counts (26/17/3/3), awards (5), talks (10),
+  people-to-publication matching, legacy round-trips for tenure, date and amount strings,
+  ISO order reproducing the curated order, and validation catching emoji, missing PDFs,
+  duplicates, dangling ids and bad author counts.
+
+**Assets (`scripts/optimize-images.mjs`, sharp, long edge ≤ 1600 px, quality 82).**
+
+| File | Before | After | Size |
+|---|---|---|---|
+| `public/images/people/beau-schelble.jpg` | 3593 KB | 145 KB | 1066×1600 |
+| `public/images/people/sarah-mendoza.jpg` | 4087 KB | 96 KB | 1065×1600 |
+| `public/images/people/yayun-tian.jpg` | 410 KB | 374 KB | 1200×1600 |
+| `public/images/people/naveena-nagaraju.jpg` | 204 KB | 206 KB | 1200×1600 |
+| `app/icon.png` / `app/apple-icon.png` / `public/images/logo-nav.png` | 108 KB | 32 / 9 / 5 KB | 512 / 180 / 92 px |
+| `public/assets/DSCF0563-Beaus-Workstation.jpg` (JSON-LD `Person.image`) | 3593 KB | 145 KB | 1066×1600 |
+| `public/assets/Frame 3.png` (`Organization.logo`, `rel=icon`) | 108 KB | 32 KB | 512×512 |
+| `public/assets/{apple-touch-icon,icon-192,icon-512}.png`, `public/og/arcs-lab-og.png` | | copied | |
+
+- **PDFs:** 42 copied to `public/papers/`.
+- **`downtownPic.jpg`** (15 MB, 6624×3860) is not carried over. A grep found no reference
+  in `astro-site/`, the root HTML or `web/`. Phase 4 must handle its URL in
+  `url-inventory.txt`, either with a 308 or as an intentional 404.
+- **Headshot URLs:** the old `/assets/{sarah,yayun,naveena}Headshot.jpg` paths get 308s in
+  Phase 4.
+- **Two portraits stay large.** The Yayun (374 KB) and Naveena (206 KB) sources were already
+  small, so re-encoding saved little. `next/image` serves resized AVIF/WebP, so neither file
+  is delivered at that size.
+
+**Deviations and notes.**
+
+- **Type shims for the Astro libs.** TS 5.9 rejects a type predicate in the Astro `site.ts`
+  that Astro's compiler allowed. It is fixed in `web/lib/site.ts`; the Astro copy is
+  untouched. The tests import the Astro libs through an `@legacy` alias: Vitest resolves the
+  real files, while `tsc` sees `tests/legacy/*.d.ts`.
+- **CI now installs `astro-site/` dependencies**, because Vite reads the Astro tsconfig when
+  it transforms those imports. Phase 8 removes both this step and the parity tests that need
+  `astro-site/`.
+- **New dev dependencies:** `sharp` 0.35.5 and `tsx` 4.23.15.
+- **Phase 3 is blocked on D14.** The plan's "faithful port" would reproduce the design that
+  overlaps the personal site, so Phase 3 now builds the chosen direction instead.
