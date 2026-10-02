@@ -61,11 +61,15 @@ export default function TerrainContours({
 
     // The canvas is created here (not in JSX) so each effect run gets a fresh one:
     // a canvas can hand its control to an OffscreenCanvas only once.
-    const canvas = document.createElement('canvas');
-    canvas.className = styles.canvas ?? '';
-    canvas.setAttribute('aria-hidden', 'true');
-    canvas.dataset.animate = String(moving);
-    wrap.prepend(canvas);
+    const makeCanvas = () => {
+      const c = document.createElement('canvas');
+      c.className = styles.canvas ?? '';
+      c.setAttribute('aria-hidden', 'true');
+      c.dataset.animate = String(moving);
+      wrap.prepend(c);
+      return c;
+    };
+    let canvas = makeCanvas();
 
     let worker: Worker | null = null;
     let fallback: ReturnType<typeof createRenderer> | null = null;
@@ -81,8 +85,22 @@ export default function TerrainContours({
     const startWorker = () => {
       const offscreen = canvas.transferControlToOffscreen();
       worker = new Worker(new URL('./terrain.worker.ts', import.meta.url), { type: 'module' });
+      let ready = false;
       worker.onmessage = (e: MessageEvent<{ type: string }>) => {
-        if (e.data.type === 'ready') markReady();
+        if (e.data.type === 'ready') {
+          ready = true;
+          markReady();
+        }
+      };
+      // If the worker cannot load or crashes before its first frame, draw on the main thread
+      // instead, on a fresh canvas (the old one handed its control to the worker).
+      worker.onerror = () => {
+        if (ready || cancelled) return;
+        worker?.terminate();
+        worker = null;
+        canvas.remove();
+        canvas = makeCanvas();
+        void startFallback().catch(() => {});
       };
       const { width, height } = box();
       worker.postMessage(

@@ -30,6 +30,11 @@ describe('next.config', () => {
     expect(contentSecurityPolicy).toContain("object-src 'none'");
   });
 
+  it('keeps production strict: no third-party origins outside previews', () => {
+    expect(contentSecurityPolicy).not.toContain('vercel.live');
+    expect(contentSecurityPolicy).toContain("frame-src 'none'");
+  });
+
   it('serves PDFs inline', async () => {
     const rules = (await nextConfig.headers?.()) ?? [];
     const pdf = rules.find((r) => r.source.startsWith('/papers/'));

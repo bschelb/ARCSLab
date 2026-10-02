@@ -108,7 +108,7 @@ jobs:
           cache: npm
           cache-dependency-path: web/package-lock.json
       - run: npm ci
-      - name: Collect (3 runs per URL, mobile)
+      - name: Collect (5 runs per URL, mobile)
         env:
           BYPASS: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
         run: |
@@ -116,7 +116,7 @@ jobs:
             --url="$BASE/" --url="$BASE/publications" \
             --url="$BASE/papers/schelble-2022-lets-think-together" \
             --url="$BASE/team" --url="$BASE/join" \
-            --settings.extraHeaders="{\"x-vercel-protection-bypass\":\"$BYPASS\"}"
+            --settings.extraHeaders="{\"x-vercel-protection-bypass\":\"$BYPASS\",\"x-vercel-set-bypass-cookie\":\"true\"}"
       - name: Summary
         if: always()
         run: |

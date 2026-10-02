@@ -7,15 +7,19 @@ import type { NextConfig } from 'next';
 // would force every route to render dynamically. 'wasm-unsafe-eval' covers PDF.js image
 // decoders. `next dev` needs 'unsafe-eval' for React's debugging features.
 const isDev = process.env.NODE_ENV === 'development';
+// Vercel injects its feedback toolbar into Preview deployments only; allow its origins there
+// (per Vercel's toolbar CSP guidance) so previews run clean. Production stays strict.
+const toolbar = process.env.VERCEL_ENV === 'preview';
+const tb = (sources: string) => (toolbar ? ` ${sources}` : '');
 export const contentSecurityPolicy = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'${isDev ? " 'unsafe-eval'" : ''}`,
-  "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob:",
-  "font-src 'self'",
-  "connect-src 'self' https://formspree.io",
+  `script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'${isDev ? " 'unsafe-eval'" : ''}${tb('https://vercel.live')}`,
+  `style-src 'self' 'unsafe-inline'${tb('https://vercel.live')}`,
+  `img-src 'self' data: blob:${tb('https://vercel.live https://vercel.com')}`,
+  `font-src 'self'${tb('https://vercel.live https://assets.vercel.com')}`,
+  `connect-src 'self' https://formspree.io${tb('https://vercel.live wss://ws-us3.pusher.com')}`,
   "worker-src 'self' blob:",
-  "frame-src 'none'",
+  `frame-src ${toolbar ? 'https://vercel.live' : "'none'"}`,
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self' https://formspree.io",
@@ -39,6 +43,12 @@ export const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+
+  experimental: {
+    // Phase 6 (LCP): CSS arrives inside the HTML instead of as render-blocking requests.
+    // The site's CSS is ~20 kB gzipped and most visitors are first-time visitors.
+    inlineCss: true,
+  },
   trailingSlash: false,
 
   images: {
