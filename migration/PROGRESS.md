@@ -27,8 +27,9 @@ All section 1 decisions were confirmed by Dr. Schelble on 1 October 2026 and are
 
 | D14 | Design identity | **C · Contour**, chosen by Dr. Schelble on 1 Oct 2026 (options page: https://claude.ai/artifact/Tqt7RZztoDUojMyeHqMvRA). The site is React 19 via Next.js 16. The design is distinct from beauschelble.com: it drops the Fraunces/Space Grotesk/Plex Mono trio, the node canvas and the "Two intelligences" serif/mono framing, overriding plan 2.3 on those points. Specifics: <br>• **Type:** Big Shoulders (display and numerals, uppercase), Public Sans (body), JetBrains Mono (coordinates and labels). <br>• **Color:** ink grounds with Tennessee Orange; light paper reading sections; UT palette per D8. <br>• **Hero:** animated contour lines generated from real elevation data for East Tennessee: the Great Smokies, the Valley & Ridge past Hardin Valley, Walden Ridge, and the Cumberland Plateau and Crab Orchard Mountains. The lines shift dynamically, but the regional pattern stays recognizable. <br>• **Headline:** "HUMANS AND AI, ENGINEERED TO THINK AS **ONE TEAM.**" in Big Shoulders, with "ONE TEAM." on a Tennessee Orange block, from the screenshot Dr. Schelble supplied. <br>• **Research:** technical-drawing team-topology figures from option A illustrate the research page. <br>Unchanged: URLs, the SEO graph, the PDF reader, group framing, no emoji, reduced motion, WCAG 2.2 AA. |
 
-Still needed from Dr. Schelble before Phase 5: current recruiting status (open or closed, and
-for which term), and optional answers for the Join page FAQ.
+Recruiting (for Phase 5): **open, for a Spring, Summer, or Fall 2027 start**, confirmed by
+Dr. Schelble on 2 Oct 2026 and stored in `site.recruiting`. Join page FAQ answers are still
+optional; without them Phase 5 drafts FAQs only from existing site content and flags them.
 
 ### Rollback reference: DNS as of 1 October 2026 (pre-cutover)
 

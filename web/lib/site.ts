@@ -35,10 +35,13 @@ export const site = {
   geo: { latitude: 35.9544, longitude: -83.9295 },
   /**
    * Recruiting status shown on /join, the home callout and the team page (Phase 5).
-   * `open: true` reflects the current copy ("We admit PhD students … and are actively
-   * recruiting"). Set `term` (e.g. "Fall 2027") and `note` when known.
+   * Confirmed by Dr. Schelble on 2 Oct 2026: recruiting for a Spring, Summer, or Fall 2027 start.
    */
-  recruiting: { open: true } as { open: boolean; term?: string; note?: string },
+  recruiting: { open: true, term: 'Spring, Summer, or Fall 2027' } as {
+    open: boolean;
+    term?: string;
+    note?: string;
+  },
   links: {
     scholar: 'https://scholar.google.com/citations?user=ggHXV-4AAAAJ&hl=en',
     orcid: 'https://orcid.org/0000-0003-3704-697X',
