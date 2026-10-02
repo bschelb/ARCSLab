@@ -37,3 +37,11 @@ npm run start        # serve the production build
 | Deployment Protection         | "Protection Bypass for Automation" secret stored in GitHub as `VERCEL_AUTOMATION_BYPASS_SECRET`                                                                                                                                                                              |
 
 Robots are `noindex` everywhere until Phase 4 makes them environment-aware.
+
+## Preview checks
+
+Previews are protected by Vercel Authentication. Automation reaches them with the
+`x-vercel-protection-bypass` header, whose value is the GitHub secret
+`VERCEL_AUTOMATION_BYPASS_SECRET`. `.github/workflows/preview-check.yml` runs a smoke test
+(key routes, the `.html` redirect, the 404, headers and robots) on every successful
+Preview deployment.

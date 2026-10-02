@@ -1,10 +1,12 @@
 name: Preview check
 
-# Manual smoke test of a protected Vercel preview, using the
-# VERCEL_AUTOMATION_BYPASS_SECRET (Deployment Protection → Protection Bypass for Automation).
-# Phase 4 adds the full URL/SEO parity check; Phase 6 runs Playwright and Lighthouse on
-# every successful preview deployment.
+# Smoke test of a protected Vercel preview, using the VERCEL_AUTOMATION_BYPASS_SECRET
+# (Deployment Protection → Protection Bypass for Automation). Runs on every successful
+# Vercel Preview deployment (the workflow file comes from the deployed commit), or manually
+# once this file is on main. Phase 4 adds the URL/SEO parity check; Phase 6 adds Playwright
+# and Lighthouse.
 on:
+  deployment_status:
   workflow_dispatch:
     inputs:
       url:
@@ -17,11 +19,15 @@ permissions:
 
 jobs:
   smoke:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.deployment_status.state == 'success' &&
+       github.event.deployment.environment == 'Preview')
     runs-on: ubuntu-latest
     steps:
       - name: Request key routes through the protection bypass
         env:
-          BASE: ${{ inputs.url }}
+          BASE: ${{ inputs.url || github.event.deployment_status.environment_url || github.event.deployment_status.target_url }}
           BYPASS: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
         run: |
           set -u
