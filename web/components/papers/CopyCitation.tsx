@@ -35,8 +35,12 @@ export default function CopyCitation({ bibtex, apa }: { bibtex: string; apa: str
           Copy citation
         </button>
       </div>
+      {/* Long BibTeX lines scroll sideways; focusable so keyboard users can scroll it (axe). */}
       <pre
         id="citation-text"
+        tabIndex={0}
+        role="region"
+        aria-label={`${format === 'bibtex' ? 'BibTeX' : 'APA'} citation`}
         className={format === 'apa' ? `${styles.text} ${styles.apa}` : styles.text}
       >
         {text}

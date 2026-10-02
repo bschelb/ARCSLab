@@ -64,6 +64,7 @@ export default function TerrainContours({
     const canvas = document.createElement('canvas');
     canvas.className = styles.canvas ?? '';
     canvas.setAttribute('aria-hidden', 'true');
+    canvas.dataset.animate = String(moving);
     wrap.prepend(canvas);
 
     let worker: Worker | null = null;

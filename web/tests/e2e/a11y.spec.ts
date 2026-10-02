@@ -1,12 +1,12 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from './fixtures';
-import { ROUTES } from './routes';
+import { ROUTES, SITEMAP_ROUTES } from './routes';
 
-// axe at both plan widths; serious and critical violations fail (plan 4.4).
+// axe on every sitemap URL at both plan widths; serious and critical violations fail (plan 4.4).
 for (const width of [390, 1440]) {
   test.describe(`axe @ ${width}px`, () => {
     test.use({ viewport: { width, height: 900 }, reducedMotion: 'reduce' });
-    for (const route of [...ROUTES, '/this-page-does-not-exist']) {
+    for (const route of [...SITEMAP_ROUTES, '/this-page-does-not-exist']) {
       test(route, async ({ page, browserName }) => {
         test.skip(browserName !== 'chromium', 'axe runs once, in Chromium');
         await page.goto(route);
@@ -29,6 +29,14 @@ for (const width of [390, 1440]) {
     }
   });
 }
+
+test('sitemap.xml lists exactly the routes the suite checks', async ({ request }) => {
+  const xml = await (await request.get('/sitemap.xml')).text();
+  const paths = [...xml.matchAll(/<loc>https:\/\/arcslab\.io([^<]*)<\/loc>/g)].map(
+    (m) => m[1] || '/',
+  );
+  expect([...paths].sort()).toEqual([...SITEMAP_ROUTES].sort());
+});
 
 test('every page has exactly one h1, a main landmark and a skip link', async ({ page }) => {
   for (const route of ROUTES) {

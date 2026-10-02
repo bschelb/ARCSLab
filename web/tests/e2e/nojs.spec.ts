@@ -1,14 +1,18 @@
 import { expect, test } from './fixtures';
-import { ROUTES } from './routes';
+import { SITEMAP_ROUTES } from './routes';
 
 test.describe('without JavaScript', () => {
   test.use({ javaScriptEnabled: false });
 
-  test('every page shows its content (nothing left hidden by reveal)', async ({ page }) => {
-    for (const route of ROUTES) {
+  test('every sitemap page shows its content (nothing left hidden by reveal)', async ({ page }) => {
+    test.setTimeout(180_000);
+    for (const route of SITEMAP_ROUTES) {
       await page.goto(route);
       await expect(page.locator('h1'), route).toBeVisible();
       expect(await page.locator('.reveal-pending').count(), route).toBe(0);
+      // count-up stats carry their real value in the HTML, never a zero placeholder
+      for (const v of await page.locator('[data-count]').allTextContents())
+        expect(v, `${route} stat`).not.toMatch(/^\$?0(\.0)?[M+]?$/);
     }
   });
 
