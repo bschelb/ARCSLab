@@ -44,18 +44,30 @@
   font-weight: 500;
 }
 .heroTitle {
-  max-width: 10.5ch;
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: var(--step-display);
-  line-height: 0.88;
+  /* sized so the longest line ("HUMANS AND AI,") fits the column at every width */
+  font-size: min(var(--step-display), calc((100vw - 2 * var(--gutter)) / 7));
+  line-height: 0.94;
   letter-spacing: 0.005em;
   text-transform: uppercase;
+  text-wrap: wrap;
   color: var(--color-white);
 }
+.heroTitle span {
+  display: block;
+  white-space: nowrap;
+}
+/* desktop: keep the headline in the left half, clear of the survey marks */
+@media (min-width: 900px) {
+  .heroTitle {
+    font-size: min(var(--step-display), 6.6vw);
+  }
+}
 .heroTitle em {
-  display: inline;
-  line-height: 1;
+  display: inline-block;
+  margin-top: 0.12em;
+  line-height: 0.9;
 }
 .heroDesc {
   max-width: 52ch;

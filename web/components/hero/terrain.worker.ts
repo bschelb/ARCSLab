@@ -5,6 +5,7 @@
  *
  * Messages in:  init { canvas, src, width, height, dpr, animate, still, focus, intensity }
  *               resize { width, height, dpr } · visible { visible }
+ *               pointer { x, y } · pointer-leave
  * Messages out: ready
  */
 import {
@@ -28,7 +29,9 @@ type InitMessage = {
 type Message =
   | InitMessage
   | { type: 'resize'; width: number; height: number; dpr: number }
-  | { type: 'visible'; visible: boolean };
+  | { type: 'visible'; visible: boolean }
+  | { type: 'pointer'; x: number; y: number }
+  | { type: 'pointer-leave' };
 
 const scope = self as unknown as DedicatedWorkerGlobalScope;
 let renderer: ReturnType<typeof createRenderer> | null = null;
@@ -37,8 +40,8 @@ let visible = true;
 let timer: ReturnType<typeof setTimeout> | undefined;
 const t0 = performance.now();
 
-// ~16 fps is plenty for lines that drift uphill over 32 s, and halves the worker's CPU.
-const FRAME_MS = 62;
+// ~24 fps: smooth enough for the cursor lift and sweep, still light on the worker.
+const FRAME_MS = 42;
 function loop() {
   timer = undefined;
   if (!renderer || !animate || !visible) return;
@@ -71,6 +74,10 @@ scope.onmessage = async (e: MessageEvent<Message>) => {
   } else if (msg.type === 'resize' && renderer) {
     renderer.resize(msg.width, msg.height, msg.dpr);
     renderer.draw(animate ? performance.now() - t0 + 1100 : 0);
+  } else if (msg.type === 'pointer') {
+    renderer?.setPointer({ x: msg.x, y: msg.y });
+  } else if (msg.type === 'pointer-leave') {
+    renderer?.setPointer(null);
   } else if (msg.type === 'visible') {
     visible = msg.visible;
     if (visible && animate && timer === undefined) loop();

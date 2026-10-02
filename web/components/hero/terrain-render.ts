@@ -56,14 +56,34 @@ export function heightsFromPixels(px: ArrayLike<number>): Float32Array {
   return smoothHeights(raw, TERRAIN_W, TERRAIN_H, 1, 1);
 }
 
+// Motion tuning for the animated hero (still frames ignore all of this).
+const BREATH_M = 30; // two noise fields blended on a slow circle, metres
+const BREATH_MS = 6000; // period scale of the breathing circle
+const SWELL_M = 14; // a long wave rolling diagonally across the map, metres
+const SWELL_MS = 2400;
+const FLOW_MS = 20000; // one full uphill cycle of the contour levels
+const LIFT_M = 480; // the hill that rises under the cursor, metres
+const LIFT_R = 13; // its radius, in grid cells
+const SWEEP_MS = 7000; // one pass of the survey sweep across the map
+
 export function createRenderer(ctx: Ctx2D, base: Float32Array, opts: RenderOptions) {
   const warpA = opts.animate ? noiseField(TERRAIN_W, TERRAIN_H, 11, 22) : null;
   const warpB = opts.animate ? noiseField(TERRAIN_W, TERRAIN_H, 29, 22) : null;
+  // Diagonal coordinate for the swell, precomputed once.
+  const diag = opts.animate ? new Float32Array(base.length) : null;
+  if (diag)
+    for (let y = 0; y < TERRAIN_H; y++)
+      for (let x = 0; x < TERRAIN_W; x++) diag[y * TERRAIN_W + x] = (x * 0.6 + y * 0.4) / 18;
   const work = opts.animate ? new Float32Array(base.length) : base;
   const minor: number[] = [];
   const index: number[] = [];
   let cw = 0;
   let ch = 0;
+  // Cursor lift: the target comes from pointer events; position and strength ease toward it.
+  let target: { x: number; y: number } | null = null;
+  let px = 0;
+  let py = 0;
+  let lift = 0;
 
   const stroke = (segs: number[], width: number, color: string) => {
     ctx.lineWidth = width;
@@ -84,23 +104,58 @@ export function createRenderer(ctx: Ctx2D, base: Float32Array, opts: RenderOptio
       ctx.canvas.height = Math.max(1, Math.round(height * dpr));
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     },
-    /** Draw one frame; `t` in ms drives the breathing and the uphill flow (0 = still). */
+    /** Cursor position in CSS pixels of the canvas, or null when it leaves. */
+    setPointer(p: { x: number; y: number } | null) {
+      if (p && !target && lift < 0.01) {
+        px = p.x;
+        py = p.y;
+      }
+      target = p;
+    },
+    /** Draw one frame; `t` in ms drives all motion (0 = still). */
     draw(t: number) {
-      if (warpA && warpB && work !== base) {
-        // Breathing: blend two noise fields (±16 m) on a slow circle.
-        const theta = t / 9000;
-        const ca = Math.cos(theta) * 16;
-        const sb = Math.sin(theta) * 16;
+      const { scale, ox, oy } = coverTransform(cw, ch, opts.focus);
+      if (warpA && warpB && diag && work !== base) {
+        const theta = t / BREATH_MS;
+        const ca = Math.cos(theta) * BREATH_M;
+        const sb = Math.sin(theta) * BREATH_M;
+        const sw = t / SWELL_MS;
         for (let i = 0; i < work.length; i++)
-          work[i] = (base[i] ?? 0) + (warpA[i] ?? 0) * ca + (warpB[i] ?? 0) * sb;
+          work[i] =
+            (base[i] ?? 0) +
+            (warpA[i] ?? 0) * ca +
+            (warpB[i] ?? 0) * sb +
+            Math.sin((diag[i] ?? 0) - sw) * SWELL_M;
+
+        // Ease the hill toward the cursor, and in or out as it enters or leaves.
+        if (target) {
+          px += (target.x - px) * 0.2;
+          py += (target.y - py) * 0.2;
+        }
+        lift += ((target ? 1 : 0) - lift) * 0.08;
+        if (lift > 0.01) {
+          const gx = (px - ox) / scale;
+          const gy = (py - oy) / scale;
+          const r = LIFT_R;
+          const x0 = Math.max(0, Math.floor(gx - 3 * r));
+          const x1 = Math.min(TERRAIN_W - 1, Math.ceil(gx + 3 * r));
+          const y0 = Math.max(0, Math.floor(gy - 3 * r));
+          const y1 = Math.min(TERRAIN_H - 1, Math.ceil(gy + 3 * r));
+          const amp = LIFT_M * lift;
+          for (let y = y0; y <= y1; y++)
+            for (let x = x0; x <= x1; x++) {
+              const d2 = ((x - gx) ** 2 + (y - gy) ** 2) / (r * r);
+              const i = y * TERRAIN_W + x;
+              work[i] = (work[i] ?? 0) + amp * Math.exp(-d2);
+            }
+        }
       }
       const levels = contourLevels(meta.minElevationM, meta.maxElevationM, {
         count: 40,
         power: 2,
-        phase: (t / 32000) % 1,
+        phase: (t / FLOW_MS) % 1,
         indexEvery: 5,
       });
-      const { scale, ox, oy } = coverTransform(cw, ch, opts.focus);
       minor.length = 0;
       index.length = 0;
       marchContours(work, TERRAIN_W, TERRAIN_H, levels, (li, x1, y1, x2, y2) => {
@@ -114,6 +169,24 @@ export function createRenderer(ctx: Ctx2D, base: Float32Array, opts: RenderOptio
       ctx.clearRect(0, 0, cw, ch);
       stroke(minor, 1, `rgba(255,255,255,${(0.12 * opts.intensity).toFixed(3)})`);
       stroke(index, 1.25, `rgba(255,130,0,${(0.5 * opts.intensity).toFixed(3)})`);
+
+      if (opts.animate && t > 0) {
+        // Survey sweep: a band of light crosses the map and lights up the lines it passes.
+        const u = ((t / SWEEP_MS) % 1) * 1.4 - 0.2;
+        const cx = u * cw;
+        const bw = Math.max(120, cw * 0.14);
+        const g = ctx.createLinearGradient(cx - bw, 0, cx + bw, 0);
+        g.addColorStop(0, 'rgba(255,170,60,0)');
+        g.addColorStop(0.5, 'rgba(255,170,60,0.9)');
+        g.addColorStop(1, 'rgba(255,170,60,0)');
+        ctx.save();
+        ctx.globalCompositeOperation = 'source-atop';
+        ctx.fillStyle = g;
+        ctx.fillRect(cx - bw, 0, bw * 2, ch);
+        ctx.restore();
+        ctx.fillStyle = 'rgba(255,130,0,0.18)';
+        ctx.fillRect(Math.round(cx), 0, 1, ch);
+      }
     },
   };
 }

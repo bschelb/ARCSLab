@@ -143,7 +143,7 @@ export default function TerrainContours({
       if (!moving) return;
       const loop = (t: number) => {
         if (cancelled) return;
-        if (visible && !document.hidden && t - last > 62) {
+        if (visible && !document.hidden && t - last > 42) {
           fallback?.draw(t);
           last = t;
         }
@@ -185,6 +185,25 @@ export default function TerrainContours({
     const onVis = () => setVisible(visible);
     document.addEventListener('visibilitychange', onVis);
 
+    // Cursor lift (animated hero, mouse or pen only): the hero section reports the pointer,
+    // since the canvas itself ignores pointer events. At most ~30 messages a second.
+    const host = moving ? wrap.parentElement : null;
+    let lastMove = 0;
+    const onMove = (e: PointerEvent) => {
+      if (e.pointerType === 'touch' || e.timeStamp - lastMove < 32) return;
+      lastMove = e.timeStamp;
+      const r = wrap.getBoundingClientRect();
+      const p = { x: e.clientX - r.left, y: e.clientY - r.top };
+      if (worker) worker.postMessage({ type: 'pointer', ...p });
+      else fallback?.setPointer(p);
+    };
+    const onLeave = () => {
+      if (worker) worker.postMessage({ type: 'pointer-leave' });
+      else fallback?.setPointer(null);
+    };
+    host?.addEventListener('pointermove', onMove, { passive: true });
+    host?.addEventListener('pointerleave', onLeave);
+
     const ro = new ResizeObserver(() => {
       const { width, height } = box();
       setSize({ w: width, h: height });
@@ -202,6 +221,8 @@ export default function TerrainContours({
       io.disconnect();
       ro.disconnect();
       document.removeEventListener('visibilitychange', onVis);
+      host?.removeEventListener('pointermove', onMove);
+      host?.removeEventListener('pointerleave', onLeave);
       worker?.terminate();
       canvas.remove();
     };
