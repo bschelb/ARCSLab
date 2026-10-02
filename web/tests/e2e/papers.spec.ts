@@ -90,7 +90,12 @@ test('robots: preview builds disallow everything; production allows and lists th
 test('sitemap lists every page and paper with canonical URLs', async ({ request }) => {
   const xml = await (await request.get('/sitemap.xml')).text();
   const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
-  expect(locs).toHaveLength(57);
+  // 8 pages + 49 papers (the production set) + Phase 5: /join, 6 research areas, 13 profiles
+  expect(locs).toHaveLength(77);
+  expect(new Set(locs).size).toBe(locs.length);
   expect(locs).toContain('https://arcslab.io/');
+  expect(locs).toContain('https://arcslab.io/join');
+  expect(locs.filter((l) => l?.includes('/research/'))).toHaveLength(6);
+  expect(locs.filter((l) => l?.includes('/team/'))).toHaveLength(13);
   expect(locs).toContain(`https://arcslab.io/papers/${WITH_PDF}`);
 });

@@ -59,7 +59,7 @@
   flex-direction: column;
   gap: 2px;
 }
-.select .label {
+.select :global(.label) {
   font-size: 0.625rem;
 }
 .select select {

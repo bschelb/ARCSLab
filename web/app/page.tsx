@@ -3,10 +3,15 @@ import TerrainContours from '@/components/hero/TerrainContours';
 import Authors, { LabMarkKey } from '@/components/papers/Authors';
 import PersonCard from '@/components/people/PersonCard';
 import Icon from '@/components/ui/Icon';
-import { publications, researchAreas, team } from '@/lib/data';
+import { news, publications, researchAreas, talks, team } from '@/lib/data';
+import { displayDate, formatUsdCompact } from '@/lib/format';
 import type { IconName } from '@/lib/icons';
 import { pageMetadata } from '@/lib/metadata';
-import { byGroup, profileHref } from '@/lib/people';
+import { KIND_LABEL, latest, newsAndTalks } from '@/lib/news';
+import { currentMembers, profileHref } from '@/lib/people';
+import { recruitingDetail, recruitingHeadline } from '@/lib/recruiting';
+import { site } from '@/lib/site';
+import { stats } from '@/lib/stats';
 import styles from './home.module.css';
 
 export const metadata = pageMetadata({
@@ -57,8 +62,10 @@ const PILLARS: { num: string; icon: IconName; title: string; desc: string }[] = 
 
 export default function HomePage() {
   const recent = [...publications].sort((a, b) => b.year - a.year).slice(0, 6);
-  const pi = byGroup(team.people, 'pi')[0];
-  const phd = byGroup(team.people, 'phd');
+  const members = currentMembers(team.people);
+  const newest = latest(newsAndTalks(talks, news), 3);
+  const fundingM = (stats.piFunding / 1_000_000).toFixed(1);
+  const r = site.recruiting;
 
   return (
     <>
@@ -105,6 +112,49 @@ export default function HomePage() {
           <span>35.9544° N / 83.9295° W</span>
           <span>Terrain · Great Smoky Mountains to the Cumberland Plateau · USGS 3DEP</span>
         </p>
+      </section>
+
+      {/* STATS (computed from data) */}
+      <section className={styles.stats} aria-labelledby="stats-k">
+        <h2 id="stats-k" className="sr-only">
+          The lab in numbers
+        </h2>
+        <ul>
+          <li>
+            <Link href="/publications">
+              <span className="stat-num">
+                <span data-count={stats.publications}>{stats.publications}</span>
+              </span>
+              <span className="label">Publications</span>
+            </Link>
+          </li>
+          <li>
+            <Link href="/funding">
+              <span className="stat-num">
+                <span data-count={fundingM} data-prefix="$" data-suffix="M">
+                  {formatUsdCompact(stats.piFunding)}
+                </span>
+              </span>
+              <span className="label">PI Funding Awarded</span>
+            </Link>
+          </li>
+          <li>
+            <Link href="/publications?award=1">
+              <span className="stat-num">
+                <span data-count={stats.bestPaperAwards}>{stats.bestPaperAwards}</span>
+              </span>
+              <span className="label">Best Paper Awards</span>
+            </Link>
+          </li>
+          <li>
+            <Link href="/talks?kind=talk">
+              <span className="stat-num">
+                <span data-count={stats.invitedTalks}>{stats.invitedTalks}</span>
+              </span>
+              <span className="label">Invited Talks</span>
+            </Link>
+          </li>
+        </ul>
       </section>
 
       {/* MISSION */}
@@ -209,6 +259,57 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* LATEST (three most recent news or talk items) */}
+      <section className={`section ${styles.latestWrap}`} aria-labelledby="latest-title">
+        <div className={styles.headRow}>
+          <div>
+            <p className="eyebrow" data-reveal>
+              Latest
+            </p>
+            <h2 id="latest-title" className="sec-title" data-reveal>
+              News &amp; <em>talks</em>
+            </h2>
+          </div>
+          <Link href="/talks" className={styles.viewAll} data-reveal>
+            All news &amp; talks <span aria-hidden="true">→</span>
+          </Link>
+        </div>
+        <ul className={styles.latest}>
+          {newest.map((n, i) => {
+            const external = n.link?.startsWith('http');
+            const body = (
+              <>
+                <span className={styles.latestMeta}>
+                  <span>{displayDate(n, 'short')}</span>
+                  <span className={styles.latestKind}>{KIND_LABEL[n.kind]}</span>
+                </span>
+                <span className={styles.latestTitle}>{n.title}</span>
+                {n.venue && <span className={styles.latestVenue}>{n.venue}</span>}
+              </>
+            );
+            return (
+              <li key={n.id} data-reveal style={{ ['--rd' as string]: `${i * 70}ms` }}>
+                {n.link ? (
+                  external ? (
+                    <a href={n.link} target="_blank" rel="noopener" className={styles.latestCard}>
+                      {body}
+                    </a>
+                  ) : (
+                    <Link href={n.link} className={styles.latestCard}>
+                      {body}
+                    </Link>
+                  )
+                ) : (
+                  <Link href="/talks" className={styles.latestCard}>
+                    {body}
+                  </Link>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+
       {/* TEAM PREVIEW */}
       <section className="section" aria-labelledby="team-title">
         <div className={styles.headRow}>
@@ -229,32 +330,46 @@ export default function HomePage() {
           University of Tennessee, Knoxville.
         </p>
         <div className={styles.teamGrid}>
-          {pi && (
-            <div data-reveal>
-              <PersonCard person={pi} role="PI · Founding Director" href="/pi">
-                {pi.shortBio}
-              </PersonCard>
-            </div>
-          )}
-          {phd.map((s, i) => (
-            <div key={s.slug} data-reveal style={{ ['--rd' as string]: `${(i + 1) * 70}ms` }}>
-              <PersonCard person={s} role="PhD Student" href={profileHref(s)}>
-                {s.shortBio}
-              </PersonCard>
+          {members.map((m, i) => (
+            <div
+              key={m.slug}
+              data-reveal
+              style={{ ['--rd' as string]: `${Math.min(i, 5) * 60}ms` }}
+            >
+              <PersonCard
+                person={m}
+                role={m.group === 'pi' ? 'PI · Founding Director' : m.role}
+                href={profileHref(m)}
+                sizes="(max-width: 640px) 50vw, (max-width: 1100px) 33vw, 20vw"
+              />
             </div>
           ))}
-          <Link href="/join" className={styles.joinTile} data-reveal>
-            <span className={styles.joinPlus} aria-hidden="true">
-              +
-            </span>
-            <span className={styles.joinName}>Join the ARCS Lab</span>
-            <span className={styles.joinRole}>Recruiting PhD Students</span>
-            <span className={styles.joinDesc}>
-              We seek motivated PhD students in ISE, CS, HCI, and Psychology. Email Dr. Schelble
-              with your CV.
-            </span>
-          </Link>
         </div>
+      </section>
+
+      {/* RECRUITING (site.recruiting) */}
+      <section
+        className={`${styles.recruit} ${r.open ? '' : styles.recruitClosed}`}
+        aria-labelledby="recruit-title"
+      >
+        <div>
+          <p className={styles.recruitK}>
+            {r.open && <span className={styles.recruitDot} aria-hidden="true" />}
+            Join the ARCS Lab
+          </p>
+          <h2 id="recruit-title" className={styles.recruitTitle}>
+            {recruitingHeadline(r)}
+          </h2>
+          <p className={styles.recruitDetail}>
+            {recruitingDetail(r)}. See PhD, DEng and undergraduate roles and how to apply.
+          </p>
+        </div>
+        <Link href="/join" className={`btn ${styles.recruitBtn}`}>
+          How to join{' '}
+          <span className="arr" aria-hidden="true">
+            →
+          </span>
+        </Link>
       </section>
 
       {/* FUNDING BAND */}
