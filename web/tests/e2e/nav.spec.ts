@@ -30,6 +30,38 @@ test.describe('mobile navigation sheet', () => {
   });
 });
 
+test('desktop nav (D9) fits on one line at 1280px; the sheet takes over below', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/research');
+  const nav = page.getByRole('navigation', { name: 'Primary', exact: true });
+  await expect(nav.getByRole('link')).toHaveText([
+    'Research',
+    'Publications',
+    'Team',
+    'PI',
+    'Funding',
+    'News & Talks',
+    'Join',
+    'Contact',
+  ]);
+  const boxes = await nav.getByRole('link').evaluateAll((els) =>
+    els.map((el) => {
+      const r = el.getBoundingClientRect();
+      return { mid: r.top + r.height / 2, right: r.right };
+    }),
+  );
+  const mids = boxes.map((b) => b.mid);
+  expect(Math.max(...mids) - Math.min(...mids), 'one row').toBeLessThan(6);
+  for (const b of boxes) expect(b.right).toBeLessThanOrEqual(1280);
+  await expect(page.getByRole('button', { name: 'Open menu' })).toBeHidden();
+
+  await page.setViewportSize({ width: 1279, height: 900 });
+  await expect(nav).toBeHidden();
+  await expect(page.getByRole('button', { name: 'Open menu' })).toBeVisible();
+});
+
 test('desktop nav marks the current page', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/funding');

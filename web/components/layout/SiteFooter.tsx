@@ -40,13 +40,13 @@ export default function SiteFooter() {
               <Link href="/funding">Funding</Link>
             </li>
             <li>
-              <Link href="/talks">Talks &amp; News</Link>
+              <Link href="/talks">News &amp; Talks</Link>
+            </li>
+            <li>
+              <Link href="/join">Join</Link>
             </li>
             <li>
               <Link href="/contact">Contact</Link>
-            </li>
-            <li>
-              <Link href="/team#join">Join the Lab</Link>
             </li>
           </ul>
         </nav>

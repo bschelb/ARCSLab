@@ -1,11 +1,12 @@
-/** Primary navigation (current items; Join and the "News & Talks" label arrive in Phase 5, D9). */
+/** Primary navigation (D9): PI keeps its own item, Talks is "News & Talks", Join is new. */
 export const NAV_ITEMS = [
   { href: '/research', label: 'Research' },
   { href: '/publications', label: 'Publications' },
   { href: '/team', label: 'Team' },
   { href: '/pi', label: 'PI' },
   { href: '/funding', label: 'Funding' },
-  { href: '/talks', label: 'Talks' },
+  { href: '/talks', label: 'News & Talks' },
+  { href: '/join', label: 'Join' },
 ] as const;
 
 export const NAV_CTA = { href: '/contact', label: 'Contact' } as const;
