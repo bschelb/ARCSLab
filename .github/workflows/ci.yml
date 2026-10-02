@@ -39,3 +39,5 @@ jobs:
       - run: npm run validate:data
       - run: npm test
       - run: npm run build
+      - name: First-load JS per route (150 kB budget)
+        run: node scripts/measure-first-load.mjs
