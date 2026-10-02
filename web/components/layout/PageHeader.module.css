@@ -78,6 +78,12 @@
   padding: 0 clamp(14px, 2vw, 28px);
   border-left: 1px solid var(--color-line-dark);
 }
+.stat :global(.label) {
+  /* Reserve two lines for every label: the mono font swaps in without a preload, and a label
+     that rewraps would otherwise change the row height and shift the page (CLS). */
+  line-height: 1.4;
+  min-height: 2.8em;
+}
 .value {
   margin: 0;
   font-size: clamp(2.4rem, 4vw, 3.4rem);

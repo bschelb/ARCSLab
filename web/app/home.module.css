@@ -28,6 +28,44 @@
   z-index: 1;
   max-width: 1000px;
 }
+/* Narrow screens: the text spans the full width, so a side shade would bury the whole map.
+   The terrain stays bright around the headline and the pinned lab mark; the copy and buttons
+   get their own scrim (fading in above the description, out below the buttons), so the map
+   comes back underneath them on tall screens. The two halves meet mid-gap at equal alpha. */
+@media (max-width: 759px) {
+  .heroShade {
+    background:
+      linear-gradient(180deg, rgb(20 16 11 / 0.6) 0%, rgb(20 16 11 / 0.18) 22%, transparent 45%),
+      linear-gradient(90deg, rgb(20 16 11 / 0.45) 0%, transparent 70%);
+  }
+  .heroDesc,
+  .heroActions {
+    position: relative;
+  }
+  .heroDesc::before,
+  .heroActions::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    left: calc(-1 * var(--gutter));
+    right: calc(-1 * var(--gutter));
+    pointer-events: none;
+  }
+  .heroDesc::before {
+    top: -64px;
+    bottom: -16px;
+    background: linear-gradient(180deg, rgb(20 16 11 / 0) 0, rgb(20 16 11 / 0.82) 64px);
+  }
+  .heroActions::before {
+    top: -16px;
+    bottom: -96px;
+    background: linear-gradient(
+      180deg,
+      rgb(20 16 11 / 0.82) calc(100% - 96px),
+      rgb(20 16 11 / 0) 100%
+    );
+  }
+}
 .heroEyebrow {
   display: flex;
   align-items: center;
@@ -44,18 +82,30 @@
   font-weight: 500;
 }
 .heroTitle {
-  max-width: 10.5ch;
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: var(--step-display);
-  line-height: 0.88;
+  /* sized so the longest line ("HUMANS AND AI,") fits the column at every width */
+  font-size: min(var(--step-display), calc((100vw - 2 * var(--gutter)) / 7));
+  line-height: 0.94;
   letter-spacing: 0.005em;
   text-transform: uppercase;
+  text-wrap: wrap;
   color: var(--color-white);
 }
+.heroTitle span {
+  display: block;
+  white-space: nowrap;
+}
+/* desktop: keep the headline in the left half, clear of the survey marks */
+@media (min-width: 900px) {
+  .heroTitle {
+    font-size: min(var(--step-display), 6.6vw);
+  }
+}
 .heroTitle em {
-  display: inline;
-  line-height: 1;
+  display: inline-block;
+  margin-top: 0.12em;
+  line-height: 0.9;
 }
 .heroDesc {
   max-width: 52ch;

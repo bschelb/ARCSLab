@@ -859,3 +859,79 @@ arranged.
   built with `VERCEL_ENV=production`. Do not promote a preview build to production without
   rebuilding. The same applies to robots.
 
+### Phase 6: Quality hardening (2 October 2026)
+
+**Summary.** Every Phase 6 gate passes on the live site (measured after cutover):
+
+| Gate (plan 4.4, 4.5) | Result |
+|---|---|
+| Lighthouse, mobile, on arcslab.io | Perf 98–100, A11y 100, Best practices 100, SEO 100 on `/`, `/publications`, a paper page, `/team` and `/join` |
+| LCP (lab) ≤ 2.0 s | 1.4–1.9 s; `/join` 2.1 s |
+| CLS ≤ 0.05 | 0–0.025 after the label fix below (`/publications` was 0.087) |
+| TBT ≤ 150 ms | 0–23 ms (was 295–620 ms before the worker) |
+| First-load JS ≤ 150 kB gz | 146–149 kB on every route (`scripts/measure-first-load.mjs`, run in CI) |
+| Largest image ≤ 300 kB | 146 kB (`scripts/check-images.mjs`) |
+| axe, serious and critical | 0 on all 77 sitemap URLs at 390 and 1440 px |
+| Keyboard, reduced motion, no-JS, 24×24 targets | Pass (`keyboard.spec.ts`, `nojs.spec.ts`) |
+| CSP | Enforced; 0 violations across the suite and all 42 PDFs, in 3 browsers |
+| Links | 0 broken internal links (128 unique); external links reported only |
+| Security headers on production | CSP, HSTS (no `preload`), X-Content-Type-Options, Referrer-Policy, Permissions-Policy and X-Frame-Options all present |
+
+**Changes.**
+- **Terrain:** the contours draw in a Web Worker on an OffscreenCanvas. There is a
+  main-thread fallback if the worker fails. Work starts only near the viewport and pauses
+  off-screen.
+- **Fonts:** only the two LCP faces are preloaded; the Public Sans italic file is dropped.
+- **Client components** receive server-rendered icons, so the icon table stays out of the
+  client bundles.
+- **CSS:** `experimental.inlineCss` inlines it into the HTML.
+- **CSP:**
+  - enforced;
+  - `upgrade-insecure-requests` dropped: it is redundant with HSTS, and WebKit applied it to
+    localhost;
+  - Vercel toolbar origins are allowed on Preview only.
+- **Accessibility fixes:** the citation box is a focusable region; the "PI" nav link meets
+  the 24 px minimum.
+- **Header stats** reserve two lines per label, so the font swap no longer shifts the page.
+- **Preview CI (`preview-check.yml`):**
+  - the Playwright suite in 3 browsers;
+  - Lighthouse CI against `lighthouserc.json` (median of 5 runs);
+  - link, image and security-header checks.
+
+  No artifacts are uploaded, because reports carry the bypass header and the repo is public.
+- **Every e2e test** fails on any CSP violation (`tests/e2e/fixtures.ts`).
+
+**Notes.**
+- **Lab LCP on the protected preview reads about 0.7 s high.** Vercel's bypass-cookie
+  redirect adds to every page. The numbers above come from the live site.
+- **The Google Scholar profile link** returns Google's 404 page to automated requests.
+  Dr. Schelble should check it in a browser.
+
+### Phase 7: Cutover (2 October 2026)
+
+- **PR #1** (`migrate/nextjs` → `main`) was merged as merge commit `ab86901`. Vercel built
+  Production from `main` (Ready about 2 minutes later).
+- **Cloudflare** (done by Dr. Schelble):
+  - the apex A record was edited from `185.199.108.153` to `76.76.21.21` (Vercel's
+    supported A record), so the root never lacked an address;
+  - the other three Pages A records were deleted;
+  - `www` CNAME → `6f7168e135aabbd7.vercel-dns-017.com`;
+  - all records are DNS only, and the TXT verification record is kept.
+
+  Vercel marks `www` "Valid Configuration" (308 → apex). It marks the apex "DNS Change
+  Recommended", which is only its preference for the CNAME. Switching the apex to the CNAME
+  later is optional.
+- **Verified on https://arcslab.io:**
+  - DNS resolves to Vercel, with Let's Encrypt certificates for the apex and `www`;
+  - http → https;
+  - parity: 117/117 URLs, 57/57 routes, only the intentional differences;
+  - robots and the sitemap are production values (77 URLs); drafts are hidden;
+  - PDFs are inline; the full Playwright suite passes against production (487 tests).
+- **Rollback**, until GitHub Pages is unpublished: restore the four `185.199.10x.153`
+  A records and `www` → `bschelb.github.io`.
+- **Remaining (Dr. Schelble):**
+  - in Search Console, submit `/sitemap.xml`, remove `sitemap-index.xml`, and inspect `/`,
+    `/publications` and a paper;
+  - after 48 stable hours, unpublish GitHub Pages;
+  - monitor for four weeks.
+

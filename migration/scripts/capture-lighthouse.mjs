@@ -19,6 +19,8 @@ const outDir = path.resolve(process.argv[3] ?? path.join(here, '..', 'baseline',
 // LH_ROUTES=/,/team overrides the plan's five key routes.
 const ROUTES = process.env.LH_ROUTES?.split(',') ?? ['/', '/publications', '/papers/schelble-2022-lets-think-together', '/team', '/contact'];
 const RUNS = 3;
+// LH_HEADERS='{"x-vercel-protection-bypass":"…"}' measures a protected Vercel preview.
+const extraHeaders = process.env.LH_HEADERS ? JSON.parse(process.env.LH_HEADERS) : undefined;
 
 const routeName = (r) => (r === '/' ? 'home' : r.slice(1).replace(/\//g, '__'));
 const pct = (s) => Math.round((s ?? 0) * 100);
@@ -31,7 +33,7 @@ try {
   for (const route of ROUTES) {
     const runs = [];
     for (let i = 0; i < RUNS; i++) {
-      const { lhr } = await lighthouse(base + route, { port: chrome.port, output: 'json', logLevel: 'error' });
+      const { lhr } = await lighthouse(base + route, { port: chrome.port, output: 'json', logLevel: 'error', extraHeaders });
       runs.push(lhr);
       process.stderr.write(`run ${i + 1} ${route}: perf ${pct(lhr.categories.performance.score)}\n`);
     }
