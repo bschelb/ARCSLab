@@ -1,0 +1,139 @@
+.form {
+  display: grid;
+  gap: 18px;
+}
+.req {
+  font-size: var(--step-small);
+  color: var(--color-text-muted);
+}
+.row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.group {
+  display: grid;
+  gap: 6px;
+}
+.group label {
+  font-family: var(--font-mono);
+  font-size: var(--step-label);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+.group input,
+.group select,
+.group textarea {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 14px;
+  font: inherit;
+  color: var(--color-text);
+  background: var(--color-white);
+  border: 1.5px solid var(--color-text-muted);
+  border-radius: 0;
+}
+.group textarea {
+  min-height: 160px;
+  resize: vertical;
+}
+.group input:focus-visible,
+.group select:focus-visible,
+.group textarea:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+  border-color: var(--color-text);
+}
+.form button {
+  justify-self: start;
+}
+.note {
+  font-size: var(--step-small);
+  color: var(--color-text-muted);
+}
+.note a {
+  color: var(--color-orange-text);
+}
+.group input[aria-invalid='true'],
+.group textarea[aria-invalid='true'] {
+  border-color: var(--color-orange-text);
+  border-width: 2px;
+}
+.error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--step-small);
+  font-weight: 600;
+  color: var(--color-orange-text);
+}
+.errorMark {
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--color-white);
+  background: var(--color-orange-text);
+}
+/* honeypot: off-screen for people, still in the form for bots */
+.hp {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.form {
+  position: relative;
+}
+.form button:disabled {
+  opacity: 0.7;
+  cursor: progress;
+}
+.alert {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 18px 20px;
+  background: var(--color-white);
+  border: 1.5px solid var(--color-orange-text);
+  border-left-width: 6px;
+}
+.alert:focus {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+}
+.done {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding: clamp(24px, 3vw, 36px);
+  background: var(--color-white);
+  border: 1px solid var(--color-line);
+  border-top: 6px solid var(--color-orange);
+}
+.doneTitle {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+.doneTitle:focus {
+  outline: none;
+}
+.done a {
+  color: var(--color-orange-text);
+}
+@media (max-width: 520px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

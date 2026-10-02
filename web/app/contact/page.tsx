@@ -1,4 +1,5 @@
 import Breadcrumbs from '@/components/Breadcrumbs';
+import ContactForm from '@/components/contact/ContactForm';
 import JoinStub from '@/components/join/JoinStub';
 import PageHeader from '@/components/layout/PageHeader';
 import Icon from '@/components/ui/Icon';
@@ -103,85 +104,7 @@ export default function ContactPage() {
           <h2 id="form-title" className={styles.panelH}>
             Contact Form
           </h2>
-          <form action="https://formspree.io/f/xvzwzoal" method="POST" className={styles.form}>
-            <input type="hidden" name="_subject" value="ARCS Lab Website Inquiry" />
-            <p className={styles.req}>Fields marked * are required.</p>
-            <div className={styles.row}>
-              <div className={styles.group}>
-                <label htmlFor="cf-first">First Name *</label>
-                <input
-                  id="cf-first"
-                  type="text"
-                  name="first_name"
-                  placeholder="Jane"
-                  autoComplete="given-name"
-                  required
-                />
-              </div>
-              <div className={styles.group}>
-                <label htmlFor="cf-last">Last Name *</label>
-                <input
-                  id="cf-last"
-                  type="text"
-                  name="last_name"
-                  placeholder="Smith"
-                  autoComplete="family-name"
-                  required
-                />
-              </div>
-            </div>
-            <div className={styles.group}>
-              <label htmlFor="cf-email">Email *</label>
-              <input
-                id="cf-email"
-                type="email"
-                name="email"
-                placeholder="jane@university.edu"
-                autoComplete="email"
-                required
-              />
-            </div>
-            <div className={styles.group}>
-              <label htmlFor="cf-aff">Affiliation</label>
-              <input
-                id="cf-aff"
-                type="text"
-                name="affiliation"
-                placeholder="University / Organization"
-                autoComplete="organization"
-              />
-            </div>
-            <div className={styles.group}>
-              <label htmlFor="cf-type">Inquiry Type</label>
-              <select id="cf-type" name="inquiry_type">
-                <option>Prospective Graduate Student</option>
-                <option>Research Collaboration</option>
-                <option>Industry Partnership</option>
-                <option>Media / Press</option>
-                <option>Speaking Invitation</option>
-                <option>General Inquiry</option>
-              </select>
-            </div>
-            <div className={styles.group}>
-              <label htmlFor="cf-msg">Message *</label>
-              <textarea
-                id="cf-msg"
-                name="message"
-                placeholder="Tell us about your interest or inquiry..."
-                required
-              />
-            </div>
-            <button type="submit" className="btn btn-primary">
-              Send Message{' '}
-              <span className="arr" aria-hidden="true">
-                →
-              </span>
-            </button>
-            <p className={styles.note}>
-              We typically respond within 2–3 business days. For urgent inquiries, email Dr.
-              Schelble directly at <a href="mailto:bschelbl@utk.edu">bschelbl@utk.edu</a>.
-            </p>
-          </form>
+          <ContactForm />
         </section>
       </div>
 
