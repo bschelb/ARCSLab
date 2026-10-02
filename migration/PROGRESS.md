@@ -526,3 +526,135 @@ Done by Claude Cowork in Dr. Schelble's logged-in browser, using the brief from 
     completed".
   - Production deploys from `main` fail as expected until cutover, because `main` has no
     `web/`.
+
+### Phase 4: Paper pages, PDF reader, SEO surface, redirects and headers (2 October 2026)
+
+**Summary.** All 49 `/papers/<id>` pages exist with production-identical metadata. The PDF
+reader is ported and improved. The SEO routes, generated share images and asset redirects are
+in place, and `web/scripts/check-parity.mjs` proves URL and SEO parity against the Phase 0
+baseline:
+- locally, with `VERCEL_ENV=production`: 117/117 URLs, 57/57 routes;
+- on the Vercel preview (run by `preview-check.yml` with the bypass secret, `--robots=preview`):
+  117/117 URLs, 57/57 routes, no unexpected differences.
+
+**Paper pages (`app/papers/[slug]`).**
+
+- `generateStaticParams` over all publications, with `dynamicParams = false`, so unknown slugs
+  return 404.
+- `generateMetadata`:
+  - title `<title> | ARCS Lab`;
+  - the Astro description rule: the abstract's first 300 characters, else a generated one-line
+    description;
+  - canonical, `og:type article`;
+  - every `citation_*` and `dc.*` tag via `metadata.other`, with arrays for repeated authors.
+- **Empty Scholar flag:** Next drops empty-content tags, so `citation_fulltext_world_readable`
+  (`content=""`) is rendered as a `<meta>` in the page; React 19 hoists it into `<head>`
+  (verified by test).
+- **JSON-LD:** ScholarlyArticle and BreadcrumbList, identical to production.
+- **Layout:**
+  - visible breadcrumb (the JSON-LD keeps the production trail);
+  - type, year, award and In Press chips; marked authors and legend; venue and DOI;
+  - Download PDF, Cite this work and Publisher actions;
+  - abstract, reader, citation;
+  - research-area chips (from `matchTags`, linking to `/research#<slug>`), keyword tags, and
+    related work;
+  - the "request a copy" block when there is no PDF.
+- **Citations:** `CopyCitation` offers BibTeX (identical to production) and new APA output
+  (`toApa`). The copy button falls back to selecting the text.
+
+**PDF reader (`components/papers/PdfReader.tsx`).**
+
+- Runtime import of `/pdfjs/pdf.min.mjs` with `/* webpackIgnore: true */`. Turbopack honors
+  the comment, per the bundled `lazy-loading.md`, and the built output loads the file at
+  runtime. Worker: `/pdfjs/pdf.worker.min.mjs`.
+- Kept from production: lazy page-by-page canvas rendering, release of far-off pages, and
+  zoom − / + / Fit width / Open in new tab.
+- New:
+  - "Page X of N" indicator;
+  - Download button in the toolbar, plus an always-visible "Download the PDF" link;
+  - PDF.js `TextLayer`, so text is selectable and screen-reader-readable. The canvas is
+    `aria-hidden`, and each page is a labeled region;
+  - the scroll container is keyboard-focusable.
+- The text-layer CSS is ported from `pdf_viewer.css`. The text layer is stable: it rendered
+  on every PDF tested.
+- **Five-PDF test** (largest to smallest: 7.76 MB, 1.9 MB, 1.05 MB, 512 KB, 73 KB):
+  - ready in 174–307 ms;
+  - at most 2–3 pages rendered at a time, whether scrolled to the top or the bottom;
+  - text spans present; the page indicator tracks scrolling; no page errors.
+- Playwright confirms first-page render, the text layer and the download in Chromium, WebKit
+  and Firefox.
+
+**SEO routes and robots.**
+
+- **Robots:** `lib/robots.ts` gives production (`VERCEL_ENV=production`) production's exact
+  string, `index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1`. Every
+  other build gets `noindex, nofollow`. `app/robots.ts` returns Allow plus the sitemap in
+  production, and `Disallow: /` elsewhere.
+- **Sitemap:** `app/sitemap.ts` lists the 8 pages and 49 papers (57 URLs) with canonical
+  URLs. The home URL is now `https://arcslab.io/`, matching its canonical; the Astro sitemap
+  used `https://arcslab.io`. Phase 5 adds the new routes.
+- **Manifest:** `app/manifest.ts` (`/manifest.webmanifest`) is ported from
+  `site.webmanifest`, which also stays served at its old URL.
+- **`app/llms.txt/route.ts`:** a lab-centric briefing built from data, including recruiting
+  status.
+- **Home canonical:** Next's metadata resolver turns a bare `/` into the origin without its
+  slash. The home page therefore renders `<link rel="canonical" href="https://arcslab.io/">`
+  and `og:url` itself, and the metadata API is skipped for those two tags on `/` only.
+
+**Share images (intentional difference).**
+
+- `app/opengraph-image.tsx` and `twitter-image.tsx`, plus a version for each paper, are
+  generated at build in the Contour style:
+  - background: a pre-rendered contour field (`assets/og-contours.png`, built by
+    `scripts/build-og-background.mts`);
+  - fonts: static Big Shoulders, Public Sans and JetBrains Mono TTFs in `assets/fonts`
+    (SIL Open Font License; see the README there).
+- **What changes:** `og:image` and `twitter:image` now point at the generated images, and Next
+  adds `og:image:type/alt` and `twitter:image:*`.
+- **What stays:** `/og/arcs-lab-og.png` is still served, so cached previews keep working.
+
+**Redirects and headers.**
+
+- **Asset redirects:** `/assets/{sarah,yayun,naveena}Headshot.jpg` → 308 to
+  `/images/people/<slug>.jpg`. `.html` → 308; both sitemaps → `/sitemap.xml`.
+- **Security headers:** as in Phase 1. The CSP stays report-only; browsers ignore
+  `upgrade-insecure-requests` in report-only mode until Phase 6 enforces it.
+- **PDF headers:** `application/pdf`, `Content-Disposition: inline`, one-hour cache
+  (verified by test).
+- **Intentional 404s** (listed in `check-parity.mjs`):
+  - `/assets/downtownPic.jpg`: the unused 15 MB photo;
+  - `/CNAME`: the GitHub Pages domain file, which means nothing on Vercel.
+
+**Parity script (`web/scripts/check-parity.mjs`).**
+
+- **(a) URLs:** every inventory path → 200, or a 301/308 → 200.
+- **(b) SEO:** for every HTML route it compares title, description, canonical, keywords,
+  author, theme-color, robots (production or preview mode), `og:*`, `twitter:*`,
+  `citation_*`, `dc.*`, and JSON-LD as a key-order-insensitive multiset. Share-image keys are
+  reported as intentional.
+- It reuses `extractSeo()` from the Phase 0 capture script, so both sides are parsed the same
+  way, and it reads `VERCEL_AUTOMATION_BYPASS_SECRET` for protected previews.
+- `preview-check.yml` now runs it on every successful Preview deployment.
+
+**Tests.**
+
+- 351 unit tests (adds APA formatting).
+- 88 Playwright tests pass across 3 browsers (38 skipped: Chromium-only axe and clipboard).
+  New coverage:
+  - the PDF reader;
+  - the no-PDF request block;
+  - BibTeX/APA copy;
+  - Scholar tags;
+  - unknown slug → 404;
+  - five redirects;
+  - environment-aware robots (`EXPECT_PRODUCTION=1` flips the expectation);
+  - a 57-URL sitemap.
+- axe now also covers a paper page with a PDF and one without.
+
+**Deviations and notes.**
+
+- **Paper titles** are set in Big Shoulders mixed case rather than uppercase, for legibility.
+- **Visible breadcrumb:** the current page's label is the paper title, while the JSON-LD
+  trail stays `venueShort`, as in production.
+- **Server log noise:** Next prints `NoFallbackError` to the server log for unknown paper
+  slugs. This is expected with `dynamicParams = false`; the response is a correct 404.
