@@ -2,6 +2,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import PageHeader from '@/components/layout/PageHeader';
 import { LabMarkKey } from '@/components/papers/Authors';
 import PublicationsExplorer from '@/components/papers/PublicationsExplorer';
+import Icon from '@/components/ui/Icon';
 import { publications, researchAreas, team } from '@/lib/data';
 import type { ExplorerPaper } from '@/lib/explorer';
 import { pageMetadata } from '@/lib/metadata';
@@ -66,6 +67,10 @@ export default function PublicationsPage() {
         years={years}
         areas={researchAreas.map((a) => ({ slug: a.slug, title: a.title }))}
         legend={<LabMarkKey />}
+        icons={{
+          search: <Icon name="search" size={16} />,
+          trophy: <Icon name="trophy" size={12} className="badge-ico" />,
+        }}
       />
     </>
   );

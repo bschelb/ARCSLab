@@ -111,7 +111,11 @@ export default async function PaperPage({ params }: PageProps<'/papers/[slug]'>)
             {pdfUrl ? 'Read online' : 'Full text'}
           </h2>
           {pdfUrl ? (
-            <PdfReader url={pdfUrl} title={paper.title} />
+            <PdfReader
+              url={pdfUrl}
+              title={paper.title}
+              downloadIcon={<Icon name="doc" size={14} />}
+            />
           ) : (
             <p className={styles.missing}>
               A shareable copy of this work is not posted here

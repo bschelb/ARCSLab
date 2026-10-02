@@ -22,15 +22,19 @@ const bigShoulders = Big_Shoulders({
   fallback: ['Archivo Narrow', 'Arial Narrow', 'Impact', 'sans-serif'],
   adjustFontFallback: false,
 });
+// Phase 6 (LCP): only the two faces that paint the largest text are preloaded. Public Sans
+// ships the upright variable face only (venue names use the browser's oblique), and the mono
+// labels load without a preload, swapping in from the fallback.
 const publicSans = Public_Sans({
   subsets: ['latin'],
-  style: ['normal', 'italic'],
+  style: ['normal'],
   variable: '--font-public-sans',
 });
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   weight: ['400', '500'],
   variable: '--font-jetbrains-mono',
+  preload: false,
 });
 
 export const metadata: Metadata = {

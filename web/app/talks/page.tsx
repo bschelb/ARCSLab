@@ -1,6 +1,7 @@
 import Breadcrumbs from '@/components/Breadcrumbs';
 import PageHeader from '@/components/layout/PageHeader';
 import NewsTimeline, { type TimelineEntry } from '@/components/news/NewsTimeline';
+import Icon from '@/components/ui/Icon';
 import { news, talks } from '@/lib/data';
 import { displayDate } from '@/lib/format';
 import type { IconName } from '@/lib/icons';
@@ -29,7 +30,7 @@ function toEntry(n: NewsItem): TimelineEntry {
     dateText: displayDate(n, 'short'),
     filter: filterFor(n.kind),
     kindLabel: n.virtual ? `${KIND_LABEL[n.kind]} · Virtual` : KIND_LABEL[n.kind],
-    icon: n.icon ?? KIND_ICON[n.kind] ?? 'doc',
+    icon: <Icon name={n.icon ?? KIND_ICON[n.kind] ?? 'doc'} size={20} />,
     title: n.title,
     ...(venue ? { venue } : {}),
     ...(n.location ? { location: n.location } : {}),
@@ -62,7 +63,7 @@ export default function TalksPage() {
         ]}
         focus={{ x: 0.75, y: 0.6 }}
       />
-      <NewsTimeline entries={entries} />
+      <NewsTimeline entries={entries} pinIcon={<Icon name="pin" size={13} />} />
     </>
   );
 }

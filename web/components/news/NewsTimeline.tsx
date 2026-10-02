@@ -1,9 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useMemo } from 'react';
-import Icon from '@/components/ui/Icon';
-import type { IconName } from '@/lib/icons';
+import { useMemo, type ReactNode } from 'react';
 import { TIMELINE_FILTERS, parseKind, type TimelineFilter } from '@/lib/news';
 import { replaceSearch, useUrlSearch } from '@/lib/url-search';
 import styles from './NewsTimeline.module.css';
@@ -15,7 +13,8 @@ export interface TimelineEntry {
   dateText: string;
   filter: TimelineFilter;
   kindLabel: string;
-  icon: IconName;
+  /** Rendered by the server (keeps the icon table out of the client bundle). */
+  icon: ReactNode;
   title: string;
   venue?: string;
   location?: string;
@@ -28,7 +27,13 @@ export interface TimelineEntry {
  * News & Talks as one dated timeline, grouped by year, with kind chips. ?kind= holds the
  * filter; the static HTML (and no-JS view) shows every entry.
  */
-export default function NewsTimeline({ entries }: { entries: TimelineEntry[] }) {
+export default function NewsTimeline({
+  entries,
+  pinIcon,
+}: {
+  entries: TimelineEntry[];
+  pinIcon: ReactNode;
+}) {
   const search = useUrlSearch();
   const active = parseKind(search);
   const shown = useMemo(
@@ -82,7 +87,7 @@ export default function NewsTimeline({ entries }: { entries: TimelineEntry[] }) 
                   <li key={e.id} className={styles.item} data-kind={e.filter}>
                     <span className={styles.date}>{e.dateText}</span>
                     <span className={styles.icon} aria-hidden="true">
-                      <Icon name={e.icon} size={20} />
+                      {e.icon}
                     </span>
                     <div className={styles.body}>
                       <p className={styles.kind}>{e.kindLabel}</p>
@@ -90,7 +95,7 @@ export default function NewsTimeline({ entries }: { entries: TimelineEntry[] }) 
                       {e.venue && <p className={styles.venue}>{e.venue}</p>}
                       {e.location && (
                         <p className={styles.loc}>
-                          <Icon name="pin" size={13} /> {e.location}
+                          {pinIcon} {e.location}
                         </p>
                       )}
                       {e.description && <p className={styles.desc}>{e.description}</p>}

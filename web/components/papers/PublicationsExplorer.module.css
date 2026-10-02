@@ -23,6 +23,7 @@
   flex: 1 1 320px;
 }
 .searchIcon {
+  display: flex;
   position: absolute;
   left: 14px;
   top: 50%;

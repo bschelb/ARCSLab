@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import Icon from '@/components/ui/Icon';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import styles from './PdfReader.module.css';
 
 type PdfJs = typeof import('pdfjs-dist');
@@ -28,7 +27,16 @@ interface Item {
  * Canvas rendering is deliberate: it works even when the visitor's browser is set to
  * download PDFs instead of displaying them.
  */
-export default function PdfReader({ url, title }: { url: string; title: string }) {
+/** `downloadIcon` is rendered by the server, so the icon table stays out of the client bundle. */
+export default function PdfReader({
+  url,
+  title,
+  downloadIcon,
+}: {
+  url: string;
+  title: string;
+  downloadIcon?: ReactNode;
+}) {
   const hostRef = useRef<HTMLDivElement>(null);
   const pagesRef = useRef<HTMLDivElement>(null);
   const controls = useRef<{ zoom: (f: number) => void; fit: () => void } | null>(null);
@@ -225,7 +233,7 @@ export default function PdfReader({ url, title }: { url: string; title: string }
             Open in new tab <span aria-hidden="true">↗</span>
           </a>
           <a href={url} download>
-            <Icon name="doc" size={14} /> Download
+            {downloadIcon} Download
           </a>
         </div>
       </div>

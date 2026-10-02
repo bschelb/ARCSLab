@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import { contourLevels, marchContours, smoothHeights } from '@/lib/contours';
-import meta from '@/lib/terrain.json';
+import { useEffect, useRef, useState } from 'react';
+import { TERRAIN_H, TERRAIN_SRC, TERRAIN_W, coverTransform, toGrid } from './terrain-geo';
+import type { createRenderer } from './terrain-render';
 import styles from './TerrainContours.module.css';
 
 /** Real places, drawn as faint survey marks so the terrain reads as East Tennessee. */
@@ -15,49 +15,8 @@ const PLACES: { name: string; lat: number; lon: number; lab?: boolean }[] = [
   { name: 'ARCS Lab · Knoxville', lat: 35.9544, lon: -83.9295, lab: true },
 ];
 
-const mercY = (lat: number) => Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI) / 360));
-
-/** lon/lat → heightmap grid coordinates (the heightmap is Web Mercator). */
-function toGrid(lat: number, lon: number): [number, number] {
-  const { bbox, width, height } = meta;
-  const x = ((lon - bbox.west) / (bbox.east - bbox.west)) * width;
-  const y = ((mercY(bbox.north) - mercY(lat)) / (mercY(bbox.north) - mercY(bbox.south))) * height;
-  return [x, y];
-}
-
-/** Smooth value noise on the grid, used to make the field breathe a little. */
-function noiseField(w: number, h: number, seed: number, cell: number): Float32Array {
-  const gw = Math.ceil(w / cell) + 2;
-  const gh = Math.ceil(h / cell) + 2;
-  const lattice = new Float32Array(gw * gh);
-  let s = seed;
-  for (let i = 0; i < lattice.length; i++) {
-    s = (s * 16807) % 2147483647;
-    lattice[i] = (s / 2147483647) * 2 - 1;
-  }
-  const out = new Float32Array(w * h);
-  for (let y = 0; y < h; y++) {
-    for (let x = 0; x < w; x++) {
-      const fx = x / cell;
-      const fy = y / cell;
-      const x0 = Math.floor(fx);
-      const y0 = Math.floor(fy);
-      const tx = fx - x0;
-      const ty = fy - y0;
-      const sx = tx * tx * (3 - 2 * tx);
-      const sy = ty * ty * (3 - 2 * ty);
-      const a = lattice[y0 * gw + x0] ?? 0;
-      const b = lattice[y0 * gw + x0 + 1] ?? 0;
-      const c = lattice[(y0 + 1) * gw + x0] ?? 0;
-      const d = lattice[(y0 + 1) * gw + x0 + 1] ?? 0;
-      out[y * w + x] = a + (b - a) * sx + (c - a) * sy + (a - b - c + d) * sx * sy;
-    }
-  }
-  return out;
-}
-
 export interface TerrainContoursProps {
-  /** Animate (home hero) or draw one still frame (page headers). */
+  /** Animate (home hero) or draw one still frame (page headers, footer). */
   animate?: boolean;
   /** Which part of the map survives the cover crop, 0–1 on each axis. */
   focus?: { x: number; y: number };
@@ -70,6 +29,15 @@ export interface TerrainContoursProps {
   className?: string;
 }
 
+/**
+ * Contour lines generated from real East Tennessee elevation data (decorative, aria-hidden).
+ *
+ * Performance (Phase 6): the contours are computed and drawn in a Web Worker on an
+ * OffscreenCanvas, so the main thread stays free; browsers without OffscreenCanvas fall back
+ * to drawing on the main thread at idle time. Work starts only once the canvas is near the
+ * viewport (the footer costs nothing at load), animation pauses off-screen and in hidden
+ * tabs, the device pixel ratio is capped at 2, and reduced motion draws a single still frame.
+ */
 export default function TerrainContours({
   animate = false,
   focus = { x: 0.6, y: 0.5 },
@@ -78,160 +46,175 @@ export default function TerrainContours({
   placesMinX = 0,
   className,
 }: TerrainContoursProps) {
-  const ref = useRef<HTMLCanvasElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [size, setSize] = useState({ w: 0, h: 0 });
+  const fx = focus.x;
+  const fy = focus.y;
 
   useEffect(() => {
-    const canvas = ref.current;
-    const ctx = canvas?.getContext('2d');
-    if (!canvas || !ctx) return;
-
+    const wrap = wrapRef.current;
+    if (!wrap) return;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const W = meta.width;
-    const H = meta.height;
-    let base: Float32Array | null = null;
-    let warpA: Float32Array | null = null;
-    let warpB: Float32Array | null = null;
-    let work: Float32Array | null = null;
-    let cw = 0;
-    let ch = 0;
+    const moving = animate && !reduced;
+    const dpr = () => Math.min(window.devicePixelRatio || 1, 2);
+    const box = () => wrap.getBoundingClientRect();
+
+    // The canvas is created here (not in JSX) so each effect run gets a fresh one:
+    // a canvas can hand its control to an OffscreenCanvas only once.
+    const canvas = document.createElement('canvas');
+    canvas.className = styles.canvas ?? '';
+    canvas.setAttribute('aria-hidden', 'true');
+    wrap.prepend(canvas);
+
+    let worker: Worker | null = null;
+    let fallback: ReturnType<typeof createRenderer> | null = null;
     let raf = 0;
+    let last = 0;
+    let started = false;
     let visible = true;
     let cancelled = false;
-    let last = 0;
-    const fx = focus.x;
-    const fy = focus.y;
-
-    const resize = () => {
-      const rect = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      cw = rect.width;
-      ch = rect.height;
-      canvas.width = Math.max(1, Math.round(cw * dpr));
-      canvas.height = Math.max(1, Math.round(ch * dpr));
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const markReady = () => {
+      canvas.dataset.ready = 'true';
     };
 
-    const draw = (t: number) => {
-      if (!base || !work || !warpA || !warpB) return;
-      // Breathing: blend two noise fields (±16 m) on a slow circle, and slide levels uphill.
-      const theta = t / 9000;
-      const ca = Math.cos(theta) * 16;
-      const sb = Math.sin(theta) * 16;
-      for (let i = 0; i < work.length; i++)
-        work[i] = (base[i] ?? 0) + (warpA[i] ?? 0) * ca + (warpB[i] ?? 0) * sb;
-      const phase = (t / 32000) % 1;
-      const levels = contourLevels(meta.minElevationM, meta.maxElevationM, {
-        count: 40,
-        power: 2,
-        phase,
-        indexEvery: 5,
-      });
-
-      const scale = Math.max(cw / (W - 1), ch / (H - 1));
-      const ox = (cw - (W - 1) * scale) * fx;
-      const oy = (ch - (H - 1) * scale) * fy;
-      const minor = new Path2D();
-      const index = new Path2D();
-      marchContours(work, W, H, levels, (li, x1, y1, x2, y2) => {
-        const p = levels[li]?.index ? index : minor;
-        p.moveTo(ox + x1 * scale, oy + y1 * scale);
-        p.lineTo(ox + x2 * scale, oy + y2 * scale);
-      });
-
-      ctx.clearRect(0, 0, cw, ch);
-      ctx.lineWidth = 1;
-      ctx.strokeStyle = `rgba(255,255,255,${(0.12 * intensity).toFixed(3)})`;
-      ctx.stroke(minor);
-      ctx.lineWidth = 1.25;
-      ctx.strokeStyle = `rgba(255,130,0,${(0.5 * intensity).toFixed(3)})`;
-      ctx.stroke(index);
-
-      // Survey marks need room: skip them on narrow screens, where the text covers the map.
-      if (places && cw >= 760) {
-        ctx.font = '500 10px "JetBrains Mono", ui-monospace, monospace';
-        ctx.textBaseline = 'middle';
-        for (const p of PLACES) {
-          const [gx, gy] = toGrid(p.lat, p.lon);
-          const x = ox + gx * scale;
-          const y = oy + gy * scale;
-          if (x < Math.max(8, cw * placesMinX) || y < 8 || x > cw - 150 || y > ch - 40) continue;
-          ctx.strokeStyle = p.lab ? 'rgba(255,130,0,0.95)' : 'rgba(255,255,255,0.5)';
-          ctx.lineWidth = 1;
-          const r = p.lab ? 7 : 4;
-          ctx.beginPath();
-          ctx.moveTo(x - r, y);
-          ctx.lineTo(x + r, y);
-          ctx.moveTo(x, y - r);
-          ctx.lineTo(x, y + r);
-          ctx.stroke();
-          if (p.lab) {
-            ctx.beginPath();
-            ctx.arc(x, y, 3, 0, Math.PI * 2);
-            ctx.stroke();
-          }
-          ctx.fillStyle = p.lab ? 'rgba(255,130,0,0.95)' : 'rgba(255,255,255,0.5)';
-          ctx.fillText(p.name.toUpperCase(), x + r + 5, y);
-        }
-      }
+    const startWorker = () => {
+      const offscreen = canvas.transferControlToOffscreen();
+      worker = new Worker(new URL('./terrain.worker.ts', import.meta.url), { type: 'module' });
+      worker.onmessage = (e: MessageEvent<{ type: string }>) => {
+        if (e.data.type === 'ready') markReady();
+      };
+      const { width, height } = box();
+      worker.postMessage(
+        {
+          type: 'init',
+          canvas: offscreen,
+          src: TERRAIN_SRC,
+          width,
+          height,
+          dpr: dpr(),
+          animate: moving,
+          focus: { x: fx, y: fy },
+          intensity,
+        },
+        [offscreen],
+      );
     };
 
-    const loop = (t: number) => {
+    const startFallback = async () => {
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+      // Only browsers without OffscreenCanvas download the renderer on the main thread.
+      const { createRenderer, heightsFromPixels } = await import('./terrain-render');
+      const img = new Image();
+      img.src = TERRAIN_SRC;
+      await img.decode();
       if (cancelled) return;
-      if (visible && !document.hidden && t - last > 42) {
-        draw(t);
-        last = t;
-      }
+      const off = document.createElement('canvas');
+      off.width = TERRAIN_W;
+      off.height = TERRAIN_H;
+      const octx = off.getContext('2d', { willReadFrequently: true });
+      if (!octx) return;
+      octx.drawImage(img, 0, 0);
+      const base = heightsFromPixels(octx.getImageData(0, 0, TERRAIN_W, TERRAIN_H).data);
+      fallback = createRenderer(ctx, base, { animate: moving, focus: { x: fx, y: fy }, intensity });
+      const { width, height } = box();
+      fallback.resize(width, height, dpr());
+      fallback.draw(moving ? performance.now() : 0);
+      markReady();
+      if (!moving) return;
+      const loop = (t: number) => {
+        if (cancelled) return;
+        if (visible && !document.hidden && t - last > 62) {
+          fallback?.draw(t);
+          last = t;
+        }
+        raf = requestAnimationFrame(loop);
+      };
       raf = requestAnimationFrame(loop);
     };
 
-    const img = new Image();
-    img.decoding = 'async';
-    img.src = '/terrain/east-tn.webp';
-    img
-      .decode()
-      .then(() => {
+    const start = () => {
+      if (started || cancelled) return;
+      started = true;
+      const run = () => {
         if (cancelled) return;
-        const off = document.createElement('canvas');
-        off.width = W;
-        off.height = H;
-        const octx = off.getContext('2d', { willReadFrequently: true });
-        if (!octx) return;
-        octx.drawImage(img, 0, 0);
-        const px = octx.getImageData(0, 0, W, H).data;
-        const raw = new Float32Array(W * H);
-        const span = meta.maxElevationM - meta.minElevationM;
-        for (let i = 0; i < raw.length; i++)
-          raw[i] = meta.minElevationM + ((px[i * 4] ?? 0) / 255) * span;
-        base = smoothHeights(raw, W, H, 1, 1);
-        warpA = noiseField(W, H, 11, 22);
-        warpB = noiseField(W, H, 29, 22);
-        work = new Float32Array(W * H);
-        resize();
-        draw(animate && !reduced ? performance.now() : 0);
-        canvas.dataset.ready = 'true';
-        if (animate && !reduced) raf = requestAnimationFrame(loop);
-      })
-      .catch(() => {
-        /* decorative only: leave the plain ink ground */
-      });
+        try {
+          if ('transferControlToOffscreen' in canvas && typeof Worker !== 'undefined')
+            startWorker();
+          else void startFallback().catch(() => {});
+        } catch {
+          void startFallback().catch(() => {});
+        }
+      };
+      if ('requestIdleCallback' in window) window.requestIdleCallback(run, { timeout: 1200 });
+      else setTimeout(run, 200);
+    };
+
+    const setVisible = (v: boolean) => {
+      visible = v;
+      worker?.postMessage({ type: 'visible', visible: v && !document.hidden });
+    };
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        const v = entry?.isIntersecting ?? true;
+        if (v) start();
+        setVisible(v);
+      },
+      { rootMargin: '300px 0px' },
+    );
+    io.observe(wrap);
+    const onVis = () => setVisible(visible);
+    document.addEventListener('visibilitychange', onVis);
 
     const ro = new ResizeObserver(() => {
-      resize();
-      draw(animate && !reduced ? performance.now() : 0);
+      const { width, height } = box();
+      setSize({ w: width, h: height });
+      if (worker) worker.postMessage({ type: 'resize', width, height, dpr: dpr() });
+      else if (fallback) {
+        fallback.resize(width, height, dpr());
+        fallback.draw(moving ? performance.now() : 0);
+      }
     });
-    ro.observe(canvas);
-    const io = new IntersectionObserver(([entry]) => {
-      visible = entry?.isIntersecting ?? true;
-    });
-    io.observe(canvas);
+    ro.observe(wrap);
 
     return () => {
       cancelled = true;
       cancelAnimationFrame(raf);
-      ro.disconnect();
       io.disconnect();
+      ro.disconnect();
+      document.removeEventListener('visibilitychange', onVis);
+      worker?.terminate();
+      canvas.remove();
     };
-  }, [animate, focus.x, focus.y, places, intensity, placesMinX]);
+  }, [animate, fx, fy, intensity]);
 
-  return <canvas ref={ref} className={`${styles.canvas} ${className ?? ''}`} aria-hidden="true" />;
+  // Survey marks need room: skip them on narrow screens, where the text covers the map.
+  const marks =
+    places && size.w >= 760
+      ? PLACES.map((p) => {
+          const { scale, ox, oy } = coverTransform(size.w, size.h, { x: fx, y: fy });
+          const [gx, gy] = toGrid(p.lat, p.lon);
+          return { ...p, x: ox + gx * scale, y: oy + gy * scale };
+        }).filter(
+          (p) =>
+            p.x >= Math.max(8, size.w * placesMinX) &&
+            p.y >= 8 &&
+            p.x <= size.w - 150 &&
+            p.y <= size.h - 40,
+        )
+      : [];
+
+  return (
+    <div ref={wrapRef} className={`${styles.wrap} ${className ?? ''}`} aria-hidden="true">
+      {marks.map((m) => (
+        <span
+          key={m.name}
+          className={`${styles.mark} ${m.lab ? styles.lab : ''}`}
+          style={{ left: m.x, top: m.y }}
+        >
+          {m.name}
+        </span>
+      ))}
+    </div>
+  );
 }

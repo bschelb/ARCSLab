@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { useCallback, useId, useMemo, type ReactNode } from 'react';
-import Icon from '@/components/ui/Icon';
 import {
   EMPTY_FILTERS,
   countLabel,
@@ -43,9 +42,11 @@ interface Props {
   years: number[];
   /** The lab-member legend, rendered by the server. */
   legend?: ReactNode;
+  /** Icons rendered by the server, so the icon table stays out of the client bundle. */
+  icons: { search: ReactNode; trophy: ReactNode };
 }
 
-export default function PublicationsExplorer({ papers, areas, years, legend }: Props) {
+export default function PublicationsExplorer({ papers, areas, years, legend, icons }: Props) {
   const search = useUrlSearch();
   const known = useMemo(() => ({ years, areas: areas.map((a) => a.slug) }), [years, areas]);
   const filters = useMemo(() => parseFilters(search, known), [search, known]);
@@ -66,7 +67,9 @@ export default function PublicationsExplorer({ papers, areas, years, legend }: P
             <label htmlFor={`${id}-q`} className="sr-only">
               Search publications
             </label>
-            <Icon name="search" size={16} className={styles.searchIcon} />
+            <span className={styles.searchIcon} aria-hidden="true">
+              {icons.search}
+            </span>
             <input
               id={`${id}-q`}
               type="search"
@@ -141,7 +144,7 @@ export default function PublicationsExplorer({ papers, areas, years, legend }: P
               aria-pressed={filters.award}
               onClick={() => set({ award: !filters.award })}
             >
-              <Icon name="trophy" size={12} className="badge-ico" />
+              {icons.trophy}
               Award-Winning
             </button>
             <button
@@ -210,7 +213,7 @@ export default function PublicationsExplorer({ papers, areas, years, legend }: P
                     <span className={styles.aside}>
                       {pub.award && (
                         <span className={styles.award}>
-                          <Icon name="trophy" size={12} className="badge-ico" />
+                          {icons.trophy}
                           {pub.award}
                         </span>
                       )}
