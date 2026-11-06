@@ -14,6 +14,13 @@ test.describe('mobile navigation sheet', () => {
     );
     const sheet = page.locator('#mobile-nav');
     await expect(sheet).toBeVisible();
+    // The sheet must cover the viewport below the nav, not collapse inside the header.
+    const box = await sheet.boundingBox();
+    const navH = await page.evaluate(() =>
+      parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')),
+    );
+    expect(box?.y).toBeCloseTo(navH, 0);
+    expect(box?.height).toBeCloseTo(844 - navH, 0);
     await expect(sheet.getByRole('link', { name: /Research/ })).toBeFocused();
     expect(await page.evaluate(() => document.body.style.overflow)).toBe('hidden');
     await page.keyboard.press('Escape');
