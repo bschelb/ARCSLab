@@ -12,6 +12,20 @@ updates:
       minor-and-patch:
         update-types: [minor, patch]
     open-pull-requests-limit: 10
+    ignore:
+      # Node types track the runtime, Node 24 (package.json engines, .nvmrc). Bump them together
+      # with the Node major, never ahead of it.
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
+      # Blocked upstream (Nov 2026): typescript-eslint, via eslint-config-next, supports
+      # TypeScript <6.1 only. Remove once its peer range includes 7.
+      - dependency-name: typescript
+        versions: ['>=6.1.0']
+      # Blocked upstream (Nov 2026): eslint-plugin-react 7.37 crashes on ESLint 10
+      # (context.getFilename was removed), and jsx-a11y and import declare eslint <=9. Remove
+      # once eslint-config-next's plugins support ESLint 10.
+      - dependency-name: eslint
+        versions: ['>=10.0.0']
 
   - package-ecosystem: github-actions
     directory: /
