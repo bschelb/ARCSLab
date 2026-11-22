@@ -35,9 +35,15 @@ export const securityHeaders = [
   { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
   {
     key: 'Permissions-Policy',
-    value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()',
+    // Deny powerful APIs the site never uses. browsing-topics replaces the retired
+    // interest-cohort (FLoC) opt-out.
+    value:
+      'camera=(), microphone=(), geolocation=(), payment=(), usb=(), serial=(), hid=(), bluetooth=(), browsing-topics=()',
   },
   { key: 'X-Frame-Options', value: 'DENY' },
+  // Isolates the browsing context from cross-origin windows (no window.opener handle either
+  // way). The site opens external links with rel="noopener" and never relies on popups.
+  { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
   { key: 'Content-Security-Policy', value: contentSecurityPolicy },
 ];
 
