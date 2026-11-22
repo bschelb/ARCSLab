@@ -1,0 +1,7 @@
+# Security contact for arcslab.io (RFC 9116).
+# Found a vulnerability in this site? Please report it privately by email; do not open a
+# public GitHub issue. Renew "Expires" at least once a year.
+Contact: mailto:bschelbl@utk.edu
+Expires: 2027-11-22T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://arcslab.io/.well-known/security.txt

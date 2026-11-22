@@ -13,9 +13,13 @@ describe('next.config', () => {
         'Referrer-Policy',
         'Permissions-Policy',
         'X-Frame-Options',
+        'Cross-Origin-Opener-Policy',
         'Content-Security-Policy',
       ]),
     );
+    const pp = securityHeaders.find((h) => h.key === 'Permissions-Policy')?.value ?? '';
+    for (const f of ['camera', 'microphone', 'geolocation', 'payment', 'browsing-topics'])
+      expect(pp).toContain(`${f}=()`);
     expect(securityHeaders.find((h) => h.key === 'Strict-Transport-Security')?.value).not.toContain(
       'preload',
     );
